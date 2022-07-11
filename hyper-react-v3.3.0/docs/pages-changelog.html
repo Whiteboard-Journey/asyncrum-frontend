@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Hyper React - Responsive Bootstrap 5 and React Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
+    <meta content="Coderthemes" name="author">
+    <link rel="shortcut icon" href="./public/images/favicon.ico">
+    <style>
+        body.loading {
+            visibility: hidden
+        }
+    </style>
+    <link rel="icon" href="favicon.ico">
+    <link href="css/core.css" rel="stylesheet">
+</head>
+
+<body class="loading" data-layout="dark-sidenav">
+    <div class="wrapper">
+        <div class="left-side-menu" id="left-side-bar">
+            <div class="slimscroll-menu" id="left-side-menu-container"><a href="index.html"
+                    class="logo text-center"><span class="logo-lg"><img src="./public/images/logo.png" alt=""
+                            height="16" id="side-main-logo"> </span><span class="logo-sm"><img
+                            src="./public/images/logo_sm.png" alt="" height="16"></span></a>
+                <ul class="mt-3 metismenu side-nav" id="left-bar-menu">
+                    <li class="side-nav-title side-nav-item">Getting Started</li>
+                    <li class="side-nav-item"><a href="index.html" class="side-nav-link"><i class="dripicons-box"></i>
+                            <span>Introduction</span></a></li>
+                    <li class="side-nav-item"><a href="pages-installation.html" class="side-nav-link"><i
+                                class="dripicons-scale"></i> <span>Getting Started</span></a></li>
+                    <li class="side-nav-item"><a href="pages-strcuture.html" class="side-nav-link"><i
+                                class="dripicons-document"></i> <span>File Strcuture</span></a></li>
+                    <li class="side-nav-item"><a href="pages-routing.html" class="side-nav-link"><i
+                                class="dripicons-link"></i> <span>Routing</span></a></li>
+                    <li class="side-nav-item"><a href="pages-spliting.html" class="side-nav-link"><i
+                                class="dripicons-code"></i> <span>Code Spliting</span></a></li>
+                    <li class="side-nav-title side-nav-item mt-2">Customization <span
+                            class="text-capitalize">(javascript)</span></li>
+                    <li class="side-nav-item"><a href="pages-customization-js.html" class="side-nav-link"><i
+                                class="dripicons-browser"></i>
+                            <span>Layouts</span></a></li>
+                    <li class="side-nav-item"><a href="pages-themes-js.html" class="side-nav-link"><i
+                                class="dripicons-document-edit"></i>
+                            <span>Themes & Others</span></a></li>
+
+                    <li class="side-nav-title side-nav-item mt-2">Customization <span
+                            class="text-capitalize">(typescript)</span></li>
+                    <li class="side-nav-item"><a href="pages-customization-ts.html" class="side-nav-link"><i
+                                class="dripicons-browser"></i>
+                            <span>Layouts</span></a></li>
+                    <li class="side-nav-item"><a href="pages-themes-ts.html" class="side-nav-link"><i
+                                class="dripicons-document-edit"></i>
+                            <span>Themes & Others</span></a></li>
+                    <li class="side-nav-title side-nav-item mt-2">Other</li>
+                    <li class="side-nav-item"><a href="pages-changelog.html" class="side-nav-link"><i
+                                class="dripicons-blog"></i> <span>Change log</span></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="content-page">
+            <div class="content">
+                <div class="navbar-custom">
+                    <ul class="list-unstyled topbar-right-menu float-right mb-0">
+                        <li class="notification-list topbar-dropdown d-lg-block"></li>
+                    </ul><button class="button-menu-mobile open-left disable-btn"><i class="mdi mdi-menu"
+                            id="button-menu-mobile-toggle"></i></button>
+                    <div class="app-search">
+                        <h4>React Documentation <label class="badge badge-success float-right">v3.3.0</label></h4>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">React</a></li>
+                                        <li class="breadcrumb-item active">Change Log</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">Change Log</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="mt-1">v3.3.0 - <code>Mar 25, 2022</code></h5>
+                                    <ul>
+                                        <li>Added: Typescript support</li>
+                                        <li>Fixed: Build issue in javascript version</li>
+                                    </ul>
+
+
+                                    <h5 class="mt-1">v3.2.0 - <code>Mar 9, 2022</code></h5>
+                                    <ul>
+                                        <li>Improved: Light and dark mode. No need for separate file in order load the
+                                            dark or light mode.</li>
+                                        <li>Added: CRM Full App</li>
+                                        <ul>
+                                            <li>Projects page</li>
+                                            <li>Order List</li>
+                                            <li>Clients List</li>
+                                            <li>Management</li>
+                                        </ul>
+                                        <li>Added: Wallet Dashboard</li>
+                                        <li>Updated: All the third-party plugins to the latest version</li>
+                                    </ul>
+
+                                    <h5 class="mt-1">v3.1.0 - <code>Jan 28, 2022</code></h5>
+                                    <ul>
+                                        <li>Added: Full Mode layout</li>
+                                        <li>Updated: Responsive support </li>
+                                        <li>Updated: All the third-party plugins to the latest version</li>
+                                        <li>Fixed: Node version support issue</li>
+                                    </ul>
+
+                                    <h5 class="mt-1">v3.0.0 - <code>Jul 28, 2021</code></h5>
+                                    <ul>
+                                        <li>Updated: the react and bootstrap to the latest version</li>
+                                        <li>Improved: Converted all the components to use hooks (E.g. useState,
+                                            useEffect, etc) instead of using deprecated methods</li>
+                                        <li>Updated: all the third-party plugins to the latest version</li>
+                                        <li>Improved: Overall experience and made it more alined with our original HTML
+                                            version</li>
+                                        <li>Fixed: Authentication issue when the demo is being opened up inside iframe
+                                        </li>
+                                    </ul>
+                                    <h5 class="mt-1">v2.0.2 - <code>Jun 9, 2020</code></h5>
+                                    <ul>
+                                        <li>Updated: Bootstrap to v4.5.0</li>
+                                        <li>Improved: Search in topbar with auto complete/suggestions dropdown</li>
+                                        <li>Added: Added a dropdown for apps in topbar</li>
+                                        <li>Fixed: Logo is not visible in safari</li>
+                                        <li>Updated: All plugins to their latest version</li>
+                                    </ul>
+                                    <h5 class="mt-1">v2.0.1 - <code>Apr 20, 2020</code></h5>
+                                    <ul>
+                                        <li>Fixed: JWT Token (Dummy) used in auth was expired</li>
+                                    </ul>
+                                    <h5 class="mt-1">v2.0 - <code>Feb 3, 2020</code></h5>
+                                    <ul>
+                                        <li>Upgraded to Hyper v3.1.0</li>
+                                        <li>Updated: Bootstrap to latest (v4.4.1)</li>
+                                        <li>Added: Simplebar scroll</li>
+                                    </ul>
+                                    <h5 class="mt-1">v1.1 - <code>Aug 2, 2019</code></h5>
+                                    <ul>
+                                        <li>Added new CRM dashboard</li>
+                                        <li>Added sample applications including eCommerce, Email, Kanban Board pages
+                                        </li>
+                                        <li>Added sample pages of Invoice, Pricing, etc</li>
+                                        <li>Bug fix: Advanced table responsive issue</li>
+                                        <li>Bug fix: Fixed the small issue with detached layout switch from right
+                                            sidebar</li>
+                                        <li>Upgraded the third party plugins</li>
+                                    </ul>
+                                    <h5 class="mt-1">v1.0 - <code>Jun 25, 2019</code></h5>
+                                    <ul>
+                                        <li>Initial Release</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <script>document.write(new Date().getFullYear())</script> © Hyper - Coderthemes.com
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-md-right footer-links d-none d-md-block"><a href="https://coderthemes.com/"
+                                    target="_blank">About</a> <a href="https://coderthemes.com/"
+                                    target="_blank">Support</a></div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="js/runtime.c9a7772b654d36324ebe.js"></script>
+    <script src="js/core.c9a7772b654d36324ebe.js"></script>
+    <script src="js/pagesshared.c9a7772b654d36324ebe.js"></script>
+</body>
+
+</html>

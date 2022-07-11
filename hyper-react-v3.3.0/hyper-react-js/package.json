@@ -1,0 +1,95 @@
+{
+  "name": "hyper-react",
+  "version": "3.0.0",
+  "private": true,
+  "dependencies": {
+    "@fullcalendar/bootstrap": "^5.10.1",
+    "@fullcalendar/core": "^5.10.1",
+    "@fullcalendar/daygrid": "^5.10.1",
+    "@fullcalendar/interaction": "^5.10.1",
+    "@fullcalendar/list": "^5.10.1",
+    "@fullcalendar/react": "^5.10.1",
+    "@fullcalendar/timegrid": "^5.10.1",
+    "@hookform/resolvers": "^2.8.8",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.3",
+    "@testing-library/user-event": "^13.5.0",
+    "apexcharts": "^3.33.1",
+    "axios": "^0.26.0",
+    "axios-mock-adapter": "^1.20.0",
+    "bootstrap": "5.1.3",
+    "britecharts-react": "^0.6.5",
+    "chart.js": "3.7.1",
+    "classnames": "^2.3.1",
+    "draft-js": "^0.11.7",
+    "draftjs-to-html": "^0.9.1",
+    "easymde": "^2.16.1",
+    "frappe-gantt": "^0.6.0",
+    "google-maps-react": "^2.0.6",
+    "i18next": "^21.6.12",
+    "i18next-browser-languagedetector": "^6.1.3",
+    "jsvectormap": "1.3.1",
+    "jwt-decode": "^3.1.2",
+    "nouislider-react": "^3.4.1",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-albus": "^2.0.0",
+    "react-apexcharts": "^1.3.9",
+    "react-beautiful-dnd": "^13.1.0",
+    "react-bootstrap": "^2.1.2",
+    "react-bootstrap-typeahead": "^6.0.0-alpha.9",
+    "react-chartjs-2": "4.0.1",
+    "react-datepicker": "^4.7.0",
+    "react-dom": "^17.0.2",
+    "react-draft-wysiwyg": "^1.14.7",
+    "react-dropzone": "^12.0.4",
+    "react-hook-form": "^7.27.1",
+    "react-i18next": "^11.15.5",
+    "react-rating": "^2.0.5",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^6.2.2",
+    "react-scripts": "4.0.3",
+    "react-select": "^5.2.2",
+    "react-simplemde-editor": "^5.0.2",
+    "react-table": "^7.7.0",
+    "react-text-mask": "^5.4.3",
+    "redux": "^4.1.2",
+    "redux-saga": "^1.1.3",
+    "sass": "^1.49.9",
+    "simplebar-react": "^2.3.6",
+    "universal-cookie": "^4.0.4",
+    "web-vitals": "^1.0.1",
+    "yup": "^0.32.9"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "flow": "flow",
+    "format": "prettier --write 'src/**/*.js'"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "flow-bin": "^0.153.0",
+    "prettier": "2.3.1",
+    "redux-saga-test-plan": "^4.0.1"
+  }
+}

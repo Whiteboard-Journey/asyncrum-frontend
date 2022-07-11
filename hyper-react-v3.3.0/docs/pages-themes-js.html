@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Hyper React - Responsive Bootstrap 5 and React Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
+    <meta content="Coderthemes" name="author">
+    <link rel="shortcut icon" href="./public/images/favicon.ico">
+    <style>
+        body.loading {
+            visibility: hidden
+        }
+    </style>
+    <link rel="icon" href="favicon.ico">
+    <link href="css/core.css" rel="stylesheet">
+</head>
+
+<body class="loading" data-layout="dark-sidenav">
+    <div class="wrapper">
+        <div class="left-side-menu" id="left-side-bar">
+            <div class="slimscroll-menu" id="left-side-menu-container"><a href="index.html"
+                    class="logo text-center"><span class="logo-lg"><img src="./public/images/logo.png" alt=""
+                            height="16" id="side-main-logo"> </span><span class="logo-sm"><img
+                            src="./public/images/logo_sm.png" alt="" height="16"></span></a>
+                <ul class="mt-3 metismenu side-nav" id="left-bar-menu">
+                    <li class="side-nav-title side-nav-item">Getting Started</li>
+                    <li class="side-nav-item"><a href="index.html" class="side-nav-link"><i class="dripicons-box"></i>
+                            <span>Introduction</span></a></li>
+                    <li class="side-nav-item"><a href="pages-installation.html" class="side-nav-link"><i
+                                class="dripicons-scale"></i> <span>Getting Started</span></a></li>
+                    <li class="side-nav-item"><a href="pages-strcuture.html" class="side-nav-link"><i
+                                class="dripicons-document"></i> <span>File Strcuture</span></a></li>
+                    <li class="side-nav-item"><a href="pages-routing.html" class="side-nav-link"><i
+                                class="dripicons-link"></i> <span>Routing</span></a></li>
+                    <li class="side-nav-item"><a href="pages-spliting.html" class="side-nav-link"><i
+                                class="dripicons-code"></i> <span>Code Spliting</span></a></li>
+                    <li class="side-nav-title side-nav-item mt-2">Customization <span
+                            class="text-capitalize">(javascript)</span></li>
+                    <li class="side-nav-item"><a href="pages-customization-js.html" class="side-nav-link"><i
+                                class="dripicons-browser"></i>
+                            <span>Layouts</span></a></li>
+                    <li class="side-nav-item"><a href="pages-themes-js.html" class="side-nav-link"><i
+                                class="dripicons-document-edit"></i>
+                            <span>Themes & Others</span></a></li>
+
+                    <li class="side-nav-title side-nav-item mt-2">Customization <span
+                            class="text-capitalize">(typescript)</span></li>
+                    <li class="side-nav-item"><a href="pages-customization-ts.html" class="side-nav-link"><i
+                                class="dripicons-browser"></i>
+                            <span>Layouts</span></a></li>
+                    <li class="side-nav-item"><a href="pages-themes-ts.html" class="side-nav-link"><i
+                                class="dripicons-document-edit"></i>
+                            <span>Themes & Others</span></a></li>
+                    <li class="side-nav-title side-nav-item mt-2">Other</li>
+                    <li class="side-nav-item"><a href="pages-changelog.html" class="side-nav-link"><i
+                                class="dripicons-blog"></i> <span>Change log</span></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="content-page">
+            <div class="content">
+                <div class="navbar-custom">
+                    <ul class="list-unstyled topbar-right-menu float-right mb-0">
+                        <li class="notification-list topbar-dropdown d-lg-block"></li>
+                    </ul><button class="button-menu-mobile open-left disable-btn"><i class="mdi mdi-menu"
+                            id="button-menu-mobile-toggle"></i></button>
+                    <div class="app-search">
+                        <h4>React Documentation <label class="badge badge-success float-right">v3.3.0</label></h4>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">React</a></li>
+                                        <li class="breadcrumb-item active">Themes</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">Themes</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page-content">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="p-lg-1">
+                                    <p>Hyper comes with multiple overall color schemes. Currently there are three themes
+                                        available: Saas (Default), Creative and Modern. Each of these are available in
+                                        dark mode as well. You can switch to any of them by simply making one line
+                                        change in the code.</p>
+                                    <p>Open <code>src/App.js</code> file and on top of the file, simply import the
+                                        respective scss file. e.g. search for "Saas.scss". Here you can simply uncomment
+                                        import statement for modern or creative. Make sure to comment the import
+                                        statement of other themes, otherwise your bundle would have css compiled for all
+                                        the themes.</p>
+                                    <p>Following table is containing file list for each respective theme/demo:</p>
+                                </div>
+                                <table class="table table-bordered m-0">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:20%"><i class="ti-file"></i> Theme/Demo</th>
+                                            <th>Scss File</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Saas (Default)</td>
+                                            <td><code>/assets/scss/Saas.scss</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Modern</td>
+                                            <td><code>/assets/scss/Modern.scss</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Creative</td>
+                                            <td><code>/assets/scss/Creative.scss</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <script>document.write(new Date().getFullYear())</script> © Hyper - Coderthemes.com
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-md-right footer-links d-none d-md-block"><a href="https://coderthemes.com/"
+                                    target="_blank">About</a> <a href="https://coderthemes.com/"
+                                    target="_blank">Support</a></div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="js/runtime.c9a7772b654d36324ebe.js"></script>
+    <script src="js/core.c9a7772b654d36324ebe.js"></script>
+    <script src="js/pagesshared.c9a7772b654d36324ebe.js"></script>
+</body>
+
+</html>
