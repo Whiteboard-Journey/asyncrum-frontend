@@ -67,3 +67,16 @@ body[data-layout-color="dark"] {
         border-color: #{map-get($dark-grays, "100")} !important;
     }
 }
+
+// sign in icon
+.signin-button {
+    width: 220px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.signin-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+}
