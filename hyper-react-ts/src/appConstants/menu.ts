@@ -44,6 +44,13 @@ const MENU_ITEMS: MenuItemType[] = [
     },
     { key: 'apps', label: 'Apps', isTitle: true },
     {
+        key: 'apps-whiteboard',
+        label: 'Whiteboard',
+        isTitle: false,
+        icon: 'mdi mdi-bulletin-board',
+        url: '/apps/whiteboard',
+    },
+    {
         key: 'apps-calendar',
         label: 'Calendar',
         isTitle: false,
