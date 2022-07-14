@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Logo from 'assets/images/logo.png';
+import Logo from 'assets/images/asyncrum-logo-white.png';
 import { useAccountLayout } from './hooks';
 
 type AccountLayoutProps = {
@@ -23,10 +23,10 @@ const AccountLayout = ({ bottomLinks, children }: AccountLayoutProps) => {
                         <Col md={8} lg={6} xl={5} xxl={4}>
                             <Card>
                                 {/* logo */}
-                                <Card.Header className="pt-4 pb-4 text-center bg-primary">
+                                <Card.Header className="pt-4 pb-3 text-center bg-primary">
                                     <Link to="/">
                                         <span>
-                                            <img src={Logo} alt="" height="18" />
+                                            <img src={Logo} alt="" height="36" />
                                         </span>
                                     </Link>
                                 </Card.Header>
@@ -40,7 +40,7 @@ const AccountLayout = ({ bottomLinks, children }: AccountLayoutProps) => {
                 </Container>
             </div>
             <footer className="footer footer-alt">
-                {t(`2018 - ${new Date().getFullYear()} © Hyper - Coderthemes.com`)}
+                {t(`2022 © Asyncrum - Software Maestro 13th Team WBJ`)}
             </footer>
         </>
     );

@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { VerticalForm, FormInput } from 'components';
 import AccountLayout from './AccountLayout';
 import { useRegister } from './hooks';
+import naverIcon from 'assets/images/btnW_icon_circle.png'
+import googleIcon from 'assets/images/google.png'
 
 export type UserData = {
     fullname: string;
@@ -51,37 +53,12 @@ const Register = () => {
                 )}
 
                 <VerticalForm<UserData> onSubmit={onSubmit} resolver={schemaResolver} defaultValues={{}}>
-                    <FormInput
-                        label={t('Full Name')}
-                        type="text"
-                        name="fullname"
-                        placeholder={t('Enter your name')}
-                        containerClass={'mb-3'}
-                    />
-                    <FormInput
-                        label={t('Email address')}
-                        type="email"
-                        name="email"
-                        placeholder={t('Enter your email')}
-                        containerClass={'mb-3'}
-                    />
-                    <FormInput
-                        label={t('Password')}
-                        type="password"
-                        name="password"
-                        placeholder={t('Enter your password')}
-                        containerClass={'mb-3'}
-                    />
-                    <FormInput
-                        label={t('I accept Terms and Conditions')}
-                        type="checkbox"
-                        name="checkboxsignup"
-                        containerClass={'mb-3 text-muted'}
-                    />
-
                     <div className="mb-3 mb-0 text-center">
-                        <Button variant="primary" type="submit" disabled={loading}>
-                            {t('Sign Up')}
+                        <Button className="signin-button" variant="primary" type="submit" disabled={loading}>
+                            <img className="signin-icon" src={naverIcon} alt="Naver Icon" /> Sign up with Naver
+                        </Button>
+                        <Button className="signin-button" variant="primary" type="submit" disabled={loading}>
+                            <img className="signin-icon" src={googleIcon} alt="Google Icon" /> Sign up with Google
                         </Button>
                     </div>
                 </VerticalForm>
