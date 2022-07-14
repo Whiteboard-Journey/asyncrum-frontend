@@ -23,7 +23,7 @@ const AccountLayout = ({ bottomLinks, children }: AccountLayoutProps) => {
                         <Col md={8} lg={6} xl={5} xxl={4}>
                             <Card>
                                 {/* logo */}
-                                <Card.Header className="pt-4 pb-4 text-center bg-primary">
+                                <Card.Header className="pt-4 pb-3 text-center bg-primary">
                                     <Link to="/">
                                         <span>
                                             <img src={Logo} alt="" height="36" />
