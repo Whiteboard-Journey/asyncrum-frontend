@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Logo from 'assets/images/asyncrum-logo-cool.png';
+import Logo from 'assets/images/asyncrum-logo-white.png';
 import { useAccountLayout } from './hooks';
 
 type AccountLayoutProps = {
@@ -26,7 +26,7 @@ const AccountLayout = ({ bottomLinks, children }: AccountLayoutProps) => {
                                 <Card.Header className="pt-4 pb-4 text-center bg-primary">
                                     <Link to="/">
                                         <span>
-                                            <img src={Logo} alt="" height="42" />
+                                            <img src={Logo} alt="" height="100" />
                                         </span>
                                     </Link>
                                 </Card.Header>
