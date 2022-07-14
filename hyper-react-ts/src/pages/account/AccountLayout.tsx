@@ -40,7 +40,7 @@ const AccountLayout = ({ bottomLinks, children }: AccountLayoutProps) => {
                 </Container>
             </div>
             <footer className="footer footer-alt">
-                {t(`2018 - ${new Date().getFullYear()} © Hyper - Coderthemes.com`)}
+                {t(`2022 © Asyncrum - Software Maestro 13th Team WBJ`)}
             </footer>
         </>
     );
