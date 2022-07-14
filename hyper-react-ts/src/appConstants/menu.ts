@@ -40,13 +40,6 @@ const MENU_ITEMS: MenuItemType[] = [
                 url: '/dashboard/project',
                 parentKey: 'dashboards',
             },
-            {
-                key: 'ds-ewallet',
-                label: 'E-Wallet',
-                url: '/dashboard/e-wallet',
-                parentKey: 'dashboards',
-                badge: { variant: 'danger', text: 'New' },
-            },
         ],
     },
     { key: 'apps', label: 'Apps', isTitle: true },
@@ -84,12 +77,6 @@ const MENU_ITEMS: MenuItemType[] = [
                 parentKey: 'apps-crm',
             },
             {
-                key: 'crm-orders',
-                label: 'Orders List',
-                url: '/apps/crm/orders',
-                parentKey: 'apps-crm',
-            },
-            {
                 key: 'crm-clients',
                 label: 'Clients',
                 url: '/apps/crm/clients',
@@ -100,82 +87,6 @@ const MENU_ITEMS: MenuItemType[] = [
                 label: 'Management',
                 url: '/apps/crm/management',
                 parentKey: 'apps-crm',
-            },
-        ],
-    },
-    {
-        key: 'apps-ecommerce',
-        label: 'Ecommerce',
-        isTitle: false,
-        icon: 'uil-store',
-        children: [
-            {
-                key: 'ecommerce-products',
-                label: 'Products',
-                url: '/apps/ecommerce/products',
-                parentKey: 'apps-ecommerce',
-            },
-            {
-                key: 'ecommerce-details',
-                label: 'Products Details',
-                url: '/apps/ecommerce/details',
-                parentKey: 'apps-ecommerce',
-            },
-            {
-                key: 'ecommerce-orders',
-                label: 'Orders',
-                url: '/apps/ecommerce/orders',
-                parentKey: 'apps-ecommerce',
-            },
-            {
-                key: 'ecommerce-order-details',
-                label: 'Order Details',
-                url: '/apps/ecommerce/order/details',
-                parentKey: 'apps-ecommerce',
-            },
-            {
-                key: 'ecommerce-customers',
-                label: 'Customers',
-                url: '/apps/ecommerce/customers',
-                parentKey: 'apps-ecommerce',
-            },
-            {
-                key: 'ecommerce-shopping-cart',
-                label: 'Shopping Cart',
-                url: '/apps/ecommerce/shopping-cart',
-                parentKey: 'apps-ecommerce',
-            },
-            {
-                key: 'ecommerce-checkout',
-                label: 'Checkout',
-                url: '/apps/ecommerce/checkout',
-                parentKey: 'apps-ecommerce',
-            },
-            {
-                key: 'ecommerce-sellers',
-                label: 'Sellers',
-                url: '/apps/ecommerce/sellers',
-                parentKey: 'apps-ecommerce',
-            },
-        ],
-    },
-    {
-        key: 'apps-email',
-        label: 'Email',
-        isTitle: false,
-        icon: 'uil-envelope',
-        children: [
-            {
-                key: 'email-inbox',
-                label: 'Inbox',
-                url: '/apps/email/inbox',
-                parentKey: 'apps-email',
-            },
-            {
-                key: 'email-read-email',
-                label: 'Read Email',
-                url: '/apps/email/details',
-                parentKey: 'apps-email',
             },
         ],
     },
@@ -252,7 +163,6 @@ const MENU_ITEMS: MenuItemType[] = [
         icon: 'uil-folder-plus',
         url: '/apps/file',
     },
-
     { key: 'custom', label: 'Custom', isTitle: true },
     {
         key: 'pages',
