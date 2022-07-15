@@ -2,33 +2,20 @@ import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 import { useToggle } from 'hooks';
 import { Language } from '../../types';
-import enFlag from './flags/us.jpg';
-import germanyFlag from './flags/germany.jpg';
-import italyFlag from './flags/italy.jpg';
-import spainFlag from './flags/spain.jpg';
-import russiaFlag from './flags/russia.jpg';
 
 // get the languages
 const Languages: Language[] = [
     {
         name: 'English',
-        flag: enFlag,
     },
     {
-        name: 'German',
-        flag: germanyFlag,
+        name: '한국어',
     },
     {
-        name: 'Italian',
-        flag: italyFlag,
+        name: '简体中文',
     },
     {
-        name: 'Spanish',
-        flag: spainFlag,
-    },
-    {
-        name: 'Russian',
-        flag: russiaFlag,
+        name: '繁體中文',
     },
 ];
 
@@ -46,7 +33,6 @@ const LanguageDropdown = () => {
                 onClick={toggleDropdown}
                 className="nav-link dropdown-toggle arrow-none"
             >
-                <img src={enLang.flag} alt={enLang.name} className="me-0 me-sm-1" height="12" />{' '}
                 <span className="align-middle d-none d-sm-inline-block">{enLang.name}</span>
                 <i className="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>
             </Dropdown.Toggle>
@@ -55,7 +41,6 @@ const LanguageDropdown = () => {
                     {Languages.map((lang, i) => {
                         return (
                             <Link to="#" className="dropdown-item notify-item" key={i + '-lang'}>
-                                <img src={lang.flag} alt={lang.name} className="me-1" height="12" />{' '}
                                 <span className="align-middle">{lang.name}</span>
                             </Link>
                         );
