@@ -41,7 +41,7 @@ const LanguageDropdown = () => {
                     {Languages.map((lang, i) => {
                         return (
                             <Link to="#" className="dropdown-item notify-item" key={i + '-lang'}>
-                                <span className="align-middle">{lang.name}</span>
+                                <span className={"align-middle" + (lang.name === "繁體中文" ? " chinese-traditional" : "")}>{lang.name}</span>
                             </Link>
                         );
                     })}
