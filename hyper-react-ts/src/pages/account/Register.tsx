@@ -20,7 +20,7 @@ const BottomLink = () => {
         <Row className="mt-3">
             <Col className="text-center">
                 <p className="text-muted">
-                    {t('Already have account?')}{' '}
+                    {t('Already have an account?')}{' '}
                     <Link to={'/account/login'} className="text-muted ms-1">
                         <b>{t('Log In')}</b>
                     </Link>
