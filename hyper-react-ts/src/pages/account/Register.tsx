@@ -53,7 +53,41 @@ const Register = () => {
                 )}
 
                 <VerticalForm<UserData> onSubmit={onSubmit} resolver={schemaResolver} defaultValues={{}}>
+                <FormInput
+                        label={t('Full Name')}
+                        type="text"
+                        name="fullname"
+                        placeholder={t('Enter your name')}
+                        containerClass={'mb-3'}
+                    />
+                    <FormInput
+                        label={t('Email address')}
+                        type="email"
+                        name="email"
+                        placeholder={t('Enter your email')}
+                        containerClass={'mb-3'}
+                    />
+                    <FormInput
+                        label={t('Password')}
+                        type="password"
+                        name="password"
+                        placeholder={t('Enter your password')}
+                        containerClass={'mb-3'}
+                    />
+                    <FormInput
+                        label={t('I accept Terms and Conditions')}
+                        type="checkbox"
+                        name="checkboxsignup"
+                        containerClass={'mb-3 text-muted'}
+                    />
+
                     <div className="mb-3 mb-0 text-center">
+                        <Button variant="primary" type="submit" disabled={loading}>
+                            {t('Sign Up')}
+                        </Button>
+                    </div>
+
+                    <div className="pt-3 mb-3 mb-0 text-center border-top">
                         <Button className="signin-button" variant="primary" type="submit" disabled={loading}>
                             <img className="signin-icon" src={naverIcon} alt="Naver Icon" /> Sign up with Naver
                         </Button>
