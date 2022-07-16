@@ -66,9 +66,9 @@ const notifications: NotificationItem[] = [
 // get the profilemenu
 const profileMenus: ProfileOption[] = [
     {
-        label: 'My Account',
+        label: 'My Profile',
         icon: 'mdi mdi-account-circle',
-        redirectTo: '#',
+        redirectTo: 'pages/profile',
     },
     {
         label: 'Settings',
