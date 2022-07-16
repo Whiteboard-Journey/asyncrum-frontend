@@ -40,7 +40,7 @@ const Login = () => {
 
             <AccountLayout bottomLinks={<BottomLink />}>
                 <div className="text-center w-75 m-auto">
-                    <h4 className="text-dark-50 text-center mt-0 mb-4 fw-bold">{t('Sign In')}</h4>
+                    <h4 className="text-dark-50 text-center mt-0 mb-4 fw-bold">{t('Log In')}</h4>
                 </div>
 
                 {error && (
@@ -54,12 +54,36 @@ const Login = () => {
                     resolver={schemaResolver}
                     defaultValues={{ username: 'test', password: 'test' }}
                 >
+                    <FormInput
+                        label={t('Username')}
+                        type="text"
+                        name="username"
+                        placeholder={t('Enter your Username')}
+                        containerClass={'mb-3'}
+                    />
+                    <FormInput
+                        label={t('Password')}
+                        type="password"
+                        name="password"
+                        placeholder={t('Enter your password')}
+                        containerClass={'mb-3'}
+                    >
+                        <Link to="/account/forget-password" className="text-muted float-end">
+                            <small>{t('Forgot your password?')}</small>
+                        </Link>
+                    </FormInput>
                     <div className="mb-3 mb-0 text-center">
+                        <Button variant="primary" type="submit" disabled={loading}>
+                            {t('Log In')}
+                        </Button>
+                    </div>
+
+                    <div className="pt-3 mb-3 mb-0 text-center border-top">
                         <Button className="signin-button" variant="primary" type="submit" disabled={loading}>
-                            <img className="signin-icon" src={naverIcon} alt="Naver Icon" /> Sign in with Naver
+                            <img className="signin-icon" src={naverIcon} alt="Naver Icon" /> Log in with Naver
                         </Button>
                         <Button className="signin-button" variant="primary" type="submit" disabled={loading}>
-                            <img className="signin-icon" src={googleIcon} alt="Google Icon" /> Sign in with Google
+                            <img className="signin-icon" src={googleIcon} alt="Google Icon" /> Log in with Google
                         </Button>
                     </div>
                 </VerticalForm>
