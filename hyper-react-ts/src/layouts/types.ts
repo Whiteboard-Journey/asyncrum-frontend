@@ -1,6 +1,5 @@
 export type Language = {
     name: string;
-    flag: string;
 };
 
 export type AppItem = {
