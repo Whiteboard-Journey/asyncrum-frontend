@@ -72,8 +72,8 @@ const profileMenus: ProfileOption[] = [
     },
     {
         label: 'Settings',
-        icon: 'mdi mdi-account-edit',
-        redirectTo: '#',
+        icon: 'mdi mdi-cog',
+        redirectTo: 'pages/settings',
     },
     {
         label: 'Support',
