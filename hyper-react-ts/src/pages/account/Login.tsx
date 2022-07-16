@@ -54,7 +54,31 @@ const Login = () => {
                     resolver={schemaResolver}
                     defaultValues={{ username: 'test', password: 'test' }}
                 >
+                    <FormInput
+                        label={t('Username')}
+                        type="text"
+                        name="username"
+                        placeholder={t('Enter your Username')}
+                        containerClass={'mb-3'}
+                    />
+                    <FormInput
+                        label={t('Password')}
+                        type="password"
+                        name="password"
+                        placeholder={t('Enter your password')}
+                        containerClass={'mb-3'}
+                    >
+                        <Link to="/account/forget-password" className="text-muted float-end">
+                            <small>{t('Forgot your password?')}</small>
+                        </Link>
+                    </FormInput>
                     <div className="mb-3 mb-0 text-center">
+                        <Button variant="primary" type="submit" disabled={loading}>
+                            {t('Sign In')}
+                        </Button>
+                    </div>
+
+                    <div className="pt-3 mb-3 mb-0 text-center border-top">
                         <Button className="signin-button" variant="primary" type="submit" disabled={loading}>
                             <img className="signin-icon" src={naverIcon} alt="Naver Icon" /> Sign in with Naver
                         </Button>
