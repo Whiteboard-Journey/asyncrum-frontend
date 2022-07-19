@@ -30,6 +30,7 @@ const ProjectDashboard = React.lazy(() => import('pages/dashboard/Project'));
 const EWalletDashboard = React.lazy(() => import('pages/dashboard/E-Wallet'));
 
 // apps
+const Whiteboard = React.lazy(() => import('pages/apps/Whiteboard'));
 const CalendarApp = React.lazy(() => import('pages/apps/Calendar'));
 const ProjectList = React.lazy(() => import('pages/apps/Projects/List'));
 const ProjectDetail = React.lazy(() => import('pages/apps/Projects/Detail/'));
@@ -228,7 +229,21 @@ const AllRoutes = () => {
             ],
         },
         {
-            // auth protected routes
+            path: '/',
+            element: <PrivateRoute roles={'Admin'} component={DefaultLayout} />,
+            children: [
+                {
+                    path: 'apps',
+                    children: [
+                        {
+                            path: 'whiteboard',
+                            element: <LoadComponent component={Whiteboard} />,
+                        }
+                    ]
+                }
+            ]
+        },
+        {  // auth protected routes
             path: '/',
             element: <PrivateRoute roles={'Admin'} component={Layout} />,
             children: [
