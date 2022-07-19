@@ -2,14 +2,15 @@ import { APICore } from './apiCore';
 
 const api = new APICore();
 
-function login(params: { username: string; password: string }) {
-    const baseUrl = '/login/';
+function login(params: { email: string; password: string }) {
+    const baseUrl = '/api/v1/auth/login';
     return api.create(`${baseUrl}`, params);
 }
 
 function logout() {
-    const baseUrl = '/logout/';
-    return api.create(`${baseUrl}`, {});
+    document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    // const baseUrl = '/logout/';
+    // return api.create(`${baseUrl}`, {});
 }
 
 function signup(params: { fullname: string; email: string; password: string }) {
