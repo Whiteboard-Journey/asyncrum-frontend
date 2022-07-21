@@ -7,6 +7,11 @@ function login(params: { email: string; password: string }) {
     return api.create(`${baseUrl}`, params);
 }
 
+function oauth(params: { provider: string; }) {
+    const baseUrl = `/oauth2/authorization/${params.provider}?redirect_uri=http://localhost:3000/dashboard/ecommerce`;
+    return api.oauth(`${baseUrl}`);
+}
+
 function logout() {
     document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     // const baseUrl = '/logout/';
@@ -28,4 +33,4 @@ function forgotPasswordConfirm(params: { email: string }) {
     return api.create(`${baseUrl}`, params);
 }
 
-export { login, logout, signup, forgotPassword, forgotPasswordConfirm };
+export { login, oauth, logout, signup, forgotPassword, forgotPasswordConfirm };

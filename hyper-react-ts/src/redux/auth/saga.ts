@@ -3,6 +3,7 @@ import { SagaIterator } from '@redux-saga/core';
 import { APICore, setAuthorization } from 'helpers/api/apiCore';
 import {
     login as loginApi,
+    oauth as oauthApi,
     logout as logoutApi,
     signup as signupApi,
     forgotPassword as forgotPasswordApi,
@@ -16,6 +17,7 @@ type UserData = {
         password: string;
         fullname: string;
         email: string;
+        provider: string;
     };
     type: string;
 };
@@ -26,9 +28,9 @@ const api = new APICore();
  * Login the user
  * @param {*} payload - username and password
  */
-function* login({ payload: { email, password }, type }: UserData): SagaIterator {
+function* login({ payload: { email, password, provider }, type }: UserData): SagaIterator {
     try {
-        const response = yield call(loginApi, { email, password });
+        const response = provider ? yield call (oauthApi, { provider }): yield call(loginApi, { email, password }) 
         const user = response.data;
         // NOTE - You can change this according to response format from your api
         user['id'] = 1;

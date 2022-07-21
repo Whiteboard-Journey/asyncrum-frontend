@@ -113,6 +113,10 @@ class APICore {
         return axios.post(url, data);
     };
 
+    oauth = (url: string) => {
+        return axios.get(url);
+    }
+
     /**
      * Updates patch data
      */
