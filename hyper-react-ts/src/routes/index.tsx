@@ -16,13 +16,6 @@ const Confirm = React.lazy(() => import('pages/account/Confirm'));
 const ForgetPassword = React.lazy(() => import('pages/account/ForgetPassword'));
 const LockScreen = React.lazy(() => import('pages/account/LockScreen'));
 
-const Login2 = React.lazy(() => import('pages/account/Login2'));
-const Logout2 = React.lazy(() => import('pages/account/Logout2'));
-const Register2 = React.lazy(() => import('pages/account/Register2'));
-const Confirm2 = React.lazy(() => import('pages/account/Confirm2'));
-const ForgetPassword2 = React.lazy(() => import('pages/account/ForgetPassword2'));
-const LockScreen2 = React.lazy(() => import('pages/account/LockScreen2'));
-
 // dashboard
 const AnalyticsDashboard = React.lazy(() => import('pages/dashboard/Analytics'));
 const EcommerceDashboard = React.lazy(() => import('pages/dashboard/Ecommerce'));
@@ -202,12 +195,6 @@ const AllRoutes = () => {
                         { path: 'forget-password', element: <LoadComponent component={ForgetPassword} /> },
                         { path: 'lock-screen', element: <LoadComponent component={LockScreen} /> },
                         { path: 'logout', element: <LoadComponent component={Logout} /> },
-                        { path: 'login2', element: <LoadComponent component={Login2} /> },
-                        { path: 'register2', element: <LoadComponent component={Register2} /> },
-                        { path: 'confirm2', element: <LoadComponent component={Confirm2} /> },
-                        { path: 'forget-password2', element: <LoadComponent component={ForgetPassword2} /> },
-                        { path: 'lock-screen2', element: <LoadComponent component={LockScreen2} /> },
-                        { path: 'logout2', element: <LoadComponent component={Logout2} /> },
                     ],
                 },
                 {
