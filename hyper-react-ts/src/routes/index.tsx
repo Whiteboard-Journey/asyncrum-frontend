@@ -22,6 +22,7 @@ const AnalyticsDashboard = React.lazy(() => import('pages/dashboard/Analytics'))
 const EcommerceDashboard = React.lazy(() => import('pages/dashboard/Ecommerce'));
 const ProjectDashboard = React.lazy(() => import('pages/dashboard/Project'));
 const EWalletDashboard = React.lazy(() => import('pages/dashboard/E-Wallet'));
+const Dashboard = React.lazy(() => import('pages/docs/Dashboard'));
 
 // apps
 const Whiteboard = React.lazy(() => import('pages/apps/Whiteboard'));
@@ -219,6 +220,21 @@ const AllRoutes = () => {
                         {
                             path: 'whiteboard',
                             element: <LoadComponent component={Whiteboard} />,
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            path: '/',
+            element: <PrivateRoute roles={'Admin'} component={Layout} />,
+            children: [
+                {
+                    path: 'docs',
+                    children: [
+                        {
+                            path: 'dashboard',
+                            element: <LoadComponent component={Dashboard} />,
                         }
                     ]
                 }
