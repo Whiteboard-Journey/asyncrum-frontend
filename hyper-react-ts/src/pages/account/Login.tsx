@@ -80,7 +80,7 @@ const Login = () => {
                     </div>
 
                     <div className="pt-3 mb-3 mb-0 text-center border-top">
-                        <Button className="signin-button" variant="primary" type="submit" disabled={loading}>
+                        <Button href={config.API_URL+"/oauth2/authorization/naver?redirect_uri=http://localhost:3000/account/oauth"}className="signin-button" variant="primary" type="submit" disabled={loading}>
                             <img className="signin-icon" src={naverIcon} alt="Naver Icon" /> Log in with Naver
                         </Button>
                         <Button href={config.API_URL+"/oauth2/authorization/google?redirect_uri=http://localhost:3000/account/oauth"} className="signin-button" variant="primary" type="submit" disabled={loading}>
