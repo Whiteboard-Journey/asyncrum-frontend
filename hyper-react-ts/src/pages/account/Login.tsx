@@ -6,6 +6,7 @@ import AccountLayout from './AccountLayout';
 import { useLogin } from './hooks';
 import naverIcon from 'assets/images/btnW_icon_circle.png'
 import googleIcon from 'assets/images/google.png'
+import config from 'config';
 
 export type UserData = {
     username: string;
@@ -82,7 +83,7 @@ const Login = () => {
                         <Button className="signin-button" variant="primary" type="submit" disabled={loading}>
                             <img className="signin-icon" src={naverIcon} alt="Naver Icon" /> Log in with Naver
                         </Button>
-                        <Button className="signin-button" variant="primary" type="submit" disabled={loading}>
+                        <Button href={config.API_URL+"/oauth2/authorization/google?redirect_uri=http://localhost:3000/account/oauth"} className="signin-button" variant="primary" type="submit" disabled={loading}>
                             <img className="signin-icon" src={googleIcon} alt="Google Icon" /> Log in with Google
                         </Button>
                     </div>

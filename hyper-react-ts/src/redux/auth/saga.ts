@@ -1,4 +1,4 @@
-import { all, fork, put, takeEvery, call } from 'redux-saga/effects';
+import { all, fork, put, takeEvery, call, take } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { APICore, setAuthorization } from 'helpers/api/apiCore';
 import {
@@ -16,6 +16,13 @@ type UserData = {
         password: string;
         fullname: string;
         email: string;
+    };
+    type: string;
+};
+
+type TokenData = {
+    payload: {
+        token: string;
     };
     type: string;
 };
@@ -40,6 +47,29 @@ function* login({ payload: { email, password }, type }: UserData): SagaIterator 
         yield put(authApiResponseSuccess(AuthActionTypes.LOGIN_USER, user));
     } catch (error: any) {
         yield put(authApiResponseError(AuthActionTypes.LOGIN_USER, error));
+        api.setLoggedInUser(null);
+        setAuthorization(null);
+    }
+}
+
+function* oauthLogin({ payload: { token }, type }: TokenData): SagaIterator {
+    try {
+        yield take(AuthActionTypes.OAUTH_LOGIN_USER);
+
+        console.log("saga:", token);
+        const user = {
+            'id': 1,
+            'firstName': 'Test',
+            'lastName': 'User',
+            'role': 'Admin',
+            'token': token
+        }
+        // NOTE - You can change this according to response format from your api
+        api.setLoggedInUser(user);
+        setAuthorization(user['token']);
+        yield put(authApiResponseSuccess(AuthActionTypes.OAUTH_LOGIN_USER, user));
+    } catch (error: any) {
+        yield put(authApiResponseError(AuthActionTypes.OAUTH_LOGIN_USER, error));
         api.setLoggedInUser(null);
         setAuthorization(null);
     }
@@ -85,6 +115,10 @@ export function* watchLoginUser() {
     yield takeEvery(AuthActionTypes.LOGIN_USER, login);
 }
 
+export function* watchOAuthLoginUser() {
+    yield takeEvery(AuthActionTypes.OAUTH_LOGIN_USER, oauthLogin);
+}
+
 export function* watchLogout() {
     yield takeEvery(AuthActionTypes.LOGOUT_USER, logout);
 }
@@ -98,7 +132,7 @@ export function* watchForgotPassword() {
 }
 
 function* authSaga() {
-    yield all([fork(watchLoginUser), fork(watchLogout), fork(watchSignup), fork(watchForgotPassword)]);
+    yield all([fork(watchLoginUser), fork(watchOAuthLoginUser), fork(watchLogout), fork(watchSignup), fork(watchForgotPassword)]);
 }
 
 export default authSaga;
