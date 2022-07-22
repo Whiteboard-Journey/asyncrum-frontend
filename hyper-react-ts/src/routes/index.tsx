@@ -129,16 +129,8 @@ const Editors = React.lazy(() => import('pages/forms/Editors'));
 const ApexChart = React.lazy(() => import('pages/charts/Apex'));
 const ChartJs = React.lazy(() => import('pages/charts/ChartJs'));
 
-// tables
-const BasicTables = React.lazy(() => import('pages/tables/Basic'));
-const AdvancedTables = React.lazy(() => import('pages/tables/Advanced'));
-
 // widgets
 const Widgets = React.lazy(() => import('pages/uikit/Widgets'));
-
-// maps
-const GoogleMaps = React.lazy(() => import('pages/maps/GoogleMaps'));
-const VectorMaps = React.lazy(() => import('pages/maps/VectorMaps'));
 
 const loading = () => <div className=""></div>;
 
@@ -605,19 +597,6 @@ const AllRoutes = () => {
                             ],
                         },
                         {
-                            path: 'tables',
-                            children: [
-                                {
-                                    path: 'basic',
-                                    element: <LoadComponent component={BasicTables} />,
-                                },
-                                {
-                                    path: 'advanced',
-                                    element: <LoadComponent component={AdvancedTables} />,
-                                },
-                            ],
-                        },
-                        {
                             path: 'charts',
                             children: [
                                 {
@@ -627,19 +606,6 @@ const AllRoutes = () => {
                                 {
                                     path: 'chartjs',
                                     element: <LoadComponent component={ChartJs} />,
-                                },
-                            ],
-                        },
-                        {
-                            path: 'maps',
-                            children: [
-                                {
-                                    path: 'googlemaps',
-                                    element: <LoadComponent component={GoogleMaps} />,
-                                },
-                                {
-                                    path: 'vectormaps',
-                                    element: <LoadComponent component={VectorMaps} />,
                                 },
                             ],
                         },

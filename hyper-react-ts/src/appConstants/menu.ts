@@ -576,46 +576,6 @@ const MENU_ITEMS: MenuItemType[] = [
         ],
     },
     {
-        key: 'tables',
-        label: 'Tables',
-        isTitle: false,
-        icon: 'uil-table',
-        children: [
-            {
-                key: 'table-basic',
-                label: 'Basic Tables',
-                url: '/ui/tables/basic',
-                parentKey: 'tables',
-            },
-            {
-                key: 'table-advanced',
-                label: 'Advanced Tables',
-                url: '/ui/tables/advanced',
-                parentKey: 'tables',
-            },
-        ],
-    },
-    {
-        key: 'maps',
-        label: 'Maps',
-        isTitle: false,
-        icon: 'uil-location-point',
-        children: [
-            {
-                key: 'maps-googlemaps',
-                label: 'Google Maps',
-                url: '/ui/maps/googlemaps',
-                parentKey: 'maps',
-            },
-            {
-                key: 'maps-vectormaps',
-                label: 'Vector Maps',
-                url: '/ui/maps/vectormaps',
-                parentKey: 'maps',
-            },
-        ],
-    },
-    {
         key: 'menu-levels',
         label: 'Menu Levels',
         isTitle: false,
