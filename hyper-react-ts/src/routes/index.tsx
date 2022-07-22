@@ -248,20 +248,8 @@ const AllRoutes = () => {
                     path: 'dashboard',
                     children: [
                         {
-                            path: 'analytics',
-                            element: <LoadComponent component={AnalyticsDashboard} />,
-                        },
-                        {
-                            path: 'ecommerce',
-                            element: <LoadComponent component={EcommerceDashboard} />,
-                        },
-                        {
-                            path: 'project',
-                            element: <LoadComponent component={ProjectDashboard} />,
-                        },
-                        {
-                            path: 'e-wallet',
-                            element: <LoadComponent component={EWalletDashboard} />,
+                            path: '',
+                            element: <LoadComponent component={Dashboard} />,
                         },
                     ],
                 },
