@@ -24,6 +24,7 @@ type AuthActionType = {
         | AuthActionTypes.API_RESPONSE_SUCCESS
         | AuthActionTypes.API_RESPONSE_ERROR
         | AuthActionTypes.LOGIN_USER
+        | AuthActionTypes.OAUTH_LOGIN_USER
         | AuthActionTypes.SIGNUP_USER
         | AuthActionTypes.LOGOUT_USER
         | AuthActionTypes.RESET;
@@ -45,6 +46,14 @@ const Auth = (state: State = INIT_STATE, action: AuthActionType) => {
         case AuthActionTypes.API_RESPONSE_SUCCESS:
             switch (action.payload.actionType) {
                 case AuthActionTypes.LOGIN_USER: {
+                    return {
+                        ...state,
+                        user: action.payload.data,
+                        userLoggedIn: true,
+                        loading: false,
+                    };
+                }
+                case AuthActionTypes.OAUTH_LOGIN_USER: {
                     return {
                         ...state,
                         user: action.payload.data,
@@ -110,6 +119,8 @@ const Auth = (state: State = INIT_STATE, action: AuthActionType) => {
             }
 
         case AuthActionTypes.LOGIN_USER:
+            return { ...state, loading: true, userLoggedIn: false };
+        case AuthActionTypes.OAUTH_LOGIN_USER:
             return { ...state, loading: true, userLoggedIn: false };
         case AuthActionTypes.SIGNUP_USER:
             return { ...state, loading: true, userSignUp: false };

@@ -7,6 +7,7 @@ export type AuthActionType = {
         | AuthActionTypes.FORGOT_PASSWORD
         | AuthActionTypes.FORGOT_PASSWORD_CHANGE
         | AuthActionTypes.LOGIN_USER
+        | AuthActionTypes.OAUTH_LOGIN_USER
         | AuthActionTypes.LOGOUT_USER
         | AuthActionTypes.RESET
         | AuthActionTypes.SIGNUP_USER;
@@ -38,6 +39,11 @@ export const authApiResponseError = (actionType: string, error: string): AuthAct
 export const loginUser = (email: string, password: string): AuthActionType => ({
     type: AuthActionTypes.LOGIN_USER,
     payload: { email, password },
+});
+
+export const oauthLoginUser = (token: string): AuthActionType => ({
+    type: AuthActionTypes.OAUTH_LOGIN_USER,
+    payload: { token },
 });
 
 export const logoutUser = (): AuthActionType => ({

@@ -10,6 +10,7 @@ import { useRedux } from 'hooks';
 
 // auth
 const Login = React.lazy(() => import('pages/account/Login'));
+const OAuth = React.lazy(() => import('pages/account/OAuth'));
 const Logout = React.lazy(() => import('pages/account/Logout'));
 const Register = React.lazy(() => import('pages/account/Register'));
 const Confirm = React.lazy(() => import('pages/account/Confirm'));
@@ -190,6 +191,7 @@ const AllRoutes = () => {
                     path: 'account',
                     children: [
                         { path: 'login', element: <LoadComponent component={Login} /> },
+                        { path: 'oauth', element: <LoadComponent component={OAuth} /> },
                         { path: 'register', element: <LoadComponent component={Register} /> },
                         { path: 'confirm', element: <LoadComponent component={Confirm} /> },
                         { path: 'forget-password', element: <LoadComponent component={ForgetPassword} /> },
