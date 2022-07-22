@@ -18,10 +18,6 @@ const ForgetPassword = React.lazy(() => import('pages/account/ForgetPassword'));
 const LockScreen = React.lazy(() => import('pages/account/LockScreen'));
 
 // dashboard
-const AnalyticsDashboard = React.lazy(() => import('pages/dashboard/Analytics'));
-const EcommerceDashboard = React.lazy(() => import('pages/dashboard/Ecommerce'));
-const ProjectDashboard = React.lazy(() => import('pages/dashboard/Project'));
-const EWalletDashboard = React.lazy(() => import('pages/dashboard/E-Wallet'));
 const Dashboard = React.lazy(() => import('pages/docs/Dashboard'));
 
 // apps
