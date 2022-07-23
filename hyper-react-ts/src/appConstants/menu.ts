@@ -14,34 +14,34 @@ export type MenuItemType = {
 };
 
 const MENU_ITEMS: MenuItemType[] = [
-    { key: 'navigation', label: 'Navigation', isTitle: true },
-    {
-        key: 'dashboards',
-        label: 'Dashboards',
-        isTitle: false,
-        icon: 'uil-home-alt',
-        badge: { variant: 'success', text: '4' },
-        children: [
-            {
-                key: 'ds-analytics',
-                label: 'Analytics',
-                url: '/dashboard/analytics',
-                parentKey: 'dashboards',
-            },
-            {
-                key: 'ds-ecommerce',
-                label: 'Ecommerce',
-                url: '/dashboard/ecommerce',
-                parentKey: 'dashboards',
-            },
-            {
-                key: 'ds-project',
-                label: 'Projects',
-                url: '/dashboard/project',
-                parentKey: 'dashboards',
-            },
-        ],
-    },
+    // { key: 'navigation', label: 'Navigation', isTitle: true },
+    // {
+    //     key: 'dashboards',
+    //     label: 'Dashboards',
+    //     isTitle: false,
+    //     icon: 'uil-home-alt',
+    //     badge: { variant: 'success', text: '4' },
+    //     children: [
+    //         {
+    //             key: 'ds-analytics',
+    //             label: 'Analytics',
+    //             url: '/dashboard/analytics',
+    //             parentKey: 'dashboards',
+    //         },
+    //         {
+    //             key: 'ds-ecommerce',
+    //             label: 'Ecommerce',
+    //             url: '/dashboard/ecommerce',
+    //             parentKey: 'dashboards',
+    //         },
+    //         {
+    //             key: 'ds-project',
+    //             label: 'Projects',
+    //             url: '/dashboard/project',
+    //             parentKey: 'dashboards',
+    //         },
+    //     ],
+    // },
     { key: 'docs', label: 'Documents', isTitle: true},
     {
         key: 'docs-recent',
@@ -62,7 +62,7 @@ const MENU_ITEMS: MenuItemType[] = [
         label: 'Whiteboards',
         isTitle: false,
         icon: 'mdi mdi-bulletin-board',
-        url: '/docs/whiteboards',
+        url: '/dashboard',
     },
     {
         key: 'apps-new-board',

@@ -18,10 +18,7 @@ const ForgetPassword = React.lazy(() => import('pages/account/ForgetPassword'));
 const LockScreen = React.lazy(() => import('pages/account/LockScreen'));
 
 // dashboard
-const AnalyticsDashboard = React.lazy(() => import('pages/dashboard/Analytics'));
-const EcommerceDashboard = React.lazy(() => import('pages/dashboard/Ecommerce'));
-const ProjectDashboard = React.lazy(() => import('pages/dashboard/Project'));
-const EWalletDashboard = React.lazy(() => import('pages/dashboard/E-Wallet'));
+const Dashboard = React.lazy(() => import('pages/docs/Dashboard'));
 
 // apps
 const Whiteboard = React.lazy(() => import('pages/apps/Whiteboard'));
@@ -224,6 +221,21 @@ const AllRoutes = () => {
                 }
             ]
         },
+        {
+            path: '/',
+            element: <PrivateRoute roles={'Admin'} component={Layout} />,
+            children: [
+                {
+                    path: 'docs',
+                    children: [
+                        {
+                            path: 'dashboard',
+                            element: <LoadComponent component={Dashboard} />,
+                        }
+                    ]
+                }
+            ]
+        },
         {  // auth protected routes
             path: '/',
             element: <PrivateRoute roles={'Admin'} component={Layout} />,
@@ -232,20 +244,8 @@ const AllRoutes = () => {
                     path: 'dashboard',
                     children: [
                         {
-                            path: 'analytics',
-                            element: <LoadComponent component={AnalyticsDashboard} />,
-                        },
-                        {
-                            path: 'ecommerce',
-                            element: <LoadComponent component={EcommerceDashboard} />,
-                        },
-                        {
-                            path: 'project',
-                            element: <LoadComponent component={ProjectDashboard} />,
-                        },
-                        {
-                            path: 'e-wallet',
-                            element: <LoadComponent component={EWalletDashboard} />,
+                            path: '',
+                            element: <LoadComponent component={Dashboard} />,
                         },
                     ],
                 },
