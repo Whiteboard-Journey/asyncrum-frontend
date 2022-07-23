@@ -54,13 +54,6 @@ const Register = () => {
                 )}
 
                 <VerticalForm<UserData> onSubmit={onSubmit} resolver={schemaResolver} defaultValues={{}}>
-                <FormInput
-                        label={t('Full Name')}
-                        type="text"
-                        name="fullname"
-                        placeholder={t('Enter your name')}
-                        containerClass={'mb-3'}
-                    />
                     <FormInput
                         label={t('Email address')}
                         type="email"
@@ -73,6 +66,13 @@ const Register = () => {
                         type="password"
                         name="password"
                         placeholder={t('Enter your password')}
+                        containerClass={'mb-3'}
+                    />
+                    <FormInput
+                        label={t('Full Name')}
+                        type="text"
+                        name="fullname"
+                        placeholder={t('Enter your name')}
                         containerClass={'mb-3'}
                     />
                     <FormInput
