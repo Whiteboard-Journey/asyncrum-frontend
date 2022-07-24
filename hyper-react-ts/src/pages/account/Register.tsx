@@ -6,6 +6,7 @@ import AccountLayout from './AccountLayout';
 import { useRegister } from './hooks';
 import naverIcon from 'assets/images/btnW_icon_circle.png'
 import googleIcon from 'assets/images/google.png'
+import config from 'config';
 
 export type UserData = {
     fullname: string;
@@ -53,13 +54,6 @@ const Register = () => {
                 )}
 
                 <VerticalForm<UserData> onSubmit={onSubmit} resolver={schemaResolver} defaultValues={{}}>
-                <FormInput
-                        label={t('Full Name')}
-                        type="text"
-                        name="fullname"
-                        placeholder={t('Enter your name')}
-                        containerClass={'mb-3'}
-                    />
                     <FormInput
                         label={t('Email address')}
                         type="email"
@@ -72,6 +66,20 @@ const Register = () => {
                         type="password"
                         name="password"
                         placeholder={t('Enter your password')}
+                        containerClass={'mb-3'}
+                    />
+                    <FormInput
+                        label={t('Confirm Password')}
+                        type="password"
+                        name="confirmPassword"
+                        placeholder={t('Enter your password again')}
+                        containerClass={'mb-3'}
+                    />
+                    <FormInput
+                        label={t('Full Name')}
+                        type="text"
+                        name="fullname"
+                        placeholder={t('Enter your name')}
                         containerClass={'mb-3'}
                     />
                     <FormInput
@@ -88,11 +96,11 @@ const Register = () => {
                     </div>
 
                     <div className="pt-3 mb-3 mb-0 text-center border-top">
-                        <Button className="signin-button" variant="primary" type="submit" disabled={loading}>
-                            <img className="signin-icon" src={naverIcon} alt="Naver Icon" /> Sign up with Naver
+                        <Button href={config.API_URL+"/oauth2/authorization/naver?redirect_uri=http://localhost:3000/account/oauth"}className="signin-button" variant="primary" type="submit" disabled={loading}>
+                            <img className="signin-icon" src={naverIcon} alt="Naver Icon" /> Sign in with Naver
                         </Button>
-                        <Button className="signin-button" variant="primary" type="submit" disabled={loading}>
-                            <img className="signin-icon" src={googleIcon} alt="Google Icon" /> Sign up with Google
+                        <Button href={config.API_URL+"/oauth2/authorization/google?redirect_uri=http://localhost:3000/account/oauth"} className="signin-button" variant="primary" type="submit" disabled={loading}>
+                            <img className="signin-icon" src={googleIcon} alt="Google Icon" /> Sign in with Google
                         </Button>
                     </div>
                 </VerticalForm>

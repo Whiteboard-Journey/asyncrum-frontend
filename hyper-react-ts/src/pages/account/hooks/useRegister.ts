@@ -25,9 +25,11 @@ export default function useRegister() {
      */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            fullname: yup.string().required(t('Please enter Fullname')),
-            email: yup.string().required('Please enter Email').email('Please enter valid Email'),
-            password: yup.string().required(t('Please enter Password')),
+            fullname: yup.string().required(t('Please enter your full name')),
+            email: yup.string().required('Please enter your email').email('Please enter a valid email address'),
+            password: yup.string().required(t('Please enter password')),
+            confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
+            checkboxsignup: yup.boolean().oneOf([true], 'You must agree to the terms and conditions')
         })
     );
 
