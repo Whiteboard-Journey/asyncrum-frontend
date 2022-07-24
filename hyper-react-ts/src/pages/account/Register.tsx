@@ -69,6 +69,13 @@ const Register = () => {
                         containerClass={'mb-3'}
                     />
                     <FormInput
+                        label={t('Confirm Password')}
+                        type="password"
+                        name="confirmPassword"
+                        placeholder={t('Enter your password again')}
+                        containerClass={'mb-3'}
+                    />
+                    <FormInput
                         label={t('Full Name')}
                         type="text"
                         name="fullname"

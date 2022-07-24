@@ -13,7 +13,7 @@ const Confirm = () => {
                 <h4 className="text-dark-50 text-center mt-4 fw-bold">{t('Please check your email')}</h4>
                 <p className="text-muted mb-4">
                     {t(
-                        'A email has been send to <b>youremail@domain.com</b>. Please check for an email from company and click on the included link to reset your password.'
+                        'A email has been send to your email address. Please check and click on the included link for your confirmation.'
                     )}
                 </p>
                 <p className="text-center">
