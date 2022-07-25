@@ -1,9 +1,8 @@
-import { Row, Col, Button, ButtonGroup, Card, Dropdown } from 'react-bootstrap';
+import { Row, Col, Button, ButtonGroup, Card, Dropdown, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Whiteboard } from './types';
-import { whiteboards } from './data';
-import avatar1 from 'assets/images/users/avatar-6.jpg';
-import avatar2 from 'assets/images/users/avatar-7.jpg';
+import { useEffect } from 'react';
+import { useReadAllWhiteboard } from "./hooks";
 import avatar3 from 'assets/images/users/avatar-8.jpg';
 
 const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
@@ -49,38 +48,12 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
                         data-original-title="Mat Helme"
                         className="d-inline-block me-1"
                     >
+                        <span className="font-13">Author: </span>
                         <img src={avatar3} className="rounded-circle avatar-xs" alt="friend" />
                     </Link>
-
-                    <Link
-                        to="#"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title=""
-                        data-original-title="Michael Zenaty"
-                        className="d-inline-block me-1"
-                    >
-                        <img src={avatar1} className="rounded-circle avatar-xs" alt="friend" />
-                    </Link>
-
-                    <Link
-                        to="#"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title=""
-                        data-original-title="James Anderson"
-                        className="d-inline-block"
-                    >
-                        <img src={avatar2} className="rounded-circle avatar-xs" alt="friend" />
-                    </Link>
-                    {whiteboard.totalMembers - 3 > 0 && (
-                        <Link to="#" className="d-inline-block text-muted fw-bold ms-2">
-                            +{whiteboard.totalMembers - 3} more
-                        </Link>
-                    )}
                 </div>
                 <p className="text-muted text-end font-12 mt-3 mb-1">
-                    Last modified by {whiteboard.lastModifiedBy}<br/>{whiteboard.lastModifiedTime}
+                    Last modified: {whiteboard.lastModifiedDate}
                 </p>
             </Card.Body>
         </Card>
@@ -88,6 +61,13 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
 }
 
 const Dashboard = () => {
+    const { loading, whiteboards, error, onDashboardLoad } = useReadAllWhiteboard();
+
+    useEffect(() => {
+        onDashboardLoad();
+        console.log(loading, whiteboards, error, onDashboardLoad);
+    });
+
     return(
         <>
             <Row>
@@ -120,8 +100,14 @@ const Dashboard = () => {
                     </div>
                 </Col>
             </Row>
+            {error && (
+                <Alert variant="danger" className="my-2">
+                    {error}
+                </Alert>
+            )}
+            {!loading && 
             <Row>
-                {whiteboards.map((whiteboard, i) => {
+                {whiteboards.map((whiteboard: Whiteboard, i: number) => {
                     return (
                         <Col md={6} xxl={3} key={'wb-' + whiteboard.id}>
                             <WhiteboardCard whiteboard={whiteboard} />
@@ -129,6 +115,7 @@ const Dashboard = () => {
                     );
                 })}
             </Row>
+            }
         </>
     );
 }

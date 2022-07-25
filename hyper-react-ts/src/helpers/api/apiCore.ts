@@ -62,12 +62,17 @@ class APICore {
     get = (url: string, params: any) => {
         let response;
         if (params) {
-            var queryString = params
-                ? Object.keys(params)
-                      .map((key) => key + '=' + params[key])
-                      .join('&')
-                : '';
-            response = axios.get(`${url}?${queryString}`, params);
+            if ('token' in params) {
+                response = axios.get(`${url}`, { headers: { Authorization: 'Bearer ' + params['token'] }});
+            }
+                else {
+                var queryString = params
+                    ? Object.keys(params)
+                        .map((key) => key + '=' + params[key])
+                        .join('&')
+                    : '';
+                response = axios.get(`${url}?${queryString}`, params);
+            }
         } else {
             response = axios.get(`${url}`, params);
         }
