@@ -6,6 +6,7 @@ export type WhiteboardActionType = {
         | WhiteboardActionTypes.API_RESPONSE_SUCCESS
         | WhiteboardActionTypes.API_RESPONSE_ERROR
         | WhiteboardActionTypes.READ_ALL_WHITEBOARD;
+        // | WhiteboardActionTypes.CREATE_WHITEBOARD;
     payload: {} | string;
 };
 
@@ -35,3 +36,8 @@ export const readAllWhiteboard = (token: string): WhiteboardActionType => ({
     type: WhiteboardActionTypes.READ_ALL_WHITEBOARD,
     payload: { token },
 });
+
+// export const createWhiteboard = (title: string, description: string, scope: string): WhiteboardActionType => ({
+//     type: WhiteboardActionTypes.CREATE_WHITEBOARD,
+//     payload: { title, description, scope },
+// });

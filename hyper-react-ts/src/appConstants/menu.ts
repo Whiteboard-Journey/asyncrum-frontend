@@ -64,13 +64,6 @@ const MENU_ITEMS: MenuItemType[] = [
         icon: 'mdi mdi-bulletin-board',
         url: '/dashboard',
     },
-    {
-        key: 'apps-new-board',
-        label: 'New whiteboard',
-        isTitle: false,
-        icon: 'mdi mdi-card-plus-outline',
-        url: '/apps/whiteboard',
-    },
     { key: 'meetings', label: 'Meetings', isTitle: true},
     {
         key: 'meetings-meeting',

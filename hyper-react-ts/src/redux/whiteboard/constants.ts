@@ -3,4 +3,5 @@ export enum WhiteboardActionTypes {
     API_RESPONSE_ERROR = '@@whiteboard/API_RESPONSE_ERROR',
 
     READ_ALL_WHITEBOARD = '@@whiteboard/READ_ALL_WHITEBOAD',
+    // CREATE_WHITEBOARD = '@@whiteboard/CREATE_WHITEBOARD'
 }

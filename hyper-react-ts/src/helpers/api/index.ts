@@ -1,5 +1,5 @@
 import { login, logout, signup, forgotPassword, forgotPasswordConfirm } from './auth';
-import { readAllWhiteboard } from './whiteboard';
+import { readAllWhiteboard, createWhiteboard } from './whiteboard';
 
 export { login, logout, signup, forgotPassword, forgotPasswordConfirm };
-export { readAllWhiteboard };
+export { readAllWhiteboard, createWhiteboard };
