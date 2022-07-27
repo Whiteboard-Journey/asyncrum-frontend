@@ -7,4 +7,9 @@ function readAllWhiteboard(params: { token: string }) {
     return api.get(`${baseUrl}`, params);
 }
 
-export { readAllWhiteboard };
+function createWhiteboard(params: { title: string; description: string; scope: string }) {
+    const baseUrl = '/api/v1/whiteboards';
+    return api.create(`${baseUrl}`, params);
+}
+
+export { readAllWhiteboard, createWhiteboard };

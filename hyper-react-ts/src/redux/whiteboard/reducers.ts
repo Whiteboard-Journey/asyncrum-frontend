@@ -20,6 +20,7 @@ type WhiteboardActionType = {
         | WhiteboardActionTypes.API_RESPONSE_SUCCESS
         | WhiteboardActionTypes.API_RESPONSE_ERROR
         | WhiteboardActionTypes.READ_ALL_WHITEBOARD;
+        // | WhiteboardActionTypes.CREATE_WHITEBOARD;
     payload: {
         actionType?: string;
         data?: WhiteboardData | [WhiteboardData];
@@ -45,6 +46,11 @@ const Whiteboard = (state: State = INIT_STATE, action: WhiteboardActionType) => 
                         hasBeenSet: true,
                     };
                 }
+                // case WhiteboardActionTypes.CREATE_WHITEBOARD: {
+                //     return {
+                //         ...state,
+                //     }
+                // }
                 default:
                     return { ...state };
             }
@@ -64,6 +70,8 @@ const Whiteboard = (state: State = INIT_STATE, action: WhiteboardActionType) => 
 
         case WhiteboardActionTypes.READ_ALL_WHITEBOARD:
             return { ...state, loading: true };
+        // case WhiteboardActionTypes.CREATE_WHITEBOARD:
+        //     return { ...state };
         default:
             return { ...state };
     }

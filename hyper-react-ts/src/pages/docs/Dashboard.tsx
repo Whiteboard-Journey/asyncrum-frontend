@@ -1,9 +1,27 @@
-import { Row, Col, Button, ButtonGroup, Card, Dropdown, Alert } from 'react-bootstrap';
+import { Row, Col, Button, ButtonGroup, Card, Dropdown, Alert, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Whiteboard } from './types';
 import { useEffect } from 'react';
 import { useReadAllWhiteboard } from "./hooks";
 import avatar3 from 'assets/images/users/avatar-8.jpg';
+import { useToggle } from 'hooks';
+import axios from 'axios';
+import config from 'config';
+
+const whiteboardPageURL = 'http://localhost:3000/apps/whiteboard';
+
+const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const user = JSON.parse(sessionStorage.getItem('hyper_user')!)
+    const title = (((event.target as HTMLFormElement).elements as {[key: string]: any})['title'].value);
+    const description = (((event.target as HTMLFormElement).elements as {[key: string]: any})['description'].value);
+    const scope = "";
+    axios.post(`${config.API_URL + "/api/v1/whiteboards"}`, { title, description, scope}, { headers: { Authorization: 'Bearer ' + user.token }})
+    .then((response) => {
+        sessionStorage.setItem('preSignedURL', response.data.preSignedURL);
+        window.location.replace(whiteboardPageURL);
+    });
+}
 
 const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
     return (
@@ -63,6 +81,8 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
 const Dashboard = () => {
     const { loading, whiteboards, error, onDashboardLoad } = useReadAllWhiteboard();
 
+    const [isStandardOpen, toggleStandard] = useToggle();
+
     useEffect(() => {
         onDashboardLoad();
         console.log(loading, whiteboards, error, onDashboardLoad);
@@ -82,11 +102,47 @@ const Dashboard = () => {
             </Row>
             <Row className="mb-2">
                 <Col sm={4}>
-                    <Link to="/apps/whiteboard">
-                        <Button variant="primary" className="rounded-pill mb-3">
-                            <i className="mdi mdi-plus"></i> Create Whiteboard
-                        </Button>
-                    </Link>
+                    <Button onClick={toggleStandard}><i className="mdi mdi-plus"></i> Create Whiteboard</Button>
+                    <Modal show={isStandardOpen} onHide={toggleStandard}>
+                        <Modal.Body>
+                            <Modal.Header onHide={toggleStandard} closeButton>
+                                <h4 className="modal-title">Create a new whiteboard</h4>
+                            </Modal.Header>
+                            <form className="ps-3 pe-3" onSubmit={onCreateWhiteboard}>
+                                <div className="mt-3 mb-3">
+                                    <label htmlFor="title" className="form-label">
+                                        Title
+                                    </label>
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        id="title"
+                                        required
+                                        placeholder="Untitled"
+                                    />
+                                </div>
+
+                                <div className="mb-3">
+                                    <label htmlFor="description" className="form-label">
+                                        Description
+                                    </label>
+                                    <input
+                                        className="form-control"
+                                        type="textarea"
+                                        id="description"
+                                        required
+                                        placeholder="Description"
+                                    />
+                                </div>
+
+                                <div className="mb-3 text-center">
+                                    <button className="btn btn-primary" type="submit">
+                                        Create
+                                    </button>
+                                </div>
+                            </form>
+                        </Modal.Body>
+                    </Modal>
                 </Col>
                 <Col sm={8}>
                     <div className="text-sm-end">
