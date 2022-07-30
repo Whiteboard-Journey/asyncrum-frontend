@@ -1,21 +1,14 @@
 import { Tldraw } from "@tldraw/tldraw"
-import yorkie from 'yorkie-js-sdk';
-import { useEffect } from "react";
-
-const activateClient = async () => {
-  const client = new yorkie.Client(`http://wbj-vpc-alb-private-152462774.ap-northeast-2.elb.amazonaws.com:8090`);
-  await client.activate();
-}
-
+import { useMultiplayerState } from "./hooks/useMultiplayerState";
 const Whiteboard = () => {
-
-    useEffect(() => {
-      activateClient();
-    }, []);
-    
+  const roomId = "testroomid";
+  const { onMount, ...events } = useMultiplayerState(roomId);
     return (
     <div>
-        <Tldraw />
+      <Tldraw 
+        onMount={onMount}
+        {...events}
+      />
     </div>);
 }
 
