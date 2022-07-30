@@ -1,4 +1,4 @@
-import { TDBinding, TDShape, TldrawApp } from "@tldraw/tldraw";
+import { TDBinding, TDDocument, TDShape, TldrawApp } from "@tldraw/tldraw";
 import { useCallback, useEffect, useState } from "react";
 import yorkie from "yorkie-js-sdk";
 
@@ -16,15 +16,20 @@ export type YorkieType = {
   bindings: Record<string, TDBinding>
 }
 
-export function useMultiplayerState(roomId: string) {
+export function useMultiplayerState(roomId: string, preSignedUrl?: string) {
 
   const [app, setApp] = useState<TldrawApp>();
   const [loading, setLoading] = useState(true);
 
   const onMount = useCallback(
-    (app: TldrawApp) => {
+    async (app: TldrawApp) => {
       app.loadRoom(roomId);
       app.pause();
+      // if(preSignedUrl){
+      //   console.log(data)
+      //   const testDocument: TDDocument = data.document
+      //   // app.loadDocument(data.document);
+      // }
       setApp(app);
     },
     [roomId]
