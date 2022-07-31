@@ -84,7 +84,7 @@ const onEditWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     const description = (((event.target as HTMLFormElement).elements as {[key: string]: any})['description'].value);
     const scope = "";
 
-    axios.patch(`${config.API_URL + "/api/v1/whiteboards/" + id }`, { title, description, scope }, { headers: { Authorization: 'Bearer ' + user.token }});
+    axios.put(`${config.API_URL + "/api/v1/whiteboards/" + id }`, { title, description, scope }, { headers: { Authorization: 'Bearer ' + user.token }});
 }
 
 const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
