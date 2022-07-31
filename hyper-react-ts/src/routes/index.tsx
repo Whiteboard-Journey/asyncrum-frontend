@@ -189,6 +189,10 @@ const AllRoutes = () => {
                     ],
                 },
                 {
+                    path: 'whiteboard',
+                    element: <LoadComponent component={Whiteboard} />,
+                },
+                {
                     path: 'error-404',
                     element: <LoadComponent component={ErrorPageNotFound} />,
                 },

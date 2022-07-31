@@ -7,8 +7,9 @@ import avatar3 from 'assets/images/users/avatar-8.jpg';
 import { useToggle } from 'hooks';
 import axios from 'axios';
 import config from 'config';
+import { TDDocument, TDFile, TldrawApp } from '@tldraw/tldraw'
 
-const whiteboardPageURL = 'http://localhost:3000/apps/whiteboard';
+const whiteboardPageURL = '/apps/whiteboard?url=';
 
 const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -18,8 +19,57 @@ const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     const scope = "";
     axios.post(`${config.API_URL + "/api/v1/whiteboards"}`, { title, description, scope}, { headers: { Authorization: 'Bearer ' + user.token }})
     .then((response) => {
-        sessionStorage.setItem('preSignedURL', response.data.preSignedURL);
-        window.location.replace(whiteboardPageURL);
+        const preSignedURL = response.data.preSignedURL;
+        const document: TDDocument = {
+            id: "doc",
+            name: "New Document",
+            version: TldrawApp.version,
+            pages: {
+                page: {
+                    id: "page",
+                    name: "Page 1",
+                    childIndex: 1,
+                    shapes: {},
+                    bindings: {}
+                }
+            },
+            pageStates: {
+                page: {
+                    id: "page",
+                    selectedIds: [],
+                    camera: {
+                        point: [0, 0],
+                        zoom: 1
+                    }
+                }
+            },
+            assets: {}
+        };
+
+        const file: TDFile = {
+            name: document.name || 'New Document',
+            fileHandle: null,
+            document,
+            assets: {},
+        };
+        
+        const json = JSON.stringify(file, null, 2)
+        
+        const blob = new Blob([json], {
+            type: 'application/vnd.Tldraw+json',
+        })
+        
+        const fileToUpload = new File([blob], title)
+
+        const formData = new FormData();
+        formData.append("data", fileToUpload);
+        const uploadAxios = axios.create({ transformRequest: [(data: any, headers: any) => {
+            delete headers.common.Authorization;
+            headers['content-type'] = 'application/octet-stream';
+            return formData;
+        }] });
+        uploadAxios.put(preSignedURL, formData).then((res) => console.log(res));
+        // window.location.replace(whiteboardPageURL);
     });
 }
 
@@ -45,7 +95,7 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
                     </Dropdown.Menu>
                 </Dropdown>
                 <h4 className="mt-0">
-                    <Link to="/apps/projects/details" className="text-title">
+                    <Link to={whiteboardPageURL + whiteboard.whiteboardFileUrl + '&title=' + whiteboard.title} className="text-title">
                         {whiteboard.title}
                     </Link>
                 </h4>
@@ -85,7 +135,6 @@ const Dashboard = () => {
 
     useEffect(() => {
         onDashboardLoad();
-        console.log(loading, whiteboards, error, onDashboardLoad);
     });
 
     return(
