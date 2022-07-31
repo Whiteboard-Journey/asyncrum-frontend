@@ -13,11 +13,13 @@ const whiteboardPageURL = '/apps/whiteboard?url=';
 
 const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const user = JSON.parse(sessionStorage.getItem('hyper_user')!)
     const title = (((event.target as HTMLFormElement).elements as {[key: string]: any})['title'].value);
     const description = (((event.target as HTMLFormElement).elements as {[key: string]: any})['description'].value);
     const scope = "";
-    axios.post(`${config.API_URL + "/api/v1/whiteboards"}`, { title, description, scope}, { headers: { Authorization: 'Bearer ' + user.token }})
+
+    axios.post(`${config.API_URL + "/api/v1/whiteboards"}`, { title, description, scope }, { headers: { Authorization: 'Bearer ' + user.token }})
     .then((response) => {
         const preSignedURL = response.data.preSignedURL;
         const document: TDDocument = {
@@ -73,7 +75,21 @@ const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     });
 }
 
+const onEditWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    
+    const user = JSON.parse(sessionStorage.getItem('hyper_user')!)
+    const id = (((event.target as HTMLFormElement).elements as {[key: string]: any})['id'].value);
+    const title = (((event.target as HTMLFormElement).elements as {[key: string]: any})['title'].value);
+    const description = (((event.target as HTMLFormElement).elements as {[key: string]: any})['description'].value);
+    const scope = "";
+
+    axios.put(`${config.API_URL + "/api/v1/whiteboards/" + id }`, { title, description, scope }, { headers: { Authorization: 'Bearer ' + user.token }});
+}
+
 const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
+    const [isEditOpen, toggleEdit] = useToggle();
+
     return (
         <Card className="d-block">
             <Card.Body>
@@ -88,10 +104,50 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
 
                     <Dropdown.Menu>
                         <Dropdown.Item>Share</Dropdown.Item>
-                        <Dropdown.Item>Rename</Dropdown.Item>
+                        <Dropdown.Item onClick={toggleEdit}>Edit</Dropdown.Item>
+                                <Modal show={isEditOpen} onHide={toggleEdit}>
+                                <Modal.Body>
+                                    <Modal.Header onHide={toggleEdit} closeButton>
+                                        <h4 className="modal-title">Edit Whiteboard Information</h4>
+                                    </Modal.Header>
+                                    <form className="ps-3 pe-3" onSubmit={onEditWhiteboard}>
+                                        <input type="hidden" id="id" value={whiteboard.id} />
+                                        <div className="mt-3 mb-3">
+                                            <label htmlFor="title" className="form-label">
+                                                Title
+                                            </label>
+                                            <input
+                                                className="form-control"
+                                                type="text"
+                                                id="title"
+                                                required
+                                                placeholder={whiteboard.title}
+                                            />
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <label htmlFor="description" className="form-label">
+                                                Description
+                                            </label>
+                                            <input
+                                                className="form-control"
+                                                type="textarea"
+                                                id="description"
+                                                required
+                                                placeholder={whiteboard.description}
+                                            />
+                                        </div>
+
+                                        <div className="mb-3 text-center">
+                                            <button className="btn btn-primary" type="submit">
+                                                Edit
+                                            </button>
+                                        </div>
+                                    </form>
+                                </Modal.Body>
+                            </Modal>
                         <Dropdown.Item>Duplicate</Dropdown.Item>
-                        <Dropdown.Item>Board details</Dropdown.Item>
-                        <Dropdown.Item>Copy link</Dropdown.Item>
+                        <Dropdown.Item className='text-danger'>Delete</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
                 <h4 className="mt-0">
