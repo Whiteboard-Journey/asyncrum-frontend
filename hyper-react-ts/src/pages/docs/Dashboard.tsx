@@ -9,7 +9,7 @@ import axios from 'axios';
 import config from 'config';
 import { TDDocument, TDFile, TldrawApp } from '@tldraw/tldraw'
 
-const whiteboardPageURL = 'http://localhost:3000/apps/whiteboard';
+const whiteboardPageURL = '/apps/whiteboard?url=';
 
 const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -95,7 +95,7 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
                     </Dropdown.Menu>
                 </Dropdown>
                 <h4 className="mt-0">
-                    <Link to="/apps/projects/details" className="text-title">
+                    <Link to={whiteboardPageURL + whiteboard.whiteboardFileUrl + '&title=' + whiteboard.title} className="text-title">
                         {whiteboard.title}
                     </Link>
                 </h4>
@@ -135,7 +135,6 @@ const Dashboard = () => {
 
     useEffect(() => {
         onDashboardLoad();
-        console.log(loading, whiteboards, error, onDashboardLoad);
     });
 
     return(

@@ -211,19 +211,19 @@ const AllRoutes = () => {
             ],
         },
         {
-            // path: '/',
-            // element: <PrivateRoute roles={'Admin'} component={DefaultLayout} />,
-            // children: [
-            //     {
-            //         path: 'apps',
-            //         children: [
-            //             {
-            //                 path: 'whiteboard',
-            //                 element: <LoadComponent component={Whiteboard} />,
-            //             }
-            //         ]
-            //     }
-            // ]
+            path: '/',
+            element: <PrivateRoute roles={'Admin'} component={DefaultLayout} />,
+            children: [
+                {
+                    path: 'apps',
+                    children: [
+                        {
+                            path: 'whiteboard',
+                            element: <LoadComponent component={Whiteboard} />,
+                        }
+                    ]
+                }
+            ]
         },
         {
             path: '/',
