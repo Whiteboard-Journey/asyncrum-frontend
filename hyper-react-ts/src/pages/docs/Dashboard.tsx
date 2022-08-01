@@ -84,11 +84,23 @@ const onEditWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     const description = (((event.target as HTMLFormElement).elements as {[key: string]: any})['description'].value);
     const scope = "";
 
-    axios.put(`${config.API_URL + "/api/v1/whiteboards/" + id }`, { title, description, scope }, { headers: { Authorization: 'Bearer ' + user.token }});
+    axios.put(`${config.API_URL + "/api/v1/whiteboards/" + id }`, { title, description, scope }, { headers: { Authorization: 'Bearer ' + user.token }})
+        .then(() => window.location.reload());
+}
+
+const onDeleteWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    
+    const user = JSON.parse(sessionStorage.getItem('hyper_user')!)
+    const id = (((event.target as HTMLFormElement).elements as {[key: string]: any})['id'].value);
+
+    axios.delete(`${config.API_URL + "/api/v1/whiteboards/" + id }`, { headers: { Authorization: 'Bearer ' + user.token }})
+        .then(() => window.location.reload());
 }
 
 const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
     const [isEditOpen, toggleEdit] = useToggle();
+    const [isDeleteOpen, toggleDelete] = useToggle();
 
     return (
         <Card className="d-block">
@@ -105,7 +117,7 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
                     <Dropdown.Menu>
                         <Dropdown.Item>Share</Dropdown.Item>
                         <Dropdown.Item onClick={toggleEdit}>Edit</Dropdown.Item>
-                                <Modal show={isEditOpen} onHide={toggleEdit}>
+                            <Modal show={isEditOpen} onHide={toggleEdit}>
                                 <Modal.Body>
                                     <Modal.Header onHide={toggleEdit} closeButton>
                                         <h4 className="modal-title">Edit Whiteboard Information</h4>
@@ -147,7 +159,23 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
                                 </Modal.Body>
                             </Modal>
                         <Dropdown.Item>Duplicate</Dropdown.Item>
-                        <Dropdown.Item className='text-danger'>Delete</Dropdown.Item>
+                        <Dropdown.Item className='text-danger' onClick={toggleDelete}>Delete</Dropdown.Item>
+                            <Modal show={isDeleteOpen} onHide={toggleDelete}>
+                                <Modal.Body>
+                                    <Modal.Header onHide={toggleDelete} closeButton>
+                                        <h4 className="modal-title">Delete {whiteboard.title}</h4>
+                                    </Modal.Header>
+                                    <p className="mt-4 mb-4 text-center font-weight-bolds">Are you sure you want to delete this whiteboard permanently?</p>
+                                    <form className="ps-3 pe-3" onSubmit={onDeleteWhiteboard}>
+                                        <input type="hidden" id="id" value={whiteboard.id} />
+                                        <div className="mb-3 text-center">
+                                            <button className="btn btn-danger" type="submit">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </form>
+                                </Modal.Body>
+                            </Modal>
                     </Dropdown.Menu>
                 </Dropdown>
                 <h4 className="mt-0">
