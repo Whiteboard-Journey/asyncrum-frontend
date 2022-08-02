@@ -9,11 +9,11 @@ export type YorkieType = {
 
 const roomId = "testroomid";
 const params = new URLSearchParams(window.location.search);
-const title = params.get('title');
+const id = params.get('id');
 const url = params.get('url');
 
 const client = new yorkie.Client('http://wbj-vpc-alb-private-152462774.ap-northeast-2.elb.amazonaws.com:8090');
-const doc = new yorkie.Document<YorkieType>(title ? title : '');
+const doc = new yorkie.Document<YorkieType>(id ? id : '');
 
 const Whiteboard = () => {
 

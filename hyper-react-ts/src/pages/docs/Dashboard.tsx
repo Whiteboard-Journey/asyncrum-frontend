@@ -179,7 +179,7 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
                     </Dropdown.Menu>
                 </Dropdown>
                 <h4 className="mt-0">
-                    <Link to={whiteboardPageURL + whiteboard.whiteboardFileUrl + '&title=' + whiteboard.title} className="text-title">
+                    <Link to={whiteboardPageURL + whiteboard.whiteboardFileUrl + '&id=' + whiteboard.id} className="text-title">
                         {whiteboard.title}
                     </Link>
                 </h4>
