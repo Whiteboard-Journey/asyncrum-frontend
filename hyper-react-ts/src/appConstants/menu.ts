@@ -58,8 +58,8 @@ const MENU_ITEMS: MenuItemType[] = [
         url: '/docs/starred',
     },
     {
-        key: 'docs-whiteboards',
-        label: 'Whiteboards',
+        key: 'docs-dashboard',
+        label: 'Dashboard',
         isTitle: false,
         icon: 'mdi mdi-bulletin-board',
         url: '/dashboard',

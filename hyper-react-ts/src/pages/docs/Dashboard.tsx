@@ -9,6 +9,8 @@ import axios from 'axios';
 import config from 'config';
 import { TDDocument, TDFile, TldrawApp } from '@tldraw/tldraw';
 import moment from 'moment';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 const whiteboardPageURL = '/apps/whiteboard?url=';
 
@@ -235,6 +237,77 @@ const Dashboard = () => {
 
     return(
         <>
+            <Row>
+                <Col>
+                    <div className="page-title-box">
+                        <h4 className="page-title">Daily Standups</h4>
+                    </div>
+                </Col>
+            </Row>
+            <Row>
+                {!loading && 
+                <Carousel 
+                additionalTransfrom={0}
+                arrows
+                centerMode={false}
+                className=""
+                containerClass="container"
+                dotListClass=""
+                draggable
+                focusOnSelect={false}
+                infinite={false}
+                itemClass=""
+                keyBoardControl
+                minimumTouchDrag={80}
+                pauseOnHover
+                renderArrowsWhenDisabled={false}
+                renderButtonGroupOutside={false}
+                renderDotsOutside={false}
+                responsive={{
+                  desktop: {
+                    breakpoint: {
+                      max: 3000,
+                      min: 1024
+                    },
+                    items: 3,
+                    partialVisibilityGutter: 40
+                  },
+                  mobile: {
+                    breakpoint: {
+                      max: 464,
+                      min: 0
+                    },
+                    items: 1,
+                    partialVisibilityGutter: 30
+                  },
+                  tablet: {
+                    breakpoint: {
+                      max: 1024,
+                      min: 464
+                    },
+                    items: 2,
+                    partialVisibilityGutter: 30
+                  }
+                }}
+                rewind={false}
+                rewindWithAnimation={false}
+                rtl={false}
+                shouldResetAutoplay
+                showDots={false}
+                sliderClass=""
+                slidesToSlide={1}
+            >
+                    {whiteboards.map((whiteboard: Whiteboard, i: number) => {
+                        return (
+                        <div>
+                            <WhiteboardCard whiteboard={whiteboard} />
+                        </div>
+                        );
+                    })}
+                </Carousel>
+                }
+            </Row>
+            
             <Row>
                 <Col>
                     <div className="page-title-box">
