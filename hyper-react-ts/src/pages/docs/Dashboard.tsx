@@ -77,8 +77,6 @@ const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
                     window.location.href = whiteboardPageURL+res.data.whiteboardUrl+'&id='+whiteboardID;
                 });
         });
-
-        // window.location.replace(whiteboardPageURL);
     });
 }
 
