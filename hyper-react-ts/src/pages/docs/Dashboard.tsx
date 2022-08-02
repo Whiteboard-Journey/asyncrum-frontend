@@ -22,6 +22,7 @@ const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     axios.post(`${config.API_URL + "/api/v1/whiteboards"}`, { title, description, scope }, { headers: { Authorization: 'Bearer ' + user.token }})
     .then((response) => {
         const preSignedURL = response.data.preSignedURL;
+        const whiteboardID = response.data.id;
         const document: TDDocument = {
             id: "doc",
             name: "New Document",
@@ -70,7 +71,13 @@ const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
             headers['content-type'] = 'application/octet-stream';
             return formData;
         }] });
-        uploadAxios.put(preSignedURL, formData).then((res) => console.log(res));
+        uploadAxios.put(preSignedURL, formData).then(() => {
+            axios.get(`${config.API_URL + "/api/v1/whiteboards/" + whiteboardID }`, { headers: { Authorization: 'Bearer ' + user.token }})
+                .then((res) => {
+                    window.location.href = whiteboardPageURL+res.data.whiteboardUrl+'&id='+whiteboardID;
+                });
+        });
+
         // window.location.replace(whiteboardPageURL);
     });
 }
