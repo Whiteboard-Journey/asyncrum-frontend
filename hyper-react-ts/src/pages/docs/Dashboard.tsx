@@ -7,7 +7,8 @@ import avatar3 from 'assets/images/users/avatar-8.jpg';
 import { useToggle } from 'hooks';
 import axios from 'axios';
 import config from 'config';
-import { TDDocument, TDFile, TldrawApp } from '@tldraw/tldraw'
+import { TDDocument, TDFile, TldrawApp } from '@tldraw/tldraw';
+import moment from 'moment';
 
 const whiteboardPageURL = '/apps/whiteboard?url=';
 
@@ -91,6 +92,12 @@ const onEditWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
 
     axios.put(`${config.API_URL + "/api/v1/whiteboards/" + id }`, { title, description, scope }, { headers: { Authorization: 'Bearer ' + user.token }})
         .then(() => window.location.reload());
+}
+
+const convertDatetime = (datetime: string) => {
+    const convertedDatetime = new Date(datetime);
+    convertedDatetime.setTime(convertedDatetime.getTime() - convertedDatetime.getTimezoneOffset()*60*1000);
+    return moment(convertedDatetime).fromNow();
 }
 
 const onDeleteWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
@@ -210,7 +217,7 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
                     </Link>
                 </div>
                 <p className="text-muted text-end font-12 mt-3 mb-1">
-                    Last modified: {whiteboard.lastModifiedDate}
+                    Last modified: {convertDatetime(whiteboard.lastModifiedDate)}
                 </p>
             </Card.Body>
         </Card>
