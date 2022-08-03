@@ -1,3 +1,11 @@
+export type DailyStandup = {
+    id: number;
+    author: string;
+    profileImageUrl: string;
+    lastModifiedDate: string;
+    recordFileUrl: string;
+}
+
 export type Whiteboard = {
     id: number;
     title: string;

@@ -1,6 +1,6 @@
 import { Row, Col, Button, ButtonGroup, Card, Dropdown, Alert, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Whiteboard } from './types';
+import { DailyStandup, Whiteboard } from './types';
 import { useEffect } from 'react';
 import { useReadAllWhiteboard } from "./hooks";
 import avatar3 from 'assets/images/users/avatar-8.jpg';
@@ -11,6 +11,7 @@ import { TDDocument, TDFile, TldrawApp } from '@tldraw/tldraw';
 import moment from 'moment';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { dailyStandups } from './data'
 
 const whiteboardPageURL = '/apps/whiteboard?url=';
 
@@ -110,6 +111,33 @@ const onDeleteWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
 
     axios.delete(`${config.API_URL + "/api/v1/whiteboards/" + id }`, { headers: { Authorization: 'Bearer ' + user.token }})
         .then(() => window.location.reload());
+}
+
+const DailyStandupCard = ({ dailyStandup }: {dailyStandup: DailyStandup}) => {
+    return (
+        <Card className="d-block mx-2">
+            <Card.Body>
+                <div className="text-center">
+                    <Link
+                        to="#"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title=""
+                        data-original-title="Mat Helme"
+                        className="d-inline-block me-1"
+                    >
+                        <img src={dailyStandup.profileImageUrl} className="rounded-circle avatar-lg" alt="friend" />
+                    </Link>
+                </div>
+                <h4 className="text-center font-weight-bold mt-2">
+                    {dailyStandup.author}
+                </h4>
+                <p className="text-muted text-center font-12 mb-1">
+                    {convertDatetime(dailyStandup.lastModifiedDate)}
+                </p>
+            </Card.Body>
+        </Card>
+    );
 }
 
 const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
@@ -269,7 +297,7 @@ const Dashboard = () => {
                       max: 3000,
                       min: 1024
                     },
-                    items: 3,
+                    items: 6,
                     partialVisibilityGutter: 40
                   },
                   mobile: {
@@ -297,10 +325,10 @@ const Dashboard = () => {
                 sliderClass=""
                 slidesToSlide={1}
             >
-                    {whiteboards.map((whiteboard: Whiteboard, i: number) => {
+                    {dailyStandups.map((dailyStandup: DailyStandup, i: number) => {
                         return (
                         <div>
-                            <WhiteboardCard whiteboard={whiteboard} />
+                            <DailyStandupCard dailyStandup={dailyStandup} />
                         </div>
                         );
                     })}
