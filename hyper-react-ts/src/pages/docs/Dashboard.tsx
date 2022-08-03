@@ -117,7 +117,7 @@ const DailyStandupCard = ({ dailyStandup }: {dailyStandup: DailyStandup}) => {
     return (
         <Card className="d-block mx-2">
             <Card.Body>
-                <div className="text-center">
+                <div className={(dailyStandup.seen ? "opacity-25" : "") + " text-center"}>
                     <Link
                         to="#"
                         data-toggle="tooltip"
@@ -129,10 +129,10 @@ const DailyStandupCard = ({ dailyStandup }: {dailyStandup: DailyStandup}) => {
                         <img src={dailyStandup.profileImageUrl} className="rounded-circle avatar-lg" alt="friend" />
                     </Link>
                 </div>
-                <h4 className="text-center font-weight-bold mt-2">
+                <h4 className={(dailyStandup.seen ? "text-light" : "") + " text-center font-weight-bold mt-2"}>
                     {dailyStandup.author}
                 </h4>
-                <p className="text-muted text-center font-12 mb-1">
+                <p className={(dailyStandup.seen ? "text-light" : "text-muted") + " text-center font-12 mb-1"}>
                     {convertDatetime(dailyStandup.lastModifiedDate)}
                 </p>
             </Card.Body>

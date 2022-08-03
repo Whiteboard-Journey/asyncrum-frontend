@@ -8,6 +8,7 @@ const dailyStandups: DailyStandup[] = [
         profileImageUrl: profileImg,
         lastModifiedDate: '2022-08-03T01:13:14',
         recordFileUrl: 'https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_4_23.webm',
+        seen: true,
     },
     {
         id: 2,
@@ -15,6 +16,7 @@ const dailyStandups: DailyStandup[] = [
         profileImageUrl: profileImg,
         lastModifiedDate: '2022-08-03T01:13:14',
         recordFileUrl: 'https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_4_23.webm',
+        seen: false,
     },
     {
         id: 3,
@@ -22,6 +24,7 @@ const dailyStandups: DailyStandup[] = [
         profileImageUrl: profileImg,
         lastModifiedDate: '2022-08-03T01:13:14',
         recordFileUrl: 'https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_4_23.webm',
+        seen: false,
     },
     {
         id: 4,
@@ -29,6 +32,7 @@ const dailyStandups: DailyStandup[] = [
         profileImageUrl: profileImg,
         lastModifiedDate: '2022-08-03T01:13:14',
         recordFileUrl: 'https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_4_23.webm',
+        seen: false,
     },
     {
         id: 5,
@@ -36,6 +40,7 @@ const dailyStandups: DailyStandup[] = [
         profileImageUrl: profileImg,
         lastModifiedDate: '2022-08-03T01:13:14',
         recordFileUrl: 'https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_4_23.webm',
+        seen: false,
     },
     {
         id: 6,
@@ -43,6 +48,7 @@ const dailyStandups: DailyStandup[] = [
         profileImageUrl: profileImg,
         lastModifiedDate: '2022-08-03T01:13:14',
         recordFileUrl: 'https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_4_23.webm',
+        seen: false,
     },
     {
         id: 7,
@@ -50,6 +56,7 @@ const dailyStandups: DailyStandup[] = [
         profileImageUrl: profileImg,
         lastModifiedDate: '2022-08-03T01:13:14',
         recordFileUrl: 'https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_4_23.webm',
+        seen: false,
     },
     {
         id: 8,
@@ -57,6 +64,7 @@ const dailyStandups: DailyStandup[] = [
         profileImageUrl: profileImg,
         lastModifiedDate: '2022-08-03T01:13:14',
         recordFileUrl: 'https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_4_23.webm',
+        seen: false,
     },
 ]
 

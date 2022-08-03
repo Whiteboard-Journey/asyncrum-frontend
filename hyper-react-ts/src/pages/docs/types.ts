@@ -4,6 +4,7 @@ export type DailyStandup = {
     profileImageUrl: string;
     lastModifiedDate: string;
     recordFileUrl: string;
+    seen: boolean;
 }
 
 export type Whiteboard = {
