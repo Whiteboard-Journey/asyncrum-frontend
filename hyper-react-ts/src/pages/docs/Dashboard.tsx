@@ -1,6 +1,6 @@
 import { Row, Col, Button, ButtonGroup, Card, Dropdown, Alert, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Whiteboard } from './types';
+import { DailyStandup, Whiteboard } from './types';
 import { useEffect } from 'react';
 import { useReadAllWhiteboard } from "./hooks";
 import avatar3 from 'assets/images/users/avatar-8.jpg';
@@ -9,6 +9,9 @@ import axios from 'axios';
 import config from 'config';
 import { TDDocument, TDFile, TldrawApp } from '@tldraw/tldraw';
 import moment from 'moment';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import { dailyStandups } from './data'
 
 const whiteboardPageURL = '/apps/whiteboard?url=';
 
@@ -108,6 +111,33 @@ const onDeleteWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
 
     axios.delete(`${config.API_URL + "/api/v1/whiteboards/" + id }`, { headers: { Authorization: 'Bearer ' + user.token }})
         .then(() => window.location.reload());
+}
+
+const DailyStandupCard = ({ dailyStandup }: {dailyStandup: DailyStandup}) => {
+    return (
+        <Card className="d-block mx-2">
+            <Card.Body>
+                <div className="text-center">
+                    <Link
+                        to="#"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title=""
+                        data-original-title="Mat Helme"
+                        className="d-inline-block me-1"
+                    >
+                        <img src={dailyStandup.profileImageUrl} className="rounded-circle avatar-lg" alt="friend" />
+                    </Link>
+                </div>
+                <h4 className="text-center font-weight-bold mt-2">
+                    {dailyStandup.author}
+                </h4>
+                <p className="text-muted text-center font-12 mb-1">
+                    {convertDatetime(dailyStandup.lastModifiedDate)}
+                </p>
+            </Card.Body>
+        </Card>
+    );
 }
 
 const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
@@ -235,6 +265,77 @@ const Dashboard = () => {
 
     return(
         <>
+            <Row>
+                <Col>
+                    <div className="page-title-box">
+                        <h4 className="page-title">Daily Standups</h4>
+                    </div>
+                </Col>
+            </Row>
+            <Row>
+                {!loading && 
+                <Carousel 
+                additionalTransfrom={0}
+                arrows
+                centerMode={false}
+                className=""
+                containerClass="container"
+                dotListClass=""
+                draggable
+                focusOnSelect={false}
+                infinite={false}
+                itemClass=""
+                keyBoardControl
+                minimumTouchDrag={80}
+                pauseOnHover
+                renderArrowsWhenDisabled={false}
+                renderButtonGroupOutside={false}
+                renderDotsOutside={false}
+                responsive={{
+                  desktop: {
+                    breakpoint: {
+                      max: 3000,
+                      min: 1024
+                    },
+                    items: 6,
+                    partialVisibilityGutter: 40
+                  },
+                  mobile: {
+                    breakpoint: {
+                      max: 464,
+                      min: 0
+                    },
+                    items: 1,
+                    partialVisibilityGutter: 30
+                  },
+                  tablet: {
+                    breakpoint: {
+                      max: 1024,
+                      min: 464
+                    },
+                    items: 2,
+                    partialVisibilityGutter: 30
+                  }
+                }}
+                rewind={false}
+                rewindWithAnimation={false}
+                rtl={false}
+                shouldResetAutoplay
+                showDots={false}
+                sliderClass=""
+                slidesToSlide={1}
+            >
+                    {dailyStandups.map((dailyStandup: DailyStandup, i: number) => {
+                        return (
+                        <div>
+                            <DailyStandupCard dailyStandup={dailyStandup} />
+                        </div>
+                        );
+                    })}
+                </Carousel>
+                }
+            </Row>
+            
             <Row>
                 <Col>
                     <div className="page-title-box">

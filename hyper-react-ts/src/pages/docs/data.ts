@@ -1,4 +1,64 @@
-import { Whiteboard } from './types';
+import { DailyStandup, Whiteboard } from './types';
+import profileImg from './Komputer_P.png'
+
+const dailyStandups: DailyStandup[] = [
+    {
+        id: 1,
+        author: "Komputer P",
+        profileImageUrl: profileImg,
+        lastModifiedDate: '2022-08-03T01:13:14',
+        recordFileUrl: 'https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_4_23.webm',
+    },
+    {
+        id: 2,
+        author: "Komputer P",
+        profileImageUrl: profileImg,
+        lastModifiedDate: '2022-08-03T01:13:14',
+        recordFileUrl: 'https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_4_23.webm',
+    },
+    {
+        id: 3,
+        author: "Komputer P",
+        profileImageUrl: profileImg,
+        lastModifiedDate: '2022-08-03T01:13:14',
+        recordFileUrl: 'https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_4_23.webm',
+    },
+    {
+        id: 4,
+        author: "Komputer P",
+        profileImageUrl: profileImg,
+        lastModifiedDate: '2022-08-03T01:13:14',
+        recordFileUrl: 'https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_4_23.webm',
+    },
+    {
+        id: 5,
+        author: "Komputer P",
+        profileImageUrl: profileImg,
+        lastModifiedDate: '2022-08-03T01:13:14',
+        recordFileUrl: 'https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_4_23.webm',
+    },
+    {
+        id: 6,
+        author: "Komputer P",
+        profileImageUrl: profileImg,
+        lastModifiedDate: '2022-08-03T01:13:14',
+        recordFileUrl: 'https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_4_23.webm',
+    },
+    {
+        id: 7,
+        author: "Komputer P",
+        profileImageUrl: profileImg,
+        lastModifiedDate: '2022-08-03T01:13:14',
+        recordFileUrl: 'https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_4_23.webm',
+    },
+    {
+        id: 8,
+        author: "Komputer P",
+        profileImageUrl: profileImg,
+        lastModifiedDate: '2022-08-03T01:13:14',
+        recordFileUrl: 'https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_4_23.webm',
+    },
+]
 
 const whiteboards: Whiteboard[] = [
     {
@@ -63,4 +123,4 @@ const whiteboards: Whiteboard[] = [
     },
 ]
 
-export { whiteboards }
+export { dailyStandups, whiteboards }
