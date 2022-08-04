@@ -23,3 +23,5 @@ export { default as StatisticsChartWidget3 } from './StatisticsChartWidget3';
 export { default as StatisticsWidget } from './StatisticsWidget';
 export { default as Timeline } from './Timeline';
 export { default as TimelineItem } from './TimelineItem';
+export { default as ScreenRecorder } from './ScreenRecorder';
+export { default as VideoRecorder } from './VideoRecorder';

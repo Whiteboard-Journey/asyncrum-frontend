@@ -1,17 +1,19 @@
 import { Row, Col, Button, ButtonGroup, Card, Dropdown, Alert, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { DailyStandup, Whiteboard } from './types';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useReadAllWhiteboard } from "./hooks";
 import avatar3 from 'assets/images/users/avatar-8.jpg';
 import { useToggle } from 'hooks';
 import axios from 'axios';
 import config from 'config';
-import { TDDocument, TDFile, TldrawApp } from '@tldraw/tldraw';
+import { TDDocument, TDFile, TldrawApp, Video } from '@tldraw/tldraw';
 import moment from 'moment';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { dailyStandups } from './data'
+import { useModal } from './hooks';
+import { dailyStandups } from './data';
+import { ScreenRecorder, VideoRecorder } from 'components';
 
 const whiteboardPageURL = '/apps/whiteboard?url=';
 
@@ -257,7 +259,10 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
 const Dashboard = () => {
     const { loading, whiteboards, error, onDashboardLoad } = useReadAllWhiteboard();
 
-    const [isStandardOpen, toggleStandard] = useToggle();
+    const [isCreateWhiteboardOpen, toggleCreateWhiteboard] = useToggle();
+    const { isOpen: isRecordOpen, size, className, scroll, toggleModal: toggleRecord, openModalWithSize, openModalWithClass, openModalWithScroll } =
+        useModal();
+
 
     useEffect(() => {
         onDashboardLoad();
@@ -270,6 +275,25 @@ const Dashboard = () => {
                     <div className="page-title-box">
                         <h4 className="page-title">Daily Standups</h4>
                     </div>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                <Button onClick={() => {openModalWithClass('modal-full-width')}}><i className="mdi mdi-plus"></i> Record</Button>
+                    <Modal show={isRecordOpen} onHide={toggleRecord} dialogClassName={className} size={size} scrollable={scroll}>
+                        <Modal.Body>
+                            <Modal.Header onHide={toggleRecord} closeButton>
+                                <h4 className="modal-title">Record</h4>
+                            </Modal.Header>
+                                <VideoRecorder />
+
+                                <div className="mb-3 text-center">
+                                    {/* <button className="btn btn-primary" type="submit">
+                                        Save Recording
+                                    </button> */}
+                                </div>
+                        </Modal.Body>
+                    </Modal>
                 </Col>
             </Row>
             <Row>
@@ -348,10 +372,10 @@ const Dashboard = () => {
             </Row>
             <Row className="mb-2">
                 <Col sm={4}>
-                    <Button onClick={toggleStandard}><i className="mdi mdi-plus"></i> Create Whiteboard</Button>
-                    <Modal show={isStandardOpen} onHide={toggleStandard}>
+                    <Button onClick={toggleCreateWhiteboard}><i className="mdi mdi-plus"></i> Create Whiteboard</Button>
+                    <Modal show={isCreateWhiteboardOpen} onHide={toggleCreateWhiteboard}>
                         <Modal.Body>
-                            <Modal.Header onHide={toggleStandard} closeButton>
+                            <Modal.Header onHide={toggleCreateWhiteboard} closeButton>
                                 <h4 className="modal-title">Create a new whiteboard</h4>
                             </Modal.Header>
                             <form className="ps-3 pe-3" onSubmit={onCreateWhiteboard}>
