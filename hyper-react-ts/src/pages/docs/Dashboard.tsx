@@ -1,19 +1,19 @@
 import { Row, Col, Button, ButtonGroup, Card, Dropdown, Alert, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { DailyStandup, Whiteboard } from './types';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useReadAllWhiteboard } from "./hooks";
 import avatar3 from 'assets/images/users/avatar-8.jpg';
 import { useToggle } from 'hooks';
 import axios from 'axios';
 import config from 'config';
-import { TDDocument, TDFile, TldrawApp, Video } from '@tldraw/tldraw';
+import { TDDocument, TDFile, TldrawApp } from '@tldraw/tldraw';
 import moment from 'moment';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { useModal } from './hooks';
 import { dailyStandups } from './data';
-import { ScreenRecorder, VideoRecorder } from 'components';
+import { VideoRecorder } from 'components';
 
 const whiteboardPageURL = '/apps/whiteboard?url=';
 
