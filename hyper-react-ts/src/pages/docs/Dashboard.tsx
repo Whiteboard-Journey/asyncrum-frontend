@@ -1,7 +1,7 @@
 import { Row, Col, Button, ButtonGroup, Card, Dropdown, Alert, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { DailyStandup, Whiteboard } from './types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useReadAllWhiteboard } from "./hooks";
 import avatar3 from 'assets/images/users/avatar-8.jpg';
 import { useToggle } from 'hooks';
@@ -12,7 +12,7 @@ import moment from 'moment';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { useModal } from './hooks';
-import { dailyStandups } from './data';
+// import { dailyStandups } from './data';
 import { VideoRecorder } from 'components';
 
 const whiteboardPageURL = '/apps/whiteboard?url=';
@@ -257,12 +257,32 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
 }
 
 const Dashboard = () => {
-    const { loading, whiteboards, error, onDashboardLoad } = useReadAllWhiteboard();
+    const { loading: whiteboardLoading, whiteboards, error, onDashboardLoad } = useReadAllWhiteboard();
 
     const [isCreateWhiteboardOpen, toggleCreateWhiteboard] = useToggle();
     const { isOpen: isRecordOpen, size, className, scroll, toggleModal: toggleRecord, openModalWithSize, openModalWithClass, openModalWithScroll } =
         useModal();
-
+    const [dailyStandups, setDailyStandups] = useState<DailyStandup[]>([]);
+    
+    useEffect(() => {
+        const user = JSON.parse(sessionStorage.getItem('hyper_user')!);
+        let dailyStandups: DailyStandup[] = [];
+        axios.get(config.API_URL+"/api/v1/records?pageIndex=0&topId=0", { headers: { Authorization: 'Bearer ' + user.token }})
+        .then(res => {
+            // res.data.records.filter(record => record.type === "daily standups")
+            for (const record of res.data.records) {
+                dailyStandups.push({
+                    id: record.id,
+                    author: record.author.fullname,
+                    profileImageUrl: record.author.profileImageUrl,
+                    lastModifiedDate: record.lastModifiedDate,
+                    recordFileUrl: record.recordFileUrl,
+                    seen: false,
+                })
+            }
+            setDailyStandups(dailyStandups);
+        });
+    }, []);
 
     useEffect(() => {
         onDashboardLoad();
@@ -285,19 +305,13 @@ const Dashboard = () => {
                             <Modal.Header onHide={toggleRecord} closeButton>
                                 <h4 className="modal-title">Record</h4>
                             </Modal.Header>
-                                <VideoRecorder />
-
-                                <div className="mb-3 text-center">
-                                    {/* <button className="btn btn-primary" type="submit">
-                                        Save Recording
-                                    </button> */}
-                                </div>
+                            <VideoRecorder />
                         </Modal.Body>
                     </Modal>
                 </Col>
             </Row>
             <Row>
-                {!loading && 
+                {!whiteboardLoading && 
                 <Carousel 
                 additionalTransfrom={0}
                 arrows
@@ -431,7 +445,7 @@ const Dashboard = () => {
                     {error}
                 </Alert>
             )}
-            {!loading && 
+            {!whiteboardLoading && 
             <Row>
                 {whiteboards.map((whiteboard: Whiteboard, i: number) => {
                     return (
