@@ -115,9 +115,13 @@ const onDeleteWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
 }
 
 const DailyStandupCard = ({ dailyStandup }: {dailyStandup: DailyStandup}) => {
+    const cam_w = 320, cam_h = 240, screen_w = 960, screen_h = 540
+    const { isOpen: isViewOpen, size, className, scroll, toggleModal: toggleView, openModalWithSize, openModalWithClass, openModalWithScroll } =
+        useModal();
+
     return (
         <Card className="d-block mx-2">
-            <Card.Body>
+            <Card.Body onClick={() => {openModalWithClass('modal-full-width')}} style={{cursor:'pointer'}}>
                 <div className={(dailyStandup.seen ? "opacity-25" : "") + " text-center"}>
                     <Link
                         to="#"
@@ -136,6 +140,15 @@ const DailyStandupCard = ({ dailyStandup }: {dailyStandup: DailyStandup}) => {
                 <p className={(dailyStandup.seen ? "text-light" : "text-muted") + " text-center font-12 mb-1"}>
                     {convertDatetime(dailyStandup.lastModifiedDate)}
                 </p>
+                <Modal show={isViewOpen} onHide={toggleView} dialogClassName={className} size={size} scrollable={scroll}>
+                    <Modal.Body>
+                        <Modal.Header onHide={toggleView} closeButton>
+                            <h4 className="modal-title">{dailyStandup.author + " - " + convertDatetime(dailyStandup.lastModifiedDate)}</h4>
+                        </Modal.Header>
+                        <video src={dailyStandup.camRecordFileUrl} controls autoPlay playsInline width={cam_w} height={cam_h} />
+                        <video src={dailyStandup.screenRecordFileUrl} controls autoPlay playsInline width={screen_w} height={screen_h} />
+                    </Modal.Body>
+                </Modal>
             </Card.Body>
         </Card>
     );
@@ -271,14 +284,36 @@ const Dashboard = () => {
         .then(res => {
             // res.data.records.filter(record => record.type === "daily standups")
             for (const record of res.data.records) {
-                dailyStandups.push({
-                    id: record.id,
-                    author: record.author.fullname,
-                    profileImageUrl: record.author.profileImageUrl,
-                    lastModifiedDate: record.lastModifiedDate,
-                    recordFileUrl: record.recordFileUrl,
-                    seen: false,
-                })
+                if (dailyStandups.at(-1)?.author === record.author.fullname
+                && dailyStandups.at(-1)?.lastModifiedDate.slice(0, -5) === record.lastModifiedDate.slice(0, -5)) {
+                    if (record.title.slice(-6) === "screen") {
+                        dailyStandups.at(-1)!.screenRecordFileUrl = record.recordFileUrl;
+                    } else {
+                        dailyStandups.at(-1)!.camRecordFileUrl = record.recordFileUrl;
+                    }
+                } else {
+                    if (record.title.slice(-6) === "screen") {
+                        dailyStandups.push({
+                            id: record.id,
+                            author: record.author.fullname,
+                            profileImageUrl: record.author.profileImageUrl,
+                            lastModifiedDate: record.lastModifiedDate,
+                            camRecordFileUrl: "",
+                            screenRecordFileUrl: record.recordFileUrl,
+                            seen: false,
+                        });
+                    } else {
+                        dailyStandups.push({
+                            id: record.id,
+                            author: record.author.fullname,
+                            profileImageUrl: record.author.profileImageUrl,
+                            lastModifiedDate: record.lastModifiedDate,
+                            camRecordFileUrl: record.recordFileUrl,
+                            screenRecordFileUrl: "",
+                            seen: false,
+                        });
+                    }
+                }
             }
             setDailyStandups(dailyStandups);
             setDailyStandupLoading(false);
