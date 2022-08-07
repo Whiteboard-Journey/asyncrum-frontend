@@ -12,7 +12,6 @@ import moment from 'moment';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { useModal } from './hooks';
-// import { dailyStandups } from './data';
 import { VideoRecorder } from 'components';
 
 const whiteboardPageURL = '/apps/whiteboard?url=';
