@@ -145,8 +145,8 @@ const DailyStandupCard = ({ dailyStandup }: {dailyStandup: DailyStandup}) => {
                         <Modal.Header onHide={toggleView} closeButton>
                             <h4 className="modal-title">{dailyStandup.author + " - " + convertDatetime(dailyStandup.lastModifiedDate)}</h4>
                         </Modal.Header>
-                        <video src={dailyStandup.camRecordFileUrl} controls autoPlay playsInline width={cam_w} height={cam_h} />
-                        <video src={dailyStandup.screenRecordFileUrl} controls autoPlay playsInline width={screen_w} height={screen_h} />
+                        <video src={dailyStandup.camRecordFileUrl} controls autoPlay playsInline width={cam_w} height={cam_h} style={{marginLeft: 'auto', marginRight: 'auto', display: 'block'}} />
+                        <video src={dailyStandup.screenRecordFileUrl} controls autoPlay playsInline width={screen_w} height={screen_h} style={{marginLeft: 'auto', marginRight: 'auto', display: 'block'}} />
                     </Modal.Body>
                 </Modal>
             </Card.Body>
