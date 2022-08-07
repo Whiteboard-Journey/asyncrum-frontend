@@ -90,32 +90,42 @@ const VideoRecorder: React.FC = () => {
   return (
     <div className="video-recorder">
         <div>
-          <p>{camStatus}</p>
-          {
-            recordingState !== 'recording'
-              ? recordingState === 'idle'
-                ? <button onClick={() => { camStartRecording(); screenStartRecording(); setRecordingState('recording'); }}>Start Recording</button>
-                : <button onClick={() => { setRecordingState('idle') }}>reshoot</button>
-              : <button onClick={() => { camStopRecording(); screenStopRecording(); setRecordingState('recorded'); }}>Stop Recording</button>
-          }
-          <br />
           {
             recordingState === 'idle' &&
-            <Webcam audio={false} ref={webcamRef} videoConstraints={videoConstraints} width={cam_w} height={cam_h} />
+            <Webcam audio={false} ref={webcamRef} videoConstraints={videoConstraints} width={cam_w} height={cam_h} style={{marginLeft: 'auto', marginRight: 'auto', display: 'block'}} />
           }
           {
             (recordingState === 'recording' && previewStream) &&
             <div>
-              <video ref={videoRef} width={cam_w} height={cam_h} controls playsInline autoPlay />
+              <video ref={videoRef} width={cam_w} height={cam_h} controls playsInline autoPlay style={{marginLeft: 'auto', marginRight: 'auto', display: 'block'}}/>
             </div>
           }
           {
             recordingState === 'recorded' &&
             <div>
-              <video src={camMediaBlobUrl!} controls autoPlay playsInline width={cam_w} height={cam_h} />
-              <video src={screenMediaBlobUrl!} controls autoPlay playsInline width={screen_w} height={screen_h} />
-              <button className='btn btn-primary' onClick={uploadVideo}>Save Recording</button>
+              <video src={camMediaBlobUrl!} controls autoPlay playsInline width={cam_w} height={cam_h} style={{marginLeft: 'auto', marginRight: 'auto', display: 'block'}} />
+              <video src={screenMediaBlobUrl!} controls autoPlay playsInline width={screen_w} height={screen_h} style={{marginLeft: 'auto', marginRight: 'auto', display: 'block'}} />
             </div>
+          }
+          {
+            recordingState !== 'recording'
+              ? recordingState === 'idle'
+                ? (
+                  <div className='mt-4 mb-3 text-center'>
+                    <button className="btn btn-primary" onClick={() => { camStartRecording(); screenStartRecording(); setRecordingState('recording'); }}>Start Recording</button>
+                  </div>
+                  )
+                : (
+                  <div className='mt-4 mb-3 text-center'>
+                    <button className="btn btn-primary me-3" onClick={() => { setRecordingState('idle') }}>Reshoot</button>
+                    <button className='btn btn-primary' onClick={uploadVideo}>Save Recording</button>
+                  </div>
+                )
+              : (
+                <div className='mt-4 mb-3 text-center'>
+                  <button className="btn btn-danger" onClick={() => { camStopRecording(); screenStopRecording(); setRecordingState('recorded'); }}>Stop Recording</button>
+                </div>
+                )
           }
         </div>
     </div >
