@@ -116,7 +116,7 @@ const onDeleteWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
 
 const DailyStandupCard = ({ dailyStandup }: {dailyStandup: DailyStandup}) => {
     const cam_w = 320, cam_h = 240, screen_w = 960, screen_h = 540
-    const { isOpen: isViewOpen, size, className, scroll, toggleModal: toggleView, openModalWithSize, openModalWithClass, openModalWithScroll } =
+    const { isOpen: isViewOpen, size, className, scroll, toggleModal: toggleView, openModalWithClass } =
         useModal();
 
     return (
@@ -272,7 +272,7 @@ const Dashboard = () => {
     const { loading: whiteboardLoading, whiteboards, error, onDashboardLoad } = useReadAllWhiteboard();
 
     const [isCreateWhiteboardOpen, toggleCreateWhiteboard] = useToggle();
-    const { isOpen: isRecordOpen, size, className, scroll, toggleModal: toggleRecord, openModalWithSize, openModalWithClass, openModalWithScroll } =
+    const { isOpen: isRecordOpen, size, className, scroll, toggleModal: toggleRecord, openModalWithClass } =
         useModal();
     const [dailyStandups, setDailyStandups] = useState<DailyStandup[]>([]);
     const [dailyStandupLoading, setDailyStandupLoading] = useState<Boolean>(true);
