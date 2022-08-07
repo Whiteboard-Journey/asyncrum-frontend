@@ -262,6 +262,7 @@ const Dashboard = () => {
     const { isOpen: isRecordOpen, size, className, scroll, toggleModal: toggleRecord, openModalWithSize, openModalWithClass, openModalWithScroll } =
         useModal();
     const [dailyStandups, setDailyStandups] = useState<DailyStandup[]>([]);
+    const [dailyStandupLoading, setDailyStandupLoading] = useState<Boolean>(true);
     
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('hyper_user')!);
@@ -280,6 +281,7 @@ const Dashboard = () => {
                 })
             }
             setDailyStandups(dailyStandups);
+            setDailyStandupLoading(false);
         });
     }, []);
 
@@ -310,7 +312,7 @@ const Dashboard = () => {
                 </Col>
             </Row>
             <Row>
-                {!whiteboardLoading && 
+                {!dailyStandupLoading && 
                 <Carousel 
                 additionalTransfrom={0}
                 arrows
