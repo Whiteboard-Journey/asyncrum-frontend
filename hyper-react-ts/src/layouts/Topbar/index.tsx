@@ -10,10 +10,12 @@ import ProfileDropdown from './ProfileDropdown';
 import SearchDropdown from './SearchDropdown';
 import TopbarSearch from './TopbarSearch';
 import AppsDropdown from './AppsDropdown';
-import userImage from 'assets/images/users/avatar-1.jpg';
 import logoSmDark from 'assets/images/logo_sm_dark.png';
 import logoSmLight from 'assets/images/logo_sm.png';
 import logo from 'assets/images/logo-light.png';
+import config from 'config';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 type TopbarProps = {
     hideLogo?: boolean;
@@ -26,6 +28,14 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
     const { dispatch, appSelector } = useRedux();
     const { width } = useViewport();
     const [isMenuOpened, toggleMenu] = useToggle();
+    const user = JSON.parse(sessionStorage.getItem('hyper_user')!);
+    const userImage = "";
+
+    useEffect(() => {
+        axios.get(config.API_URL + "/api/v1/members/" + user.id)
+            .then(res => {
+            })
+    }, []);
 
     const containerCssClasses = !hideLogo ? 'container-fluid' : '';
 
