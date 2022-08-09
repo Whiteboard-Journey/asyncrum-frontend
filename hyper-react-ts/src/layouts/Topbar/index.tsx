@@ -28,7 +28,7 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
     const { dispatch, appSelector } = useRedux();
     const { width } = useViewport();
     const [isMenuOpened, toggleMenu] = useToggle();
-    const user = JSON.parse(sessionStorage.getItem('hyper_user')!);
+    const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
     const userImage = "";
 
     useEffect(() => {
