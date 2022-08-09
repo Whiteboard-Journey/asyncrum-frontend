@@ -19,7 +19,7 @@ const whiteboardPageURL = '/apps/whiteboard?url=';
 const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
+    const user = JSON.parse(sessionStorage.getItem('hyper_user')!)
     const title = (((event.target as HTMLFormElement).elements as {[key: string]: any})['title'].value);
     const description = (((event.target as HTMLFormElement).elements as {[key: string]: any})['description'].value);
     const scope = "";
@@ -88,7 +88,7 @@ const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
 const onEditWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
-    const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
+    const user = JSON.parse(sessionStorage.getItem('hyper_user')!)
     const id = (((event.target as HTMLFormElement).elements as {[key: string]: any})['id'].value);
     const title = (((event.target as HTMLFormElement).elements as {[key: string]: any})['title'].value);
     const description = (((event.target as HTMLFormElement).elements as {[key: string]: any})['description'].value);
@@ -107,7 +107,7 @@ const convertDatetime = (datetime: string) => {
 const onDeleteWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
-    const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
+    const user = JSON.parse(sessionStorage.getItem('hyper_user')!)
     const id = (((event.target as HTMLFormElement).elements as {[key: string]: any})['id'].value);
 
     axios.delete(`${config.API_URL + "/api/v1/whiteboards/" + id }`, { headers: { Authorization: 'Bearer ' + user.token }})
@@ -278,7 +278,7 @@ const Dashboard = () => {
     const [dailyStandupLoading, setDailyStandupLoading] = useState<Boolean>(true);
     
     useEffect(() => {
-        const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
+        const user = JSON.parse(sessionStorage.getItem('hyper_user')!);
         let dailyStandups: DailyStandup[] = [];
         axios.get(config.API_URL+"/api/v1/records?pageIndex=0&topId=0", { headers: { Authorization: 'Bearer ' + user.token }})
         .then(res => {

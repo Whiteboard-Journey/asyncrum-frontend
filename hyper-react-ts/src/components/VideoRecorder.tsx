@@ -33,7 +33,7 @@ const VideoRecorder: React.FC = () => {
       return;
     }
 
-    const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
+    const user = JSON.parse(sessionStorage.getItem('hyper_user')!);
     const title = user.firstName + " " + user.lastName + " " + new Date().toLocaleDateString()
     const description = "Daily standups - " + title
 
