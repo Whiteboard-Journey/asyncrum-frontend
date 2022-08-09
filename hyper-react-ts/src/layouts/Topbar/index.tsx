@@ -31,11 +31,11 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
     const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
     const userImage = "";
 
-    useEffect(() => {
-        axios.get(config.API_URL + "/api/v1/members/" + user.id)
-            .then(res => {
-            })
-    }, []);
+    // useEffect(() => {
+    //     axios.get(config.API_URL + "/api/v1/members/" + user.id)
+    //         .then(res => {
+    //         })
+    // }, []);
 
     const containerCssClasses = !hideLogo ? 'container-fluid' : '';
 

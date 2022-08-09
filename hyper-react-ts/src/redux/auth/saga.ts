@@ -39,7 +39,6 @@ function* login({ payload: { email, password }, type }: UserData): SagaIterator 
         const response = yield call(loginApi, { email, password });
         const user = response.data;
         // NOTE - You can change this according to response format from your api
-        
         api.setLoggedInUser(user);
         setAuthorization(user['token']);
         yield put(authApiResponseSuccess(AuthActionTypes.LOGIN_USER, user));
