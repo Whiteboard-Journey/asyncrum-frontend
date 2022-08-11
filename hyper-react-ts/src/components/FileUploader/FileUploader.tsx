@@ -20,17 +20,15 @@ const FileUploader = ({ showPreview = true, onFileUpload }: FileUploaderProps) =
         <>
             <Dropzone onDrop={(acceptedFiles) => handleAcceptedFiles(acceptedFiles, onFileUpload)}>
                 {({ getRootProps, getInputProps }) => (
-                    <div className="dropzone">
+                    <div className="dropzone ratio ratio-1x1" style={{ position: "absolute", width: 150, height: 150, zIndex: 100 }}>
                         <div className="dz-message needsclick" {...getRootProps()}>
                             <input {...getInputProps()} />
-                            <i className="h3 text-muted dripicons-cloud-upload"></i>
-                            <h5>Drop files here or click to upload.</h5>
                         </div>
                     </div>
                 )}
             </Dropzone>
 
-            {showPreview && selectedFiles.length > 0 && (
+            {/* {showPreview && selectedFiles.length > 0 && (
                 <div className="dropzone-previews mt-3" id="uploadPreviewTemplate">
                     {(selectedFiles || []).map((f, i) => {
                         return (
@@ -75,7 +73,7 @@ const FileUploader = ({ showPreview = true, onFileUpload }: FileUploaderProps) =
                         );
                     })}
                 </div>
-            )}
+            )} */}
         </>
     );
 };
