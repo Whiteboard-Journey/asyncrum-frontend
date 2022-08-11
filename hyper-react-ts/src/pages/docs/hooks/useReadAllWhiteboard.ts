@@ -12,7 +12,7 @@ export default function useReadAllWhiteboard() {
     }));
 
     const onDashboardLoad = async () => {
-        const user = JSON.parse(sessionStorage.getItem('hyper_user')!);
+        const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
         if(!hasBeenSet) {dispatch(readAllWhiteboard(user.token))} ;
     };
 

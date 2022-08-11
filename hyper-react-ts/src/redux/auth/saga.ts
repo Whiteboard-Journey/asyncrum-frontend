@@ -4,6 +4,7 @@ import { APICore, setAuthorization } from 'helpers/api/apiCore';
 import {
     login as loginApi,
     logout as logoutApi,
+    readMember as readMemberApi,
     signup as signupApi,
     forgotPassword as forgotPasswordApi,
 } from 'helpers';
@@ -38,10 +39,6 @@ function* login({ payload: { email, password }, type }: UserData): SagaIterator 
         const response = yield call(loginApi, { email, password });
         const user = response.data;
         // NOTE - You can change this according to response format from your api
-        user['id'] = 1;
-        user['firstName'] = 'Test';
-        user['lastName'] = 'User';
-        user['role'] = 'Admin';
         api.setLoggedInUser(user);
         setAuthorization(user['token']);
         yield put(authApiResponseSuccess(AuthActionTypes.LOGIN_USER, user));
@@ -55,18 +52,14 @@ function* login({ payload: { email, password }, type }: UserData): SagaIterator 
 function* oauthLogin({ payload: { token }, type }: TokenData): SagaIterator {
     try {
         yield take(AuthActionTypes.OAUTH_LOGIN_USER);
+        const response = yield call(readMemberApi, { token })
 
-        console.log("saga:", token);
-        const user = {
-            'id': 1,
-            'firstName': 'Test',
-            'lastName': 'User',
-            'role': 'Admin',
-            'token': token
-        }
+        console.log("saga:", response);
+        let user = response.data;
+        user['token'] = token;
         // NOTE - You can change this according to response format from your api
         api.setLoggedInUser(user);
-        setAuthorization(user['token']);
+        setAuthorization(token);
         yield put(authApiResponseSuccess(AuthActionTypes.OAUTH_LOGIN_USER, user));
     } catch (error: any) {
         yield put(authApiResponseError(AuthActionTypes.OAUTH_LOGIN_USER, error));

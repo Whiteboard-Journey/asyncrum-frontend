@@ -19,7 +19,7 @@ const whiteboardPageURL = '/apps/whiteboard?url=';
 const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const user = JSON.parse(sessionStorage.getItem('hyper_user')!)
+    const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
     const title = (((event.target as HTMLFormElement).elements as {[key: string]: any})['title'].value);
     const description = (((event.target as HTMLFormElement).elements as {[key: string]: any})['description'].value);
     const scope = "";
@@ -88,7 +88,7 @@ const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
 const onEditWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
-    const user = JSON.parse(sessionStorage.getItem('hyper_user')!)
+    const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
     const id = (((event.target as HTMLFormElement).elements as {[key: string]: any})['id'].value);
     const title = (((event.target as HTMLFormElement).elements as {[key: string]: any})['title'].value);
     const description = (((event.target as HTMLFormElement).elements as {[key: string]: any})['description'].value);
@@ -107,7 +107,7 @@ const convertDatetime = (datetime: string) => {
 const onDeleteWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
-    const user = JSON.parse(sessionStorage.getItem('hyper_user')!)
+    const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
     const id = (((event.target as HTMLFormElement).elements as {[key: string]: any})['id'].value);
 
     axios.delete(`${config.API_URL + "/api/v1/whiteboards/" + id }`, { headers: { Authorization: 'Bearer ' + user.token }})
@@ -269,8 +269,8 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
 }
 
 const Dashboard = () => {
-    const { loading: whiteboardLoading, whiteboards, error, onDashboardLoad } = useReadAllWhiteboard();
-
+    const [whiteboards, setWhiteboards] = useState<Whiteboard[]>([]);
+    const [whiteboardLoading, setWhiteboardLoading] = useState<Boolean>(true);
     const [isCreateWhiteboardOpen, toggleCreateWhiteboard] = useToggle();
     const { isOpen: isRecordOpen, size, className, scroll, toggleModal: toggleRecord, openModalWithClass } =
         useModal();
@@ -278,9 +278,9 @@ const Dashboard = () => {
     const [dailyStandupLoading, setDailyStandupLoading] = useState<Boolean>(true);
     
     useEffect(() => {
-        const user = JSON.parse(sessionStorage.getItem('hyper_user')!);
+        const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
         let dailyStandups: DailyStandup[] = [];
-        axios.get(config.API_URL+"/api/v1/records?pageIndex=0&topId=0", { headers: { Authorization: 'Bearer ' + user.token }})
+        axios.get(config.API_URL+"/api/v1/records?scope=team&pageIndex=0&topId=0", { headers: { Authorization: 'Bearer ' + user.token }})
         .then(res => {
             // res.data.records.filter(record => record.type === "daily standups")
             for (const record of res.data.records) {
@@ -321,8 +321,27 @@ const Dashboard = () => {
     }, []);
 
     useEffect(() => {
-        onDashboardLoad();
-    });
+        const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
+        let whiteboards: Whiteboard[] = [];
+        axios.get(config.API_URL+"/api/v1/whiteboards?scope=team&pageIndex=0&topId=0", { headers: { Authorization: 'Bearer ' + user.token }})
+        .then(res => {
+            // res.data.records.filter(record => record.type === "daily standups")
+            for (const record of res.data.whiteboards) {
+                whiteboards.push({
+                    id: record.id,
+                    title: record.title,
+                    description: record.description,
+                    createdDate: record.createdDate,
+                    lastModifiedDate: record.lastModifiedDate,
+                    scope: record.scope,
+                    author: record.author.fullname,
+                    whiteboardFileUrl: record.whiteboardFileUrl,
+                });
+            }
+            setWhiteboards(whiteboards);
+            setWhiteboardLoading(false);
+        });
+    }, []);
 
     return(
         <>
@@ -476,11 +495,6 @@ const Dashboard = () => {
                     </div>
                 </Col>
             </Row>
-            {error && (
-                <Alert variant="danger" className="my-2">
-                    {error}
-                </Alert>
-            )}
             {!whiteboardLoading && 
             <Row>
                 {whiteboards.map((whiteboard: Whiteboard, i: number) => {
