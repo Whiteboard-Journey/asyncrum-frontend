@@ -20,7 +20,7 @@ const FileUploader = ({ showPreview = true, onFileUpload }: FileUploaderProps) =
         <>
             <Dropzone onDrop={(acceptedFiles) => handleAcceptedFiles(acceptedFiles, onFileUpload)}>
                 {({ getRootProps, getInputProps }) => (
-                    <div className="dropzone ratio ratio-1x1" style={{ position: "absolute", width: 150, height: 150, zIndex: 100 }}>
+                    <div className="dropzone ratio ratio-1x1" style={{ position: "absolute", width: 150, height: 150, zIndex: -100 }}>
                         <div className="dz-message needsclick" {...getRootProps()}>
                             <input {...getInputProps()} />
                         </div>
