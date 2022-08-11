@@ -326,7 +326,7 @@ const Dashboard = () => {
         axios.get(config.API_URL+"/api/v1/whiteboards?scope=team&pageIndex=0&topId=0", { headers: { Authorization: 'Bearer ' + user.token }})
         .then(res => {
             // res.data.records.filter(record => record.type === "daily standups")
-            for (const record of res.data.records) {
+            for (const record of res.data.whiteboards) {
                 whiteboards.push({
                     id: record.id,
                     title: record.title,
