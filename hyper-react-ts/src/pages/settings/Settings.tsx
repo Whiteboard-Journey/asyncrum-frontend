@@ -38,9 +38,8 @@ const Settings = () => {
         setProfileImageFile(null);
     }
 
-    const onSaveProfileImage = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (!(e.target as HTMLFormElement).data) {
+    const onSaveProfileImage = (e: React.MouseEvent<HTMLElement>) => {
+        if (!profileImageFile) {
             return;
         }
         else {
@@ -49,7 +48,7 @@ const Settings = () => {
                     const preSignedURL = res.data.preSignedURL;
                     const uploadAxios = axios.create({ transformRequest: [(data: any, headers: any) => {
                         delete headers.common.Authorization;
-                        headers['content-type'] = 'image/png';
+                        headers['Content-Type'] = 'image/png';
                         return profileImageFile;
                     }] });
                     uploadAxios.put(preSignedURL, profileImageFile).then(() => {
@@ -59,7 +58,12 @@ const Settings = () => {
         }
     }
 
-    const notify = () => toast("Profile image saved successfully!");
+    const notify = () => toast(
+        <div>
+            Profile image saved successfully!
+            <br />
+            The change might take a few minutes to be applied.
+        </div>);
 
     return (
         <>
@@ -109,27 +113,25 @@ const Settings = () => {
                                     </form>
                                     </Col>
                                     <Col md={{ span: 3, offset: 2 }}>
-                                        <form onSubmit={onSaveProfileImage}>
-                                            <div style={{ height: 190, position: "relative" }}>
-                                                <p className='mb-1' style={{ fontWeight: '600' }}>Profile Image</p>
-                                                <img src={previewImage} alt="profile preview" className="rounded ratio ratio-1x1" style={{ position: "absolute", width: 150, height: 150, cursor: "pointer" }} onClick={()=>{fileInput.current!.click()}} referrerPolicy="no-referrer" />
-                                                <input 
-                                                    type='file' 
-                                                    // accept='image/jpg, image/png, image/jpeg' 
-                                                    accept='image/png'
-                                                    style={{display:'none'}}
-                                                    name='profileImage'
-                                                    onChange={onChange}
-                                                    ref={fileInput}
-                                                />
-                                            </div>
-                                            <Button className="me-2" type="submit" >
-                                                Save
-                                            </Button>
-                                            <Button className="btn btn-secondary" onClick={onCancelProfileImageChange} >
-                                                Cancel
-                                            </Button>
-                                        </form>
+                                        <div style={{ height: 190, position: "relative" }}>
+                                            <p className='mb-1' style={{ fontWeight: '600' }}>Profile Image</p>
+                                            <img src={previewImage} alt="profile preview" className="rounded ratio ratio-1x1" style={{ position: "absolute", width: 150, height: 150, cursor: "pointer" }} onClick={()=>{fileInput.current!.click()}} referrerPolicy="no-referrer" />
+                                            <input 
+                                                type='file' 
+                                                // accept='image/jpg, image/png, image/jpeg' 
+                                                accept='image/png'
+                                                style={{display:'none'}}
+                                                name='profileImage'
+                                                onChange={onChange}
+                                                ref={fileInput}
+                                            />
+                                        </div>
+                                        <Button className="me-2" onClick={onSaveProfileImage} >
+                                            Save
+                                        </Button>
+                                        <Button className="btn btn-secondary" onClick={onCancelProfileImageChange} >
+                                            Cancel
+                                        </Button>
                                     </Col>
                                 </Row>
                             </div>
