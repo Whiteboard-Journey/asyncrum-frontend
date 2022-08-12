@@ -1,7 +1,7 @@
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import { FormInput } from 'components';
 import LeftPanel from './LeftPanel';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import config from 'config';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
@@ -58,6 +58,18 @@ const Settings = () => {
         }
     }
 
+    const onSubmitProfileInfo = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const fullname = (((e.target as HTMLFormElement).elements as {[key: string]: any})['fullname'].value);
+        const nickname = "";
+        axios.patch(`${config.API_URL + "/api/v1/members/" + user.id}`, { fullname, nickname }, { headers: { Authorization: 'Bearer ' + user.token }})
+            .then(() => {
+                user.fullname = fullname;
+                sessionStorage.setItem('asyncrum_user', JSON.stringify(user));
+                window.location.reload();
+            });
+    }
+
     const notify = () => toast(
         <div>
             Profile image saved successfully!
@@ -85,13 +97,15 @@ const Settings = () => {
                             <div className="page-aside-right">
                                 <Row>
                                     <Col md={7}>
-                                    <form>
+                                    <form onSubmit={onSubmitProfileInfo}>
                                         <FormInput
                                             label="Full Name"
                                             type="text"
-                                            name="fullName"
+                                            name="fullname"
                                             containerClass={'mb-3'}
-                                            key="fullName"
+                                            key="fullname"
+                                            placeholder={user.fullname}
+                                            required
                                         />
                                         <FormInput
                                             label="Company Name"
