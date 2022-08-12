@@ -131,7 +131,7 @@ const DailyStandupCard = ({ dailyStandup }: {dailyStandup: DailyStandup}) => {
                         data-original-title="Mat Helme"
                         className="d-inline-block me-1"
                     >
-                        <img src={dailyStandup.profileImageUrl} className="rounded-circle avatar-lg" alt="friend" />
+                        <img src={dailyStandup.profileImageUrl} className="rounded-circle avatar-lg" alt="friend" referrerPolicy="no-referrer" />
                     </Link>
                 </div>
                 <h4 className={(dailyStandup.seen ? "text-light" : "") + " text-center font-weight-bold mt-2"}>
