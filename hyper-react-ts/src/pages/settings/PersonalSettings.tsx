@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
 
-const Settings = () => {
+const PersonalSettings = () => {
     const [previewImage, setPreviewImage] = useState<string>(user.profileImageUrl);
     const [profileImageFile, setProfileImageFile] = useState<null | File>();
     const fileInput = useRef<HTMLInputElement>(null);
@@ -91,10 +91,11 @@ const Settings = () => {
                     <Card>
                         <Card.Body>
                             <div className="page-aside-left">
-                                <LeftPanel />
+                                <LeftPanel selected="personal" />
                             </div>
 
                             <div className="page-aside-right">
+                                <h4 className="mb-3">Change Personal Information</h4>
                                 <Row>
                                     <Col md={7}>
                                     <form onSubmit={onSubmitProfileInfo}>
@@ -168,4 +169,4 @@ const Settings = () => {
     );
 };
 
-export default Settings;
+export default PersonalSettings;

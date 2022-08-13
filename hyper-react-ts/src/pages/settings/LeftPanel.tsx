@@ -10,7 +10,11 @@ type Team = {
     pictureUrl: string;
 }
 
-const LeftPanel = () => {
+type LeftPanelProps = {
+    selected: string;
+}
+
+const LeftPanel = ({selected}: LeftPanelProps) => {
     // const [teamList, setTeamList] = useState<Team[]>([]);
     // const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
 
@@ -46,10 +50,10 @@ const LeftPanel = () => {
             </Dropdown> */}
 
             <div className="email-menu-list">
-                <Link to="#" className="active text-primary">
+                <Link to="/pages/personal-settings" className={selected === "personal" ? "active text-primary" : ""}>
                     <i className="mdi mdi-account-outline font-18 align-middle me-2"></i>Personal Profile
                 </Link>
-                <Link to="#">
+                <Link to="/pages/team-settings" className={selected === "team" ? "active text-primary" : ""}>
                     <i className="mdi mdi-account-group-outline font-18 align-middle me-2"></i>Team Profile
                 </Link>
             </div>
