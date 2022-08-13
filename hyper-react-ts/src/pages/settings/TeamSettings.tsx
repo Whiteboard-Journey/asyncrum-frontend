@@ -7,18 +7,46 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+type Member = {
+    fullname: string;
+    profileImageUrl: string;
+}
+
+type Team = {
+    id: number;
+    name: string;
+    pictureUrl: string;
+    members: Member[];
+}
+
 const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
 
 const TeamSettings = () => {
-    const [previewImage, setPreviewImage] = useState<string>(user.profileImageUrl);
+    const [team, setTeam] = useState<Team>();
+    const [previewImage, setPreviewImage] = useState<string>();
     const [profileImageFile, setProfileImageFile] = useState<null | File>();
     const fileInput = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {});
+    useEffect(() => {
+        axios.get(config.API_URL+"/api/v1/teams/"+user.id, { headers: { Authorization: 'Bearer ' + user.token }})
+            .then(res => {
+                let teaminfo: Team = {
+                    id: res.data.id,
+                    name: res.data.name,
+                    pictureUrl: res.data.pictureUrl,
+                    members: res.data.members.map((member: Member) => ({
+                        fullname: member.fullname,
+                        profileImageUrl: member.profileImageUrl
+                    }))
+                };
+                setTeam(teaminfo);
+                setPreviewImage(team?.pictureUrl)
+            });
+    }, []);
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if (!e.target.files) {
-            setPreviewImage(user.profileImageUrl);
+            setPreviewImage(team?.pictureUrl);
             return;
         } else {
             setProfileImageFile(e.target.files[0]);
@@ -36,7 +64,7 @@ const TeamSettings = () => {
     };
 
     const onCancelProfileImageChange = () => {
-        setPreviewImage(user.profileImageUrl);
+        setPreviewImage(team?.pictureUrl);
         setProfileImageFile(null);
     }
 
@@ -62,12 +90,9 @@ const TeamSettings = () => {
 
     const onSubmitProfileInfo = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const fullname = (((e.target as HTMLFormElement).elements as {[key: string]: any})['fullname'].value);
-        const nickname = "";
-        axios.patch(`${config.API_URL + "/api/v1/members/" + user.id}`, { fullname, nickname }, { headers: { Authorization: 'Bearer ' + user.token }})
+        const name = (((e.target as HTMLFormElement).elements as {[key: string]: any})['name'].value);
+        axios.patch(`${config.API_URL + "/api/v1/teams/" + team?.id}`, { name }, { headers: { Authorization: 'Bearer ' + user.token }})
             .then(() => {
-                user.fullname = fullname;
-                sessionStorage.setItem('asyncrum_user', JSON.stringify(user));
                 window.location.reload();
             });
     }
@@ -107,7 +132,7 @@ const TeamSettings = () => {
                                             name="name"
                                             containerClass={'mb-3'}
                                             key="name"
-                                            placeholder={user.fullname}
+                                            placeholder={team?.name}
                                             required
                                         />
                                         <Button color="primary" type="submit">
