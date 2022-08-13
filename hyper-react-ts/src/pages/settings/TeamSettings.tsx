@@ -1,7 +1,7 @@
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import { FormInput } from 'components';
 import LeftPanel from './LeftPanel';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import config from 'config';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,10 +9,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
 
-const Settings = () => {
+const TeamSettings = () => {
     const [previewImage, setPreviewImage] = useState<string>(user.profileImageUrl);
     const [profileImageFile, setProfileImageFile] = useState<null | File>();
     const fileInput = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {});
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if (!e.target.files) {
@@ -72,7 +74,7 @@ const Settings = () => {
 
     const notify = () => toast(
         <div>
-            Profile image saved successfully!
+            Team logo saved successfully!
             <br />
             The change might take a few minutes to be applied.
         </div>);
@@ -91,35 +93,22 @@ const Settings = () => {
                     <Card>
                         <Card.Body>
                             <div className="page-aside-left">
-                                <LeftPanel />
+                                <LeftPanel selected="team" />
                             </div>
 
                             <div className="page-aside-right">
+                                <h4 className="mb-3">Change Team Information</h4>
                                 <Row>
                                     <Col md={7}>
                                     <form onSubmit={onSubmitProfileInfo}>
                                         <FormInput
-                                            label="Full Name"
+                                            label="Team Name"
                                             type="text"
-                                            name="fullname"
+                                            name="name"
                                             containerClass={'mb-3'}
-                                            key="fullname"
+                                            key="name"
                                             placeholder={user.fullname}
                                             required
-                                        />
-                                        <FormInput
-                                            label="Company Name"
-                                            type="text"
-                                            name="companyName"
-                                            containerClass={'mb-3'}
-                                            key="companyName"
-                                        />
-                                        <FormInput
-                                            label="Role"
-                                            type="text"
-                                            name="role"
-                                            containerClass={'mb-3'}
-                                            key="role"
                                         />
                                         <Button color="primary" type="submit">
                                             Save Changes
@@ -128,7 +117,7 @@ const Settings = () => {
                                     </Col>
                                     <Col md={{ span: 3, offset: 2 }}>
                                         <div style={{ height: 190, position: "relative" }}>
-                                            <p className='mb-1' style={{ fontWeight: '600' }}>Profile Image</p>
+                                            <p className='mb-1' style={{ fontWeight: '600' }}>Team Logo</p>
                                             <img src={previewImage} alt="profile preview" className="rounded ratio ratio-1x1" style={{ position: "absolute", width: 150, height: 150, cursor: "pointer" }} onClick={()=>{fileInput.current!.click()}} referrerPolicy="no-referrer" />
                                             <input 
                                                 type='file' 
@@ -145,6 +134,25 @@ const Settings = () => {
                                         </Button>
                                         <Button className="btn btn-secondary" onClick={onCancelProfileImageChange} >
                                             Cancel
+                                        </Button>
+                                    </Col>
+                                </Row>
+                                <hr />
+                                <Row>
+                                    <Col>
+                                        <span className='h4 mb-1 me-3' >Members</span>
+                                        <Button className="btn btn-primary">
+                                            Invite
+                                        </Button>
+                                    </Col>
+                                </Row>
+                                <hr />
+                                <Row>
+                                    <Col>
+                                        <h4>Leave Whiteboard Journey team</h4>
+                                        <p>By leaving the team, you will lose access to all its contents.</p>
+                                        <Button className="btn btn-danger">
+                                            Leave Team
                                         </Button>
                                     </Col>
                                 </Row>
@@ -168,4 +176,4 @@ const Settings = () => {
     );
 };
 
-export default Settings;
+export default TeamSettings;
