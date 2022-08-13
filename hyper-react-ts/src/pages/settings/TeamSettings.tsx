@@ -1,4 +1,4 @@
-import { Row, Col, Card, Button } from 'react-bootstrap';
+import { Row, Col, Card, Button, InputGroup, Form, Modal } from 'react-bootstrap';
 import { FormInput } from 'components';
 import LeftPanel from './LeftPanel';
 import React, { useEffect, useRef, useState } from 'react';
@@ -6,6 +6,7 @@ import config from 'config';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useToggle } from 'hooks';
 
 type Member = {
     fullname: string;
@@ -19,13 +20,36 @@ type Team = {
     members: Member[];
 }
 
+type Invitation = {
+    memberId: null;
+    memberEmail: string;
+}
+
 const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
+
+const MemberCard = ({ member }: {member: Member}) => {
+    return (
+        <Card className="d-block mx-2 flex-fill">
+            <Card.Body>
+                <div className="text-center mb-2">
+                    <img src={member.profileImageUrl} className="rounded avatar-lg" alt="member" referrerPolicy="no-referrer" />
+                </div>
+                <h4 className="text-center font-weight-bold mt-3 mb-0">
+                    {member.fullname}
+                </h4>
+            </Card.Body>
+        </Card>
+    );
+}
 
 const TeamSettings = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [team, setTeam] = useState<Team>();
     const [previewImage, setPreviewImage] = useState<string>();
     const [logoImageFile, setLogoImageFile] = useState<null | File>();
+    const [isInviteOpen, toggleInvite] = useToggle();
+
+
     const fileInput = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -34,7 +58,12 @@ const TeamSettings = () => {
 
     useEffect(() => {
         setPreviewImage(team?.pictureUrl);
+        console.log(team?.members)
     }, [team]);
+
+    useEffect(() => {
+
+    })
 
     const getTeamData = async () => {
         await axios.get(config.API_URL+"/api/v1/teams/"+user.id, { headers: { Authorization: 'Bearer ' + user.token }})
@@ -111,6 +140,17 @@ const TeamSettings = () => {
             });
     }
 
+    const onInvite = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const email = (((e.target as HTMLFormElement).elements as {[key: string]: any})['email'].value);
+        const invitationData: Invitation = {
+            memberId: null,
+            memberEmail: email,
+        }
+        axios.post(config.API_URL + "/api/v1/teams/" + team?.id + "/members/invitation", invitationData, { headers: { Authorization: 'Bearer ' + user.token }})
+            .then(() => toast(<div>Invitation sent to {email}!</div>));
+    }
+
     const notify = () => toast(
         <div>
             Team logo saved successfully!
@@ -177,13 +217,44 @@ const TeamSettings = () => {
                                     </Col>
                                 </Row>
                                 <hr />
-                                <Row>
+                                <Row className="mb-3">
                                     <Col>
                                         <span className='h4 mb-1 me-3' >Members</span>
-                                        <Button className="btn btn-primary">
-                                            Invite
+                                        <Button className="btn btn-primary" onClick={toggleInvite}>
+                                            <i className="mdi mdi-plus"></i> Invite
                                         </Button>
+                                        <Modal show={isInviteOpen} onHide={toggleInvite}>
+                                            <Modal.Body>
+                                                <Modal.Header onHide={toggleInvite} closeButton>
+                                                    <h4 className="modal-title">Invite a new member</h4>
+                                                </Modal.Header>
+                                                <form className="ps-3 pe-3 mt-3" onSubmit={onInvite}>
+                                                    <Form.Group>
+                                                        <Form.Label htmlFor="email">Invite by Email</Form.Label>
+                                                        <InputGroup className="mb-3">
+                                                            <Form.Control
+                                                                id="email"
+                                                                type="email"
+                                                                placeholder="example@email.com"
+                                                            />
+                                                            <Button type="submit">
+                                                                Send Invitation
+                                                            </Button>
+                                                        </InputGroup>
+                                                    </Form.Group>
+                                                </form>
+                                            </Modal.Body>
+                                        </Modal>
                                     </Col>
+                                </Row>
+                                <Row>
+                                    {team?.members.map((member: Member, i: number) => {
+                                        return (
+                                        <Col className="d-flex">
+                                            <MemberCard member={member} />
+                                        </Col>
+                                        );
+                                    })}
                                 </Row>
                                 <hr />
                                 <Row>
