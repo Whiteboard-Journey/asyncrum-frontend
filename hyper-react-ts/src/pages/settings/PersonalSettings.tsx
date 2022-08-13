@@ -95,6 +95,7 @@ const PersonalSettings = () => {
                             </div>
 
                             <div className="page-aside-right">
+                                <h4 className="mb-3">Change Personal Information</h4>
                                 <Row>
                                     <Col md={7}>
                                     <form onSubmit={onSubmitProfileInfo}>
