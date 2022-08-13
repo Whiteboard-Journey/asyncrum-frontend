@@ -22,13 +22,22 @@ type Team = {
 const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
 
 const TeamSettings = () => {
+    const [loading, setLoading] = useState<boolean>(true);
     const [team, setTeam] = useState<Team>();
     const [previewImage, setPreviewImage] = useState<string>();
-    const [profileImageFile, setProfileImageFile] = useState<null | File>();
+    const [logoImageFile, setLogoImageFile] = useState<null | File>();
     const fileInput = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        axios.get(config.API_URL+"/api/v1/teams/"+user.id, { headers: { Authorization: 'Bearer ' + user.token }})
+        getTeamData();
+    }, []);
+
+    useEffect(() => {
+        setPreviewImage(team?.pictureUrl);
+    }, [team]);
+
+    const getTeamData = async () => {
+        await axios.get(config.API_URL+"/api/v1/teams/"+user.id, { headers: { Authorization: 'Bearer ' + user.token }})
             .then(res => {
                 let teaminfo: Team = {
                     id: res.data.id,
@@ -39,17 +48,22 @@ const TeamSettings = () => {
                         profileImageUrl: member.profileImageUrl
                     }))
                 };
+                return teaminfo;
+            })
+            .then((teaminfo: Team) => {
                 setTeam(teaminfo);
-                setPreviewImage(team?.pictureUrl)
+                setPreviewImage(team?.pictureUrl);
+                setLoading(false);
+                return teaminfo;
             });
-    }, []);
+    }
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if (!e.target.files) {
             setPreviewImage(team?.pictureUrl);
             return;
         } else {
-            setProfileImageFile(e.target.files[0]);
+            setLogoImageFile(e.target.files[0]);
         }
 
         const reader = new FileReader();
@@ -65,30 +79,30 @@ const TeamSettings = () => {
 
     const onCancelProfileImageChange = () => {
         setPreviewImage(team?.pictureUrl);
-        setProfileImageFile(null);
+        setLogoImageFile(null);
     }
 
-    const onSaveProfileImage = (e: React.MouseEvent<HTMLElement>) => {
-        if (!profileImageFile) {
+    const onSaveLogoImage = (e: React.MouseEvent<HTMLElement>) => {
+        if (!logoImageFile) {
             return;
         }
         else {
-            axios.post(config.API_URL+"/api/v1/member/images/"+user.id, null, { headers: { Authorization: 'Bearer ' + user.token }})
+            axios.post(config.API_URL+"/api/v1/team/images/"+team?.id, null, { headers: { Authorization: 'Bearer ' + user.token }})
                 .then(res => {
                     const preSignedURL = res.data.preSignedURL;
                     const uploadAxios = axios.create({ transformRequest: [(data: any, headers: any) => {
                         delete headers.common.Authorization;
                         headers['Content-Type'] = 'image/png';
-                        return profileImageFile;
+                        return logoImageFile;
                     }] });
-                    uploadAxios.put(preSignedURL, profileImageFile).then(() => {
+                    uploadAxios.put(preSignedURL, logoImageFile).then(() => {
                         notify();
                     });
                 })
         }
     }
 
-    const onSubmitProfileInfo = (e: React.FormEvent<HTMLFormElement>) => {
+    const onSubmitTeamInfo = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const name = (((e.target as HTMLFormElement).elements as {[key: string]: any})['name'].value);
         axios.patch(`${config.API_URL + "/api/v1/teams/" + team?.id}`, { name }, { headers: { Authorization: 'Bearer ' + user.token }})
@@ -113,7 +127,7 @@ const TeamSettings = () => {
                     </div>
                 </Col>
             </Row>
-            <Row>
+            {!loading && <Row>
                 <Col>
                     <Card>
                         <Card.Body>
@@ -125,7 +139,7 @@ const TeamSettings = () => {
                                 <h4 className="mb-3">Change Team Information</h4>
                                 <Row>
                                     <Col md={7}>
-                                    <form onSubmit={onSubmitProfileInfo}>
+                                    <form onSubmit={onSubmitTeamInfo}>
                                         <FormInput
                                             label="Team Name"
                                             type="text"
@@ -149,12 +163,12 @@ const TeamSettings = () => {
                                                 // accept='image/jpg, image/png, image/jpeg' 
                                                 accept='image/png'
                                                 style={{display:'none'}}
-                                                name='profileImage'
+                                                name='logoImage'
                                                 onChange={onChange}
                                                 ref={fileInput}
                                             />
                                         </div>
-                                        <Button className="me-2" onClick={onSaveProfileImage} >
+                                        <Button className="me-2" onClick={onSaveLogoImage} >
                                             Save
                                         </Button>
                                         <Button className="btn btn-secondary" onClick={onCancelProfileImageChange} >
@@ -174,7 +188,7 @@ const TeamSettings = () => {
                                 <hr />
                                 <Row>
                                     <Col>
-                                        <h4>Leave Whiteboard Journey team</h4>
+                                        <h4>Leave {team?.name} team</h4>
                                         <p>By leaving the team, you will lose access to all its contents.</p>
                                         <Button className="btn btn-danger">
                                             Leave Team
@@ -185,7 +199,7 @@ const TeamSettings = () => {
                         </Card.Body>
                     </Card>
                 </Col>
-            </Row>
+            </Row>}
             <ToastContainer
                 position="bottom-center"
                 autoClose={3000}
