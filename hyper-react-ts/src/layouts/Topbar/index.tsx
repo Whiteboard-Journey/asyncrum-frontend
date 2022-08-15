@@ -29,7 +29,6 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
     const { width } = useViewport();
     const [isMenuOpened, toggleMenu] = useToggle();
     const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
-    const userImage = user.profileImageUrl;
 
     // useEffect(() => {
     //     axios.get(config.API_URL + "/api/v1/members/" + user.id)
@@ -115,10 +114,10 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
                     </li>
                     <li className="dropdown notification-list">
                         <ProfileDropdown
-                            userImage={userImage}
+                            userImage={user.profileImageUrl}
                             menuItems={profileMenus}
-                            username={'Dominic Keller'}
-                            userTitle={'Founder'}
+                            username={user.fullname}
+                            userTitle={'Developer'}
                         />
                     </li>
                 </ul>
