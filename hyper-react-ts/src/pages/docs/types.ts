@@ -16,5 +16,6 @@ export type Whiteboard = {
     lastModifiedDate: string;
     scope: string;
     author: string;
+    authorProfileImageUrl: string;
     whiteboardFileUrl: string;
 }
