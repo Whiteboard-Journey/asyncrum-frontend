@@ -25,7 +25,7 @@ const ProfileDropdown = ({ userTitle, username, menuItems, userImage }: ProfileD
                 className="nav-link dropdown-toggle nav-user arrow-none me-0"
             >
                 <span className="account-user-avatar">
-                    <img src={userImage} className="rounded-circle" alt="user" />
+                    <img src={userImage} className="rounded-circle" alt="user" referrerPolicy="no-referrer" />
                 </span>
                 <span>
                     <span className="account-user-name">{username}</span>

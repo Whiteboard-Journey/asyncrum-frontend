@@ -9,8 +9,11 @@ function login(params: { email: string; password: string }) {
 
 function logout() {
     document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    // const baseUrl = '/logout/';
-    // return api.create(`${baseUrl}`, {});
+}
+
+function readMember(params: { token: string; }) {
+    const baseUrl = '/api/v1/members/0';
+    return api.get(`${baseUrl}`, params);
 }
 
 function signup(params: { fullname: string; email: string; password: string }) {
@@ -28,4 +31,4 @@ function forgotPasswordConfirm(params: { email: string }) {
     return api.create(`${baseUrl}`, params);
 }
 
-export { login, logout, signup, forgotPassword, forgotPasswordConfirm };
+export { login, logout, readMember, signup, forgotPassword, forgotPasswordConfirm };

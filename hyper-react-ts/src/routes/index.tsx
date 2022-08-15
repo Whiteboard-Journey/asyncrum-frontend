@@ -28,6 +28,10 @@ const ProjectDetail = React.lazy(() => import('pages/apps/Projects/Detail/'));
 const ProjectGannt = React.lazy(() => import('pages/apps/Projects/Gantt'));
 const ProjectForm = React.lazy(() => import('pages/apps/Projects/ProjectForm'));
 
+// settings
+const PersonalSettings = React.lazy(() => import('pages/settings/PersonalSettings'));
+const TeamSettings = React.lazy(() => import('pages/settings/TeamSettings'));
+
 // - chat
 const ChatApp = React.lazy(() => import('pages/apps/Chat/'));
 
@@ -391,6 +395,14 @@ const AllRoutes = () => {
                 {
                     path: 'pages',
                     children: [
+                        {
+                            path: 'personal-settings',
+                            element: <LoadComponent component={PersonalSettings} />,
+                        },
+                        {path: 'team-settings',
+                        element: <LoadComponent component={TeamSettings} />,
+
+                        },
                         {
                             path: 'starter',
                             element: <LoadComponent component={Starter} />,
