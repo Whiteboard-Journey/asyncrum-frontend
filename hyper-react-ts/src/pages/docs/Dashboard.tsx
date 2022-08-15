@@ -2,8 +2,6 @@ import { Row, Col, Button, ButtonGroup, Card, Dropdown, OverlayTrigger, Tooltip,
 import { Link } from 'react-router-dom';
 import { DailyStandup, Whiteboard } from './types';
 import { useEffect, useState } from 'react';
-import { useReadAllWhiteboard } from "./hooks";
-import avatar3 from 'assets/images/users/avatar-8.jpg';
 import { useToggle } from 'hooks';
 import axios from 'axios';
 import config from 'config';
