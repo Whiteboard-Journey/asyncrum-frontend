@@ -2,8 +2,6 @@ import { Row, Col, Button, ButtonGroup, Card, Dropdown, OverlayTrigger, Tooltip,
 import { Link } from 'react-router-dom';
 import { DailyStandup, Whiteboard } from './types';
 import { useEffect, useState } from 'react';
-import { useReadAllWhiteboard } from "./hooks";
-import avatar3 from 'assets/images/users/avatar-8.jpg';
 import { useToggle } from 'hooks';
 import axios from 'axios';
 import config from 'config';
@@ -120,19 +118,10 @@ const DailyStandupCard = ({ dailyStandup }: {dailyStandup: DailyStandup}) => {
         useModal();
 
     return (
-        <Card className="d-block mx-2">
+        <Card className="d-block me-3">
             <Card.Body onClick={() => {openModalWithClass('modal-full-width')}} style={{cursor:'pointer'}}>
                 <div className={(dailyStandup.seen ? "opacity-25" : "") + " text-center"}>
-                    <Link
-                        to="#"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title=""
-                        data-original-title="Mat Helme"
-                        className="d-inline-block me-1"
-                    >
-                        <img src={dailyStandup.profileImageUrl} className="rounded-circle avatar-lg" alt="friend" referrerPolicy="no-referrer" />
-                    </Link>
+                    <img src={dailyStandup.profileImageUrl} className="rounded-circle avatar-lg" alt={dailyStandup.author} referrerPolicy="no-referrer" />
                 </div>
                 <h4 className={(dailyStandup.seen ? "text-light" : "") + " text-center font-weight-bold mt-2"}>
                     {dailyStandup.author}
@@ -348,7 +337,7 @@ const Dashboard = () => {
                     </div>
                 </Col>
             </Row>
-            <Row>
+            <Row className="mb-4">
                 <Col>
                 <Button onClick={() => {openModalWithClass('modal-full-width')}}><i className="mdi mdi-plus"></i> Record</Button>
                     <Modal show={isRecordOpen} onHide={toggleRecord} dialogClassName={className} size={size} scrollable={scroll}>
@@ -424,7 +413,7 @@ const Dashboard = () => {
                 </Carousel>
                 }
             </Row>
-            
+            <hr />
             <Row>
                 <Col>
                     <div className="page-title-box">
