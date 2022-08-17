@@ -11,6 +11,7 @@ const cam_w = 320, cam_h = 240, screen_w = 960, screen_h = 540
 const VideoRecorder: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const webcamRef = useRef<Webcam>(null)
+  const [uploadCounter, setUploadCounter] = useState(0);
   const [recordingState, setRecordingState] = useState<'idle' | 'recording' | 'recorded'>('idle')
 
   const {
@@ -34,7 +35,7 @@ const VideoRecorder: React.FC = () => {
     }
 
     const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
-    const title = user.firstName + " " + user.lastName + " " + new Date().toLocaleDateString()
+    const title = user.fullname + " " + Date.now();
     const description = "Daily standups - " + title
 
     fetch(camMediaBlobUrl!)

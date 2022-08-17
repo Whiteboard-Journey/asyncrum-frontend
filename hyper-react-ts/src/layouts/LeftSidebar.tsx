@@ -28,19 +28,19 @@ const SideBarContent = ({ hideUserProfile }: SideBarContentProps) => {
             )}
             <AppMenu menuItems={getMenuItems()} />
 
-            <div
+            {/* <div
                 className={classNames('help-box', 'text-center', {
                     'text-white': hideUserProfile,
                 })}
             >
                 <Link to="/" className="float-end close-btn text-white">
                     <i className="mdi mdi-close" />
-                </Link>
+                </Link> */}
 
-                <img src={helpBoxImage} height="90" alt="Helper Icon" />
+                {/* <img src={helpBoxImage} height="90" alt="Helper Icon" />
                 <h5 className="mt-3">Unlimited Access</h5>
-                <p className="mb-3">Upgrade to plan to get access to unlimited reports</p>
-                <button
+                <p className="mb-3">Upgrade to plan to get access to unlimited reports</p> */}
+                {/* <button
                     className={classNames(
                         'btn',
                         'btn-sm',
@@ -49,7 +49,7 @@ const SideBarContent = ({ hideUserProfile }: SideBarContentProps) => {
                 >
                     Upgrade
                 </button>
-            </div>
+            </div> */}
             <div className="clearfix" />
         </>
     );
