@@ -255,7 +255,7 @@ const TeamSettings = () => {
                                 <Row>
                                     {team?.members.map((member: Member, i: number) => {
                                         return (
-                                        <Col sm={6} lg={3} xl={2} className='mb-4'>
+                                        <Col sm={6} lg={4} xl={3} className='mb-4'>
                                             <MemberCard member={member} />
                                         </Col>
                                         );
