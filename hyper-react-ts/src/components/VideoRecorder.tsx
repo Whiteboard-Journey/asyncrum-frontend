@@ -11,7 +11,6 @@ const cam_w = 320, cam_h = 240, screen_w = 960, screen_h = 540
 const VideoRecorder: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const webcamRef = useRef<Webcam>(null)
-  const [uploadCounter, setUploadCounter] = useState(0);
   const [recordingState, setRecordingState] = useState<'idle' | 'recording' | 'recorded'>('idle')
 
   const {
