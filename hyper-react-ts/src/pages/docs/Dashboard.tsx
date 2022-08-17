@@ -20,7 +20,7 @@ const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
     const title = (((event.target as HTMLFormElement).elements as {[key: string]: any})['title'].value);
     const description = (((event.target as HTMLFormElement).elements as {[key: string]: any})['description'].value);
-    const scope = "";
+    const scope = "TEAM";
 
     axios.post(`${config.API_URL + "/api/v1/whiteboards"}`, { title, description, scope }, { headers: { Authorization: 'Bearer ' + user.token }})
     .then((response) => {
