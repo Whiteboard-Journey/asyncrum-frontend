@@ -2,7 +2,7 @@ export type DailyStandup = {
     id: number;
     author: string;
     profileImageUrl: string;
-    lastModifiedDate: string;
+    createdDate: string;
     camRecordFileUrl: string;
     screenRecordFileUrl: string;
     seen: boolean;

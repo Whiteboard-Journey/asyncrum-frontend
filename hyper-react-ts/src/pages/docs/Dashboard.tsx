@@ -127,12 +127,12 @@ const DailyStandupCard = ({ dailyStandup }: {dailyStandup: DailyStandup}) => {
                     {dailyStandup.author}
                 </h4>
                 <p className={(dailyStandup.seen ? "text-light" : "text-muted") + " text-center font-12 mb-1"}>
-                    {convertDatetime(dailyStandup.lastModifiedDate)}
+                    {convertDatetime(dailyStandup.createdDate)}
                 </p>
                 <Modal show={isViewOpen} onHide={toggleView} dialogClassName={className} size={size} scrollable={scroll}>
                     <Modal.Body>
                         <Modal.Header onHide={toggleView} closeButton>
-                            <h4 className="modal-title">{dailyStandup.author + " - " + convertDatetime(dailyStandup.lastModifiedDate)}</h4>
+                            <h4 className="modal-title">{dailyStandup.author + " - " + convertDatetime(dailyStandup.createdDate)}</h4>
                         </Modal.Header>
                         <video src={dailyStandup.camRecordFileUrl} controls autoPlay playsInline width={cam_w} height={cam_h} style={{marginLeft: 'auto', marginRight: 'auto', display: 'block'}} />
                         <video src={dailyStandup.screenRecordFileUrl} controls autoPlay playsInline width={screen_w} height={screen_h} style={{marginLeft: 'auto', marginRight: 'auto', display: 'block'}} />
@@ -269,7 +269,7 @@ const Dashboard = () => {
             // res.data.records.filter(record => record.type === "daily standups")
             for (const record of res.data.records) {
                 if (dailyStandups.at(-1)?.author === record.author.fullname
-                && dailyStandups.at(-1)?.lastModifiedDate.slice(0, -5) === record.lastModifiedDate.slice(0, -5)) {
+                && dailyStandups.at(-1)?.createdDate.slice(0, -5) === record.createdDate.slice(0, -5)) {
                     if (record.title.slice(-6) === "screen") {
                         dailyStandups.at(-1)!.screenRecordFileUrl = record.recordFileUrl;
                     } else {
@@ -281,7 +281,7 @@ const Dashboard = () => {
                             id: record.id,
                             author: record.author.fullname,
                             profileImageUrl: record.author.profileImageUrl,
-                            lastModifiedDate: record.lastModifiedDate,
+                            createdDate: record.createdDate,
                             camRecordFileUrl: "",
                             screenRecordFileUrl: record.recordFileUrl,
                             seen: false,
@@ -291,7 +291,7 @@ const Dashboard = () => {
                             id: record.id,
                             author: record.author.fullname,
                             profileImageUrl: record.author.profileImageUrl,
-                            lastModifiedDate: record.lastModifiedDate,
+                            createdDate: record.createdDate,
                             camRecordFileUrl: record.recordFileUrl,
                             screenRecordFileUrl: "",
                             seen: false,
