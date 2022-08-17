@@ -34,7 +34,7 @@ const VideoRecorder: React.FC = () => {
     }
 
     const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
-    const title = user.firstName + " " + user.lastName + " " + new Date().toLocaleDateString()
+    const title = user.fullname + " " + Date.now();
     const description = "Daily standups - " + title
 
     fetch(camMediaBlobUrl!)
