@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Row, Col, Card, Toast, ToastContainer, Form, Button, ToastContainerProps } from 'react-bootstrap';
 import { useToggle } from 'hooks';
 import { PageTitle } from 'components';
-import logo from 'assets/images/logo_sm_dark.png';
+import logo from 'assets/images/asyncrum-logo-white-small.png';
 
 type Stack = {
     time: string;
