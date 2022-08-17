@@ -12,7 +12,7 @@ const params = new URLSearchParams(window.location.search);
 const id = params.get('id');
 const url = params.get('url');
 
-const client = new yorkie.Client('http://wbj-vpc-alb-private-152462774.ap-northeast-2.elb.amazonaws.com:8090');
+const client = new yorkie.Client('http://api.asyncrum.com:8090');
 const doc = new yorkie.Document<YorkieType>(id ? id : '');
 
 const Whiteboard = () => {
