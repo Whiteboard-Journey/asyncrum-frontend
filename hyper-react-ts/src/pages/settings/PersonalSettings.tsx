@@ -130,7 +130,7 @@ const PersonalSettings = () => {
                                     <Col md={{ span: 3, offset: 2 }}>
                                         <div style={{ height: 190, position: "relative" }}>
                                             <p className='mb-1' style={{ fontWeight: '600' }}>Profile Image</p>
-                                            <div className='container'>
+                                            <div className='overlay-container'>
                                                 <img src={previewImage} alt="profile preview" className="rounded ratio ratio-1x1" style={{ position: "absolute", width: 150, height: 150, cursor: "pointer" }} referrerPolicy="no-referrer" />
                                                 <input 
                                                     type='file' 
@@ -142,7 +142,7 @@ const PersonalSettings = () => {
                                                     ref={fileInput}
                                                 />
                                                 <div className='overlay rounded' onClick={()=>{fileInput.current!.click()}}>
-                                                    <div className='text'>click to upload</div>
+                                                    <div className='overlay-text'>click to upload</div>
                                                 </div>
                                             </div>
                                         </div>
