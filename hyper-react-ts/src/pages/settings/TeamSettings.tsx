@@ -29,7 +29,7 @@ const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
 
 const MemberCard = ({ member }: {member: Member}) => {
     return (
-        <Card className="d-block mx-2 flex-fill">
+        <Card className="d-block mx-2 mb-2 h-100">
             <Card.Body>
                 <div className="text-center mb-2">
                     <img src={member.profileImageUrl} className="rounded avatar-lg" alt="member" referrerPolicy="no-referrer" />
@@ -197,7 +197,7 @@ const TeamSettings = () => {
                                     <Col md={{ span: 3, offset: 2 }}>
                                         <div style={{ height: 190, position: "relative" }}>
                                             <p className='mb-1' style={{ fontWeight: '600' }}>Team Logo</p>
-                                            <div className='overlay-container'>
+                                            <div className='container'>
                                                 <img src={previewImage} alt="profile preview" className="rounded ratio ratio-1x1" style={{ position: "absolute", width: 150, height: 150, cursor: "pointer" }} referrerPolicy="no-referrer" />
                                                 <input 
                                                     type='file' 
@@ -209,7 +209,7 @@ const TeamSettings = () => {
                                                     ref={fileInput}
                                                 />
                                                 <div className='overlay rounded' onClick={()=>{fileInput.current!.click()}}>
-                                                    <div className='overlay-text'>click to upload</div>
+                                                    <div className='text'>click to upload</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -255,7 +255,7 @@ const TeamSettings = () => {
                                 <Row>
                                     {team?.members.map((member: Member, i: number) => {
                                         return (
-                                        <Col className="d-flex">
+                                        <Col sm={6} lg={4} xl={3} className='mb-4'>
                                             <MemberCard member={member} />
                                         </Col>
                                         );
