@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useToggle } from 'hooks';
 import axios from 'axios';
 import config from 'config';
-import { TDDocument, TDFile, TldrawApp } from '@tldraw/tldraw';
+import { TDDocument, TDFile, TldrawApp } from '@krapi0314/tldraw';
 import moment from 'moment';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
