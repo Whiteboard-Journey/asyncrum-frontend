@@ -14,7 +14,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
-    "@tldraw/tldraw": "^1.20.0",
+    "@krapi0314/tldraw": "1.20.3",
     "@types/draftjs-to-html": "^0.8.1",
     "@types/frappe-gantt": "^0.4.2",
     "@types/html-to-draftjs": "^1.4.0",
@@ -82,6 +82,7 @@
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0",
     "yorkie-js-sdk": "^0.2.16",
+    "@react-hook/throttle": "^2.2.0",
     "yup": "^0.32.11"
   },
   "scripts": {
