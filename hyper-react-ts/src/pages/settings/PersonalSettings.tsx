@@ -1,7 +1,7 @@
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import { FormInput } from 'components';
 import LeftPanel from './LeftPanel';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import config from 'config';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
 
-const Settings = () => {
+const PersonalSettings = () => {
     const [previewImage, setPreviewImage] = useState<string>(user.profileImageUrl);
     const [profileImageFile, setProfileImageFile] = useState<null | File>();
     const fileInput = useRef<HTMLInputElement>(null);
@@ -58,6 +58,18 @@ const Settings = () => {
         }
     }
 
+    const onSubmitProfileInfo = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const fullname = (((e.target as HTMLFormElement).elements as {[key: string]: any})['fullname'].value);
+        const nickname = "";
+        axios.patch(`${config.API_URL + "/api/v1/members/" + user.id}`, { fullname, nickname }, { headers: { Authorization: 'Bearer ' + user.token }})
+            .then(() => {
+                user.fullname = fullname;
+                sessionStorage.setItem('asyncrum_user', JSON.stringify(user));
+                window.location.reload();
+            });
+    }
+
     const notify = () => toast(
         <div>
             Profile image saved successfully!
@@ -79,19 +91,22 @@ const Settings = () => {
                     <Card>
                         <Card.Body>
                             <div className="page-aside-left">
-                                <LeftPanel />
+                                <LeftPanel selected="personal" />
                             </div>
 
                             <div className="page-aside-right">
+                                <h4 className="mb-3">Change Personal Information</h4>
                                 <Row>
                                     <Col md={7}>
-                                    <form>
+                                    <form onSubmit={onSubmitProfileInfo}>
                                         <FormInput
                                             label="Full Name"
                                             type="text"
-                                            name="fullName"
+                                            name="fullname"
                                             containerClass={'mb-3'}
-                                            key="fullName"
+                                            key="fullname"
+                                            placeholder={user.fullname}
+                                            required
                                         />
                                         <FormInput
                                             label="Company Name"
@@ -115,16 +130,21 @@ const Settings = () => {
                                     <Col md={{ span: 3, offset: 2 }}>
                                         <div style={{ height: 190, position: "relative" }}>
                                             <p className='mb-1' style={{ fontWeight: '600' }}>Profile Image</p>
-                                            <img src={previewImage} alt="profile preview" className="rounded ratio ratio-1x1" style={{ position: "absolute", width: 150, height: 150, cursor: "pointer" }} onClick={()=>{fileInput.current!.click()}} referrerPolicy="no-referrer" />
-                                            <input 
-                                                type='file' 
-                                                // accept='image/jpg, image/png, image/jpeg' 
-                                                accept='image/png'
-                                                style={{display:'none'}}
-                                                name='profileImage'
-                                                onChange={onChange}
-                                                ref={fileInput}
-                                            />
+                                            <div className='overlay-container'>
+                                                <img src={previewImage} alt="profile preview" className="rounded ratio ratio-1x1" style={{ position: "absolute", width: 150, height: 150, cursor: "pointer" }} referrerPolicy="no-referrer" />
+                                                <input 
+                                                    type='file' 
+                                                    // accept='image/jpg, image/png, image/jpeg' 
+                                                    accept='image/png'
+                                                    style={{display:'none'}}
+                                                    name='profileImage'
+                                                    onChange={onChange}
+                                                    ref={fileInput}
+                                                />
+                                                <div className='overlay rounded' onClick={()=>{fileInput.current!.click()}}>
+                                                    <div className='overlay-text'>click to upload</div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <Button className="me-2" onClick={onSaveProfileImage} >
                                             Save
@@ -154,4 +174,4 @@ const Settings = () => {
     );
 };
 
-export default Settings;
+export default PersonalSettings;

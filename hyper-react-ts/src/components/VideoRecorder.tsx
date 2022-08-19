@@ -34,7 +34,7 @@ const VideoRecorder: React.FC = () => {
     }
 
     const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
-    const title = user.firstName + " " + user.lastName + " " + new Date().toLocaleDateString()
+    const title = user.fullname + " " + Date.now();
     const description = "Daily standups - " + title
 
     fetch(camMediaBlobUrl!)
@@ -43,7 +43,7 @@ const VideoRecorder: React.FC = () => {
         axios.post(config.API_URL+'/api/v1/records', {
           "title": title + " cam",
           "description": description + " cam",
-          "scope": ""
+          "scope": "TEAM"
         }, { headers: { Authorization: 'Bearer ' + user.token }})
         .then(res => {
           const preSignedURL = res.data.preSignedURL;
@@ -62,7 +62,7 @@ const VideoRecorder: React.FC = () => {
         axios.post(config.API_URL+'/api/v1/records', {
           "title": title + " screen",
           "description": description + " screen",
-          "scope": ""
+          "scope": "TEAM"
         }, { headers: { Authorization: 'Bearer ' + user.token }})
         .then(res => {
           const preSignedURL = res.data.preSignedURL;

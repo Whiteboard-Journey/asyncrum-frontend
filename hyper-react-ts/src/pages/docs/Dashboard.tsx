@@ -1,9 +1,7 @@
-import { Row, Col, Button, ButtonGroup, Card, Dropdown, Alert, Modal } from 'react-bootstrap';
+import { Row, Col, Button, ButtonGroup, Card, Dropdown, OverlayTrigger, Tooltip, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { DailyStandup, Whiteboard } from './types';
 import { useEffect, useState } from 'react';
-import { useReadAllWhiteboard } from "./hooks";
-import avatar3 from 'assets/images/users/avatar-8.jpg';
 import { useToggle } from 'hooks';
 import axios from 'axios';
 import config from 'config';
@@ -22,7 +20,7 @@ const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
     const title = (((event.target as HTMLFormElement).elements as {[key: string]: any})['title'].value);
     const description = (((event.target as HTMLFormElement).elements as {[key: string]: any})['description'].value);
-    const scope = "";
+    const scope = "TEAM";
 
     axios.post(`${config.API_URL + "/api/v1/whiteboards"}`, { title, description, scope }, { headers: { Authorization: 'Bearer ' + user.token }})
     .then((response) => {
@@ -120,30 +118,21 @@ const DailyStandupCard = ({ dailyStandup }: {dailyStandup: DailyStandup}) => {
         useModal();
 
     return (
-        <Card className="d-block mx-2">
+        <Card className="d-block me-3">
             <Card.Body onClick={() => {openModalWithClass('modal-full-width')}} style={{cursor:'pointer'}}>
                 <div className={(dailyStandup.seen ? "opacity-25" : "") + " text-center"}>
-                    <Link
-                        to="#"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title=""
-                        data-original-title="Mat Helme"
-                        className="d-inline-block me-1"
-                    >
-                        <img src={dailyStandup.profileImageUrl} className="rounded-circle avatar-lg" alt="friend" referrerPolicy="no-referrer" />
-                    </Link>
+                    <img src={dailyStandup.profileImageUrl} className="rounded-circle avatar-lg" alt={dailyStandup.author} referrerPolicy="no-referrer" />
                 </div>
                 <h4 className={(dailyStandup.seen ? "text-light" : "") + " text-center font-weight-bold mt-2"}>
                     {dailyStandup.author}
                 </h4>
                 <p className={(dailyStandup.seen ? "text-light" : "text-muted") + " text-center font-12 mb-1"}>
-                    {convertDatetime(dailyStandup.lastModifiedDate)}
+                    {convertDatetime(dailyStandup.createdDate)}
                 </p>
                 <Modal show={isViewOpen} onHide={toggleView} dialogClassName={className} size={size} scrollable={scroll}>
                     <Modal.Body>
                         <Modal.Header onHide={toggleView} closeButton>
-                            <h4 className="modal-title">{dailyStandup.author + " - " + convertDatetime(dailyStandup.lastModifiedDate)}</h4>
+                            <h4 className="modal-title">{dailyStandup.author + " - " + convertDatetime(dailyStandup.createdDate)}</h4>
                         </Modal.Header>
                         <video src={dailyStandup.camRecordFileUrl} controls autoPlay playsInline width={cam_w} height={cam_h} style={{marginLeft: 'auto', marginRight: 'auto', display: 'block'}} />
                         <video src={dailyStandup.screenRecordFileUrl} controls autoPlay playsInline width={screen_w} height={screen_h} style={{marginLeft: 'auto', marginRight: 'auto', display: 'block'}} />
@@ -241,24 +230,19 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
                 </h4>
                 {whiteboard.description && (
                     <p className="font-13 my-3">
-                        {whiteboard.description}...
-                        <Link to="#" className="fw-bold text-muted">
-                            view more
-                        </Link>
+                        {whiteboard.description}
                     </p>
                 )}
                 <div>
-                    <Link
-                        to="#"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title=""
-                        data-original-title="Mat Helme"
-                        className="d-inline-block me-1"
+                    <span className="font-13">Author: </span>
+                    <OverlayTrigger
+                        placement={'bottom'}
+                        overlay={
+                            <Tooltip>{whiteboard.author}</Tooltip>
+                        }
                     >
-                        <span className="font-13">Author: </span>
-                        <img src={avatar3} className="rounded-circle avatar-xs" alt="friend" />
-                    </Link>
+                        <img src={whiteboard.authorProfileImageUrl} className="rounded-circle avatar-xs" alt={whiteboard.author} />
+                    </OverlayTrigger>
                 </div>
                 <p className="text-muted text-end font-12 mt-3 mb-1">
                     Last modified: {convertDatetime(whiteboard.lastModifiedDate)}
@@ -285,7 +269,7 @@ const Dashboard = () => {
             // res.data.records.filter(record => record.type === "daily standups")
             for (const record of res.data.records) {
                 if (dailyStandups.at(-1)?.author === record.author.fullname
-                && dailyStandups.at(-1)?.lastModifiedDate.slice(0, -5) === record.lastModifiedDate.slice(0, -5)) {
+                && dailyStandups.at(-1)?.createdDate.slice(0, -5) === record.createdDate.slice(0, -5)) {
                     if (record.title.slice(-6) === "screen") {
                         dailyStandups.at(-1)!.screenRecordFileUrl = record.recordFileUrl;
                     } else {
@@ -297,7 +281,7 @@ const Dashboard = () => {
                             id: record.id,
                             author: record.author.fullname,
                             profileImageUrl: record.author.profileImageUrl,
-                            lastModifiedDate: record.lastModifiedDate,
+                            createdDate: record.createdDate,
                             camRecordFileUrl: "",
                             screenRecordFileUrl: record.recordFileUrl,
                             seen: false,
@@ -307,7 +291,7 @@ const Dashboard = () => {
                             id: record.id,
                             author: record.author.fullname,
                             profileImageUrl: record.author.profileImageUrl,
-                            lastModifiedDate: record.lastModifiedDate,
+                            createdDate: record.createdDate,
                             camRecordFileUrl: record.recordFileUrl,
                             screenRecordFileUrl: "",
                             seen: false,
@@ -326,16 +310,17 @@ const Dashboard = () => {
         axios.get(config.API_URL+"/api/v1/whiteboards?scope=team&pageIndex=0&topId=0", { headers: { Authorization: 'Bearer ' + user.token }})
         .then(res => {
             // res.data.records.filter(record => record.type === "daily standups")
-            for (const record of res.data.whiteboards) {
+            for (const whiteboard of res.data.whiteboards) {
                 whiteboards.push({
-                    id: record.id,
-                    title: record.title,
-                    description: record.description,
-                    createdDate: record.createdDate,
-                    lastModifiedDate: record.lastModifiedDate,
-                    scope: record.scope,
-                    author: record.author.fullname,
-                    whiteboardFileUrl: record.whiteboardFileUrl,
+                    id: whiteboard.id,
+                    title: whiteboard.title,
+                    description: whiteboard.description,
+                    createdDate: whiteboard.createdDate,
+                    lastModifiedDate: whiteboard.lastModifiedDate,
+                    scope: whiteboard.scope,
+                    author: whiteboard.author.fullname,
+                    authorProfileImageUrl: whiteboard.author.profileImageUrl,
+                    whiteboardFileUrl: whiteboard.whiteboardFileUrl,
                 });
             }
             setWhiteboards(whiteboards);
@@ -352,7 +337,7 @@ const Dashboard = () => {
                     </div>
                 </Col>
             </Row>
-            <Row>
+            <Row className="mb-4">
                 <Col>
                 <Button onClick={() => {openModalWithClass('modal-full-width')}}><i className="mdi mdi-plus"></i> Record</Button>
                     <Modal show={isRecordOpen} onHide={toggleRecord} dialogClassName={className} size={size} scrollable={scroll}>
@@ -428,7 +413,7 @@ const Dashboard = () => {
                 </Carousel>
                 }
             </Row>
-            
+            <hr />
             <Row>
                 <Col>
                     <div className="page-title-box">
