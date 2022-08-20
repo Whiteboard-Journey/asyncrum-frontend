@@ -31,6 +31,7 @@ const ProjectForm = React.lazy(() => import('pages/apps/Projects/ProjectForm'));
 // settings
 const PersonalSettings = React.lazy(() => import('pages/settings/PersonalSettings'));
 const TeamSettings = React.lazy(() => import('pages/settings/TeamSettings'));
+const CreateTeam = React.lazy(() => import('pages/settings/CreateTeam'));
 
 // - chat
 const ChatApp = React.lazy(() => import('pages/apps/Chat/'));
@@ -399,9 +400,13 @@ const AllRoutes = () => {
                             path: 'personal-settings',
                             element: <LoadComponent component={PersonalSettings} />,
                         },
-                        {path: 'team-settings',
-                        element: <LoadComponent component={TeamSettings} />,
-
+                        {
+                            path: 'team-settings',
+                            element: <LoadComponent component={TeamSettings} />,
+                        },
+                        {
+                            path: 'create-team',
+                            element: <LoadComponent component={CreateTeam} />,
                         },
                         {
                             path: 'starter',
