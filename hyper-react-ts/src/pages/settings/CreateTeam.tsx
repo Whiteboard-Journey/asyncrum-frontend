@@ -25,8 +25,15 @@ const CreateTeam = () => {
     const fileInput = useRef<HTMLInputElement>(null);
     const [isInviteOpen, toggleInvite] = useToggle();
 
-    const onCreateTeam = () => {
-
+    const onCreateTeam = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const name = (((e.target as HTMLFormElement).elements as {[key: string]: any})['name'].value);
+        const code = name.slice(0, 3) + Date.now();
+        axios.post(config.API_URL+"/api/v1/teams", {name, code},  { headers: { Authorization: 'Bearer ' + user.token }})
+            .then(res => {
+                setTeamId(res.data.id);
+                setTeamName(name);
+            })
     };
 
     const onUploadTeamImage = () => {
@@ -124,12 +131,12 @@ const CreateTeam = () => {
                                                 render={({ next }) => (
                                                     <VerticalForm 
                                                         onSubmit={(event, values) => {
-                                                            onCreateTeam();
+                                                            onCreateTeam(values as React.FormEvent<HTMLFormElement>);
                                                             next();
                                                         }} 
                                                         resolver={createValidationSchema}>
                                                         <FormInput
-                                                            label="Team Name"
+                                                            label="Enter a team name"
                                                             type="text"
                                                             name="name"
                                                             containerClass={'mb-3'}
@@ -147,37 +154,44 @@ const CreateTeam = () => {
                                             />
                                             <Step
                                                 id="logo"
-                                                render={({ next, previous }) => (
+                                                render={({ next }) => (
                                                     <VerticalForm 
                                                     onSubmit={(event, values) => {
                                                         onUploadTeamImage();
                                                         next();
                                                     }}> 
-                                                        <div style={{ height: 190, position: "relative" }}>
-                                            <p className='mb-1' style={{ fontWeight: '600' }}>Team Logo</p>
-                                            <div className='overlay-container'>
-                                                <img src="" alt="logo preview" className="rounded ratio ratio-1x1" style={{ position: "absolute", width: 150, height: 150, cursor: "pointer" }} referrerPolicy="no-referrer" />
-                                                <input 
-                                                    type='file' 
-                                                    // accept='image/jpg, image/png, image/jpeg' 
-                                                    accept='image/png'
-                                                    style={{display:'none'}}
-                                                    name='logoImage'
-                                                    onChange={onChange}
-                                                    ref={fileInput}
-                                                />
-                                                <div className='overlay rounded' onClick={()=>{fileInput.current!.click()}}>
-                                                    <div className='overlay-text'>click to upload</div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                    <div className="d-flex align-items-center justify-content-center">
+                                                        <div>
+                                                            <div style={{ height: 190, position: "relative" }}>
+                                                                <p className='mb-1' style={{ fontWeight: '600' }}>Upload your team logo (optional)</p>
+                                                                <div className='overlay-container mx-auto'>
+                                                                    <img src={previewImage} alt="logo preview" className="rounded ratio ratio-1x1" style={{ position: "absolute", width: 150, height: 150, cursor: "pointer" }} referrerPolicy="no-referrer" />
+                                                                    <input 
+                                                                        type='file' 
+                                                                        // accept='image/jpg, image/png, image/jpeg' 
+                                                                        accept='image/png'
+                                                                        style={{display:'none'}}
+                                                                        name='logoImage'
+                                                                        onChange={onChange}
+                                                                        ref={fileInput}
+                                                                    />
+                                                                    <div className='overlay rounded' onClick={()=>{fileInput.current!.click()}}>
+                                                                        <div className='overlay-text'>click to upload</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className='d-flex align-items-center justify-content-center'>
+                                                                <Button className="me-2" onClick={onSaveLogoImage} >
+                                                                    Save
+                                                                </Button>
+                                                                <Button className="btn btn-secondary" onClick={onCancelLogoImageChange} >
+                                                                    Cancel
+                                                                </Button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
                                                         <ul className="list-inline wizard mb-0">
-                                                            <li className="previous list-inline-item">
-                                                                <Button onClick={previous} variant="info">
-                                                                    Previous
-                                                                </Button>
-                                                            </li>
                                                             <li className="next list-inline-item float-end">
                                                                 <Button variant="primary" type="submit">
                                                                     Next
@@ -197,16 +211,10 @@ const CreateTeam = () => {
                                                                     <i className="mdi mdi-check-all"></i>
                                                                 </h2>
                                                                 <h3 className="mt-0 mb-4">Team {teamName} Created !</h3>
-
-                                                                
                                                             </div>
                                                         </Col>
 
                                                         <Col className="d-flex justify-content-between">
-                                                            <Button onClick={previous} variant="info">
-                                                                Previous
-                                                            </Button>
-
                                                             <Button className="btn btn-primary" onClick={toggleInvite}>
                                                                 <i className="mdi mdi-plus"></i> Invite Members
                                                             </Button>
