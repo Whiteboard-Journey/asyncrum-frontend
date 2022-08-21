@@ -106,7 +106,7 @@ const TeamSettings = () => {
         reader.readAsDataURL(e.target.files[0]);
     };
 
-    const onCancelProfileImageChange = () => {
+    const onCancelLogoImageChange = () => {
         setPreviewImage(team?.pictureUrl);
         setLogoImageFile(null);
     }
@@ -216,7 +216,7 @@ const TeamSettings = () => {
                                         <Button className="me-2" onClick={onSaveLogoImage} >
                                             Save
                                         </Button>
-                                        <Button className="btn btn-secondary" onClick={onCancelProfileImageChange} >
+                                        <Button className="btn btn-secondary" onClick={onCancelLogoImageChange} >
                                             Cancel
                                         </Button>
                                     </Col>
