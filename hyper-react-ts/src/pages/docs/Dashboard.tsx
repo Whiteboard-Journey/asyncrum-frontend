@@ -92,7 +92,7 @@ const onEditWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     const description = (((event.target as HTMLFormElement).elements as {[key: string]: any})['description'].value);
     const scope = "";
 
-    axios.put(`${config.API_URL + "/api/v1/whiteboards/" + id }`, { title, description, scope }, { headers: { Authorization: 'Bearer ' + user.token }})
+    axios.patch(`${config.API_URL + "/api/v1/whiteboards/" + id }`, { title, description, scope }, { headers: { Authorization: 'Bearer ' + user.token }})
         .then(() => window.location.reload());
 }
 
@@ -146,6 +146,10 @@ const DailyStandupCard = ({ dailyStandup }: {dailyStandup: DailyStandup}) => {
 const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
     const [isEditOpen, toggleEdit] = useToggle();
     const [isDeleteOpen, toggleDelete] = useToggle();
+    const [isReadMore, setIsReadMore] = useState(true);
+    const toggleReadMore = () => {
+        setIsReadMore(!isReadMore);
+    };
 
     return (
         <Card className="d-block">
@@ -177,6 +181,7 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
                                                 className="form-control"
                                                 type="text"
                                                 id="title"
+                                                maxLength={255}
                                                 required
                                                 placeholder={whiteboard.title}
                                             />
@@ -188,8 +193,9 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
                                             </label>
                                             <input
                                                 className="form-control"
-                                                type="textarea"
+                                                type="text"
                                                 id="description"
+                                                maxLength={255}
                                                 required
                                                 placeholder={whiteboard.description}
                                             />
@@ -225,12 +231,19 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
                 </Dropdown>
                 <h4 className="mt-0">
                     <Link to={whiteboardPageURL + whiteboard.whiteboardFileUrl + '&id=' + whiteboard.id} className="text-title">
-                        {whiteboard.title}
+                        {whiteboard.title.length > 25 ? whiteboard.title.slice(0, 25) + " ..." : whiteboard.title}
                     </Link>
                 </h4>
                 {whiteboard.description && (
                     <p className="font-13 my-3">
-                        {whiteboard.description}
+                        { isReadMore ? 
+                            whiteboard.description.slice(0, 35) :
+                        whiteboard.description }
+                        { whiteboard.description.length > 35 ?
+                            (<span onClick={toggleReadMore} className="fw-bold text-info" role="button">
+                                { isReadMore ? " ...read more" : " show less" }
+                            </span>) : ""
+                        }
                     </p>
                 )}
                 <div>
@@ -443,6 +456,7 @@ const Dashboard = () => {
                                         className="form-control"
                                         type="text"
                                         id="title"
+                                        maxLength={255}
                                         required
                                         placeholder="Untitled"
                                     />
@@ -456,6 +470,7 @@ const Dashboard = () => {
                                         className="form-control"
                                         type="textarea"
                                         id="description"
+                                        maxLength={255}
                                         required
                                         placeholder="Description"
                                     />
