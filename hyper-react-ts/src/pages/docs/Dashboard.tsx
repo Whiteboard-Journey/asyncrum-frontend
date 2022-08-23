@@ -1,7 +1,7 @@
-import { Row, Col, Button, ButtonGroup, Card, Dropdown, OverlayTrigger, Tooltip, Modal } from 'react-bootstrap';
+import { Row, Col, Button, ButtonGroup, Card, Dropdown, OverlayTrigger, Tooltip, Modal, Pagination } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { DailyStandup, Whiteboard } from './types';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useToggle } from 'hooks';
 import axios from 'axios';
 import config from 'config';
@@ -273,11 +273,13 @@ const Dashboard = () => {
         useModal();
     const [dailyStandups, setDailyStandups] = useState<DailyStandup[]>([]);
     const [dailyStandupLoading, setDailyStandupLoading] = useState<Boolean>(true);
+    const [whiteboardPageNumber, setWhiteboardPageNumber] = useState<number>(1);
+    const [numberOfWhiteboards, setNumberOfWhiteboards] = useState<number>(0);
     
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
         let dailyStandups: DailyStandup[] = [];
-        axios.get(config.API_URL+"/api/v1/records?scope=team&pageIndex=0&topId=0", { headers: { Authorization: 'Bearer ' + user.token }})
+        axios.get(config.API_URL+`/api/v1/records?scope=team&pageIndex=0&topId=0`, { headers: { Authorization: 'Bearer ' + user.token }})
         .then(res => {
             // res.data.records.filter(record => record.type === "daily standups")
             for (const record of res.data.records) {
@@ -317,12 +319,12 @@ const Dashboard = () => {
             setDailyStandups(dailyStandups);
             setDailyStandupLoading(false);
         });
-    }, []);
+    }, [whiteboardPageNumber]);
 
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
         let whiteboards: Whiteboard[] = [];
-        axios.get(config.API_URL+"/api/v1/whiteboards?scope=team&pageIndex=0&topId=0", { headers: { Authorization: 'Bearer ' + user.token }})
+        axios.get(config.API_URL+`/api/v1/whiteboards?scope=team&pageIndex=${whiteboardPageNumber-1}&topId=0`, { headers: { Authorization: 'Bearer ' + user.token }})
         .then(res => {
             // res.data.records.filter(record => record.type === "daily standups")
             for (const whiteboard of res.data.whiteboards) {
@@ -339,9 +341,31 @@ const Dashboard = () => {
                 });
             }
             setWhiteboards(whiteboards);
+            setNumberOfWhiteboards(res.data.size_ALL_PAGE);
             setWhiteboardLoading(false);
         });
-    }, []);
+    }, [whiteboardPageNumber]);
+
+    const WhiteboardPagination = () => {
+        const whiteboardPerPage = 12;
+        let items = [];
+    
+        const onPageNumberClick = (e: React.MouseEvent<HTMLElement>) => {
+            setWhiteboardPageNumber(parseInt((e.target as any).innerText));   
+        }
+    
+        for (let number = 1; number <= Math.ceil(numberOfWhiteboards / whiteboardPerPage) ; number++) {
+            items.push(<Pagination.Item key={number.toString()} active={number === whiteboardPageNumber} onClick={onPageNumberClick}>{number}</Pagination.Item>);
+        }
+    
+        return (
+            <Pagination className="mx-auto">
+                <Pagination.Prev />
+                {items}
+                <Pagination.Next />
+            </Pagination>
+        );
+    };
 
     return(
         <>
@@ -498,6 +522,7 @@ const Dashboard = () => {
                 </Col>
             </Row>
             {!whiteboardLoading && 
+            (<>
             <Row>
                 {whiteboards.map((whiteboard: Whiteboard, i: number) => {
                     return (
@@ -507,6 +532,12 @@ const Dashboard = () => {
                     );
                 })}
             </Row>
+            <Row>
+                <Col className="d-flex">
+                    <WhiteboardPagination />
+                </Col>
+            </Row>
+            </>)
             }
         </>
     );
