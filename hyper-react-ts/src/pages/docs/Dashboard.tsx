@@ -269,7 +269,7 @@ const Dashboard = () => {
             // res.data.records.filter(record => record.type === "daily standups")
             for (const record of res.data.records) {
                 if (dailyStandups.at(-1)?.author === record.author.fullname
-                && dailyStandups.at(-1)?.createdDate.slice(0, -5) === record.createdDate.slice(0, -5)) {
+                && dailyStandups.at(-1)?.title.slice(0, 13) === record.title.slice(0, 13)) {
                     if (record.title.slice(-6) === "screen") {
                         dailyStandups.at(-1)!.screenRecordFileUrl = record.recordFileUrl;
                     } else {
@@ -280,6 +280,7 @@ const Dashboard = () => {
                         dailyStandups.push({
                             id: record.id,
                             author: record.author.fullname,
+                            title: record.title,
                             profileImageUrl: record.author.profileImageUrl,
                             createdDate: record.createdDate,
                             camRecordFileUrl: "",
@@ -290,6 +291,7 @@ const Dashboard = () => {
                         dailyStandups.push({
                             id: record.id,
                             author: record.author.fullname,
+                            title: record.title,
                             profileImageUrl: record.author.profileImageUrl,
                             createdDate: record.createdDate,
                             camRecordFileUrl: record.recordFileUrl,

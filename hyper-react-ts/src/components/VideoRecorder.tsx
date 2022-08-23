@@ -8,6 +8,10 @@ import config from 'config';
 const videoConstraints = { facingMode: 'user' }
 const cam_w = 320, cam_h = 240, screen_w = 960, screen_h = 540
 
+const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
+const title = user.fullname + " " + Date.now();
+const description = "Daily standups - " + title
+
 const VideoRecorder: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const webcamRef = useRef<Webcam>(null)
@@ -27,36 +31,27 @@ const VideoRecorder: React.FC = () => {
     mediaBlobUrl: screenMediaBlobUrl,
   } = useReactMediaRecorder({ video: true, screen: true });
 
-  const uploadVideo = () => {
-    if (!camMediaBlobUrl || !screenMediaBlobUrl) {
-      alert("Recordings are not ready");
-      return;
-    }
+  const uploadVideo = async (url: string, type: string) => {
+    let camMedia = await fetch(url!);
+    let blob = await camMedia.blob();
+    let response = await axios.post(config.API_URL+'/api/v1/records', {
+      "title": title + " " + type,
+      "description": description + " " + type,
+      "scope": "TEAM"
+    }, { headers: { Authorization: 'Bearer ' + user.token }});
 
-    const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
-    const title = user.fullname + " " + Date.now();
-    const description = "Daily standups - " + title
+    const preSignedURL = response.data.preSignedURL;
+    const fileToUpload = new File([blob], title + " " + type + ".mp4", {type: 'video/mp4'});
+    const uploadAxios = axios.create({ transformRequest: [(data: any, headers: any) => {
+      delete headers.common.Authorization;
+      headers['Content-Type'] = 'video/mp4';
+      return data;
+    }] });
+    await uploadAxios.put(preSignedURL, fileToUpload);
+  }
 
-    fetch(camMediaBlobUrl!)
-      .then(res => res.blob())
-      .then(blob => {
-        axios.post(config.API_URL+'/api/v1/records', {
-          "title": title + " cam",
-          "description": description + " cam",
-          "scope": "TEAM"
-        }, { headers: { Authorization: 'Bearer ' + user.token }})
-        .then(res => {
-          const preSignedURL = res.data.preSignedURL;
-          const fileToUpload = new File([blob], title + " cam.mp4", {type: 'video/mp4'});
-          const uploadAxios = axios.create({ transformRequest: [(data: any, headers: any) => {
-            delete headers.common.Authorization;
-            headers['Content-Type'] = 'video/mp4';
-            return data;
-          }] });
-          uploadAxios.put(preSignedURL, fileToUpload);
-        });
-      });
-    fetch(screenMediaBlobUrl!)
+  const uploadScreenVideo = async () => {
+    await fetch(screenMediaBlobUrl!)
       .then(res => res.blob())
       .then(blob => {
         axios.post(config.API_URL+'/api/v1/records', {
@@ -64,7 +59,7 @@ const VideoRecorder: React.FC = () => {
           "description": description + " screen",
           "scope": "TEAM"
         }, { headers: { Authorization: 'Bearer ' + user.token }})
-        .then(res => {
+        .then(async (res) => {
           const preSignedURL = res.data.preSignedURL;
           const fileToUpload = new File([blob], title + " screen.mp4", {type: 'video/mp4'});
           const uploadAxios = axios.create({ transformRequest: [(data: any, headers: any) => {
@@ -72,9 +67,21 @@ const VideoRecorder: React.FC = () => {
             headers['Content-Type'] = 'video/mp4';
             return data;
           }] });
-          uploadAxios.put(preSignedURL, fileToUpload);
+          await uploadAxios.put(preSignedURL, fileToUpload);
         });
       });
+  }
+
+  const uploadVideoes = async () => {
+    if (!camMediaBlobUrl || !screenMediaBlobUrl) {
+      alert("Recordings are not ready");
+      return;
+    }
+
+    await uploadVideo(camMediaBlobUrl, "cam");
+    await uploadVideo(screenMediaBlobUrl, "screen");
+
+    window.location.reload();
   }
 
   useEffect(() => {
@@ -118,7 +125,7 @@ const VideoRecorder: React.FC = () => {
                 : (
                   <div className='mt-4 mb-3 text-center'>
                     <button className="btn btn-primary me-3" onClick={() => { setRecordingState('idle') }}>Reshoot</button>
-                    <button className='btn btn-primary' onClick={uploadVideo}>Save Recording</button>
+                    <button className='btn btn-primary' onClick={uploadVideoes}>Save Recording</button>
                   </div>
                 )
               : (
