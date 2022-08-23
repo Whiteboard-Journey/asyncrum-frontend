@@ -8,11 +8,10 @@ import config from 'config';
 const videoConstraints = { facingMode: 'user' }
 const cam_w = 320, cam_h = 240, screen_w = 960, screen_h = 540
 
-const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
-const title = user.fullname + " " + Date.now();
-const description = "Daily standups - " + title
-
 const VideoRecorder: React.FC = () => {
+  const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
+  const title = user.fullname + " " + Date.now();
+  const description = "Daily standups - " + title
   const videoRef = useRef<HTMLVideoElement>(null);
   const webcamRef = useRef<Webcam>(null)
   const [recordingState, setRecordingState] = useState<'idle' | 'recording' | 'recorded'>('idle')
