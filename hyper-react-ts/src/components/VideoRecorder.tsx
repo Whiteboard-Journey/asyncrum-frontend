@@ -36,7 +36,7 @@ const VideoRecorder: React.FC = () => {
     let response = await axios.post(config.API_URL+'/api/v1/records', {
       "title": title + " " + type,
       "description": description + " " + type,
-      "scope": "TEAM"
+      "scope": "team"
     }, { headers: { Authorization: 'Bearer ' + user.token }});
 
     const preSignedURL = response.data.preSignedURL;
