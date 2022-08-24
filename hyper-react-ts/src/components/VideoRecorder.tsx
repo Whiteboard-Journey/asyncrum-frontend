@@ -118,7 +118,7 @@ const VideoRecorder: React.FC = () => {
               ? recordingState === 'idle'
                 ? (
                   <div className='mt-4 mb-3 text-center'>
-                    <button className="btn btn-primary" onClick={() => { camStartRecording(); screenStartRecording(); setRecordingState('recording'); }}>Start Recording</button>
+                    <button className="btn btn-primary" onClick={() => { screenStartRecording(); camStartRecording(); setRecordingState('recording'); }}>Start Recording</button>
                   </div>
                   )
                 : (
