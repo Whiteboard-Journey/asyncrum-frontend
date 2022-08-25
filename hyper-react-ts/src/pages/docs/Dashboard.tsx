@@ -316,7 +316,7 @@ const Dashboard = () => {
                     }
                 }
             }
-            setDailyStandups(dailyStandups);
+            setDailyStandups(dailyStandups.reverse());
             setDailyStandupLoading(false);
         });
     }, [whiteboardPageNumber]);
