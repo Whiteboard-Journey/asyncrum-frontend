@@ -1,7 +1,7 @@
 import { Row, Col, Button, ButtonGroup, Card, Dropdown, OverlayTrigger, Tooltip, Modal, Pagination } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { DailyStandup, Whiteboard } from './types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useToggle } from 'hooks';
 import axios from 'axios';
 import config from 'config';
@@ -12,12 +12,12 @@ import 'react-multi-carousel/lib/styles.css';
 import { useModal } from './hooks';
 import { VideoRecorder } from 'components';
 
+const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
 const whiteboardPageURL = '/apps/whiteboard?url=';
 
 const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
     const title = (((event.target as HTMLFormElement).elements as {[key: string]: any})['title'].value);
     const description = (((event.target as HTMLFormElement).elements as {[key: string]: any})['description'].value);
     const scope = "team";
@@ -86,7 +86,6 @@ const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
 const onEditWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
-    const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
     const id = (((event.target as HTMLFormElement).elements as {[key: string]: any})['id'].value);
     const title = (((event.target as HTMLFormElement).elements as {[key: string]: any})['title'].value);
     const description = (((event.target as HTMLFormElement).elements as {[key: string]: any})['description'].value);
@@ -96,20 +95,34 @@ const onEditWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
         .then(() => window.location.reload());
 }
 
-const convertDatetime = (datetime: string) => {
+const convertDateTime = (datetime: string) => {
     const convertedDatetime = new Date(datetime);
     convertedDatetime.setTime(convertedDatetime.getTime() - convertedDatetime.getTimezoneOffset()*60*1000);
-    return moment(convertedDatetime).fromNow();
+    return convertedDatetime;
+}
+
+const getTimeFromNow = (datetime: string) => {
+    return moment(convertDateTime(datetime)).fromNow();
 }
 
 const onDeleteWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
-    const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
     const id = (((event.target as HTMLFormElement).elements as {[key: string]: any})['id'].value);
 
     axios.delete(`${config.API_URL + "/api/v1/whiteboards/" + id }`, { headers: { Authorization: 'Bearer ' + user.token }})
         .then(() => window.location.reload());
+}
+
+const onViewDailyStandups = (id: number[]) => {
+    const body = {
+        "title": null,
+        "description": null,
+        "scope": "team",
+    }
+    axios.patch(config.API_URL + "/api/v1/records/" + id[0], body, { headers: { Authorization: 'Bearer ' + user.token }});
+    axios.patch(config.API_URL + "/api/v1/records/" + id[1], body, { headers: { Authorization: 'Bearer ' + user.token }});
+    // window.location.reload();
 }
 
 const DailyStandupCard = ({ dailyStandup }: {dailyStandup: DailyStandup}) => {
@@ -119,7 +132,10 @@ const DailyStandupCard = ({ dailyStandup }: {dailyStandup: DailyStandup}) => {
 
     return (
         <Card className="d-block me-3">
-            <Card.Body onClick={() => {openModalWithClass('modal-full-width')}} style={{cursor:'pointer'}}>
+            <Card.Body onClick={() => {
+                    openModalWithClass('modal-full-width');
+                    onViewDailyStandups(dailyStandup.id);
+                }} style={{cursor:'pointer'}}>
                 <div className={(dailyStandup.seen ? "opacity-25" : "") + " text-center"}>
                     <img src={dailyStandup.profileImageUrl} className="rounded-circle avatar-lg" alt={dailyStandup.author} referrerPolicy="no-referrer" />
                 </div>
@@ -127,12 +143,12 @@ const DailyStandupCard = ({ dailyStandup }: {dailyStandup: DailyStandup}) => {
                     {dailyStandup.author}
                 </h4>
                 <p className={(dailyStandup.seen ? "text-light" : "text-muted") + " text-center font-12 mb-1"}>
-                    {convertDatetime(dailyStandup.createdDate)}
+                    {getTimeFromNow(dailyStandup.createdDate)}
                 </p>
                 <Modal show={isViewOpen} onHide={toggleView} dialogClassName={className} size={size} scrollable={scroll}>
                     <Modal.Body>
                         <Modal.Header onHide={toggleView} closeButton>
-                            <h4 className="modal-title">{dailyStandup.author + " - " + convertDatetime(dailyStandup.createdDate)}</h4>
+                            <h4 className="modal-title">{dailyStandup.author + " - " + getTimeFromNow(dailyStandup.createdDate)}</h4>
                         </Modal.Header>
                         <video src={dailyStandup.camRecordFileUrl} controls autoPlay playsInline width={cam_w} height={cam_h} style={{marginLeft: 'auto', marginRight: 'auto', display: 'block'}} />
                         <video src={dailyStandup.screenRecordFileUrl} controls autoPlay playsInline width={screen_w} height={screen_h} style={{marginLeft: 'auto', marginRight: 'auto', display: 'block'}} />
@@ -258,7 +274,7 @@ const WhiteboardCard = ({ whiteboard }: {whiteboard: Whiteboard}) => {
                     </OverlayTrigger>
                 </div>
                 <p className="text-muted text-end font-12 mt-3 mb-1">
-                    Last modified: {convertDatetime(whiteboard.lastModifiedDate)}
+                    Last modified: {getTimeFromNow(whiteboard.lastModifiedDate)}
                 </p>
             </Card.Body>
         </Card>
@@ -275,58 +291,66 @@ const Dashboard = () => {
     const [dailyStandupLoading, setDailyStandupLoading] = useState<Boolean>(true);
     const [whiteboardPageNumber, setWhiteboardPageNumber] = useState<number>(1);
     const [numberOfWhiteboards, setNumberOfWhiteboards] = useState<number>(0);
+    const carouselRef = useRef<Carousel>(null);
     
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
         let dailyStandups: DailyStandup[] = [];
         axios.get(config.API_URL+`/api/v1/records?scope=team&pageIndex=0&topId=0`, { headers: { Authorization: 'Bearer ' + user.token }})
         .then(res => {
-            // res.data.records.filter(record => record.type === "daily standups")
             for (const record of res.data.records) {
+                if (moment().diff(moment(convertDateTime(record.createdDate)), 'hours') > 24 && record.seenMemberIdGroup?.indexOf(user.id) > -1) {
+                    continue;
+                }
                 if (dailyStandups.at(-1)?.author === record.author.fullname
                 && dailyStandups.at(-1)?.title.slice(0, 13) === record.title.slice(0, 13)) {
                     if (record.title.slice(-6) === "screen") {
+                        dailyStandups.at(-1)!.id.push(record.id);
                         dailyStandups.at(-1)!.screenRecordFileUrl = record.recordFileUrl;
                     } else {
+                        dailyStandups.at(-1)!.id.push(record.id);
                         dailyStandups.at(-1)!.camRecordFileUrl = record.recordFileUrl;
                     }
                 } else {
                     if (record.title.slice(-6) === "screen") {
                         dailyStandups.push({
-                            id: record.id,
+                            id: [record.id],
                             author: record.author.fullname,
                             title: record.title,
                             profileImageUrl: record.author.profileImageUrl,
                             createdDate: record.createdDate,
                             camRecordFileUrl: "",
                             screenRecordFileUrl: record.recordFileUrl,
-                            seen: false,
+                            seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
                         });
                     } else {
                         dailyStandups.push({
-                            id: record.id,
+                            id: [record.id],
                             author: record.author.fullname,
                             title: record.title,
                             profileImageUrl: record.author.profileImageUrl,
                             createdDate: record.createdDate,
                             camRecordFileUrl: record.recordFileUrl,
                             screenRecordFileUrl: "",
-                            seen: false,
+                            seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
                         });
                     }
                 }
             }
             setDailyStandups(dailyStandups.reverse());
             setDailyStandupLoading(false);
+            const slide = dailyStandups.findIndex(dailyStandup => !dailyStandup.seen)
+            if (carouselRef && carouselRef.current) {
+                carouselRef.current.goToSlide(slide);
+            }
         });
-    }, [whiteboardPageNumber]);
+    }, []);
 
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
         let whiteboards: Whiteboard[] = [];
         axios.get(config.API_URL+`/api/v1/whiteboards?scope=team&pageIndex=${whiteboardPageNumber-1}&topId=0`, { headers: { Authorization: 'Bearer ' + user.token }})
         .then(res => {
-            // res.data.records.filter(record => record.type === "daily standups")
             for (const whiteboard of res.data.whiteboards) {
                 whiteboards.push({
                     id: whiteboard.id,
@@ -392,6 +416,7 @@ const Dashboard = () => {
             <Row>
                 {!dailyStandupLoading && 
                 <Carousel 
+                ref={carouselRef}
                 additionalTransfrom={0}
                 arrows
                 centerMode={false}
