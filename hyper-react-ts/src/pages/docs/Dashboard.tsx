@@ -13,7 +13,7 @@ import { useModal } from './hooks';
 import { VideoRecorder } from 'components';
 
 const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
-const whiteboardPageURL = '/apps/whiteboard?url=';
+const whiteboardPageURL = '/whiteboard?url=';
 
 const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
