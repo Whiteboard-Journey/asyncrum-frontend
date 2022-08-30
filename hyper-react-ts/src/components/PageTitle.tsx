@@ -18,7 +18,7 @@ const PageTitle = ({ breadCrumbItems, title }: PageTitleProps) => {
                 <div className="page-title-box">
                     <div className="page-title-right">
                         <Breadcrumb listProps={{ className: 'm-0' }}>
-                            <Breadcrumb.Item href="/">Hyper</Breadcrumb.Item>
+                            <Breadcrumb.Item href="/">Asyncrum</Breadcrumb.Item>
 
                             {breadCrumbItems.map((item, index) => {
                                 return item.active ? (

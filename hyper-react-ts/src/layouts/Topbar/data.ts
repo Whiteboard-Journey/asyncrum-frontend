@@ -1,7 +1,4 @@
 import { NotificationItem, ProfileOption, SearchOption } from '../types';
-import avatar1 from 'assets/images/users/avatar-1.jpg';
-import avatar2 from 'assets/images/users/avatar-2.jpg';
-import avatar5 from 'assets/images/users/avatar-5.jpg';
 
 // get the notifications
 const notifications: NotificationItem[] = [
@@ -36,7 +33,7 @@ const notifications: NotificationItem[] = [
                 title: 'Cristina Pride',
                 subText: 'Hi, How are you? What about our next meeting',
                 time: '1 day ago',
-                avatar: avatar1,
+                avatar: '',
                 isRead: true,
             },
         ],
@@ -56,7 +53,7 @@ const notifications: NotificationItem[] = [
                 id: 2,
                 title: 'Karen Robinson',
                 subText: 'Wow ! this admin looks good and awesome design',
-                avatar: avatar2,
+                avatar: '',
                 isRead: true,
             },
         ],
@@ -94,7 +91,7 @@ const searchOptions: SearchOption[] = [
             firstname: 'Erwin',
             lastname: 'Brown',
             position: 'UI Designer',
-            avatar: avatar2,
+            avatar: '',
         },
     },
     {
@@ -105,7 +102,7 @@ const searchOptions: SearchOption[] = [
             firstname: 'Jacob',
             lastname: 'Deo',
             position: 'Developer',
-            avatar: avatar5,
+            avatar: '',
         },
     },
 ];

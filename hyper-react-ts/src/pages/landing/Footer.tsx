@@ -10,9 +10,7 @@ const Footer = () => {
                     <Col lg={6}>
                         <img src={logo} alt="" className="logo-dark" height="18" />
                         <p className="text-muted mt-4">
-                            Hyper makes it easier to build better websites with
-                            <br /> great speed. Save hundreds of hours of design
-                            <br /> and development by using it.
+                            Asyncrum description
                         </p>
 
                         <ul className="social-list list-inline mt-3">
@@ -120,7 +118,7 @@ const Footer = () => {
                     <Col lg={12}>
                         <div className="mt-5">
                             <p className="text-muted mt-4 text-center mb-0">
-                                © 2018 - {new Date().getFullYear()} Hyper. Design and coded by Coderthemes
+                                © 2022 {new Date().getFullYear()} Asyncrum.
                             </p>
                         </div>
                     </Col>

@@ -20,7 +20,7 @@ const Features = ({ features }: FeaturesProps) => {
                                 Features you'll <span className="text-danger">love</span>
                             </h3>
                             <p className="text-muted mt-2">
-                                Hyper comes with next generation ui design and have multiple benefits
+                                Asyncrum description
                             </p>
                         </div>
                     </Col>

@@ -44,7 +44,7 @@ const DatepickerInputWithAddon = forwardRef<HTMLInputElement, DatepickerInputPro
     </div>
 ));
 
-type HyperDatepickerProps = {
+type DatepickerProps = {
     value: Date;
     onChange: (date: Date) => void;
     hideAddon?: boolean;
@@ -62,7 +62,7 @@ type HyperDatepickerProps = {
     inline?: boolean;
 };
 
-const HyperDatepicker = (props: HyperDatepickerProps) => {
+const Datepicker = (props: DatepickerProps) => {
     // handle custom input
     const input =
         (props.hideAddon || false) === true ? (
@@ -95,4 +95,4 @@ const HyperDatepicker = (props: HyperDatepickerProps) => {
     );
 };
 
-export default HyperDatepicker;
+export default Datepicker;

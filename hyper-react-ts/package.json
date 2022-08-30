@@ -1,6 +1,6 @@
 {
-  "name": "hyper-react-ts",
-  "version": "3.3.0",
+  "name": "asyncrum",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@fullcalendar/bootstrap": "^5.10.1",

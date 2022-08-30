@@ -74,20 +74,20 @@ const layouts: LayoutDemo[] = [
 const features: Feature[] = [
     {
         id: 1,
-        title: 'Inbuilt applications and pages',
-        desc: 'Hyper comes with a variety of ready-to-use applications and pages that help to speed up the development',
+        title: 'Asyncrum 1',
+        desc: 'Asyncrum description 1',
         image: image1,
         features: [
-            'Projects & Tasks',
-            'Ecommerce Application Pages',
-            'Profile, pricing, invoice',
-            'Login, signup, forget password',
+            'Feature 1',
+            'Feature 2',
+            'Feature 3',
+            'Feature 4',
         ],
     },
     {
         id: 2,
-        title: 'Simply beautiful design',
-        desc: 'The simplest and fastest way to build dashboard or admin panel. Hyper is built using the latest tech and tools and provide an easy way to customize anything, including an overall color schemes, layout, etc.',
+        title: 'Asyncrum 2',
+        desc: 'Asyncrum description 2',
         image: image2,
         features: [
             'Built with latest Bootstrap',

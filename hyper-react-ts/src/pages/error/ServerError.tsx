@@ -44,7 +44,7 @@ const ServerError = () => {
                 </div>
             </div>
 
-            <footer className="footer footer-alt">2018 - {new Date().getFullYear()} © Hyper - Coderthemes.com</footer>
+            <footer className="footer footer-alt">2022 {new Date().getFullYear()} © Asyncrum - Software Maestro 13th Team WBJ</footer>
         </>
     );
 };

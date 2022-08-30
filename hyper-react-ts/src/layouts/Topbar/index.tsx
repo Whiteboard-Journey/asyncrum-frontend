@@ -30,12 +30,6 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
     const [isMenuOpened, toggleMenu] = useToggle();
     const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
 
-    // useEffect(() => {
-    //     axios.get(config.API_URL + "/api/v1/members/" + user.id)
-    //         .then(res => {
-    //         })
-    // }, []);
-
     const containerCssClasses = !hideLogo ? 'container-fluid' : '';
 
     const { layoutType, leftSideBarType } = appSelector((state) => ({

@@ -17,12 +17,11 @@ const Hero = () => {
                                 <span className="text-white-50 ms-1">Welcome to new landing page</span>
                             </div>
                             <h2 className="text-white fw-normal mb-4 mt-3 hero-title">
-                                Responsive Web UI Kit & Dashboard Template
+                                Asyncrum
                             </h2>
 
                             <p className="mb-4 font-16 text-white-50">
-                                Hyper is a fully featured dashboard and admin template comes with tones of well designed
-                                UI elements, components, widgets and pages.
+                                Asyncrum
                             </p>
 
                             <Link to="#" target="_blank" className="btn btn-success">

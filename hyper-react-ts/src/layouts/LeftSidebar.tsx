@@ -9,7 +9,6 @@ import logoDark from 'assets/images/logo-dark.png';
 import logoDarkSm from 'assets/images/asyncrum-logo-white-small.png';
 import logo from 'assets/images/asyncrum-logo-white.png';
 import helpBoxImage from 'assets/images/help-icon.svg';
-import profileImg from 'assets/images/users/avatar-1.jpg';
 
 type SideBarContentProps = {
     hideUserProfile: boolean;
@@ -21,7 +20,7 @@ const SideBarContent = ({ hideUserProfile }: SideBarContentProps) => {
             {!hideUserProfile && (
                 <div className="leftbar-user">
                     <Link to="/">
-                        <img src={profileImg} alt="" height="42" className="rounded-circle shadow-sm" />
+                        <img src='' alt="" height="42" className="rounded-circle shadow-sm" />
                         <span className="leftbar-user-name">Dominic Keller</span>
                     </Link>
                 </div>
