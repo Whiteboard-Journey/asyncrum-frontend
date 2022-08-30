@@ -3,9 +3,9 @@ import { useForm, Resolver, SubmitHandler, DefaultValues } from 'react-hook-form
 
 type VerticalFromProps<TFormValues> = {
     defaultValues?: DefaultValues<TFormValues>;
-    resolver?: Resolver<TFormValues>;
+    resolver?: Resolver<any>;
     children?: React.ReactNode;
-    onSubmit: SubmitHandler<TFormValues>;
+    onSubmit: SubmitHandler<any>;
     formClass?: string;
 };
 

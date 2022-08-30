@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import SimpleBar from 'simplebar-react';
 import classNames from 'classnames';
 import { getMenuItems } from 'helpers';
-import AppMenu from './Menu/';
+import AppMenu from './Menu';
 import logoSm from 'assets/images/asyncrum-logo-white-small.png';
 import logoDark from 'assets/images/asyncrum-logo-white.png';
 import logoDarkSm from 'assets/images/asyncrum-logo-white-small.png';

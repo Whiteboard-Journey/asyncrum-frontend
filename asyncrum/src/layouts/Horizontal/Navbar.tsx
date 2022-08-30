@@ -1,4 +1,4 @@
-import AppMenu from './Menu/';
+import AppMenu from './Menu';
 import { Collapse } from 'react-bootstrap';
 import classNames from 'classnames';
 import { getMenuItems } from 'helpers';
