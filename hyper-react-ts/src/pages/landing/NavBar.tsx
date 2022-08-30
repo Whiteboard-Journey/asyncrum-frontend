@@ -1,7 +1,7 @@
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useRedux } from 'hooks';
-import logo from 'assets/images/logo.png';
+import logo from 'assets/images/asyncrum-logo-cool.png';
 
 const NavBar = () => {
     const { appSelector } = useRedux();

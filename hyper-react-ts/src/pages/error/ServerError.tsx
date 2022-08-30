@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Row, Col, Card } from 'react-bootstrap';
 import notFoundImg from 'assets/images/startman.svg';
-import Logo from 'assets/images/logo.png';
+import Logo from 'assets/images/asyncrum-logo-cool.png';
 
 const ServerError = () => {
     return (

@@ -12,7 +12,7 @@ import TopbarSearch from './TopbarSearch';
 import AppsDropdown from './AppsDropdown';
 import logoSmDark from 'assets/images/asyncrum-logo-white-small.png';
 import logoSmLight from 'assets/images/asyncrum-logo-white-small.png';
-import logo from 'assets/images/logo-light.png';
+import logo from 'assets/images/asyncrum-logo-white.png';
 import config from 'config';
 import { useEffect } from 'react';
 import axios from 'axios';

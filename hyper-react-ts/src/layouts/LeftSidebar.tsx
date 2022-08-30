@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { getMenuItems } from 'helpers';
 import AppMenu from './Menu/';
 import logoSm from 'assets/images/asyncrum-logo-white-small.png';
-import logoDark from 'assets/images/logo-dark.png';
+import logoDark from 'assets/images/asyncrum-logo-white.png';
 import logoDarkSm from 'assets/images/asyncrum-logo-white-small.png';
 import logo from 'assets/images/asyncrum-logo-white.png';
 import helpBoxImage from 'assets/images/help-icon.svg';
@@ -15,31 +15,33 @@ type SideBarContentProps = {
 };
 
 const SideBarContent = ({ hideUserProfile }: SideBarContentProps) => {
+    const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!)
+
     return (
         <>
             {!hideUserProfile && (
                 <div className="leftbar-user">
                     <Link to="/">
                         <img src='' alt="" height="42" className="rounded-circle shadow-sm" />
-                        <span className="leftbar-user-name">Dominic Keller</span>
+                        <span className="leftbar-user-name">{user.fullname}</span>
                     </Link>
                 </div>
             )}
             <AppMenu menuItems={getMenuItems()} />
 
-            {/* <div
+            <div
                 className={classNames('help-box', 'text-center', {
                     'text-white': hideUserProfile,
                 })}
             >
                 <Link to="/" className="float-end close-btn text-white">
                     <i className="mdi mdi-close" />
-                </Link> */}
+                </Link>
 
-                {/* <img src={helpBoxImage} height="90" alt="Helper Icon" />
+                <img src={helpBoxImage} height="90" alt="Helper Icon" />
                 <h5 className="mt-3">Unlimited Access</h5>
-                <p className="mb-3">Upgrade to plan to get access to unlimited reports</p> */}
-                {/* <button
+                <p className="mb-3">Upgrade to plan to get access to unlimited reports</p>
+                <button
                     className={classNames(
                         'btn',
                         'btn-sm',
@@ -48,7 +50,7 @@ const SideBarContent = ({ hideUserProfile }: SideBarContentProps) => {
                 >
                     Upgrade
                 </button>
-            </div> */}
+            </div>
             <div className="clearfix" />
         </>
     );
