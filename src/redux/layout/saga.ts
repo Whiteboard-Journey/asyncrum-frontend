@@ -6,19 +6,19 @@ import { LayoutActionTypes } from './constants';
  * @param {*} cssClass
  */
 function manageBodyClass(cssClass: string, action = 'toggle') {
-    switch (action) {
-        case 'add':
-            if (document.body) document.body.classList.add(cssClass);
-            break;
-        case 'remove':
-            if (document.body) document.body.classList.remove(cssClass);
-            break;
-        default:
-            if (document.body) document.body.classList.toggle(cssClass);
-            break;
-    }
+  switch (action) {
+    case 'add':
+      if (document.body) document.body.classList.add(cssClass);
+      break;
+    case 'remove':
+      if (document.body) document.body.classList.remove(cssClass);
+      break;
+    default:
+      if (document.body) document.body.classList.toggle(cssClass);
+      break;
+  }
 
-    return true;
+  return true;
 }
 
 /**
@@ -32,30 +32,30 @@ function manageBodyClass(cssClass: string, action = 'toggle') {
  * Show the rightsidebar
  */
 function* showRightSidebar() {
-    try {
-        yield call(manageBodyClass, 'end-bar-enabled', 'add');
-    } catch (error) {}
+  try {
+    yield call(manageBodyClass, 'end-bar-enabled', 'add');
+  } catch (error) {}
 }
 
 /**
  * Hides the rightsidebar
  */
 function* hideRightSidebar() {
-    try {
-        yield call(manageBodyClass, 'end-bar-enabled', 'remove');
-    } catch (error) {}
+  try {
+    yield call(manageBodyClass, 'end-bar-enabled', 'remove');
+  } catch (error) {}
 }
 
 export function* watchShowRightSidebar() {
-    yield takeEvery(LayoutActionTypes.SHOW_RIGHT_SIDEBAR, showRightSidebar);
+  yield takeEvery(LayoutActionTypes.SHOW_RIGHT_SIDEBAR, showRightSidebar);
 }
 
 export function* watchHideRightSidebar() {
-    yield takeEvery(LayoutActionTypes.HIDE_RIGHT_SIDEBAR, hideRightSidebar);
+  yield takeEvery(LayoutActionTypes.HIDE_RIGHT_SIDEBAR, hideRightSidebar);
 }
 
 function* LayoutSaga() {
-    yield all([fork(watchShowRightSidebar), fork(watchHideRightSidebar)]);
+  yield all([fork(watchShowRightSidebar), fork(watchHideRightSidebar)]);
 }
 
 export default LayoutSaga;

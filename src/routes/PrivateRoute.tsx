@@ -2,8 +2,8 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { APICore } from 'helpers/api/apiCore';
 
 type PrivateRouteProps = {
-    component: React.ComponentType;
-    roles?: string;
+  component: React.ComponentType;
+  roles?: string;
 };
 
 /**
@@ -12,14 +12,14 @@ type PrivateRouteProps = {
  * @returns
  */
 const PrivateRoute = ({ component: RouteComponent, roles, ...rest }: PrivateRouteProps) => {
-    let location = useLocation();
-    const api = new APICore();
+  let location = useLocation();
+  const api = new APICore();
 
-    if (api.isUserAuthenticated() === false) {
-        return <Navigate to={'/account/login'} state={{ from: location }} replace />;
-    }
+  if (api.isUserAuthenticated() === false) {
+    return <Navigate to={'/account/login'} state={{ from: location }} replace />;
+  }
 
-    return <RouteComponent />;
+  return <RouteComponent />;
 };
 
 export default PrivateRoute;

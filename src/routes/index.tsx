@@ -35,115 +35,116 @@ const Landing = React.lazy(() => import('pages/landing/'));
 const loading = () => <div className=""></div>;
 
 type LoadComponentProps = {
-    component: React.LazyExoticComponent<() => JSX.Element>;
+  component: React.LazyExoticComponent<() => JSX.Element>;
 };
 
 const LoadComponent = ({ component: Component }: LoadComponentProps) => (
-    <Suspense fallback={loading()}>
-        <Component />
-    </Suspense>
+  <Suspense fallback={loading()}>
+    <Component />
+  </Suspense>
 );
 
 const AllRoutes = () => {
-    const { appSelector } = useRedux();
+  const { appSelector } = useRedux();
 
-    const { layout } = appSelector((state) => ({
-        layout: state.Layout,
-    }));
+  const { layout } = appSelector((state) => ({
+    layout: state.Layout,
+  }));
 
-    const getLayout = () => {
-        let layoutCls: React.ComponentType = VerticalLayout;
+  const getLayout = () => {
+    let layoutCls: React.ComponentType = VerticalLayout;
 
-        switch (layout.layoutType) {
-            case LayoutTypes.LAYOUT_HORIZONTAL:
-                layoutCls = HorizontalLayout;
-                break;
-            case LayoutTypes.LAYOUT_DETACHED:
-                layoutCls = DetachedLayout;
-                break;
-            case LayoutTypes.LAYOUT_FULL:
-                layoutCls = FullLayout;
-                break;
-            default:
-                layoutCls = VerticalLayout;
-                break;
-        }
-        return layoutCls;
-    };
-    let Layout = getLayout();
+    switch (layout.layoutType) {
+      case LayoutTypes.LAYOUT_HORIZONTAL:
+        layoutCls = HorizontalLayout;
+        break;
+      case LayoutTypes.LAYOUT_DETACHED:
+        layoutCls = DetachedLayout;
+        break;
+      case LayoutTypes.LAYOUT_FULL:
+        layoutCls = FullLayout;
+        break;
+      default:
+        layoutCls = VerticalLayout;
+        break;
+    }
+    return layoutCls;
+  };
+  let Layout = getLayout();
 
-    return useRoutes([
-        { path: '/', element: <Root /> },
+  return useRoutes([
+    { path: '/', element: <Root /> },
+    {
+      // public routes
+      path: '/',
+      element: <DefaultLayout />,
+      children: [
         {
-            // public routes
-            path: '/',
-            element: <DefaultLayout />,
-            children: [
-                {
-                    path: 'account',
-                    children: [
-                        { path: 'login', element: <LoadComponent component={Login} /> },
-                        { path: 'oauth', element: <LoadComponent component={OAuth} /> },
-                        { path: 'register', element: <LoadComponent component={Register} /> },
-                        { path: 'confirm', element: <LoadComponent component={Confirm} /> },
-                        { path: 'forget-password', element: <LoadComponent component={ForgetPassword} /> },
-                        { path: 'logout', element: <LoadComponent component={Logout} /> },
-                    ],
-                },
-                {
-                    path: 'whiteboard',
-                    element: <LoadComponent component={Whiteboard} />,
-                },
-                {
-                    path: 'error-404',
-                    element: <LoadComponent component={ErrorPageNotFound} />,
-                },
-                {
-                    path: 'error-500',
-                    element: <LoadComponent component={ServerError} />,
-                },
-                {
-                    path: 'landing',
-                    element: <LoadComponent component={Landing} />,
-                },
-            ],
+          path: 'account',
+          children: [
+            { path: 'login', element: <LoadComponent component={Login} /> },
+            { path: 'oauth', element: <LoadComponent component={OAuth} /> },
+            { path: 'register', element: <LoadComponent component={Register} /> },
+            { path: 'confirm', element: <LoadComponent component={Confirm} /> },
+            { path: 'forget-password', element: <LoadComponent component={ForgetPassword} /> },
+            { path: 'logout', element: <LoadComponent component={Logout} /> },
+          ],
         },
-        {  // auth protected routes
-            path: '/',
-            element: <PrivateRoute roles={'Admin'} component={Layout} />,
-            children: [
-                {
-                    path: 'whiteboard',
-                    element: <LoadComponent component={Whiteboard} />,
-                },
-                {
-                    path: 'dashboard',
-                    element: <LoadComponent component={Dashboard} />,
-                },
-                {
-                    path: 'settings',
-                    children: [
-                        {
-                            path: 'user',
-                            element: <LoadComponent component={PersonalSettings} />,
-                        },
-                        {
-                            path: 'team',
-                            element: <LoadComponent component={TeamSettings} />,
-                        },
-                        {
-                            path: 'create-team',
-                            element: <LoadComponent component={CreateTeam} />,
-                        },
-                        {
-                            path: 'error-404-alt',
-                            element: <LoadComponent component={ErrorPageNotFoundAlt} />,
-                        },
-                    ],
-                },
-            ],
+        {
+          path: 'whiteboard',
+          element: <LoadComponent component={Whiteboard} />,
         },
-    ]);
+        {
+          path: 'error-404',
+          element: <LoadComponent component={ErrorPageNotFound} />,
+        },
+        {
+          path: 'error-500',
+          element: <LoadComponent component={ServerError} />,
+        },
+        {
+          path: 'landing',
+          element: <LoadComponent component={Landing} />,
+        },
+      ],
+    },
+    {
+      // auth protected routes
+      path: '/',
+      element: <PrivateRoute roles={'Admin'} component={Layout} />,
+      children: [
+        {
+          path: 'whiteboard',
+          element: <LoadComponent component={Whiteboard} />,
+        },
+        {
+          path: 'dashboard',
+          element: <LoadComponent component={Dashboard} />,
+        },
+        {
+          path: 'settings',
+          children: [
+            {
+              path: 'user',
+              element: <LoadComponent component={PersonalSettings} />,
+            },
+            {
+              path: 'team',
+              element: <LoadComponent component={TeamSettings} />,
+            },
+            {
+              path: 'create-team',
+              element: <LoadComponent component={CreateTeam} />,
+            },
+            {
+              path: 'error-404-alt',
+              element: <LoadComponent component={ErrorPageNotFoundAlt} />,
+            },
+          ],
+        },
+      ],
+    },
+  ]);
 };
 
 export { AllRoutes };

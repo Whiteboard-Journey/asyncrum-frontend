@@ -8,36 +8,35 @@ axios.defaults.baseURL = config.API_URL;
 
 // intercepting to capture errors
 axios.interceptors.response.use(
-    (response) => {
-        return response;
-    },
-    (error) => {
-        // Any status codes that falls outside the range of 2xx cause this function to trigger
-        let message;
+  (response) => {
+    return response;
+  },
+  (error) => {
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    let message;
 
-        if (error && error.response && error.response.status === 404) {
-            // window.location.href = '/not-found';
-        } else if (error && error.response && error.response.status === 403) {
-            window.location.href = '/access-denied';
-        } else {
-            switch (error.response.status) {
-                case 401:
-                    message = 'Invalid credentials';
-                    break;
-                case 403:
-                    message = 'Access Forbidden';
-                    break;
-                case 404:
-                    message = 'Sorry! the data you are looking for could not be found';
-                    break;
-                default: {
-                    message =
-                        error.response && error.response.data ? error.response.data['message'] : error.message || error;
-                }
-            }
-            return Promise.reject(message);
+    if (error && error.response && error.response.status === 404) {
+      // window.location.href = '/not-found';
+    } else if (error && error.response && error.response.status === 403) {
+      window.location.href = '/access-denied';
+    } else {
+      switch (error.response.status) {
+        case 401:
+          message = 'Invalid credentials';
+          break;
+        case 403:
+          message = 'Access Forbidden';
+          break;
+        case 404:
+          message = 'Sorry! the data you are looking for could not be found';
+          break;
+        default: {
+          message = error.response && error.response.data ? error.response.data['message'] : error.message || error;
         }
+      }
+      return Promise.reject(message);
     }
+  }
 );
 
 const AUTH_SESSION_KEY = 'asyncrum_user';
@@ -47,174 +46,173 @@ const AUTH_SESSION_KEY = 'asyncrum_user';
  * @param {*} token
  */
 const setAuthorization = (token: string | null) => {
-    if (token) axios.defaults.headers.common['Authorization'] = 'JWT ' + token;
-    else delete axios.defaults.headers.common['Authorization'];
+  if (token) axios.defaults.headers.common['Authorization'] = 'JWT ' + token;
+  else delete axios.defaults.headers.common['Authorization'];
 };
 
 const getUserFromSession = () => {
-    const user = sessionStorage.getItem(AUTH_SESSION_KEY);
-    return user ? (typeof user == 'object' ? user : JSON.parse(user)) : null;
+  const user = sessionStorage.getItem(AUTH_SESSION_KEY);
+  return user ? (typeof user == 'object' ? user : JSON.parse(user)) : null;
 };
 class APICore {
-    /**
-     * Fetches data from given url
-     */
-    get = (url: string, params: any) => {
-        let response;
-        if (params) {
-            if ('token' in params) {
-                response = axios.get(`${url}`, { headers: { Authorization: 'Bearer ' + params['token'] }});
-            }
-                else {
-                var queryString = params
-                    ? Object.keys(params)
-                        .map((key) => key + '=' + params[key])
-                        .join('&')
-                    : '';
-                response = axios.get(`${url}?${queryString}`, params);
-            }
-        } else {
-            response = axios.get(`${url}`, params);
-        }
-        return response;
-    };
+  /**
+   * Fetches data from given url
+   */
+  get = (url: string, params: any) => {
+    let response;
+    if (params) {
+      if ('token' in params) {
+        response = axios.get(`${url}`, { headers: { Authorization: 'Bearer ' + params['token'] } });
+      } else {
+        var queryString = params
+          ? Object.keys(params)
+              .map((key) => key + '=' + params[key])
+              .join('&')
+          : '';
+        response = axios.get(`${url}?${queryString}`, params);
+      }
+    } else {
+      response = axios.get(`${url}`, params);
+    }
+    return response;
+  };
 
-    getFile = (url: string, params: any) => {
-        let response;
-        if (params) {
-            var queryString = params
-                ? Object.keys(params)
-                      .map((key) => key + '=' + params[key])
-                      .join('&')
-                : '';
-            response = axios.get(`${url}?${queryString}`, { responseType: 'blob' });
-        } else {
-            response = axios.get(`${url}`, { responseType: 'blob' });
-        }
-        return response;
-    };
+  getFile = (url: string, params: any) => {
+    let response;
+    if (params) {
+      var queryString = params
+        ? Object.keys(params)
+            .map((key) => key + '=' + params[key])
+            .join('&')
+        : '';
+      response = axios.get(`${url}?${queryString}`, { responseType: 'blob' });
+    } else {
+      response = axios.get(`${url}`, { responseType: 'blob' });
+    }
+    return response;
+  };
 
-    getMultiple = (urls: string, params: any) => {
-        const reqs = [];
-        let queryString = '';
-        if (params) {
-            queryString = params
-                ? Object.keys(params)
-                      .map((key) => key + '=' + params[key])
-                      .join('&')
-                : '';
-        }
-
-        for (const url of urls) {
-            reqs.push(axios.get(`${url}?${queryString}`));
-        }
-        return axios.all(reqs);
-    };
-
-    /**
-     * post given data to url
-     */
-    create = (url: string, data: any) => {
-        return axios.post(url, data);
-    };
-
-    getMember = (url: string) => {
-        return axios.get(url);
+  getMultiple = (urls: string, params: any) => {
+    const reqs = [];
+    let queryString = '';
+    if (params) {
+      queryString = params
+        ? Object.keys(params)
+            .map((key) => key + '=' + params[key])
+            .join('&')
+        : '';
     }
 
-    /**
-     * Updates patch data
-     */
-    updatePatch = (url: string, data: any) => {
-        return axios.patch(url, data);
+    for (const url of urls) {
+      reqs.push(axios.get(`${url}?${queryString}`));
+    }
+    return axios.all(reqs);
+  };
+
+  /**
+   * post given data to url
+   */
+  create = (url: string, data: any) => {
+    return axios.post(url, data);
+  };
+
+  getMember = (url: string) => {
+    return axios.get(url);
+  };
+
+  /**
+   * Updates patch data
+   */
+  updatePatch = (url: string, data: any) => {
+    return axios.patch(url, data);
+  };
+
+  /**
+   * Updates data
+   */
+  update = (url: string, data: any) => {
+    return axios.put(url, data);
+  };
+
+  /**
+   * Deletes data
+   */
+  delete = (url: string) => {
+    return axios.delete(url);
+  };
+
+  /**
+   * post given data to url with file
+   */
+  createWithFile = (url: string, data: any) => {
+    const formData = new FormData();
+    for (const k in data) {
+      formData.append(k, data[k]);
+    }
+
+    const config: any = {
+      headers: {
+        ...axios.defaults.headers,
+        'content-type': 'multipart/form-data',
+      },
     };
+    return axios.post(url, formData, config);
+  };
 
-    /**
-     * Updates data
-     */
-    update = (url: string, data: any) => {
-        return axios.put(url, data);
+  /**
+   * post given data to url with file
+   */
+  updateWithFile = (url: string, data: any) => {
+    const formData = new FormData();
+    for (const k in data) {
+      formData.append(k, data[k]);
+    }
+
+    const config: any = {
+      headers: {
+        ...axios.defaults.headers,
+        'content-type': 'multipart/form-data',
+      },
     };
+    return axios.patch(url, formData, config);
+  };
 
-    /**
-     * Deletes data
-     */
-    delete = (url: string) => {
-        return axios.delete(url);
-    };
+  isUserAuthenticated = () => {
+    const user = this.getLoggedInUser();
 
-    /**
-     * post given data to url with file
-     */
-    createWithFile = (url: string, data: any) => {
-        const formData = new FormData();
-        for (const k in data) {
-            formData.append(k, data[k]);
-        }
+    if (!user || (user && !user.token)) {
+      return false;
+    }
+    const decoded: any = jwtDecode(user.token);
+    const currentTime = Date.now() / 1000;
+    if (decoded.exp < currentTime) {
+      console.warn('access token expired');
+      return false;
+    } else {
+      return true;
+    }
+  };
 
-        const config: any = {
-            headers: {
-                ...axios.defaults.headers,
-                'content-type': 'multipart/form-data',
-            },
-        };
-        return axios.post(url, formData, config);
-    };
+  setLoggedInUser = (session: any) => {
+    if (session) sessionStorage.setItem(AUTH_SESSION_KEY, JSON.stringify(session));
+    else {
+      sessionStorage.removeItem(AUTH_SESSION_KEY);
+    }
+  };
+  /**
+   * Returns the logged in user
+   */
+  getLoggedInUser = () => {
+    return getUserFromSession();
+  };
 
-    /**
-     * post given data to url with file
-     */
-    updateWithFile = (url: string, data: any) => {
-        const formData = new FormData();
-        for (const k in data) {
-            formData.append(k, data[k]);
-        }
-
-        const config: any = {
-            headers: {
-                ...axios.defaults.headers,
-                'content-type': 'multipart/form-data',
-            },
-        };
-        return axios.patch(url, formData, config);
-    };
-
-    isUserAuthenticated = () => {
-        const user = this.getLoggedInUser();
-
-        if (!user || (user && !user.token)) {
-            return false;
-        }
-        const decoded: any = jwtDecode(user.token);
-        const currentTime = Date.now() / 1000;
-        if (decoded.exp < currentTime) {
-            console.warn('access token expired');
-            return false;
-        } else {
-            return true;
-        }
-    };
-
-    setLoggedInUser = (session: any) => {
-        if (session) sessionStorage.setItem(AUTH_SESSION_KEY, JSON.stringify(session));
-        else {
-            sessionStorage.removeItem(AUTH_SESSION_KEY);
-        }
-    };
-    /**
-     * Returns the logged in user
-     */
-    getLoggedInUser = () => {
-        return getUserFromSession();
-    };
-
-    setUserInSession = (modifiedUser: any) => {
-        let userInfo = sessionStorage.getItem(AUTH_SESSION_KEY);
-        if (userInfo) {
-            const { token, user } = JSON.parse(userInfo);
-            this.setLoggedInUser({ token, ...user, ...modifiedUser });
-        }
-    };
+  setUserInSession = (modifiedUser: any) => {
+    let userInfo = sessionStorage.getItem(AUTH_SESSION_KEY);
+    if (userInfo) {
+      const { token, user } = JSON.parse(userInfo);
+      this.setLoggedInUser({ token, ...user, ...modifiedUser });
+    }
+  };
 }
 
 /*
@@ -222,10 +220,10 @@ Check if token available in session
 */
 let user = getUserFromSession();
 if (user) {
-    const { token } = user;
-    if (token) {
-        setAuthorization(token);
-    }
+  const { token } = user;
+  if (token) {
+    setAuthorization(token);
+  }
 }
 
 export { APICore, setAuthorization };
