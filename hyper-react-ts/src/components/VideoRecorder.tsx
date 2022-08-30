@@ -90,7 +90,6 @@ const VideoRecorder: React.FC = () => {
   }, [previewStream])
 
   useEffect(() => {
-    console.log(recordingState, screenMediaBlobUrl);
   }, [recordingState, screenMediaBlobUrl]);
 
   return (

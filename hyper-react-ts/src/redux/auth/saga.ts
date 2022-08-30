@@ -54,7 +54,6 @@ function* oauthLogin({ payload: { token }, type }: TokenData): SagaIterator {
         yield take(AuthActionTypes.OAUTH_LOGIN_USER);
         const response = yield call(readMemberApi, { token })
 
-        console.log("saga:", response);
         let user = response.data;
         user['token'] = token;
         // NOTE - You can change this according to response format from your api

@@ -50,10 +50,10 @@ const LeftPanel = ({selected}: LeftPanelProps) => {
             </Dropdown> */}
 
             <div className="email-menu-list">
-                <Link to="/pages/personal-settings" className={selected === "personal" ? "active text-primary" : ""}>
+                <Link to="/settings/user" className={selected === "personal" ? "active text-primary" : ""}>
                     <i className="mdi mdi-account-outline font-18 align-middle me-2"></i>Personal Profile
                 </Link>
-                <Link to="/pages/team-settings" className={selected === "team" ? "active text-primary" : ""}>
+                <Link to="/settings/team" className={selected === "team" ? "active text-primary" : ""}>
                     <i className="mdi mdi-account-group-outline font-18 align-middle me-2"></i>Team Profile
                 </Link>
             </div>

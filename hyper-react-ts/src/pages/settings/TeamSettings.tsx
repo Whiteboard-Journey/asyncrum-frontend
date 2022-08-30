@@ -58,7 +58,6 @@ const TeamSettings = () => {
 
     useEffect(() => {
         setPreviewImage(team?.pictureUrl);
-        console.log(team?.members)
     }, [team]);
 
     useEffect(() => {

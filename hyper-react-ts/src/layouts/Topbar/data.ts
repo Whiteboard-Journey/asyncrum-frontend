@@ -68,7 +68,7 @@ const profileMenus: ProfileOption[] = [
     {
         label: 'Settings',
         icon: 'mdi mdi-cog',
-        redirectTo: 'pages/personal-settings',
+        redirectTo: 'settings/user',
     },
     {
         label: 'Support',

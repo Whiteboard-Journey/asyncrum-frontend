@@ -15,124 +15,22 @@ const Logout = React.lazy(() => import('pages/account/Logout'));
 const Register = React.lazy(() => import('pages/account/Register'));
 const Confirm = React.lazy(() => import('pages/account/Confirm'));
 const ForgetPassword = React.lazy(() => import('pages/account/ForgetPassword'));
-const LockScreen = React.lazy(() => import('pages/account/LockScreen'));
-
 // dashboard
 const Dashboard = React.lazy(() => import('pages/docs/Dashboard'));
 
 // apps
 const Whiteboard = React.lazy(() => import('pages/apps/Whiteboard'));
-const CalendarApp = React.lazy(() => import('pages/apps/Calendar'));
-const ProjectList = React.lazy(() => import('pages/apps/Projects/List'));
-const ProjectDetail = React.lazy(() => import('pages/apps/Projects/Detail/'));
-const ProjectGannt = React.lazy(() => import('pages/apps/Projects/Gantt'));
-const ProjectForm = React.lazy(() => import('pages/apps/Projects/ProjectForm'));
 
 // settings
 const PersonalSettings = React.lazy(() => import('pages/settings/PersonalSettings'));
 const TeamSettings = React.lazy(() => import('pages/settings/TeamSettings'));
 const CreateTeam = React.lazy(() => import('pages/settings/CreateTeam'));
 
-// - chat
-const ChatApp = React.lazy(() => import('pages/apps/Chat/'));
-
-// -crm
-const CRMDashboard = React.lazy(() => import('pages/apps/CRM/Dashboard'));
-const CRMProjects = React.lazy(() => import('pages/apps/CRM/Projects'));
-const CRMManagement = React.lazy(() => import('pages/apps/CRM/Management'));
-const CRMClients = React.lazy(() => import('pages/apps/CRM/Clients'));
-const CRMOrderList = React.lazy(() => import('pages/apps/CRM/OrderList'));
-
-// - ecommece pages
-const EcommerceProducts = React.lazy(() => import('pages/apps/Ecommerce/Products'));
-const ProductDetails = React.lazy(() => import('pages/apps/Ecommerce/ProductDetails'));
-const Orders = React.lazy(() => import('pages/apps/Ecommerce/Orders'));
-const OrderDetails = React.lazy(() => import('pages/apps/Ecommerce/OrderDetails'));
-const Customers = React.lazy(() => import('pages/apps/Ecommerce/Customers'));
-const Cart = React.lazy(() => import('pages/apps/Ecommerce/Cart'));
-const Checkout = React.lazy(() => import('pages/apps/Ecommerce/Checkout/'));
-const Sellers = React.lazy(() => import('pages/apps/Ecommerce/Sellers'));
-
-// - email
-const Inbox = React.lazy(() => import('pages/apps/Email/Inbox'));
-const EmailDetail = React.lazy(() => import('pages/apps/Email/Detail'));
-
-// - social
-const SocialFeed = React.lazy(() => import('pages/apps/SocialFeed/'));
-
-// - tasks
-const TaskList = React.lazy(() => import('pages/apps/Tasks/List/'));
-const TaskDetails = React.lazy(() => import('pages/apps/Tasks/Details'));
-const Kanban = React.lazy(() => import('pages/apps/Tasks/Board/'));
-// - file
-const FileManager = React.lazy(() => import('pages/apps/FileManager'));
-
 // pages
-const Profile = React.lazy(() => import('pages/profile'));
-const Profile2 = React.lazy(() => import('pages/profile2'));
 const ErrorPageNotFound = React.lazy(() => import('pages/error/PageNotFound'));
 const ErrorPageNotFoundAlt = React.lazy(() => import('pages/error/PageNotFoundAlt'));
 const ServerError = React.lazy(() => import('pages/error/ServerError'));
-
-// - other
-const Invoice = React.lazy(() => import('pages/other/Invoice'));
-const FAQ = React.lazy(() => import('pages/other/FAQ'));
-const Pricing = React.lazy(() => import('pages/other/Pricing'));
-const Maintenance = React.lazy(() => import('pages/other/Maintenance'));
-const Starter = React.lazy(() => import('pages/other/Starter'));
-const PreLoader = React.lazy(() => import('pages/other/PreLoader/'));
-const Timeline = React.lazy(() => import('pages/other/Timeline'));
-
 const Landing = React.lazy(() => import('pages/landing/'));
-
-// uikit
-const Accordions = React.lazy(() => import('pages/uikit/Accordions'));
-const Alerts = React.lazy(() => import('pages/uikit/Alerts'));
-const Avatars = React.lazy(() => import('pages/uikit/Avatars'));
-const Badges = React.lazy(() => import('pages/uikit/Badges'));
-const Breadcrumbs = React.lazy(() => import('pages/uikit/Breadcrumb'));
-const Buttons = React.lazy(() => import('pages/uikit/Buttons'));
-const Cards = React.lazy(() => import('pages/uikit/Cards'));
-const Carousels = React.lazy(() => import('pages/uikit/Carousel'));
-const Dropdowns = React.lazy(() => import('pages/uikit/Dropdowns'));
-const EmbedVideo = React.lazy(() => import('pages/uikit/EmbedVideo'));
-const Grid = React.lazy(() => import('pages/uikit/Grid'));
-const ListGroups = React.lazy(() => import('pages/uikit/ListGroups'));
-const Modals = React.lazy(() => import('pages/uikit/Modals'));
-const Notifications = React.lazy(() => import('pages/uikit/Notifications'));
-const Offcanvases = React.lazy(() => import('pages/uikit/Offcanvas'));
-const Placeholders = React.lazy(() => import('pages/uikit/Placeholders'));
-const Paginations = React.lazy(() => import('pages/uikit/Paginations'));
-const Popovers = React.lazy(() => import('pages/uikit/Popovers'));
-const Progress = React.lazy(() => import('pages/uikit/Progress'));
-const Ribbons = React.lazy(() => import('pages/uikit/Ribbons'));
-const Spinners = React.lazy(() => import('pages/uikit/Spinners'));
-const Tabs = React.lazy(() => import('pages/uikit/Tabs'));
-const Tooltips = React.lazy(() => import('pages/uikit/Tooltips'));
-const Typography = React.lazy(() => import('pages/uikit/Typography'));
-const DragDrop = React.lazy(() => import('pages/uikit/DragDrop'));
-const RangeSliders = React.lazy(() => import('pages/uikit/RangeSliders'));
-const Ratings = React.lazy(() => import('pages/uikit/Ratings'));
-
-// icons
-const Dripicons = React.lazy(() => import('pages/icons/Dripicons'));
-const MDIIcons = React.lazy(() => import('pages/icons/MDIIcons'));
-const Unicons = React.lazy(() => import('pages/icons/Unicons'));
-
-// forms
-const BasicForms = React.lazy(() => import('pages/forms/Basic'));
-const FormAdvanced = React.lazy(() => import('pages/forms/Advanced'));
-const FormValidation = React.lazy(() => import('pages/forms/Validation'));
-const FormWizard = React.lazy(() => import('pages/forms/Wizard'));
-const FileUpload = React.lazy(() => import('pages/forms/FileUpload'));
-const Editors = React.lazy(() => import('pages/forms/Editors'));
-
-// charts
-const ApexChart = React.lazy(() => import('pages/charts/Apex'));
-const ChartJs = React.lazy(() => import('pages/charts/ChartJs'));
-
-// widgets
-const Widgets = React.lazy(() => import('pages/uikit/Widgets'));
 
 const loading = () => <div className=""></div>;
 
@@ -189,7 +87,6 @@ const AllRoutes = () => {
                         { path: 'register', element: <LoadComponent component={Register} /> },
                         { path: 'confirm', element: <LoadComponent component={Confirm} /> },
                         { path: 'forget-password', element: <LoadComponent component={ForgetPassword} /> },
-                        { path: 'lock-screen', element: <LoadComponent component={LockScreen} /> },
                         { path: 'logout', element: <LoadComponent component={Logout} /> },
                     ],
                 },
@@ -206,197 +103,32 @@ const AllRoutes = () => {
                     element: <LoadComponent component={ServerError} />,
                 },
                 {
-                    path: 'maintenance',
-                    element: <LoadComponent component={Maintenance} />,
-                },
-                {
                     path: 'landing',
                     element: <LoadComponent component={Landing} />,
                 },
             ],
-        },
-        {
-            path: '/',
-            element: <PrivateRoute roles={'Admin'} component={DefaultLayout} />,
-            children: [
-                {
-                    path: 'whiteboard',
-                    element: <LoadComponent component={Whiteboard} />,
-                }
-            ]
-        },
-        {
-            path: '/',
-            element: <PrivateRoute roles={'Admin'} component={Layout} />,
-            children: [
-                {
-                    path: 'docs',
-                    children: [
-                        {
-                            path: 'dashboard',
-                            element: <LoadComponent component={Dashboard} />,
-                        }
-                    ]
-                }
-            ]
         },
         {  // auth protected routes
             path: '/',
             element: <PrivateRoute roles={'Admin'} component={Layout} />,
             children: [
                 {
+                    path: 'whiteboard',
+                    element: <LoadComponent component={Whiteboard} />,
+                },
+                {
                     path: 'dashboard',
-                    children: [
-                        {
-                            path: '',
-                            element: <LoadComponent component={Dashboard} />,
-                        },
-                    ],
+                    element: <LoadComponent component={Dashboard} />,
                 },
                 {
-                    path: 'apps',
+                    path: 'settings',
                     children: [
                         {
-                            path: 'calendar',
-                            element: <LoadComponent component={CalendarApp} />,
-                        },
-                        {
-                            path: 'chat',
-                            element: <LoadComponent component={ChatApp} />,
-                        },
-                        {
-                            path: 'crm',
-                            children: [
-                                {
-                                    path: 'dashboard',
-                                    element: <LoadComponent component={CRMDashboard} />,
-                                },
-                                {
-                                    path: 'projects',
-                                    element: <LoadComponent component={CRMProjects} />,
-                                },
-                                {
-                                    path: 'management',
-                                    element: <LoadComponent component={CRMManagement} />,
-                                },
-                                {
-                                    path: 'clients',
-                                    element: <LoadComponent component={CRMClients} />,
-                                },
-                                {
-                                    path: 'orders',
-                                    element: <LoadComponent component={CRMOrderList} />,
-                                },
-                            ],
-                        },
-                        {
-                            path: 'ecommerce',
-                            children: [
-                                {
-                                    path: 'products',
-                                    element: <LoadComponent component={EcommerceProducts} />,
-                                },
-                                {
-                                    path: 'details',
-                                    element: <LoadComponent component={ProductDetails} />,
-                                },
-                                {
-                                    path: 'orders',
-                                    element: <LoadComponent component={Orders} />,
-                                },
-                                {
-                                    path: 'order/details',
-                                    element: <LoadComponent component={OrderDetails} />,
-                                },
-                                {
-                                    path: 'customers',
-                                    element: <LoadComponent component={Customers} />,
-                                },
-                                {
-                                    path: 'shopping-cart',
-                                    element: <LoadComponent component={Cart} />,
-                                },
-                                {
-                                    path: 'checkout',
-                                    element: <LoadComponent component={Checkout} />,
-                                },
-                                {
-                                    path: 'sellers',
-                                    element: <LoadComponent component={Sellers} />,
-                                },
-                            ],
-                        },
-                        {
-                            path: 'email',
-                            children: [
-                                {
-                                    path: 'inbox',
-                                    element: <LoadComponent component={Inbox} />,
-                                },
-                                {
-                                    path: 'details',
-                                    element: <LoadComponent component={EmailDetail} />,
-                                },
-                            ],
-                        },
-                        {
-                            path: 'tasks',
-                            children: [
-                                {
-                                    path: 'list',
-                                    element: <LoadComponent component={TaskList} />,
-                                },
-                                {
-                                    path: 'kanban',
-                                    element: <LoadComponent component={Kanban} />,
-                                },
-                                {
-                                    path: 'details',
-                                    element: <LoadComponent component={TaskDetails} />,
-                                },
-                            ],
-                        },
-
-                        {
-                            path: 'projects',
-                            children: [
-                                {
-                                    path: 'list',
-                                    element: <LoadComponent component={ProjectList} />,
-                                },
-                                {
-                                    path: 'details',
-                                    element: <LoadComponent component={ProjectDetail} />,
-                                },
-                                {
-                                    path: 'gantt',
-                                    element: <LoadComponent component={ProjectGannt} />,
-                                },
-                                {
-                                    path: 'new',
-                                    element: <LoadComponent component={ProjectForm} />,
-                                },
-                            ],
-                        },
-                        {
-                            path: 'social',
-                            element: <LoadComponent component={SocialFeed} />,
-                        },
-                        {
-                            path: 'file',
-                            element: <LoadComponent component={FileManager} />,
-                        },
-                    ],
-                },
-                {
-                    path: 'pages',
-                    children: [
-                        {
-                            path: 'personal-settings',
+                            path: 'user',
                             element: <LoadComponent component={PersonalSettings} />,
                         },
                         {
-                            path: 'team-settings',
+                            path: 'team',
                             element: <LoadComponent component={TeamSettings} />,
                         },
                         {
@@ -404,226 +136,8 @@ const AllRoutes = () => {
                             element: <LoadComponent component={CreateTeam} />,
                         },
                         {
-                            path: 'starter',
-                            element: <LoadComponent component={Starter} />,
-                        },
-                        {
-                            path: 'profile',
-                            element: <LoadComponent component={Profile} />,
-                        },
-                        {
-                            path: 'profile2',
-                            element: <LoadComponent component={Profile2} />,
-                        },
-                        {
-                            path: 'pricing',
-                            element: <LoadComponent component={Pricing} />,
-                        },
-                        {
                             path: 'error-404-alt',
                             element: <LoadComponent component={ErrorPageNotFoundAlt} />,
-                        },
-                        {
-                            path: 'timeline',
-                            element: <LoadComponent component={Timeline} />,
-                        },
-                        {
-                            path: 'invoice',
-                            element: <LoadComponent component={Invoice} />,
-                        },
-                        {
-                            path: 'faq',
-                            element: <LoadComponent component={FAQ} />,
-                        },
-                        {
-                            path: 'preloader',
-                            element: <LoadComponent component={PreLoader} />,
-                        },
-                    ],
-                },
-                {
-                    path: 'ui',
-                    children: [
-                        {
-                            path: 'base-ui',
-                            children: [
-                                {
-                                    path: 'accordions',
-                                    element: <LoadComponent component={Accordions} />,
-                                },
-                                {
-                                    path: 'alerts',
-                                    element: <LoadComponent component={Alerts} />,
-                                },
-                                {
-                                    path: 'avatars',
-                                    element: <LoadComponent component={Avatars} />,
-                                },
-                                {
-                                    path: 'badges',
-                                    element: <LoadComponent component={Badges} />,
-                                },
-                                {
-                                    path: 'breadcrumb',
-                                    element: <LoadComponent component={Breadcrumbs} />,
-                                },
-                                {
-                                    path: 'buttons',
-                                    element: <LoadComponent component={Buttons} />,
-                                },
-                                {
-                                    path: 'cards',
-                                    element: <LoadComponent component={Cards} />,
-                                },
-                                {
-                                    path: 'carousel',
-                                    element: <LoadComponent component={Carousels} />,
-                                },
-                                {
-                                    path: 'dropdowns',
-                                    element: <LoadComponent component={Dropdowns} />,
-                                },
-                                {
-                                    path: 'embedvideo',
-                                    element: <LoadComponent component={EmbedVideo} />,
-                                },
-                                {
-                                    path: 'grid',
-                                    element: <LoadComponent component={Grid} />,
-                                },
-                                {
-                                    path: 'listgroups',
-                                    element: <LoadComponent component={ListGroups} />,
-                                },
-                                {
-                                    path: 'modals',
-                                    element: <LoadComponent component={Modals} />,
-                                },
-                                {
-                                    path: 'notifications',
-                                    element: <LoadComponent component={Notifications} />,
-                                },
-                                {
-                                    path: 'offcanvas',
-                                    element: <LoadComponent component={Offcanvases} />,
-                                },
-                                {
-                                    path: 'placeholders',
-                                    element: <LoadComponent component={Placeholders} />,
-                                },
-                                {
-                                    path: 'paginations',
-                                    element: <LoadComponent component={Paginations} />,
-                                },
-                                {
-                                    path: 'popovers',
-                                    element: <LoadComponent component={Popovers} />,
-                                },
-                                {
-                                    path: 'progress',
-                                    element: <LoadComponent component={Progress} />,
-                                },
-                                {
-                                    path: 'ribbons',
-                                    element: <LoadComponent component={Ribbons} />,
-                                },
-                                {
-                                    path: 'spinners',
-                                    element: <LoadComponent component={Spinners} />,
-                                },
-                                {
-                                    path: 'tabs',
-                                    element: <LoadComponent component={Tabs} />,
-                                },
-                                {
-                                    path: 'tooltips',
-                                    element: <LoadComponent component={Tooltips} />,
-                                },
-                                {
-                                    path: 'typography',
-                                    element: <LoadComponent component={Typography} />,
-                                },
-                            ],
-                        },
-                        {
-                            path: 'widgets',
-                            element: <LoadComponent component={Widgets} />,
-                        },
-                        {
-                            path: 'extended',
-                            children: [
-                                {
-                                    path: 'dragdrop',
-                                    element: <LoadComponent component={DragDrop} />,
-                                },
-                                {
-                                    path: 'rangesliders',
-                                    element: <LoadComponent component={RangeSliders} />,
-                                },
-                                {
-                                    path: 'ratings',
-                                    element: <LoadComponent component={Ratings} />,
-                                },
-                            ],
-                        },
-                        {
-                            path: 'icons',
-                            children: [
-                                {
-                                    path: 'unicons',
-                                    element: <LoadComponent component={Unicons} />,
-                                },
-                                {
-                                    path: 'mdi',
-                                    element: <LoadComponent component={MDIIcons} />,
-                                },
-                                {
-                                    path: 'dripicons',
-                                    element: <LoadComponent component={Dripicons} />,
-                                },
-                            ],
-                        },
-                        {
-                            path: 'forms',
-                            children: [
-                                {
-                                    path: 'basic',
-                                    element: <LoadComponent component={BasicForms} />,
-                                },
-                                {
-                                    path: 'advanced',
-                                    element: <LoadComponent component={FormAdvanced} />,
-                                },
-                                {
-                                    path: 'validation',
-                                    element: <LoadComponent component={FormValidation} />,
-                                },
-                                {
-                                    path: 'wizard',
-                                    element: <LoadComponent component={FormWizard} />,
-                                },
-                                {
-                                    path: 'upload',
-                                    element: <LoadComponent component={FileUpload} />,
-                                },
-                                {
-                                    path: 'editors',
-                                    element: <LoadComponent component={Editors} />,
-                                },
-                            ],
-                        },
-                        {
-                            path: 'charts',
-                            children: [
-                                {
-                                    path: 'apex',
-                                    element: <LoadComponent component={ApexChart} />,
-                                },
-                                {
-                                    path: 'chartjs',
-                                    element: <LoadComponent component={ChartJs} />,
-                                },
-                            ],
                         },
                     ],
                 },
