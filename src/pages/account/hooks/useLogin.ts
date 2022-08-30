@@ -8,56 +8,56 @@ import { useRedux } from 'hooks';
 import { UserData } from '../Login';
 
 type LocationState = {
-    from?: Location;
+  from?: Location;
 };
 
 export default function useLogin() {
-    const { t } = useTranslation();
-    const { dispatch, appSelector } = useRedux();
+  const { t } = useTranslation();
+  const { dispatch, appSelector } = useRedux();
 
-    const location: Location = useLocation();
-    let redirectUrl: string = '/';
+  const location: Location = useLocation();
+  let redirectUrl: string = '/';
 
-    if (location.state) {
-        const { from } = location.state as LocationState;
-        redirectUrl = from ? from.pathname : '/';
-    }
+  if (location.state) {
+    const { from } = location.state as LocationState;
+    redirectUrl = from ? from.pathname : '/';
+  }
 
-    useEffect(() => {
-        dispatch(resetAuth());
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(resetAuth());
+  }, [dispatch]);
 
-    const { loading, userLoggedIn, user, error } = appSelector((state) => ({
-        loading: state.Auth.loading,
-        user: state.Auth.user,
-        error: state.Auth.error,
-        userLoggedIn: state.Auth.userLoggedIn,
-    }));
+  const { loading, userLoggedIn, user, error } = appSelector((state) => ({
+    loading: state.Auth.loading,
+    user: state.Auth.user,
+    error: state.Auth.error,
+    userLoggedIn: state.Auth.userLoggedIn,
+  }));
 
-    /*
+  /*
     form validation schema
     */
-    const schemaResolver = yupResolver(
-        yup.object().shape({
-            username: yup.string().required(t('Please enter username')),
-            password: yup.string().required(t('Please enter password')),
-        })
-    );
+  const schemaResolver = yupResolver(
+    yup.object().shape({
+      username: yup.string().required(t('Please enter username')),
+      password: yup.string().required(t('Please enter password')),
+    })
+  );
 
-    /*
+  /*
     handle form submission
     */
-    const onSubmit = (formData: UserData) => {
-        dispatch(loginUser(formData['username'], formData['password']));
-    };
+  const onSubmit = (formData: UserData) => {
+    dispatch(loginUser(formData['username'], formData['password']));
+  };
 
-    return {
-        loading,
-        userLoggedIn,
-        user,
-        error,
-        schemaResolver,
-        onSubmit,
-        redirectUrl,
-    };
+  return {
+    loading,
+    userLoggedIn,
+    user,
+    error,
+    schemaResolver,
+    onSubmit,
+    redirectUrl,
+  };
 }

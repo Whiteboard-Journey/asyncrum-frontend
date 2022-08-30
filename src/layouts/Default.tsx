@@ -8,20 +8,20 @@ const loading = () => <div className=""></div>;
 type DefaultLayoutProps = {};
 
 const DefaultLayout = (props: DefaultLayoutProps) => {
-    const { appSelector } = useRedux();
+  const { appSelector } = useRedux();
 
-    const { layoutColor } = appSelector((state) => ({
-        layoutColor: state.Layout.layoutColor,
-    }));
+  const { layoutColor } = appSelector((state) => ({
+    layoutColor: state.Layout.layoutColor,
+  }));
 
-    useEffect(() => {
-        changeBodyAttribute('data-layout-color', layoutColor);
-    }, [layoutColor]);
+  useEffect(() => {
+    changeBodyAttribute('data-layout-color', layoutColor);
+  }, [layoutColor]);
 
-    return (
-        <Suspense fallback={loading()}>
-            <Outlet />
-        </Suspense>
-    );
+  return (
+    <Suspense fallback={loading()}>
+      <Outlet />
+    </Suspense>
+  );
 };
 export default DefaultLayout;

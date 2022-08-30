@@ -11,40 +11,40 @@ import Footer from './Footer';
 import { services, layouts, features, plans, rawFaqs } from './data';
 
 const Landing = () => {
-    useEffect(() => {
-        if (document.body) document.body.classList.remove('authentication-bg');
-    }, []);
+  useEffect(() => {
+    if (document.body) document.body.classList.remove('authentication-bg');
+  }, []);
 
-    return (
-        <>
-            {/* navbar */}
-            <NavBar />
+  return (
+    <>
+      {/* navbar */}
+      <NavBar />
 
-            {/* hero */}
-            <Hero />
+      {/* hero */}
+      <Hero />
 
-            {/* services */}
-            <Services services={services} />
+      {/* services */}
+      <Services services={services} />
 
-            {/* layouts */}
-            <Layouts layouts={layouts} />
+      {/* layouts */}
+      <Layouts layouts={layouts} />
 
-            {/* features */}
-            <Features features={features} />
+      {/* features */}
+      <Features features={features} />
 
-            {/* pricing */}
-            <Pricing plans={plans} />
+      {/* pricing */}
+      <Pricing plans={plans} />
 
-            {/* faqs */}
-            <FAQ rawFaqs={rawFaqs} />
+      {/* faqs */}
+      <FAQ rawFaqs={rawFaqs} />
 
-            {/* contact */}
-            <ContactUs />
+      {/* contact */}
+      <ContactUs />
 
-            {/* footer */}
-            <Footer />
-        </>
-    );
+      {/* footer */}
+      <Footer />
+    </>
+  );
 };
 
 export { Landing };

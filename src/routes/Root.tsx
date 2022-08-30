@@ -1,14 +1,14 @@
 import { Navigate } from 'react-router-dom';
 
 const Root = () => {
-    const getRootUrl = () => {
-        let url: string = 'dashboard';
-        return url;
-    };
+  const getRootUrl = () => {
+    let url: string = 'dashboard';
+    return url;
+  };
 
-    const url = getRootUrl();
+  const url = getRootUrl();
 
-    return <Navigate to={`/${url}`} />;
+  return <Navigate to={`/${url}`} />;
 };
 
 export default Root;

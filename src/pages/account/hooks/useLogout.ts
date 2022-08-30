@@ -3,9 +3,9 @@ import { logoutUser } from 'redux/actions';
 import { useRedux } from 'hooks';
 
 export default function useLogout() {
-    const { dispatch } = useRedux();
+  const { dispatch } = useRedux();
 
-    useEffect(() => {
-        dispatch(logoutUser());
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(logoutUser());
+  }, [dispatch]);
 }

@@ -4,26 +4,26 @@ import AccountLayout from './AccountLayout';
 import mailSent from 'assets/images/mail_sent.svg';
 
 const Confirm = () => {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
-    return (
-        <AccountLayout>
-            <div className="text-center m-auto">
-                <img src={mailSent} alt="mail sent" height="64" />
-                <h4 className="text-dark-50 text-center mt-4 fw-bold">{t('Please check your email')}</h4>
-                <p className="text-muted mb-4">
-                    {t(
-                        'A email has been send to your email address. Please check and click on the included link for your confirmation.'
-                    )}
-                </p>
-                <p className="text-center">
-                    <Link className="btn btn-primary" to="/account/login">
-                        {t('Back to Login')}
-                    </Link>
-                </p>
-            </div>
-        </AccountLayout>
-    );
+  return (
+    <AccountLayout>
+      <div className="text-center m-auto">
+        <img src={mailSent} alt="mail sent" height="64" />
+        <h4 className="text-dark-50 text-center mt-4 fw-bold">{t('Please check your email')}</h4>
+        <p className="text-muted mb-4">
+          {t(
+            'A email has been send to your email address. Please check and click on the included link for your confirmation.'
+          )}
+        </p>
+        <p className="text-center">
+          <Link className="btn btn-primary" to="/account/login">
+            {t('Back to Login')}
+          </Link>
+        </p>
+      </div>
+    </AccountLayout>
+  );
 };
 
 export default Confirm;

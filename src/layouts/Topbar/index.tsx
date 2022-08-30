@@ -18,141 +18,137 @@ import { useEffect } from 'react';
 import axios from 'axios';
 
 type TopbarProps = {
-    hideLogo?: boolean;
-    navCssClasses?: string;
-    openLeftMenuCallBack?: () => void;
-    topbarDark?: boolean;
+  hideLogo?: boolean;
+  navCssClasses?: string;
+  openLeftMenuCallBack?: () => void;
+  topbarDark?: boolean;
 };
 
 const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: TopbarProps) => {
-    const { dispatch, appSelector } = useRedux();
-    const { width } = useViewport();
-    const [isMenuOpened, toggleMenu] = useToggle();
-    const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
+  const { dispatch, appSelector } = useRedux();
+  const { width } = useViewport();
+  const [isMenuOpened, toggleMenu] = useToggle();
+  const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
 
-    const containerCssClasses = !hideLogo ? 'container-fluid' : '';
+  const containerCssClasses = !hideLogo ? 'container-fluid' : '';
 
-    const { layoutType, leftSideBarType } = appSelector((state) => ({
-        layoutType: state.Layout.layoutType,
-        leftSideBarType: state.Layout.leftSideBarType,
-    }));
+  const { layoutType, leftSideBarType } = appSelector((state) => ({
+    layoutType: state.Layout.layoutType,
+    leftSideBarType: state.Layout.leftSideBarType,
+  }));
 
-    /**
-     * Toggle the leftmenu when having mobile screen
-     */
-    const handleLeftMenuCallBack = () => {
-        toggleMenu();
-        if (openLeftMenuCallBack) openLeftMenuCallBack();
+  /**
+   * Toggle the leftmenu when having mobile screen
+   */
+  const handleLeftMenuCallBack = () => {
+    toggleMenu();
+    if (openLeftMenuCallBack) openLeftMenuCallBack();
 
-        switch (layoutType) {
-            case layoutConstants.LayoutTypes.LAYOUT_VERTICAL:
-                if (width >= 768) {
-                    if (leftSideBarType === 'fixed' || leftSideBarType === 'scrollable')
-                        dispatch(changeSidebarType(layoutConstants.SideBarWidth.LEFT_SIDEBAR_TYPE_CONDENSED));
-                    if (leftSideBarType === 'condensed')
-                        dispatch(changeSidebarType(layoutConstants.SideBarWidth.LEFT_SIDEBAR_TYPE_FIXED));
-                }
-                break;
-
-            case layoutConstants.LayoutTypes.LAYOUT_FULL:
-                if (document.body) {
-                    document.body.classList.toggle('hide-menu');
-                }
-                break;
-            default:
-                break;
+    switch (layoutType) {
+      case layoutConstants.LayoutTypes.LAYOUT_VERTICAL:
+        if (width >= 768) {
+          if (leftSideBarType === 'fixed' || leftSideBarType === 'scrollable')
+            dispatch(changeSidebarType(layoutConstants.SideBarWidth.LEFT_SIDEBAR_TYPE_CONDENSED));
+          if (leftSideBarType === 'condensed')
+            dispatch(changeSidebarType(layoutConstants.SideBarWidth.LEFT_SIDEBAR_TYPE_FIXED));
         }
-    };
+        break;
 
-    /**
-     * Toggles the right sidebar
-     */
-    const handleRightSideBar = () => {
-        dispatch(showRightSidebar());
-    };
+      case layoutConstants.LayoutTypes.LAYOUT_FULL:
+        if (document.body) {
+          document.body.classList.toggle('hide-menu');
+        }
+        break;
+      default:
+        break;
+    }
+  };
 
-    return (
-        <div className={classNames('navbar-custom', navCssClasses)}>
-            <div className={containerCssClasses}>
-                {!hideLogo && (
-                    <Link to="/" className="topnav-logo">
-                        <span className="topnav-logo-lg">
-                            <img src={logo} alt="logo" height="16" />
-                        </span>
-                        <span className="topnav-logo-sm">
-                            <img src={topbarDark ? logoSmLight : logoSmDark} alt="logo" height="16" />
-                        </span>
-                    </Link>
-                )}
+  /**
+   * Toggles the right sidebar
+   */
+  const handleRightSideBar = () => {
+    dispatch(showRightSidebar());
+  };
 
-                <ul className="list-unstyled topbar-menu float-end mb-0">
-                    <li className="notification-list topbar-dropdown d-xl-none">
-                        <SearchDropdown />
-                    </li>
-                    <li className="dropdown notification-list topbar-dropdown">
-                        <LanguageDropdown />
-                    </li>
-                    <li className="dropdown notification-list">
-                        <NotificationDropdown notifications={notifications} />
-                    </li>
-                    <li className="dropdown notification-list d-none d-sm-inline-block">
-                        <AppsDropdown />
-                    </li>
-                    <li className="notification-list">
-                        <button
-                            className="nav-link dropdown-toggle end-bar-toggle arrow-none btn btn-link shadow-none"
-                            onClick={handleRightSideBar}
-                        >
-                            <i className="dripicons-gear noti-icon"></i>
-                        </button>
-                    </li>
-                    <li className="dropdown notification-list">
-                        <ProfileDropdown
-                            userImage={user.profileImageUrl}
-                            menuItems={profileMenus}
-                            username={user.fullname}
-                            userTitle={'Developer'}
-                        />
-                    </li>
-                </ul>
+  return (
+    <div className={classNames('navbar-custom', navCssClasses)}>
+      <div className={containerCssClasses}>
+        {!hideLogo && (
+          <Link to="/" className="topnav-logo">
+            <span className="topnav-logo-lg">
+              <img src={logo} alt="logo" height="16" />
+            </span>
+            <span className="topnav-logo-sm">
+              <img src={topbarDark ? logoSmLight : logoSmDark} alt="logo" height="16" />
+            </span>
+          </Link>
+        )}
 
-                {/* toggle for vertical layout */}
-                {(layoutType === layoutConstants.LayoutTypes.LAYOUT_VERTICAL ||
-                    layoutType === layoutConstants.LayoutTypes.LAYOUT_FULL) && (
-                    <button className="button-menu-mobile open-left" onClick={handleLeftMenuCallBack}>
-                        <i className="mdi mdi-menu" />
-                    </button>
-                )}
+        <ul className="list-unstyled topbar-menu float-end mb-0">
+          <li className="notification-list topbar-dropdown d-xl-none">
+            <SearchDropdown />
+          </li>
+          <li className="dropdown notification-list topbar-dropdown">
+            <LanguageDropdown />
+          </li>
+          <li className="dropdown notification-list">
+            <NotificationDropdown notifications={notifications} />
+          </li>
+          <li className="dropdown notification-list d-none d-sm-inline-block">
+            <AppsDropdown />
+          </li>
+          <li className="notification-list">
+            <button
+              className="nav-link dropdown-toggle end-bar-toggle arrow-none btn btn-link shadow-none"
+              onClick={handleRightSideBar}
+            >
+              <i className="dripicons-gear noti-icon"></i>
+            </button>
+          </li>
+          <li className="dropdown notification-list">
+            <ProfileDropdown
+              userImage={user.profileImageUrl}
+              menuItems={profileMenus}
+              username={user.fullname}
+              userTitle={'Developer'}
+            />
+          </li>
+        </ul>
 
-                {/* toggle for horizontal layout */}
-                {layoutType === layoutConstants.LayoutTypes.LAYOUT_HORIZONTAL && (
-                    <Link
-                        to="#"
-                        className={classNames('navbar-toggle', { open: isMenuOpened })}
-                        onClick={handleLeftMenuCallBack}
-                    >
-                        <div className="lines">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </Link>
-                )}
+        {/* toggle for vertical layout */}
+        {(layoutType === layoutConstants.LayoutTypes.LAYOUT_VERTICAL ||
+          layoutType === layoutConstants.LayoutTypes.LAYOUT_FULL) && (
+          <button className="button-menu-mobile open-left" onClick={handleLeftMenuCallBack}>
+            <i className="mdi mdi-menu" />
+          </button>
+        )}
 
-                {/* toggle for detached layout */}
-                {layoutType === layoutConstants.LayoutTypes.LAYOUT_DETACHED && (
-                    <Link to="#" className="button-menu-mobile disable-btn" onClick={handleLeftMenuCallBack}>
-                        <div className="lines">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </Link>
-                )}
-                <TopbarSearch options={searchOptions} />
+        {/* toggle for horizontal layout */}
+        {layoutType === layoutConstants.LayoutTypes.LAYOUT_HORIZONTAL && (
+          <Link to="#" className={classNames('navbar-toggle', { open: isMenuOpened })} onClick={handleLeftMenuCallBack}>
+            <div className="lines">
+              <span></span>
+              <span></span>
+              <span></span>
             </div>
-        </div>
-    );
+          </Link>
+        )}
+
+        {/* toggle for detached layout */}
+        {layoutType === layoutConstants.LayoutTypes.LAYOUT_DETACHED && (
+          <Link to="#" className="button-menu-mobile disable-btn" onClick={handleLeftMenuCallBack}>
+            <div className="lines">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </Link>
+        )}
+        <TopbarSearch options={searchOptions} />
+      </div>
+    </div>
+  );
 };
 
 export default Topbar;
