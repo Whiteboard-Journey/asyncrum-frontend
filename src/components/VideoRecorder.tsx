@@ -34,9 +34,9 @@ const VideoRecorder: React.FC = () => {
   } = useReactMediaRecorder({ video: true, screen: true });
 
   const uploadVideo = async (url: string, type: string) => {
-    let camMedia = await fetch(url!);
-    let blob = await camMedia.blob();
-    let response = await axios.post(
+    const camMedia = await fetch(url!);
+    const blob = await camMedia.blob();
+    const response = await axios.post(
       config.API_URL + '/api/v1/records',
       {
         title: title + ' ' + type,

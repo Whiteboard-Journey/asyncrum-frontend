@@ -48,7 +48,7 @@ export default function useThemeCustomizer() {
    * On layout change
    */
   const changeLayoutType = (value: string) => {
-    var layout = value;
+    const layout = value;
     switch (layout) {
       case 'topnav':
         dispatch(changeLayout(layoutConstants.LayoutTypes.LAYOUT_HORIZONTAL));
@@ -69,7 +69,7 @@ export default function useThemeCustomizer() {
    * Change the layout color
    */
   const changeLayoutColorScheme = (value: string) => {
-    var mode = value;
+    const mode = value;
     switch (mode) {
       case 'dark':
         dispatch(changeLayoutColor(layoutConstants.LayoutColor.LAYOUT_COLOR_DARK));
@@ -84,7 +84,7 @@ export default function useThemeCustomizer() {
    * Change the width mode
    */
   const changeWidthMode = (value: string) => {
-    var mode = value;
+    const mode = value;
 
     switch (mode) {
       case 'boxed':
@@ -100,7 +100,7 @@ export default function useThemeCustomizer() {
    * Changes the theme
    */
   const changeLeftSidebarTheme = (value: string) => {
-    var theme = value;
+    const theme = value;
     switch (theme) {
       case 'default':
         dispatch(changeSidebarTheme(layoutConstants.SideBarTheme.LEFT_SIDEBAR_THEME_DEFAULT));
@@ -118,7 +118,7 @@ export default function useThemeCustomizer() {
    * Change the leftsiderbar type
    */
   const changeLeftSiderbarType = (value: string) => {
-    var type = value;
+    const type = value;
     switch (type) {
       case 'condensed':
         dispatch(changeSidebarType(layoutConstants.SideBarWidth.LEFT_SIDEBAR_TYPE_CONDENSED));

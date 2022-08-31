@@ -11,10 +11,9 @@ import {
   Pagination,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { DailyStandup, Whiteboard } from './types';
+import { DailyStandup, Whiteboard, WhiteboardCardProps } from './types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useToggle } from 'hooks';
-import axios from 'axios';
 import config from 'config';
 import { TDDocument, TDFile, TldrawApp } from '@krapi0314/tldraw';
 import moment from 'moment';
@@ -22,106 +21,23 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { useModal } from './hooks';
 import { VideoRecorder } from 'components';
+import {
+  createWhiteboard as createWhiteboardAPI,
+  readAllWhiteboard as readAllWhiteboardAPI,
+  readWhiteboard as readWhiteboardAPI,
+  uploadWhiteboard as uploadWhiteboardAPI,
+  updateWhiteboard as updateWhiteboardAPI,
+  deleteWhiteboard as deleteWhiteboardAPI,
+  readAllDailyStandups as readAllDailyStandupsAPI,
+  viewDailyStandup as viewDailyStandupAPI,
+} from 'helpers';
 
-const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
+const user =
+  sessionStorage.getItem('asyncrum_user') !== null
+    ? JSON.parse(sessionStorage.getItem('asyncrum_user') as string)
+    : null;
 const whiteboardPageURL = '/whiteboard?url=';
-
-const onCreateWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
-
-  const title = ((event.target as HTMLFormElement).elements as { [key: string]: any })['title'].value;
-  const description = ((event.target as HTMLFormElement).elements as { [key: string]: any })['description'].value;
-  const scope = 'team';
-
-  axios
-    .post(
-      `${config.API_URL + '/api/v1/whiteboards'}`,
-      { title, description, scope },
-      { headers: { Authorization: 'Bearer ' + user.token } }
-    )
-    .then((response) => {
-      const preSignedURL = response.data.preSignedURL;
-      const whiteboardID = response.data.id;
-      const document: TDDocument = {
-        id: 'doc',
-        name: 'New Document',
-        version: TldrawApp.version,
-        pages: {
-          page: {
-            id: 'page',
-            name: 'Page 1',
-            childIndex: 1,
-            shapes: {},
-            bindings: {},
-          },
-        },
-        pageStates: {
-          page: {
-            id: 'page',
-            selectedIds: [],
-            camera: {
-              point: [0, 0],
-              zoom: 1,
-            },
-          },
-        },
-        assets: {},
-      };
-
-      const file: TDFile = {
-        name: document.name || 'New Document',
-        fileHandle: null,
-        document,
-        assets: {},
-      };
-
-      const json = JSON.stringify(file, null, 2);
-
-      const blob = new Blob([json], {
-        type: 'application/vnd.Tldraw+json',
-      });
-
-      const fileToUpload = new File([blob], title);
-
-      const formData = new FormData();
-      formData.append('data', fileToUpload);
-      const uploadAxios = axios.create({
-        transformRequest: [
-          (data: any, headers: any) => {
-            delete headers.common.Authorization;
-            headers['content-type'] = 'application/octet-stream';
-            return formData;
-          },
-        ],
-      });
-      uploadAxios.put(preSignedURL, formData).then(() => {
-        axios
-          .get(`${config.API_URL + '/api/v1/whiteboards/' + whiteboardID}`, {
-            headers: { Authorization: 'Bearer ' + user.token },
-          })
-          .then((res) => {
-            window.location.href = whiteboardPageURL + res.data.whiteboardUrl + '&id=' + whiteboardID;
-          });
-      });
-    });
-};
-
-const onEditWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
-
-  const id = ((event.target as HTMLFormElement).elements as { [key: string]: any })['id'].value;
-  const title = ((event.target as HTMLFormElement).elements as { [key: string]: any })['title'].value;
-  const description = ((event.target as HTMLFormElement).elements as { [key: string]: any })['description'].value;
-  const scope = '';
-
-  axios
-    .patch(
-      `${config.API_URL + '/api/v1/whiteboards/' + id}`,
-      { title, description, scope },
-      { headers: { Authorization: 'Bearer ' + user.token } }
-    )
-    .then(() => window.location.reload());
-};
+const scope = 'team';
 
 const convertDateTime = (datetime: string) => {
   const convertedDatetime = new Date(datetime);
@@ -133,29 +49,9 @@ const getTimeFromNow = (datetime: string) => {
   return moment(convertDateTime(datetime)).fromNow();
 };
 
-const onDeleteWhiteboard = (event: React.FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
-
-  const id = ((event.target as HTMLFormElement).elements as { [key: string]: any })['id'].value;
-
-  axios
-    .delete(`${config.API_URL + '/api/v1/whiteboards/' + id}`, { headers: { Authorization: 'Bearer ' + user.token } })
-    .then(() => window.location.reload());
-};
-
-const onViewDailyStandups = (id: number[]) => {
-  const body = {
-    title: null,
-    description: null,
-    scope: 'team',
-  };
-  axios.patch(config.API_URL + '/api/v1/records/' + id[0], body, {
-    headers: { Authorization: 'Bearer ' + user.token },
-  });
-  axios.patch(config.API_URL + '/api/v1/records/' + id[1], body, {
-    headers: { Authorization: 'Bearer ' + user.token },
-  });
-  // window.location.reload();
+const onViewDailyStandups = async (id: number[]) => {
+  await viewDailyStandupAPI(id[0]);
+  await viewDailyStandupAPI(id[1]);
 };
 
 const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
@@ -172,8 +68,7 @@ const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
           openModalWithClass('modal-full-width');
           onViewDailyStandups(dailyStandup.id);
         }}
-        style={{ cursor: 'pointer' }}
-      >
+        style={{ cursor: 'pointer' }}>
         <div className={(dailyStandup.seen ? 'opacity-25' : '') + ' text-center'}>
           <img
             src={dailyStandup.profileImageUrl}
@@ -218,12 +113,22 @@ const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
   );
 };
 
-const WhiteboardCard = ({ whiteboard }: { whiteboard: Whiteboard }) => {
+const WhiteboardCard = ({ whiteboard, onEditWhiteboard, onDeleteWhiteboard }: WhiteboardCardProps) => {
   const [isEditOpen, toggleEdit] = useToggle();
   const [isDeleteOpen, toggleDelete] = useToggle();
   const [isReadMore, setIsReadMore] = useState(true);
   const toggleReadMore = () => {
     setIsReadMore(!isReadMore);
+  };
+
+  const closeModalAfterEdit = (event: React.FormEvent<HTMLFormElement>) => {
+    onEditWhiteboard(event);
+    toggleEdit();
+  };
+
+  const closeModalAfterDelete = (event: React.FormEvent<HTMLFormElement>) => {
+    onDeleteWhiteboard(event);
+    toggleDelete();
   };
 
   return (
@@ -242,7 +147,7 @@ const WhiteboardCard = ({ whiteboard }: { whiteboard: Whiteboard }) => {
                 <Modal.Header onHide={toggleEdit} closeButton>
                   <h4 className="modal-title">Edit Whiteboard Information</h4>
                 </Modal.Header>
-                <form className="ps-3 pe-3" onSubmit={onEditWhiteboard}>
+                <form className="ps-3 pe-3" onSubmit={closeModalAfterEdit}>
                   <input type="hidden" id="id" value={whiteboard.id} />
                   <div className="mt-3 mb-3">
                     <label htmlFor="title" className="form-label">
@@ -292,7 +197,7 @@ const WhiteboardCard = ({ whiteboard }: { whiteboard: Whiteboard }) => {
                 <p className="mt-4 mb-4 text-center font-weight-bolds">
                   Are you sure you want to delete this whiteboard permanently?
                 </p>
-                <form className="ps-3 pe-3" onSubmit={onDeleteWhiteboard}>
+                <form className="ps-3 pe-3" onSubmit={closeModalAfterDelete}>
                   <input type="hidden" id="id" value={whiteboard.id} />
                   <div className="mb-3 text-center">
                     <button className="btn btn-danger" type="submit">
@@ -337,106 +242,187 @@ const WhiteboardCard = ({ whiteboard }: { whiteboard: Whiteboard }) => {
 
 const Dashboard = () => {
   const [whiteboards, setWhiteboards] = useState<Whiteboard[]>([]);
-  const [whiteboardLoading, setWhiteboardLoading] = useState<Boolean>(true);
+  const [whiteboardLoading, setWhiteboardLoading] = useState<boolean>(true);
   const [isCreateWhiteboardOpen, toggleCreateWhiteboard] = useToggle();
   const { isOpen: isRecordOpen, size, className, scroll, toggleModal: toggleRecord, openModalWithClass } = useModal();
   const [dailyStandups, setDailyStandups] = useState<DailyStandup[]>([]);
-  const [dailyStandupLoading, setDailyStandupLoading] = useState<Boolean>(true);
+  const [dailyStandupLoading, setDailyStandupLoading] = useState<boolean>(true);
   const [whiteboardPageNumber, setWhiteboardPageNumber] = useState<number>(1);
   const [numberOfWhiteboards, setNumberOfWhiteboards] = useState<number>(0);
   const carouselRef = useRef<Carousel>(null);
 
-  useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
-    let dailyStandups: DailyStandup[] = [];
-    axios
-      .get(config.API_URL + `/api/v1/records?scope=team&pageIndex=0&topId=0`, {
-        headers: { Authorization: 'Bearer ' + user.token },
-      })
-      .then((res) => {
-        for (const record of res.data.records) {
-          if (
-            moment().diff(moment(convertDateTime(record.createdDate)), 'hours') > 24 &&
-            record.seenMemberIdGroup?.indexOf(user.id) > -1
-          ) {
-            continue;
-          }
-          if (
-            dailyStandups.at(-1)?.author === record.author.fullname &&
-            dailyStandups.at(-1)?.title.slice(0, 13) === record.title.slice(0, 13)
-          ) {
-            if (record.title.slice(-6) === 'screen') {
-              dailyStandups.at(-1)!.id.push(record.id);
-              dailyStandups.at(-1)!.screenRecordFileUrl = record.recordFileUrl;
-            } else {
-              dailyStandups.at(-1)!.id.push(record.id);
-              dailyStandups.at(-1)!.camRecordFileUrl = record.recordFileUrl;
-            }
-          } else {
-            if (record.title.slice(-6) === 'screen') {
-              dailyStandups.push({
-                id: [record.id],
-                author: record.author.fullname,
-                title: record.title,
-                profileImageUrl: record.author.profileImageUrl,
-                createdDate: record.createdDate,
-                camRecordFileUrl: '',
-                screenRecordFileUrl: record.recordFileUrl,
-                seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
-              });
-            } else {
-              dailyStandups.push({
-                id: [record.id],
-                author: record.author.fullname,
-                title: record.title,
-                profileImageUrl: record.author.profileImageUrl,
-                createdDate: record.createdDate,
-                camRecordFileUrl: record.recordFileUrl,
-                screenRecordFileUrl: '',
-                seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
-              });
-            }
-          }
+  const readAllDailyStandups = async () => {
+    const pageIndex = 0;
+    const readAllDailyStandupsAPIResponse = await readAllDailyStandupsAPI({ scope, pageIndex });
+    for (const record of readAllDailyStandupsAPIResponse.data.records) {
+      if (
+        moment().diff(moment(convertDateTime(record.createdDate)), 'hours') > 24 &&
+        record.seenMemberIdGroup?.indexOf(user.id) > -1
+      ) {
+        continue;
+      }
+      if (
+        dailyStandups.at(-1) &&
+        dailyStandups.at(-1)?.author === record.author.fullname &&
+        dailyStandups.at(-1)?.title.slice(0, 13) === record.title.slice(0, 13)
+      ) {
+        if (record.title.slice(-6) === 'screen') {
+          dailyStandups.at(-1)?.id.push(record.id);
+          (dailyStandups.at(-1) as DailyStandup).screenRecordFileUrl = record.recordFileUrl;
+        } else {
+          dailyStandups.at(-1)?.id.push(record.id);
+          (dailyStandups.at(-1) as DailyStandup).camRecordFileUrl = record.recordFileUrl;
         }
-        setDailyStandups(dailyStandups.reverse());
-        setDailyStandupLoading(false);
-        const slide = dailyStandups.findIndex((dailyStandup) => !dailyStandup.seen);
-        if (carouselRef && carouselRef.current) {
-          carouselRef.current.goToSlide(slide);
+      } else {
+        if (record.title.slice(-6) === 'screen') {
+          dailyStandups.push({
+            id: [record.id],
+            author: record.author.fullname,
+            title: record.title,
+            profileImageUrl: record.author.profileImageUrl,
+            createdDate: record.createdDate,
+            camRecordFileUrl: '',
+            screenRecordFileUrl: record.recordFileUrl,
+            seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
+          });
+        } else {
+          dailyStandups.push({
+            id: [record.id],
+            author: record.author.fullname,
+            title: record.title,
+            profileImageUrl: record.author.profileImageUrl,
+            createdDate: record.createdDate,
+            camRecordFileUrl: record.recordFileUrl,
+            screenRecordFileUrl: '',
+            seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
+          });
         }
+      }
+    }
+    setDailyStandups(dailyStandups.reverse());
+    setDailyStandupLoading(false);
+    const slide = dailyStandups.findIndex((dailyStandup) => !dailyStandup.seen);
+    if (carouselRef && carouselRef.current) {
+      carouselRef.current.goToSlide(slide);
+    }
+  };
+
+  const readAllWhiteboard = async (pageIndex: number) => {
+    const whiteboards: Whiteboard[] = [];
+    const readAllWhiteboardAPIResponse = await readAllWhiteboardAPI({ scope, pageIndex });
+    for (const whiteboard of readAllWhiteboardAPIResponse.data.whiteboards) {
+      whiteboards.push({
+        id: whiteboard.id,
+        title: whiteboard.title,
+        description: whiteboard.description,
+        createdDate: whiteboard.createdDate,
+        lastModifiedDate: whiteboard.lastModifiedDate,
+        scope: whiteboard.scope,
+        author: whiteboard.author.fullname,
+        authorProfileImageUrl: whiteboard.author.profileImageUrl,
+        whiteboardFileUrl: whiteboard.whiteboardFileUrl,
       });
+    }
+    setWhiteboards(whiteboards);
+    setNumberOfWhiteboards(readAllWhiteboardAPIResponse.data.size_ALL_PAGE);
+    setWhiteboardLoading(false);
+  };
+
+  const onCreateWhiteboard = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const title = ((event.target as HTMLFormElement).elements as { [key: string]: any })['title'].value;
+    const description = ((event.target as HTMLFormElement).elements as { [key: string]: any })['description'].value;
+
+    const createWhiteboardAPIResponse = await createWhiteboardAPI({ title, description, scope });
+    const { id, preSignedURL } = createWhiteboardAPIResponse.data;
+    const formData = createWhiteboardFormData(id, title);
+    await uploadWhiteboardAPI(preSignedURL, formData);
+    const readWhiteboardAPIResponse = await readWhiteboardAPI(id);
+    window.location.href = whiteboardPageURL + readWhiteboardAPIResponse.data.whiteboardUrl + '&id=' + id;
+  };
+
+  const createWhiteboardFormData = (whiteboardID: string, title: string) => {
+    const document: TDDocument = {
+      id: whiteboardID,
+      name: title,
+      version: TldrawApp.version,
+      pages: {
+        page: {
+          id: 'page',
+          name: 'Page 1',
+          childIndex: 1,
+          shapes: {},
+          bindings: {},
+        },
+      },
+      pageStates: {
+        page: {
+          id: 'page',
+          selectedIds: [],
+          camera: {
+            point: [0, 0],
+            zoom: 1,
+          },
+        },
+      },
+      assets: {},
+    };
+
+    const file: TDFile = {
+      name: document.name || 'New Document',
+      fileHandle: null,
+      document,
+      assets: {},
+    };
+
+    const json = JSON.stringify(file, null, 2);
+
+    const blob = new Blob([json], {
+      type: 'application/vnd.Tldraw+json',
+    });
+
+    const fileToUpload = new File([blob], title);
+
+    const formData = new FormData();
+    formData.append('data', fileToUpload);
+
+    return formData;
+  };
+
+  const onEditWhiteboard = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const id = ((event.target as HTMLFormElement).elements as { [key: string]: any })['id'].value;
+    const title = ((event.target as HTMLFormElement).elements as { [key: string]: any })['title'].value;
+    const description = ((event.target as HTMLFormElement).elements as { [key: string]: any })['description'].value;
+
+    await updateWhiteboardAPI(id, { title, description, scope });
+    const pageIndex = whiteboardPageNumber - 1;
+    readAllWhiteboard(pageIndex);
+  };
+
+  const onDeleteWhiteboard = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const id = ((event.target as HTMLFormElement).elements as { [key: string]: any })['id'].value;
+    await deleteWhiteboardAPI(id);
+    const pageIndex = whiteboardPageNumber - 1;
+    readAllWhiteboard(pageIndex);
+  };
+
+  useEffect(() => {
+    readAllDailyStandups();
   }, []);
 
   useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
-    let whiteboards: Whiteboard[] = [];
-    axios
-      .get(config.API_URL + `/api/v1/whiteboards?scope=team&pageIndex=${whiteboardPageNumber - 1}&topId=0`, {
-        headers: { Authorization: 'Bearer ' + user.token },
-      })
-      .then((res) => {
-        for (const whiteboard of res.data.whiteboards) {
-          whiteboards.push({
-            id: whiteboard.id,
-            title: whiteboard.title,
-            description: whiteboard.description,
-            createdDate: whiteboard.createdDate,
-            lastModifiedDate: whiteboard.lastModifiedDate,
-            scope: whiteboard.scope,
-            author: whiteboard.author.fullname,
-            authorProfileImageUrl: whiteboard.author.profileImageUrl,
-            whiteboardFileUrl: whiteboard.whiteboardFileUrl,
-          });
-        }
-        setWhiteboards(whiteboards);
-        setNumberOfWhiteboards(res.data.size_ALL_PAGE);
-        setWhiteboardLoading(false);
-      });
+    const pageIndex = whiteboardPageNumber - 1;
+    readAllWhiteboard(pageIndex);
   }, [whiteboardPageNumber]);
 
   const WhiteboardPagination = () => {
     const whiteboardPerPage = 12;
-    let items = [];
+    const items = [];
 
     const onPageNumberClick = (e: React.MouseEvent<HTMLElement>) => {
       setWhiteboardPageNumber(parseInt((e.target as any).innerText));
@@ -473,8 +459,7 @@ const Dashboard = () => {
           <Button
             onClick={() => {
               openModalWithClass('modal-full-width');
-            }}
-          >
+            }}>
             <i className="mdi mdi-plus"></i> Record
           </Button>
           <Modal show={isRecordOpen} onHide={toggleRecord} dialogClassName={className} size={size} scrollable={scroll}>
@@ -539,8 +524,7 @@ const Dashboard = () => {
             shouldResetAutoplay
             showDots={false}
             sliderClass=""
-            slidesToSlide={1}
-          >
+            slidesToSlide={1}>
             {dailyStandups.map((dailyStandup: DailyStandup, i: number) => {
               return (
                 <div>
@@ -628,7 +612,11 @@ const Dashboard = () => {
             {whiteboards.map((whiteboard: Whiteboard, i: number) => {
               return (
                 <Col md={6} xxl={3} key={'wb-' + whiteboard.id}>
-                  <WhiteboardCard whiteboard={whiteboard} />
+                  <WhiteboardCard
+                    whiteboard={whiteboard}
+                    onEditWhiteboard={onEditWhiteboard}
+                    onDeleteWhiteboard={onDeleteWhiteboard}
+                  />
                 </Col>
               );
             })}

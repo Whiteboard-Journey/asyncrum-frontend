@@ -63,7 +63,7 @@ const TeamSettings = () => {
     await axios
       .get(config.API_URL + '/api/v1/teams/' + user.id, { headers: { Authorization: 'Bearer ' + user.token } })
       .then((res) => {
-        let teaminfo: Team = {
+        const teaminfo: Team = {
           id: res.data.id,
           name: res.data.name,
           pictureUrl: res.data.pictureUrl,

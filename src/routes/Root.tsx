@@ -2,7 +2,7 @@ import { Navigate } from 'react-router-dom';
 
 const Root = () => {
   const getRootUrl = () => {
-    let url: string = 'dashboard';
+    const url = 'dashboard';
     return url;
   };
 

@@ -6,14 +6,14 @@ type DownloadFile = {
 };
 
 const downloadFile = ({ data, filename, mime, bom }: DownloadFile) => {
-  var blobData = typeof bom !== 'undefined' ? [bom, data] : [data];
-  var blob = new Blob(blobData, { type: mime || 'application/octet-stream' });
+  const blobData = typeof bom !== 'undefined' ? [bom, data] : [data];
+  const blob = new Blob(blobData, { type: mime || 'application/octet-stream' });
 
-  var blobURL =
+  const blobURL =
     window.URL && window.URL.createObjectURL
       ? window.URL.createObjectURL(blob)
       : window.webkitURL.createObjectURL(blob);
-  var tempLink = document.createElement('a');
+  const tempLink = document.createElement('a');
   tempLink.style.display = 'none';
   tempLink.href = blobURL;
   tempLink.setAttribute('download', filename);

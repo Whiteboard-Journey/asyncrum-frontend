@@ -12,7 +12,7 @@ type PrivateRouteProps = {
  * @returns
  */
 const PrivateRoute = ({ component: RouteComponent, roles, ...rest }: PrivateRouteProps) => {
-  let location = useLocation();
+  const location = useLocation();
   const api = new APICore();
 
   if (api.isUserAuthenticated() === false) {

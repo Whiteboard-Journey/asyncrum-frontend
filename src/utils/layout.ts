@@ -10,7 +10,7 @@ type ConfigType = {
 };
 
 // add property to change in particular option
-let config: ConfigType = {
+const config: ConfigType = {
   leftSideBarType: SideBarWidth.LEFT_SIDEBAR_TYPE_FIXED,
 };
 
