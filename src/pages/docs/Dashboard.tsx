@@ -301,7 +301,8 @@ const Dashboard = () => {
     }
     setDailyStandups(dailyStandups.reverse());
     setDailyStandupLoading(false);
-    const slide = dailyStandups.findIndex((dailyStandup) => !dailyStandup.seen);
+    let slide = dailyStandups.findIndex((dailyStandup) => !dailyStandup.seen);
+    slide = slide >= 0 ? slide : 0;
     if (carouselRef && carouselRef.current) {
       carouselRef.current.goToSlide(slide);
     }
