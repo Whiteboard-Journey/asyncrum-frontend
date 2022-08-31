@@ -14,7 +14,7 @@ type AppMenuProps = {
 };
 
 const AppMenu = ({ menuItems }: AppMenuProps) => {
-  let location = useLocation();
+  const location = useLocation();
   const menuRef = useRef<HTMLUListElement>(null);
 
   const [topnavMenuItems, setTopnavMenuItems] = useState<MenuItemType[]>(menuItems);
@@ -35,7 +35,7 @@ const AppMenu = ({ menuItems }: AppMenuProps) => {
     let matchingMenuItem = null;
 
     if (div) {
-      let items: HTMLCollectionOf<HTMLAnchorElement> = div.getElementsByTagName('a');
+      const items: HTMLCollectionOf<HTMLAnchorElement> = div.getElementsByTagName('a');
       for (let i = 0; i < items.length; ++i) {
         if (location.pathname === items[i].pathname) {
           matchingMenuItem = items[i];

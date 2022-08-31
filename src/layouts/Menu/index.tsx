@@ -10,7 +10,7 @@ type AppMenuProps = {
 };
 
 const AppMenu = ({ menuItems }: AppMenuProps) => {
-  let location = useLocation();
+  const location = useLocation();
 
   const menuRef = useRef<HTMLUListElement>(null);
 
@@ -31,7 +31,7 @@ const AppMenu = ({ menuItems }: AppMenuProps) => {
     let matchingMenuItem = null;
 
     if (div) {
-      let items: HTMLCollectionOf<HTMLAnchorElement> = div.getElementsByClassName(
+      const items: HTMLCollectionOf<HTMLAnchorElement> = div.getElementsByClassName(
         'side-nav-link-ref'
       ) as HTMLCollectionOf<HTMLAnchorElement>;
       for (let i = 0; i < items.length; ++i) {

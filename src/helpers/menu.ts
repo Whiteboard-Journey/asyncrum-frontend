@@ -22,11 +22,11 @@ const findMenuItem = (
   menuItemKey: MenuItemType['key'] | undefined
 ): MenuItemType | null => {
   if (menuItems && menuItemKey) {
-    for (var i = 0; i < menuItems.length; i++) {
+    for (let i = 0; i < menuItems.length; i++) {
       if (menuItems[i].key === menuItemKey) {
         return menuItems[i];
       }
-      var found = findMenuItem(menuItems[i].children, menuItemKey);
+      const found = findMenuItem(menuItems[i].children, menuItemKey);
       if (found) return found;
     }
   }

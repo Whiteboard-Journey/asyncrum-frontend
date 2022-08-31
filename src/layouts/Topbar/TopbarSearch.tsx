@@ -68,7 +68,7 @@ const formateOptions = (options: SearchOption[]) => {
     return [item.type];
   });
 
-  let formattedOptions = [];
+  const formattedOptions = [];
   let count = 0;
 
   for (let i = 0; i < grouppedData.length; i++) {

@@ -61,18 +61,18 @@ class APICore {
   get = (url: string, params: any) => {
     let response;
     if (params) {
-      if ('token' in params) {
-        response = axios.get(`${url}`, { headers: { Authorization: 'Bearer ' + params['token'] } });
-      } else {
-        var queryString = params
+        const queryString = params
           ? Object.keys(params)
-              .map((key) => key + '=' + params[key])
+              .map((key) => {
+                if (key != 'token') {
+                  return key + '=' + params[key];
+                }
+              })
               .join('&')
           : '';
-        response = axios.get(`${url}?${queryString}`, params);
-      }
+        response = axios.get(`${url}?${queryString}`, { headers: { Authorization: 'Bearer ' + user.token }});
     } else {
-      response = axios.get(`${url}`, params);
+      response = axios.get(`${url}`, { headers: { Authorization: 'Bearer ' + user.token }});
     }
     return response;
   };
@@ -80,7 +80,7 @@ class APICore {
   getFile = (url: string, params: any) => {
     let response;
     if (params) {
-      var queryString = params
+      const queryString = params
         ? Object.keys(params)
             .map((key) => key + '=' + params[key])
             .join('&')
@@ -113,18 +113,14 @@ class APICore {
    * post given data to url
    */
   create = (url: string, data: any) => {
-    return axios.post(url, data);
-  };
-
-  getMember = (url: string) => {
-    return axios.get(url);
+    return axios.post(url, data, { headers: { Authorization: 'Bearer ' + user.token }});
   };
 
   /**
    * Updates patch data
    */
   updatePatch = (url: string, data: any) => {
-    return axios.patch(url, data);
+    return axios.patch(url, data, { headers: { Authorization: 'Bearer ' + user.token }});
   };
 
   /**
@@ -138,7 +134,7 @@ class APICore {
    * Deletes data
    */
   delete = (url: string) => {
-    return axios.delete(url);
+    return axios.delete(url, { headers: { Authorization: 'Bearer ' + user.token }});
   };
 
   /**
@@ -207,7 +203,7 @@ class APICore {
   };
 
   setUserInSession = (modifiedUser: any) => {
-    let userInfo = sessionStorage.getItem(AUTH_SESSION_KEY);
+    const userInfo = sessionStorage.getItem(AUTH_SESSION_KEY);
     if (userInfo) {
       const { token, user } = JSON.parse(userInfo);
       this.setLoggedInUser({ token, ...user, ...modifiedUser });
@@ -218,7 +214,7 @@ class APICore {
 /*
 Check if token available in session
 */
-let user = getUserFromSession();
+const user = getUserFromSession();
 if (user) {
   const { token } = user;
   if (token) {

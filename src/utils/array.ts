@@ -7,9 +7,9 @@ const groupByFields = (array: Array<any>, f: any): Array<any> => {
         }
         array : array of data to group e.g. : [{...}, {...}]       
     */
-  var groups: { [key: string]: any[] } = {};
+  const groups: { [key: string]: any[] } = {};
   array.forEach((o) => {
-    var group = JSON.stringify(f(o));
+    const group = JSON.stringify(f(o));
     groups[group] = groups[group] || [];
     groups[group].push(o);
   });

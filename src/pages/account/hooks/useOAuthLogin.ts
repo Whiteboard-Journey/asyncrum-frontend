@@ -13,7 +13,7 @@ export default function useOAuthLogin() {
   const { dispatch, appSelector } = useRedux();
 
   const location: Location = useLocation();
-  let redirectUrl: string = '/';
+  let redirectUrl = '/';
 
   if (location.state) {
     const { from } = location.state as LocationState;

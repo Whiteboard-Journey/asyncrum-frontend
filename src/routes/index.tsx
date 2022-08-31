@@ -70,7 +70,7 @@ const AllRoutes = () => {
     }
     return layoutCls;
   };
-  let Layout = getLayout();
+  const Layout = getLayout();
 
   return useRoutes([
     { path: '/', element: <Root /> },
