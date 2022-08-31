@@ -527,7 +527,7 @@ const Dashboard = () => {
             slidesToSlide={1}>
             {dailyStandups.map((dailyStandup: DailyStandup, i: number) => {
               return (
-                <div>
+                <div key={i}>
                   <DailyStandupCard dailyStandup={dailyStandup} />
                 </div>
               );
