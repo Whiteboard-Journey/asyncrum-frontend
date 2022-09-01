@@ -5,10 +5,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { VerticalForm, FormInput } from 'components';
 import React, { useRef, useState } from 'react';
 import defaultImage from 'assets/images/asyncrum-logo-small.png';
-import config from 'config';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useToggle } from 'hooks';
+import { createTeam as createTeamAPI, createLogoImage as createLogoImageAPI, inviteMember as inviteMemberAPI, uploadLogoImage as uploadLogoImageAPI }  from 'helpers';
 
 type Invitation = {
   memberId: null;
@@ -25,19 +25,14 @@ const CreateTeam = () => {
   const fileInput = useRef<HTMLInputElement>(null);
   const [isInviteOpen, toggleInvite] = useToggle();
 
-  const onCreateTeam = (e: React.FormEvent<HTMLFormElement>) => {
+  const onCreateTeam = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const name = ((e.target as HTMLFormElement).elements as { [key: string]: any })['name'].value;
     const code = name.slice(0, 3) + Date.now();
-    axios
-      .post(config.API_URL + '/api/v1/teams', { name, code }, { headers: { Authorization: 'Bearer ' + user.token } })
-      .then((res) => {
-        setTeamId(res.data.id);
-        setTeamName(name);
-      });
+    const createTeamAPIResponse = await createTeamAPI({name, code});
+    setTeamId(createTeamAPIResponse.data.id);
+    setTeamName(name);
   };
-
-  const onUploadTeamImage = () => {};
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (!e.target.files) {
@@ -63,42 +58,30 @@ const CreateTeam = () => {
     setLogoImageFile(null);
   };
 
-  const onSaveLogoImage = (e: React.MouseEvent<HTMLElement>) => {
-    if (!logoImageFile) {
+  const onSaveLogoImage = async (e: React.MouseEvent<HTMLElement>) => {
+    if (!teamId || !logoImageFile) {
       return;
     } else {
-      axios
-        .post(config.API_URL + '/api/v1/team/images/' + teamId, null, {
-          headers: { Authorization: 'Bearer ' + user.token },
-        })
-        .then((res) => {
-          const preSignedURL = res.data.preSignedURL;
-          const uploadAxios = axios.create({
-            transformRequest: [
-              (data: any, headers: any) => {
-                delete headers.common.Authorization;
-                headers['Content-Type'] = 'image/png';
-                return logoImageFile;
-              },
-            ],
-          });
-          uploadAxios.put(preSignedURL, logoImageFile);
-        });
+      const createLogoImageAPIResponse = await createLogoImageAPI(teamId);
+      const presignedURL = createLogoImageAPIResponse.data.preSignedURL;
+      await uploadLogoImageAPI(presignedURL, logoImageFile);
+      notify();
     }
   };
 
-  const onInvite = (e: React.FormEvent<HTMLFormElement>) => {
+  const onInvite = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!teamId) {
+      return;
+    }
     const email = ((e.target as HTMLFormElement).elements as { [key: string]: any })['email'].value;
     const invitationData: Invitation = {
       memberId: null,
       memberEmail: email,
     };
-    axios
-      .post(config.API_URL + '/api/v1/teams/' + teamId + '/members/invitation', invitationData, {
-        headers: { Authorization: 'Bearer ' + user.token },
-      })
-      .then(() => toast(<div>Invitation sent to {email}!</div>));
+    await inviteMemberAPI(teamId, invitationData);
+    (e.target as HTMLFormElement).reset();
+    invitationNotify(email);
   };
 
   const createValidationSchema = yupResolver(
@@ -106,6 +89,22 @@ const CreateTeam = () => {
       name: yup.string().required('Please enter a team name.'),
     })
   );
+  
+  const invitationNotify = (email: string) => 
+  toast(
+    <div>
+      Invitation sent to <b>{email}</b>!
+    </div>
+  );
+
+  const notify = () =>
+    toast(
+      <div>
+        Team logo saved successfully!
+        <br />
+        The change might take a few minutes to be applied.
+      </div>
+    );
 
   return (
     <>
@@ -160,10 +159,7 @@ const CreateTeam = () => {
                         id="logo"
                         render={({ next }) => (
                           <VerticalForm
-                            onSubmit={(event, values) => {
-                              onUploadTeamImage();
-                              next();
-                            }}
+                            onSubmit={next}
                           >
                             <div className="d-flex align-items-center justify-content-center">
                               <div>
