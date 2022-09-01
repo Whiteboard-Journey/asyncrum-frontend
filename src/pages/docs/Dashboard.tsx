@@ -68,7 +68,8 @@ const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
           openModalWithClass('modal-full-width');
           onViewDailyStandups(dailyStandup.id);
         }}
-        style={{ cursor: 'pointer' }}>
+        style={{ cursor: 'pointer' }}
+      >
         <div className={(dailyStandup.seen ? 'opacity-25' : '') + ' text-center'}>
           <img
             src={dailyStandup.profileImageUrl}
@@ -460,7 +461,8 @@ const Dashboard = () => {
           <Button
             onClick={() => {
               openModalWithClass('modal-full-width');
-            }}>
+            }}
+          >
             <i className="mdi mdi-plus"></i> Record
           </Button>
           <Modal show={isRecordOpen} onHide={toggleRecord} dialogClassName={className} size={size} scrollable={scroll}>
@@ -525,7 +527,8 @@ const Dashboard = () => {
             shouldResetAutoplay
             showDots={false}
             sliderClass=""
-            slidesToSlide={1}>
+            slidesToSlide={1}
+          >
             {dailyStandups.map((dailyStandup: DailyStandup, i: number) => {
               return (
                 <div key={i}>

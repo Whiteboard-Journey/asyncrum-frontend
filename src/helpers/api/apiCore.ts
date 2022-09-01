@@ -1,7 +1,6 @@
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import config from '../../config';
-import { isError } from 'util';
 
 // content type
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -69,11 +68,13 @@ class APICore {
             .map((key) => {
               if (!user || key != 'token') {
                 return key + '=' + params[key];
-              } 
+              }
             })
             .join('&')
         : '';
-        response = axios.get(`${url}?${queryString}`, { headers: { Authorization: 'Bearer ' + `${params['token'] ? params['token'] : user.token}` }});
+      response = axios.get(`${url}?${queryString}`, {
+        headers: { Authorization: 'Bearer ' + `${params['token'] ? params['token'] : user.token}` },
+      });
     } else {
       response = axios.get(`${url}`);
     }
@@ -117,7 +118,7 @@ class APICore {
    */
   create = (url: string, data: any) => {
     if (user?.token) {
-      return axios.post(url, data, { headers: { Authorization: 'Bearer ' + user.token }});
+      return axios.post(url, data, { headers: { Authorization: 'Bearer ' + user.token } });
     }
     return axios.post(url, data);
   };
