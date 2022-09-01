@@ -35,6 +35,7 @@
   },
   "plugins": ["react", "react-hooks", "import", "@typescript-eslint"],
   "rules": {
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "react/react-in-jsx-scope": "off"
   }
 }

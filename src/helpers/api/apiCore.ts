@@ -1,6 +1,7 @@
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import config from '../../config';
+import { isError } from 'util';
 
 // content type
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -46,13 +47,13 @@ const AUTH_SESSION_KEY = 'asyncrum_user';
  * @param {*} token
  */
 const setAuthorization = (token: string | null) => {
-  if (token) axios.defaults.headers.common['Authorization'] = 'JWT ' + token;
+  if (token) axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
   else delete axios.defaults.headers.common['Authorization'];
 };
 
 const getUserFromSession = () => {
   const user = sessionStorage.getItem(AUTH_SESSION_KEY);
-  return user ? (typeof user == 'object' ? user : JSON.parse(user)) : null;
+  return user ? (typeof user == 'string' ? JSON.parse(user) : user) : null;
 };
 class APICore {
   /**
@@ -60,19 +61,21 @@ class APICore {
    */
   get = (url: string, params: any) => {
     let response;
+    const user = getUserFromSession();
+
     if (params) {
-        const queryString = params
-          ? Object.keys(params)
-              .map((key) => {
-                if (key != 'token') {
-                  return key + '=' + params[key];
-                }
-              })
-              .join('&')
-          : '';
-        response = axios.get(`${url}?${queryString}`, { headers: { Authorization: 'Bearer ' + user.token }});
+      const queryString = params
+        ? Object.keys(params)
+            .map((key) => {
+              if (!user || key != 'token') {
+                return key + '=' + params[key];
+              } 
+            })
+            .join('&')
+        : '';
+        response = axios.get(`${url}?${queryString}`, { headers: { Authorization: 'Bearer ' + `${params['token'] ? params['token'] : user.token}` }});
     } else {
-      response = axios.get(`${url}`, { headers: { Authorization: 'Bearer ' + user.token }});
+      response = axios.get(`${url}`);
     }
     return response;
   };
@@ -113,14 +116,17 @@ class APICore {
    * post given data to url
    */
   create = (url: string, data: any) => {
-    return axios.post(url, data, { headers: { Authorization: 'Bearer ' + user.token }});
+    if (user?.token) {
+      return axios.post(url, data, { headers: { Authorization: 'Bearer ' + user.token }});
+    }
+    return axios.post(url, data);
   };
 
   /**
    * Updates patch data
    */
   updatePatch = (url: string, data: any) => {
-    return axios.patch(url, data, { headers: { Authorization: 'Bearer ' + user.token }});
+    return axios.patch(url, data);
   };
 
   /**
@@ -134,7 +140,7 @@ class APICore {
    * Deletes data
    */
   delete = (url: string) => {
-    return axios.delete(url, { headers: { Authorization: 'Bearer ' + user.token }});
+    return axios.delete(url);
   };
 
   /**
