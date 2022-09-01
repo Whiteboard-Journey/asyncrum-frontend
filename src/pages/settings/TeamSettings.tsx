@@ -3,9 +3,7 @@ import LeftPanel from './LeftPanel';
 import React, { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {
-  readTeam as readTeamAPI,
-} from 'helpers';
+import { readTeam as readTeamAPI } from 'helpers';
 import { Member, Team } from './types';
 import MemberCard from './MemberCard';
 import TeamInfoForm from './TeamInfoForm';
@@ -66,7 +64,7 @@ const TeamSettings = () => {
                   <h4 className="mb-3">Change Team Information</h4>
                   <Row>
                     <Col md={7}>
-                      <TeamInfoForm team={team} teamname={teamname} setTeamname={setTeamname}/>
+                      <TeamInfoForm team={team} teamname={teamname} setTeamname={setTeamname} />
                     </Col>
                     <Col md={{ span: 3, offset: 2 }}>
                       <TeamImageForm team={team} previewImage={previewImage} setPreviewImage={setPreviewImage} />
@@ -76,7 +74,7 @@ const TeamSettings = () => {
                   <Row className="mb-3">
                     <Col>
                       <span className="h4 mb-1 me-3">Members</span>
-                      <InviteMemberButton team={team} />
+                      <InviteMemberButton teamId={team?.id} />
                     </Col>
                   </Row>
                   <Row>

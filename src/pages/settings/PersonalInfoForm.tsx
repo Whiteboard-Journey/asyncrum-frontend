@@ -2,10 +2,8 @@ import { Button } from 'react-bootstrap';
 import { FormInput } from 'components';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {
-  updateProfileInfo as updateProfileInfoAPI,
-} from 'helpers';
-import { APICore } from 'helpers/api/apiCore'
+import { updateProfileInfo as updateProfileInfoAPI } from 'helpers';
+import { APICore } from 'helpers/api/apiCore';
 import { useState } from 'react';
 
 const PersonalInfoForm: React.FC = () => {
@@ -27,9 +25,8 @@ const PersonalInfoForm: React.FC = () => {
 
   const changeInfoNotify = () => toast(<div>Personal information changed successfully!</div>);
 
-    
-    return (
-      <form onSubmit={onSubmitProfileInfo}>
+  return (
+    <form onSubmit={onSubmitProfileInfo}>
       <FormInput
         label="Full Name"
         type="text"
@@ -39,19 +36,13 @@ const PersonalInfoForm: React.FC = () => {
         placeholder={userFullname}
         required
       />
-      <FormInput
-        label="Company Name"
-        type="text"
-        name="companyName"
-        containerClass={'mb-3'}
-        key="companyName"
-      />
+      <FormInput label="Company Name" type="text" name="companyName" containerClass={'mb-3'} key="companyName" />
       <FormInput label="Role" type="text" name="role" containerClass={'mb-3'} key="role" />
       <Button color="primary" type="submit">
         Save Changes
       </Button>
     </form>
-    );
-}
+  );
+};
 
 export default PersonalInfoForm;
