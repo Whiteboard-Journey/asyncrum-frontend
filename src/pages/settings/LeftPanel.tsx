@@ -56,6 +56,9 @@ const LeftPanel = ({ selected }: LeftPanelProps) => {
         <Link to="/settings/team" className={selected === 'team' ? 'active text-primary' : ''}>
           <i className="mdi mdi-account-group-outline font-18 align-middle me-2"></i>Team Profile
         </Link>
+        <Link to="/settings/create-team">
+          <i className="mdi mdi-plus font-18 align-middle me-2"></i>Create Team
+        </Link>
       </div>
 
       <div className="mt-4">

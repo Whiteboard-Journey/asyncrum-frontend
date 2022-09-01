@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Row, Col, Card, Form, Button, ProgressBar, Modal, InputGroup } from 'react-bootstrap';
 import { Wizard, Steps, Step } from 'react-albus';
 import * as yup from 'yup';
@@ -248,7 +249,9 @@ const CreateTeam = () => {
                                   </form>
                                 </Modal.Body>
                               </Modal>
-                              <Button variant="primary">Done</Button>
+                              <Link to="/settings/team">
+                                <Button variant="primary">Done</Button>
+                              </Link>
                             </Col>
                           </Row>
                         )}
