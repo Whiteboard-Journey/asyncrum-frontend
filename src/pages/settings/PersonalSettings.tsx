@@ -4,9 +4,11 @@ import LeftPanel from './LeftPanel';
 import React, { useRef, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { createProfileImage as createProfileImageAPI,
+import {
+  createProfileImage as createProfileImageAPI,
   updateProfileInfo as updateProfileInfoAPI,
-uploadProfileImage as uploadProfileImageAPI }  from 'helpers';
+  uploadProfileImage as uploadProfileImageAPI,
+} from 'helpers';
 
 const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
 
@@ -55,20 +57,15 @@ const PersonalSettings = () => {
     e.preventDefault();
     const fullname = ((e.target as HTMLFormElement).elements as { [key: string]: any })['fullname'].value;
     const nickname = '';
-    await updateProfileInfoAPI({fullname, nickname});
-    setUserFullname(fullname)
+    await updateProfileInfoAPI({ fullname, nickname });
+    setUserFullname(fullname);
     user.fullname = fullname;
     sessionStorage.setItem('asyncrum_user', JSON.stringify(user));
     (e.target as HTMLFormElement).reset();
     changeInfoNotify();
   };
 
-  const changeInfoNotify = () =>
-    toast(
-      <div>
-        Personal information changed successfully!
-      </div>
-    );
+  const changeInfoNotify = () => toast(<div>Personal information changed successfully!</div>);
 
   const notify = () =>
     toast(
