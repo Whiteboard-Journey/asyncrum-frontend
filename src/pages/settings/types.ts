@@ -18,7 +18,7 @@ export type Invitation = {
 export type TeamInfoFormProps = {
   team: Team | undefined;
   teamname: string | undefined;
-  setTeamname: (value: React.SetStateAction<string | undefined>) => void;
+  setTeamname: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 export type TeamImageFormProps = {
