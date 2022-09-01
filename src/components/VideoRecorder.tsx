@@ -1,9 +1,11 @@
-import { Button } from 'react-bootstrap';
 import { useReactMediaRecorder } from 'react-media-recorder';
 import { useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import axios from 'axios';
-import config from 'config';
+import {
+  createRecord as createRecordAPI,
+  uploadRecord as uploadRecordAPI
+} from 'helpers';
+
 
 const videoConstraints = { facingMode: 'user' };
 const cam_w = 320,
@@ -34,61 +36,18 @@ const VideoRecorder: React.FC = () => {
   } = useReactMediaRecorder({ video: true, screen: true });
 
   const uploadVideo = async (url: string, type: string) => {
-    const camMedia = await fetch(url!);
+    const camMedia = await fetch(url);
     const blob = await camMedia.blob();
-    const response = await axios.post(
-      config.API_URL + '/api/v1/records',
-      {
-        title: title + ' ' + type,
-        description: description + ' ' + type,
-        scope: 'team',
-      },
-      { headers: { Authorization: 'Bearer ' + user.token } }
-    );
+    const body = { 
+      title: title + ' ' + type,
+      description: description + ' ' + type,
+      scope: 'team' 
+    }
 
-    const preSignedURL = response.data.preSignedURL;
+    const createRecordAPIResponse = await createRecordAPI(body);
+    const presignedURL = createRecordAPIResponse.data.preSignedURL;
     const fileToUpload = new File([blob], title + ' ' + type + '.mp4', { type: 'video/mp4' });
-    const uploadAxios = axios.create({
-      transformRequest: [
-        (data: any, headers: any) => {
-          delete headers.common.Authorization;
-          headers['Content-Type'] = 'video/mp4';
-          return data;
-        },
-      ],
-    });
-    await uploadAxios.put(preSignedURL, fileToUpload);
-  };
-
-  const uploadScreenVideo = async () => {
-    await fetch(screenMediaBlobUrl!)
-      .then((res) => res.blob())
-      .then((blob) => {
-        axios
-          .post(
-            config.API_URL + '/api/v1/records',
-            {
-              title: title + ' screen',
-              description: description + ' screen',
-              scope: 'TEAM',
-            },
-            { headers: { Authorization: 'Bearer ' + user.token } }
-          )
-          .then(async (res) => {
-            const preSignedURL = res.data.preSignedURL;
-            const fileToUpload = new File([blob], title + ' screen.mp4', { type: 'video/mp4' });
-            const uploadAxios = axios.create({
-              transformRequest: [
-                (data: any, headers: any) => {
-                  delete headers.common.Authorization;
-                  headers['Content-Type'] = 'video/mp4';
-                  return data;
-                },
-              ],
-            });
-            await uploadAxios.put(preSignedURL, fileToUpload);
-          });
-      });
+    await uploadRecordAPI(presignedURL, fileToUpload);
   };
 
   const uploadVideoes = async () => {
@@ -108,8 +67,6 @@ const VideoRecorder: React.FC = () => {
       videoRef.current.srcObject = previewStream;
     }
   }, [previewStream]);
-
-  useEffect(() => {}, [recordingState, screenMediaBlobUrl]);
 
   return (
     <div className="video-recorder">
