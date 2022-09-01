@@ -2,21 +2,21 @@ import { APICore } from './apiCore';
 import axios from 'axios';
 
 const api = new APICore();
-const baseURL = '/api/v1/whiteboards'
+const baseURL = '/api/v1/whiteboards';
 
-const readAllWhiteboard = (params: { scope: string, pageIndex: number }) => {
+const readAllWhiteboard = (params: { scope: string; pageIndex: number }) => {
   return api.get(baseURL, params);
-}
+};
 
 const readWhiteboard = (id: string) => {
-  return api.get(baseURL+'/'+id, null);
-}
+  return api.get(baseURL + '/' + id, null);
+};
 
 const createWhiteboard = (params: { title: string; description: string; scope: string }) => {
   return api.create(baseURL, params);
-}
+};
 
-const uploadWhiteboard = ( presignedURL: string, formData: FormData ) => {
+const uploadWhiteboard = (presignedURL: string, formData: FormData) => {
   const uploadAxios = axios.create({
     transformRequest: [
       (_, headers: any) => {
@@ -27,14 +27,14 @@ const uploadWhiteboard = ( presignedURL: string, formData: FormData ) => {
     ],
   });
   return uploadAxios.put(presignedURL, formData);
-}
+};
 
 const updateWhiteboard = (id: string, params: { title: string; description: string; scope: string }) => {
-  return api.updatePatch(baseURL+'/'+id, params);
-}
+  return api.updatePatch(baseURL + '/' + id, params);
+};
 
 const deleteWhiteboard = (id: string) => {
-  return api.delete(baseURL+'/'+id)
-}
+  return api.delete(baseURL + '/' + id);
+};
 
 export { readAllWhiteboard, readWhiteboard, createWhiteboard, uploadWhiteboard, updateWhiteboard, deleteWhiteboard };

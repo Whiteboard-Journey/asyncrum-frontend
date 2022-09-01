@@ -25,4 +25,4 @@ export type WhiteboardCardProps = {
   whiteboard: Whiteboard;
   onEditWhiteboard: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
   onDeleteWhiteboard: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
-}
+};
