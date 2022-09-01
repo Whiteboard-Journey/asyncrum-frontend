@@ -9,7 +9,12 @@ import defaultImage from 'assets/images/asyncrum-logo-small.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useToggle } from 'hooks';
-import { createTeam as createTeamAPI, createLogoImage as createLogoImageAPI, inviteMember as inviteMemberAPI, uploadLogoImage as uploadLogoImageAPI }  from 'helpers';
+import {
+  createTeam as createTeamAPI,
+  createLogoImage as createLogoImageAPI,
+  inviteMember as inviteMemberAPI,
+  uploadLogoImage as uploadLogoImageAPI,
+} from 'helpers';
 
 type Invitation = {
   memberId: null;
@@ -30,7 +35,7 @@ const CreateTeam = () => {
     e.preventDefault();
     const name = ((e.target as HTMLFormElement).elements as { [key: string]: any })['name'].value;
     const code = name.slice(0, 3) + Date.now();
-    const createTeamAPIResponse = await createTeamAPI({name, code});
+    const createTeamAPIResponse = await createTeamAPI({ name, code });
     setTeamId(createTeamAPIResponse.data.id);
     setTeamName(name);
   };
@@ -90,13 +95,13 @@ const CreateTeam = () => {
       name: yup.string().required('Please enter a team name.'),
     })
   );
-  
-  const invitationNotify = (email: string) => 
-  toast(
-    <div>
-      Invitation sent to <b>{email}</b>!
-    </div>
-  );
+
+  const invitationNotify = (email: string) =>
+    toast(
+      <div>
+        Invitation sent to <b>{email}</b>!
+      </div>
+    );
 
   const notify = () =>
     toast(
@@ -159,9 +164,7 @@ const CreateTeam = () => {
                       <Step
                         id="logo"
                         render={({ next }) => (
-                          <VerticalForm
-                            onSubmit={next}
-                          >
+                          <VerticalForm onSubmit={next}>
                             <div className="d-flex align-items-center justify-content-center">
                               <div>
                                 <div style={{ height: 190, position: 'relative' }}>

@@ -5,7 +5,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useToggle } from 'hooks';
-import { createLogoImage as createLogoImageAPI, readTeam as readTeamAPI, updateTeamInfo as updateTeamInfoAPI, inviteMember as inviteMemberAPI, uploadLogoImage as uploadLogoImageAPI }  from 'helpers';
+import {
+  createLogoImage as createLogoImageAPI,
+  readTeam as readTeamAPI,
+  updateTeamInfo as updateTeamInfoAPI,
+  inviteMember as inviteMemberAPI,
+  uploadLogoImage as uploadLogoImageAPI,
+} from 'helpers';
 
 type Member = {
   fullname: string;
@@ -137,19 +143,14 @@ const TeamSettings = () => {
     invitationNotify(email);
   };
 
-  const changeInfoNotify = () => 
-  toast(
-    <div>
-      Team Information changed successfully!
-    </div>
-  );
+  const changeInfoNotify = () => toast(<div>Team Information changed successfully!</div>);
 
-  const invitationNotify = (email: string) => 
-  toast(
-    <div>
-      Invitation sent to <b>{email}</b>!
-    </div>
-  );
+  const invitationNotify = (email: string) =>
+    toast(
+      <div>
+        Invitation sent to <b>{email}</b>!
+      </div>
+    );
 
   const notify = () =>
     toast(

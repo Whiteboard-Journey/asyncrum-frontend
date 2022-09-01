@@ -1,11 +1,7 @@
 import { useReactMediaRecorder } from 'react-media-recorder';
 import { useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import {
-  createRecord as createRecordAPI,
-  uploadRecord as uploadRecordAPI
-} from 'helpers';
-
+import { createRecord as createRecordAPI, uploadRecord as uploadRecordAPI } from 'helpers';
 
 const videoConstraints = { facingMode: 'user' };
 const cam_w = 320,
@@ -38,11 +34,11 @@ const VideoRecorder: React.FC = () => {
   const uploadVideo = async (url: string, type: string) => {
     const camMedia = await fetch(url);
     const blob = await camMedia.blob();
-    const body = { 
+    const body = {
       title: title + ' ' + type,
       description: description + ' ' + type,
-      scope: 'team' 
-    }
+      scope: 'team',
+    };
 
     const createRecordAPIResponse = await createRecordAPI(body);
     const presignedURL = createRecordAPIResponse.data.preSignedURL;

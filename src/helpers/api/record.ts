@@ -6,7 +6,7 @@ const baseURL = '/api/v1/records';
 
 const createRecord = (params: { title: string; description: string; scope: string }) => {
   return api.create(baseURL, params);
-}
+};
 
 const readAllDailyStandups = (params: { scope: string; pageIndex: number }) => {
   return api.get(baseURL, params);
@@ -23,7 +23,7 @@ const uploadRecord = (presignedURL: string, fileToUpload: File) => {
     ],
   });
   return uploadAxios.put(presignedURL, fileToUpload);
-}
+};
 
 const viewDailyStandup = (id: number) => {
   const params = {
