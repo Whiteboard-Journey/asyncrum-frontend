@@ -1,8 +1,6 @@
 import { useReactMediaRecorder } from 'react-media-recorder';
 import { useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import axios from 'axios';
-import config from 'config';
 import {
   createRecord as createRecordAPI,
   uploadRecord as uploadRecordAPI
