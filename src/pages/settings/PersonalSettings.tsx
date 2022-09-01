@@ -2,15 +2,17 @@ import { Row, Col, Card, Button } from 'react-bootstrap';
 import { FormInput } from 'components';
 import LeftPanel from './LeftPanel';
 import React, { useRef, useState } from 'react';
-import config from 'config';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { createProfileImage as createProfileImageAPI,
+  updateProfileInfo as updateProfileInfoAPI,
+uploadProfileImage as uploadProfileImageAPI }  from 'helpers';
 
 const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
 
 const PersonalSettings = () => {
   const [previewImage, setPreviewImage] = useState<string>(user.profileImageUrl);
+  const [userFullname, setUserFullname] = useState<string>(user.fullname);
   const [profileImageFile, setProfileImageFile] = useState<null | File>();
   const fileInput = useRef<HTMLInputElement>(null);
 
@@ -38,47 +40,25 @@ const PersonalSettings = () => {
     setProfileImageFile(null);
   };
 
-  const onSaveProfileImage = (e: React.MouseEvent<HTMLElement>) => {
+  const onSaveProfileImage = async (e: React.MouseEvent<HTMLElement>) => {
     if (!profileImageFile) {
       return;
     } else {
-      axios
-        .post(config.API_URL + '/api/v1/member/images/' + user.id, null, {
-          headers: { Authorization: 'Bearer ' + user.token },
-        })
-        .then((res) => {
-          const preSignedURL = res.data.preSignedURL;
-          const uploadAxios = axios.create({
-            transformRequest: [
-              (data: any, headers: any) => {
-                delete headers.common.Authorization;
-                headers['Content-Type'] = 'image/png';
-                return profileImageFile;
-              },
-            ],
-          });
-          uploadAxios.put(preSignedURL, profileImageFile).then(() => {
-            notify();
-          });
-        });
+      const createProfileImageAPIResponse = await createProfileImageAPI();
+      const presignedURL = createProfileImageAPIResponse.data.preSignedURL;
+      await uploadProfileImageAPI(presignedURL, profileImageFile);
+      notify();
     }
   };
 
-  const onSubmitProfileInfo = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitProfileInfo = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fullname = ((e.target as HTMLFormElement).elements as { [key: string]: any })['fullname'].value;
     const nickname = '';
-    axios
-      .patch(
-        `${config.API_URL + '/api/v1/members/' + user.id}`,
-        { fullname, nickname },
-        { headers: { Authorization: 'Bearer ' + user.token } }
-      )
-      .then(() => {
-        user.fullname = fullname;
-        sessionStorage.setItem('asyncrum_user', JSON.stringify(user));
-        window.location.reload();
-      });
+    await updateProfileInfoAPI({fullname, nickname});
+    setUserFullname(fullname)
+    user.fullname = fullname;
+    sessionStorage.setItem('asyncrum_user', JSON.stringify(user));
   };
 
   const notify = () =>
@@ -118,7 +98,7 @@ const PersonalSettings = () => {
                         name="fullname"
                         containerClass={'mb-3'}
                         key="fullname"
-                        placeholder={user.fullname}
+                        placeholder={userFullname}
                         required
                       />
                       <FormInput
