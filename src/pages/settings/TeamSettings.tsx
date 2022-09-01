@@ -2,11 +2,10 @@ import { Row, Col, Card, Button, InputGroup, Form, Modal } from 'react-bootstrap
 import { FormInput } from 'components';
 import LeftPanel from './LeftPanel';
 import React, { useEffect, useRef, useState } from 'react';
-import config from 'config';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useToggle } from 'hooks';
+import { createLogoImage as createLogoImageAPI, readTeam as readTeamAPI, updateTeamInfo as updateTeamInfoAPI, inviteMember as inviteMemberAPI, uploadLogoImage as uploadLogoImageAPI }  from 'helpers';
 
 type Member = {
   fullname: string;
@@ -43,6 +42,7 @@ const MemberCard = ({ member }: { member: Member }) => {
 const TeamSettings = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [team, setTeam] = useState<Team>();
+  const [teamname, setTeamname] = useState<string>();
   const [previewImage, setPreviewImage] = useState<string>();
   const [logoImageFile, setLogoImageFile] = useState<null | File>();
   const [isInviteOpen, toggleInvite] = useToggle();
@@ -57,29 +57,22 @@ const TeamSettings = () => {
     setPreviewImage(team?.pictureUrl);
   }, [team]);
 
-  useEffect(() => {});
-
   const getTeamData = async () => {
-    await axios
-      .get(config.API_URL + '/api/v1/teams/' + user.id, { headers: { Authorization: 'Bearer ' + user.token } })
-      .then((res) => {
-        const teaminfo: Team = {
-          id: res.data.id,
-          name: res.data.name,
-          pictureUrl: res.data.pictureUrl,
-          members: res.data.members.map((member: Member) => ({
-            fullname: member.fullname,
-            profileImageUrl: member.profileImageUrl,
-          })),
-        };
-        return teaminfo;
-      })
-      .then((teaminfo: Team) => {
-        setTeam(teaminfo);
-        setPreviewImage(team?.pictureUrl);
-        setLoading(false);
-        return teaminfo;
-      });
+    const readTeamAPIResponse = await readTeamAPI();
+    const teaminfo: Team = {
+      id: readTeamAPIResponse.data.id,
+      name: readTeamAPIResponse.data.name,
+      pictureUrl: readTeamAPIResponse.data.pictureUrl,
+      members: readTeamAPIResponse.data.members.map((member: Member) => ({
+        fullname: member.fullname,
+        profileImageUrl: member.profileImageUrl,
+      })),
+    };
+    setTeam(teaminfo);
+    setTeamname(teaminfo.name);
+    setPreviewImage(teaminfo.pictureUrl);
+    setLoading(false);
+    return teaminfo;
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -106,59 +99,57 @@ const TeamSettings = () => {
     setLogoImageFile(null);
   };
 
-  const onSaveLogoImage = (e: React.MouseEvent<HTMLElement>) => {
-    if (!logoImageFile) {
+  const onSaveLogoImage = async (e: React.MouseEvent<HTMLElement>) => {
+    if (!logoImageFile || !team) {
       return;
     } else {
-      axios
-        .post(config.API_URL + '/api/v1/team/images/' + team?.id, null, {
-          headers: { Authorization: 'Bearer ' + user.token },
-        })
-        .then((res) => {
-          const preSignedURL = res.data.preSignedURL;
-          const uploadAxios = axios.create({
-            transformRequest: [
-              (data: any, headers: any) => {
-                delete headers.common.Authorization;
-                headers['Content-Type'] = 'image/png';
-                return logoImageFile;
-              },
-            ],
-          });
-          uploadAxios.put(preSignedURL, logoImageFile).then(() => {
-            notify();
-          });
-        });
+      const createLogoImageAPIResponse = await createLogoImageAPI(team.id);
+      const presignedURL = createLogoImageAPIResponse.data.preSignedURL;
+      await uploadLogoImageAPI(presignedURL, logoImageFile);
+      notify();
     }
   };
 
-  const onSubmitTeamInfo = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitTeamInfo = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!team) {
+      return;
+    }
     const name = ((e.target as HTMLFormElement).elements as { [key: string]: any })['name'].value;
-    axios
-      .patch(
-        `${config.API_URL + '/api/v1/teams/' + team?.id}`,
-        { name },
-        { headers: { Authorization: 'Bearer ' + user.token } }
-      )
-      .then(() => {
-        window.location.reload();
-      });
+    await updateTeamInfoAPI(team.id, { name });
+    setTeamname(name);
+    (e.target as HTMLFormElement).reset();
+    changeInfoNotify();
   };
 
-  const onInvite = (e: React.FormEvent<HTMLFormElement>) => {
+  const onInvite = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!team) {
+      return;
+    }
     const email = ((e.target as HTMLFormElement).elements as { [key: string]: any })['email'].value;
     const invitationData: Invitation = {
       memberId: null,
       memberEmail: email,
     };
-    axios
-      .post(config.API_URL + '/api/v1/teams/' + team?.id + '/members/invitation', invitationData, {
-        headers: { Authorization: 'Bearer ' + user.token },
-      })
-      .then(() => toast(<div>Invitation sent to {email}!</div>));
+    await inviteMemberAPI(team.id, invitationData);
+    (e.target as HTMLFormElement).reset();
+    invitationNotify(email);
   };
+
+  const changeInfoNotify = () => 
+  toast(
+    <div>
+      Team Information changed successfully!
+    </div>
+  );
+
+  const invitationNotify = (email: string) => 
+  toast(
+    <div>
+      Invitation sent to <b>{email}</b>!
+    </div>
+  );
 
   const notify = () =>
     toast(
@@ -198,7 +189,7 @@ const TeamSettings = () => {
                           name="name"
                           containerClass={'mb-3'}
                           key="name"
-                          placeholder={team?.name}
+                          placeholder={teamname}
                           required
                         />
                         <Button color="primary" type="submit">
@@ -283,7 +274,7 @@ const TeamSettings = () => {
                   <hr />
                   <Row>
                     <Col>
-                      <h4>Leave {team?.name} team</h4>
+                      <h4>Leave {teamname} team</h4>
                       <p>By leaving the team, you will lose access to all its contents.</p>
                       <Button className="btn btn-danger">Leave Team</Button>
                     </Col>

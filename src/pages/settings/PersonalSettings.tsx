@@ -59,7 +59,16 @@ const PersonalSettings = () => {
     setUserFullname(fullname)
     user.fullname = fullname;
     sessionStorage.setItem('asyncrum_user', JSON.stringify(user));
+    (e.target as HTMLFormElement).reset();
+    changeInfoNotify();
   };
+
+  const changeInfoNotify = () =>
+    toast(
+      <div>
+        Personal information changed successfully!
+      </div>
+    );
 
   const notify = () =>
     toast(
