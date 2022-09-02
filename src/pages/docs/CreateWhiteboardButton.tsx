@@ -1,79 +1,8 @@
 import { Button, Modal } from 'react-bootstrap';
-import { TDDocument, TDFile, TldrawApp } from '@krapi0314/tldraw';
-import { useToggle } from 'hooks';
-import {
-  createWhiteboard as createWhiteboardAPI,
-  readWhiteboard as readWhiteboardAPI,
-  uploadWhiteboard as uploadWhiteboardAPI,
-} from 'helpers';
+import { useWhiteboard } from './hooks';
 
 const CreateWhiteboardButton = () => {
-  const [isCreateWhiteboardOpen, toggleCreateWhiteboard] = useToggle();
-
-  const scope = 'team';
-  const whiteboardPageURL = '/whiteboard?url=';
-
-  const onCreateWhiteboard = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const title = ((event.target as HTMLFormElement).elements as { [key: string]: any })['title'].value;
-    const description = ((event.target as HTMLFormElement).elements as { [key: string]: any })['description'].value;
-
-    const createWhiteboardAPIResponse = await createWhiteboardAPI({ title, description, scope });
-    const { id, preSignedURL } = createWhiteboardAPIResponse.data;
-    const formData = createWhiteboardFormData(id, title);
-    await uploadWhiteboardAPI(preSignedURL, formData);
-    const readWhiteboardAPIResponse = await readWhiteboardAPI(id);
-    window.location.href = whiteboardPageURL + readWhiteboardAPIResponse.data.whiteboardUrl + '&id=' + id;
-  };
-
-  const createWhiteboardFormData = (whiteboardID: string, title: string) => {
-    const document: TDDocument = {
-      id: whiteboardID,
-      name: title,
-      version: TldrawApp.version,
-      pages: {
-        page: {
-          id: 'page',
-          name: 'Page 1',
-          childIndex: 1,
-          shapes: {},
-          bindings: {},
-        },
-      },
-      pageStates: {
-        page: {
-          id: 'page',
-          selectedIds: [],
-          camera: {
-            point: [0, 0],
-            zoom: 1,
-          },
-        },
-      },
-      assets: {},
-    };
-
-    const file: TDFile = {
-      name: document.name || 'New Document',
-      fileHandle: null,
-      document,
-      assets: {},
-    };
-
-    const json = JSON.stringify(file, null, 2);
-
-    const blob = new Blob([json], {
-      type: 'application/vnd.Tldraw+json',
-    });
-
-    const fileToUpload = new File([blob], title);
-
-    const formData = new FormData();
-    formData.append('data', fileToUpload);
-
-    return formData;
-  };
+  const { isCreateWhiteboardOpen, toggleCreateWhiteboard, onCreateWhiteboard } = useWhiteboard();
 
   return (
     <>

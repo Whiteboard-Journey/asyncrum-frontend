@@ -1,30 +1,14 @@
 import { Card, Dropdown, OverlayTrigger, Tooltip, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { WhiteboardCardProps } from './types';
-import React, { useState } from 'react';
-import { useToggle } from 'hooks';
-import { useMoment } from './hooks';
+import { useMoment, useWhiteboardCard } from './hooks';
 
 const whiteboardPageURL = '/whiteboard?url=';
 
 const WhiteboardCard = ({ whiteboard, onEditWhiteboard, onDeleteWhiteboard }: WhiteboardCardProps) => {
-  const [isEditOpen, toggleEdit] = useToggle();
-  const [isDeleteOpen, toggleDelete] = useToggle();
-  const [isReadMore, setIsReadMore] = useState(true);
   const { getTimeFromNow } = useMoment();
-  const toggleReadMore = () => {
-    setIsReadMore(!isReadMore);
-  };
-
-  const closeModalAfterEdit = (event: React.FormEvent<HTMLFormElement>) => {
-    onEditWhiteboard(event);
-    toggleEdit();
-  };
-
-  const closeModalAfterDelete = (event: React.FormEvent<HTMLFormElement>) => {
-    onDeleteWhiteboard(event);
-    toggleDelete();
-  };
+  const { isEditOpen, isDeleteOpen, isReadMore, toggleEdit, toggleDelete, toggleReadMore, closeModalAfterFunction } =
+    useWhiteboardCard();
 
   return (
     <Card className="d-block">
@@ -42,7 +26,9 @@ const WhiteboardCard = ({ whiteboard, onEditWhiteboard, onDeleteWhiteboard }: Wh
                 <Modal.Header onHide={toggleEdit} closeButton>
                   <h4 className="modal-title">Edit Whiteboard Information</h4>
                 </Modal.Header>
-                <form className="ps-3 pe-3" onSubmit={closeModalAfterEdit}>
+                <form
+                  className="ps-3 pe-3"
+                  onSubmit={(event) => closeModalAfterFunction(onEditWhiteboard, event, toggleEdit)}>
                   <input type="hidden" id="id" value={whiteboard.id} />
                   <div className="mt-3 mb-3">
                     <label htmlFor="title" className="form-label">
@@ -92,7 +78,9 @@ const WhiteboardCard = ({ whiteboard, onEditWhiteboard, onDeleteWhiteboard }: Wh
                 <p className="mt-4 mb-4 text-center font-weight-bolds">
                   Are you sure you want to delete this whiteboard permanently?
                 </p>
-                <form className="ps-3 pe-3" onSubmit={closeModalAfterDelete}>
+                <form
+                  className="ps-3 pe-3"
+                  onSubmit={(event) => closeModalAfterFunction(onDeleteWhiteboard, event, toggleDelete)}>
                   <input type="hidden" id="id" value={whiteboard.id} />
                   <div className="mb-3 text-center">
                     <button className="btn btn-danger" type="submit">

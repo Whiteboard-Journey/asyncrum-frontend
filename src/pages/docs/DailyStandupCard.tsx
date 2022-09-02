@@ -1,6 +1,5 @@
 import { Card, Modal } from 'react-bootstrap';
-import { useModal, useMoment } from './hooks';
-import { viewDailyStandup as viewDailyStandupAPI } from 'helpers';
+import { useDailyStandupCard, useModal, useMoment } from './hooks';
 
 import { DailyStandup } from './types';
 
@@ -11,11 +10,7 @@ const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
     screen_h = 540;
   const { isOpen: isViewOpen, size, className, scroll, toggleModal: toggleView, openModalWithClass } = useModal();
   const { getTimeFromNow } = useMoment();
-
-  const onViewDailyStandups = async (id: number[]) => {
-    await viewDailyStandupAPI(id[0]);
-    await viewDailyStandupAPI(id[1]);
-  };
+  const { onViewDailyStandups } = useDailyStandupCard();
 
   return (
     <Card className="d-block me-3">
@@ -24,8 +19,7 @@ const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
           openModalWithClass('modal-full-width');
           onViewDailyStandups(dailyStandup.id);
         }}
-        style={{ cursor: 'pointer' }}
-      >
+        style={{ cursor: 'pointer' }}>
         <div className={(dailyStandup.seen ? 'opacity-25' : '') + ' text-center'}>
           <img
             src={dailyStandup.profileImageUrl}
