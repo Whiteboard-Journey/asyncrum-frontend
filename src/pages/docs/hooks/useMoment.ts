@@ -13,9 +13,9 @@ const useMoment = () => {
 
   const getTimeDifference = (datetime: string) => {
     return moment().diff(moment(convertDateTime(datetime)), 'hours');
-  }
+  };
 
   return { convertDateTime, getTimeFromNow, getTimeDifference };
-}
+};
 
 export default useMoment;

@@ -1,18 +1,18 @@
 import Carousel from 'react-multi-carousel';
 import { readAllDailyStandups as readAllDailyStandupsAPI } from 'helpers';
-import { DailyStandup } from "../types";
-import { useEffect, useRef, useState } from "react";
+import { DailyStandup } from '../types';
+import { useEffect, useRef, useState } from 'react';
 import { useMoment } from './';
 import { APICore } from 'helpers/api/apiCore';
 
 const useDailyStandup = () => {
-    const [dailyStandups, setDailyStandups] = useState<DailyStandup[]>([]);
+  const [dailyStandups, setDailyStandups] = useState<DailyStandup[]>([]);
   const [dailyStandupLoading, setDailyStandupLoading] = useState<boolean>(true);
 
   const carouselRef = useRef<Carousel>(null);
 
   const { getTimeDifference } = useMoment();
-    const api = new APICore();
+  const api = new APICore();
   const user = api.getLoggedInUser();
   const scope = 'team';
 
@@ -20,10 +20,7 @@ const useDailyStandup = () => {
     const pageIndex = 0;
     const readAllDailyStandupsAPIResponse = await readAllDailyStandupsAPI({ scope, pageIndex });
     for (const record of readAllDailyStandupsAPIResponse.data.records) {
-      if (
-        getTimeDifference(record.createdDate) > 24 &&
-        record.seenMemberIdGroup?.indexOf(user.id) > -1
-      ) {
+      if (getTimeDifference(record.createdDate) > 24 && record.seenMemberIdGroup?.indexOf(user.id) > -1) {
         continue;
       }
       if (
@@ -77,7 +74,7 @@ const useDailyStandup = () => {
     readAllDailyStandups();
   }, []);
 
-    return { carouselRef, dailyStandups, dailyStandupLoading, setDailyStandups, setDailyStandupLoading};
-}
+  return { carouselRef, dailyStandups, dailyStandupLoading, setDailyStandups, setDailyStandupLoading };
+};
 
 export default useDailyStandup;

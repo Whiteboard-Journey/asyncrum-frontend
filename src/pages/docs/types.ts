@@ -31,4 +31,4 @@ export type WhiteboardPaginationProps = {
   whiteboardPageNumber: number;
   numberOfWhiteboards: number;
   onPageNumberClick: (e: React.MouseEvent<HTMLElement>) => void;
-}
+};
