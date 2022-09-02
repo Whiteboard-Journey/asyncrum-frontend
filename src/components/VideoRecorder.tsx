@@ -1,68 +1,68 @@
-import { useReactMediaRecorder } from 'react-media-recorder';
-import { useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import { createRecord as createRecordAPI, uploadRecord as uploadRecordAPI } from 'helpers';
+import { useVideoRecorder } from './hooks';
 
-const videoConstraints = { facingMode: 'user' };
+const VideoRecorder: React.FC = () => {
+  const videoConstraints = { facingMode: 'user' };
 const cam_w = 320,
   cam_h = 240,
   screen_w = 960,
   screen_h = 540;
+  const { recordingState, webcamRef, videoRef, previewStream, camMediaBlobUrl, screenMediaBlobUrl, setRecordingState, camStartRecording, camStopRecording, screenStartRecording, screenStopRecording, uploadVideoes } = useVideoRecorder();
 
-const VideoRecorder: React.FC = () => {
-  const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
-  const title = user.fullname + ' ' + Date.now();
-  const description = 'Daily standups - ' + title;
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const webcamRef = useRef<Webcam>(null);
-  const [recordingState, setRecordingState] = useState<'idle' | 'recording' | 'recorded'>('idle');
 
-  const {
-    status: camStatus,
-    startRecording: camStartRecording,
-    stopRecording: camStopRecording,
-    mediaBlobUrl: camMediaBlobUrl,
-    previewStream,
-  } = useReactMediaRecorder({ video: true });
+  // const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
+  // const title = user.fullname + ' ' + Date.now();
+  // const description = 'Daily standups - ' + title;
+  // const videoRef = useRef<HTMLVideoElement>(null);
+  // const webcamRef = useRef<Webcam>(null);
+  // const [recordingState, setRecordingState] = useState<'idle' | 'recording' | 'recorded'>('idle');
 
-  const {
-    startRecording: screenStartRecording,
-    stopRecording: screenStopRecording,
-    mediaBlobUrl: screenMediaBlobUrl,
-  } = useReactMediaRecorder({ video: true, screen: true });
+  // const {
+  //   status: camStatus,
+  //   startRecording: camStartRecording,
+  //   stopRecording: camStopRecording,
+  //   mediaBlobUrl: camMediaBlobUrl,
+  //   previewStream,
+  // } = useReactMediaRecorder({ video: true });
 
-  const uploadVideo = async (url: string, type: string) => {
-    const camMedia = await fetch(url);
-    const blob = await camMedia.blob();
-    const body = {
-      title: title + ' ' + type,
-      description: description + ' ' + type,
-      scope: 'team',
-    };
+  // const {
+  //   startRecording: screenStartRecording,
+  //   stopRecording: screenStopRecording,
+  //   mediaBlobUrl: screenMediaBlobUrl,
+  // } = useReactMediaRecorder({ video: true, screen: true });
 
-    const createRecordAPIResponse = await createRecordAPI(body);
-    const presignedURL = createRecordAPIResponse.data.preSignedURL;
-    const fileToUpload = new File([blob], title + ' ' + type + '.mp4', { type: 'video/mp4' });
-    await uploadRecordAPI(presignedURL, fileToUpload);
-  };
+  // const uploadVideo = async (url: string, type: string) => {
+  //   const camMedia = await fetch(url);
+  //   const blob = await camMedia.blob();
+  //   const body = {
+  //     title: title + ' ' + type,
+  //     description: description + ' ' + type,
+  //     scope: 'team',
+  //   };
 
-  const uploadVideoes = async () => {
-    if (!camMediaBlobUrl || !screenMediaBlobUrl) {
-      alert('Recordings are not ready');
-      return;
-    }
+  //   const createRecordAPIResponse = await createRecordAPI(body);
+  //   const presignedURL = createRecordAPIResponse.data.preSignedURL;
+  //   const fileToUpload = new File([blob], title + ' ' + type + '.mp4', { type: 'video/mp4' });
+  //   await uploadRecordAPI(presignedURL, fileToUpload);
+  // };
 
-    await uploadVideo(camMediaBlobUrl, 'cam');
-    await uploadVideo(screenMediaBlobUrl, 'screen');
+  // const uploadVideoes = async () => {
+  //   if (!camMediaBlobUrl || !screenMediaBlobUrl) {
+  //     alert('Recordings are not ready');
+  //     return;
+  //   }
 
-    window.location.reload();
-  };
+  //   await uploadVideo(camMediaBlobUrl, 'cam');
+  //   await uploadVideo(screenMediaBlobUrl, 'screen');
 
-  useEffect(() => {
-    if (videoRef.current && previewStream) {
-      videoRef.current.srcObject = previewStream;
-    }
-  }, [previewStream]);
+  //   window.location.reload();
+  // };
+
+  // useEffect(() => {
+  //   if (videoRef.current && previewStream) {
+  //     videoRef.current.srcObject = previewStream;
+  //   }
+  // }, [previewStream]);
 
   return (
     <div className="video-recorder">
@@ -93,7 +93,7 @@ const VideoRecorder: React.FC = () => {
         {recordingState === 'recorded' && (
           <div>
             <video
-              src={camMediaBlobUrl!}
+              src={camMediaBlobUrl}
               controls
               autoPlay
               playsInline
@@ -102,7 +102,7 @@ const VideoRecorder: React.FC = () => {
               style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }}
             />
             <video
-              src={screenMediaBlobUrl!}
+              src={screenMediaBlobUrl}
               controls
               autoPlay
               playsInline
