@@ -21,26 +21,24 @@ export type CreateSteps = {
 };
 
 export type CreateTeamNameFormProps = CreateSteps & {
-  setTeamId: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setTeamName: React.Dispatch<React.SetStateAction<string | undefined>>;
+  onCreateTeam: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
 };
 
-export type CreateTeamImageFormProps = CreateSteps & {
-  teamId: number | undefined;
-};
+export type CreateTeamImageFormProps = CreateSteps & TeamImageFormProps;
 
 export type TeamInfoFormProps = {
-  team: Team | undefined;
   teamname: string | undefined;
-  setTeamname: React.Dispatch<React.SetStateAction<string | undefined>>;
+  onSubmitTeamInfo: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
 };
 
 export type TeamImageFormProps = {
-  team: Team | undefined;
+  fileInput: React.RefObject<HTMLInputElement>;
   previewImage: string | undefined;
-  setPreviewImage: React.Dispatch<React.SetStateAction<string | undefined>>;
+  onChangeLogoImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSaveLogoImage: (e: React.MouseEvent<HTMLElement>) => Promise<void>;
+  onCancelChangeLogoImage: () => void;
 };
 
 export type InviteMemberButtonProps = {
-  teamId: number | undefined;
+  onInvite: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
 };

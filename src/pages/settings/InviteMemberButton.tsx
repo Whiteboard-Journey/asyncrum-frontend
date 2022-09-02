@@ -1,34 +1,9 @@
 import { Button, InputGroup, Form, Modal } from 'react-bootstrap';
 import { useToggle } from 'hooks';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { inviteMember as inviteMemberAPI } from 'helpers';
-import { Invitation, InviteMemberButtonProps } from './types';
+import { InviteMemberButtonProps } from './types';
 
-const InviteMemberButton: React.FC<InviteMemberButtonProps> = ({ teamId }: InviteMemberButtonProps) => {
+const InviteMemberButton: React.FC<InviteMemberButtonProps> = ({ onInvite }: InviteMemberButtonProps) => {
   const [isInviteOpen, toggleInvite] = useToggle();
-
-  const onInvite = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!teamId) {
-      return;
-    }
-    const email = ((e.target as HTMLFormElement).elements as { [key: string]: any })['email'].value;
-    const invitationData: Invitation = {
-      memberId: null,
-      memberEmail: email,
-    };
-    await inviteMemberAPI(teamId, invitationData);
-    (e.target as HTMLFormElement).reset();
-    invitationNotify(email);
-  };
-
-  const invitationNotify = (email: string) =>
-    toast(
-      <div>
-        Invitation sent to <b>{email}</b>!
-      </div>
-    );
 
   return (
     <>
