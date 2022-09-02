@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export default function useMoment() {
+const useMoment = () => {
   const convertDateTime = (datetime: string) => {
     const convertedDatetime = new Date(datetime);
     convertedDatetime.setTime(convertedDatetime.getTime() - convertedDatetime.getTimezoneOffset() * 60 * 1000);
@@ -11,5 +11,11 @@ export default function useMoment() {
     return moment(convertDateTime(datetime)).fromNow();
   };
 
-  return { convertDateTime, getTimeFromNow };
-}
+  const getTimeDifference = (datetime: string) => {
+    return moment().diff(moment(convertDateTime(datetime)), 'hours');
+  };
+
+  return { convertDateTime, getTimeFromNow, getTimeDifference };
+};
+
+export default useMoment;

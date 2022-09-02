@@ -26,3 +26,9 @@ export type WhiteboardCardProps = {
   onEditWhiteboard: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
   onDeleteWhiteboard: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
 };
+
+export type WhiteboardPaginationProps = {
+  whiteboardPageNumber: number;
+  numberOfWhiteboards: number;
+  onPageNumberClick: (e: React.MouseEvent<HTMLElement>) => void;
+};

@@ -1,0 +1,154 @@
+import React, { useEffect, useState } from 'react';
+import { TDDocument, TDFile, TldrawApp } from '@krapi0314/tldraw';
+import { useToggle } from 'hooks';
+import {
+  createWhiteboard as createWhiteboardAPI,
+  readWhiteboard as readWhiteboardAPI,
+  readAllWhiteboard as readAllWhiteboardAPI,
+  uploadWhiteboard as uploadWhiteboardAPI,
+  deleteWhiteboard as deleteWhiteboardAPI,
+  updateWhiteboard as updateWhiteboardAPI,
+} from 'helpers';
+import { Whiteboard } from '../types';
+
+const useWhiteboard = () => {
+  const [whiteboards, setWhiteboards] = useState<Whiteboard[]>([]);
+  const [whiteboardLoading, setWhiteboardLoading] = useState<boolean>(true);
+  const [whiteboardPageNumber, setWhiteboardPageNumber] = useState<number>(1);
+  const [numberOfWhiteboards, setNumberOfWhiteboards] = useState<number>(0);
+  const [isCreateWhiteboardOpen, toggleCreateWhiteboard] = useToggle();
+
+  const scope = 'team';
+  const whiteboardPageURL = '/whiteboard?url=';
+
+  useEffect(() => {
+    const pageIndex = whiteboardPageNumber - 1;
+    readAllWhiteboard(pageIndex);
+  }, [whiteboardPageNumber]);
+
+  const readAllWhiteboard = async (pageIndex: number) => {
+    const whiteboards: Whiteboard[] = [];
+    const readAllWhiteboardAPIResponse = await readAllWhiteboardAPI({ scope, pageIndex });
+    for (const whiteboard of readAllWhiteboardAPIResponse.data.whiteboards) {
+      whiteboards.push({
+        id: whiteboard.id,
+        title: whiteboard.title,
+        description: whiteboard.description,
+        createdDate: whiteboard.createdDate,
+        lastModifiedDate: whiteboard.lastModifiedDate,
+        scope: whiteboard.scope,
+        author: whiteboard.author.fullname,
+        authorProfileImageUrl: whiteboard.author.profileImageUrl,
+        whiteboardFileUrl: whiteboard.whiteboardFileUrl,
+      });
+    }
+    setWhiteboards(whiteboards);
+    setNumberOfWhiteboards(readAllWhiteboardAPIResponse.data.size_ALL_PAGE);
+    setWhiteboardLoading(false);
+  };
+
+  const onCreateWhiteboard = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const title = ((event.target as HTMLFormElement).elements as { [key: string]: any })['title'].value;
+    const description = ((event.target as HTMLFormElement).elements as { [key: string]: any })['description'].value;
+
+    const createWhiteboardAPIResponse = await createWhiteboardAPI({ title, description, scope });
+    const { id, preSignedURL } = createWhiteboardAPIResponse.data;
+    const formData = createWhiteboardFormData(id, title);
+    await uploadWhiteboardAPI(preSignedURL, formData);
+    const readWhiteboardAPIResponse = await readWhiteboardAPI(id);
+    window.location.href = whiteboardPageURL + readWhiteboardAPIResponse.data.whiteboardUrl + '&id=' + id;
+  };
+
+  const createWhiteboardFormData = (whiteboardID: string, title: string) => {
+    const document: TDDocument = {
+      id: whiteboardID,
+      name: title,
+      version: TldrawApp.version,
+      pages: {
+        page: {
+          id: 'page',
+          name: 'Page 1',
+          childIndex: 1,
+          shapes: {},
+          bindings: {},
+        },
+      },
+      pageStates: {
+        page: {
+          id: 'page',
+          selectedIds: [],
+          camera: {
+            point: [0, 0],
+            zoom: 1,
+          },
+        },
+      },
+      assets: {},
+    };
+
+    const file: TDFile = {
+      name: document.name || 'New Document',
+      fileHandle: null,
+      document,
+      assets: {},
+    };
+
+    const json = JSON.stringify(file, null, 2);
+
+    const blob = new Blob([json], {
+      type: 'application/vnd.Tldraw+json',
+    });
+
+    const fileToUpload = new File([blob], title);
+
+    const formData = new FormData();
+    formData.append('data', fileToUpload);
+
+    return formData;
+  };
+
+  const onEditWhiteboard = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const id = ((event.target as HTMLFormElement).elements as { [key: string]: any })['id'].value;
+    const title = ((event.target as HTMLFormElement).elements as { [key: string]: any })['title'].value;
+    const description = ((event.target as HTMLFormElement).elements as { [key: string]: any })['description'].value;
+
+    await updateWhiteboardAPI(id, { title, description, scope });
+    const pageIndex = whiteboardPageNumber - 1;
+    readAllWhiteboard(pageIndex);
+  };
+
+  const onDeleteWhiteboard = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const id = ((event.target as HTMLFormElement).elements as { [key: string]: any })['id'].value;
+    await deleteWhiteboardAPI(id);
+    const pageIndex = whiteboardPageNumber - 1;
+    readAllWhiteboard(pageIndex);
+  };
+
+  const onPageNumberClick = (e: React.MouseEvent<HTMLElement>) => {
+    setWhiteboardPageNumber(parseInt((e.target as any).innerText));
+  };
+
+  return {
+    isCreateWhiteboardOpen,
+    whiteboards,
+    whiteboardLoading,
+    whiteboardPageNumber,
+    numberOfWhiteboards,
+    setWhiteboards,
+    setWhiteboardPageNumber,
+    readAllWhiteboard,
+    onCreateWhiteboard,
+    onEditWhiteboard,
+    onDeleteWhiteboard,
+    onPageNumberClick,
+    toggleCreateWhiteboard,
+  };
+};
+
+export default useWhiteboard;
