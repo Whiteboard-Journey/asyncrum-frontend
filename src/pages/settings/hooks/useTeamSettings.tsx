@@ -30,7 +30,7 @@ const useTeamSettings = () => {
 
   const onCreateTeam = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const name = ((e.target as HTMLFormElement).elements as { [key: string]: any })['name'].value;
+    const name = ((e.target as HTMLFormElement).elements.namedItem('name') as HTMLInputElement).value;
     const code = name.slice(0, 3) + Date.now();
     await createTeamAPI({ name, code });
     const readTeamAPIResponse = await readTeamAPI();
@@ -72,7 +72,7 @@ const useTeamSettings = () => {
     if (!team) {
       return;
     }
-    const name = ((e.target as HTMLFormElement).elements as { [key: string]: any })['name'].value;
+    const name = ((e.target as HTMLFormElement).elements.namedItem('name') as HTMLInputElement).value;
     await updateTeamInfoAPI(team.id, { name });
     setTeamname(name);
     (e.target as HTMLFormElement).reset();
@@ -99,6 +99,7 @@ const useTeamSettings = () => {
   };
 
   const onSaveLogoImage = async (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
     if (!logoImageFile || !team) {
       return;
     } else {
@@ -119,7 +120,7 @@ const useTeamSettings = () => {
     if (!team?.id) {
       return;
     }
-    const email = ((e.target as HTMLFormElement).elements as { [key: string]: any })['email'].value;
+    const email = ((e.target as HTMLFormElement).elements.namedItem('email') as HTMLInputElement).value;
     const invitationData: Invitation = {
       memberId: null,
       memberEmail: email,

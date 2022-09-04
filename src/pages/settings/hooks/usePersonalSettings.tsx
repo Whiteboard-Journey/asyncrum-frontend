@@ -19,7 +19,7 @@ const usePersonalSettings = () => {
 
   const onSubmitProfileInfo = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const fullname = ((e.target as HTMLFormElement).elements as { [key: string]: any })['fullname'].value;
+    const fullname = ((e.target as HTMLFormElement).elements.namedItem('fullname') as HTMLInputElement).value;
     const nickname = '';
     await updateProfileInfoAPI({ fullname, nickname });
     setUserFullname(fullname);
@@ -49,6 +49,7 @@ const usePersonalSettings = () => {
   };
 
   const onSaveProfileImage = async (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
     if (!profileImageFile) {
       return;
     } else {
