@@ -4,11 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { VerticalForm, FormInput } from 'components';
 import { CreateTeamNameFormProps } from './types';
 
-const CreateTeamNameForm: React.FC<CreateTeamNameFormProps> = ({
-  next,
-  onCreateTeam,
-}: CreateTeamNameFormProps) => {
-
+const CreateTeamNameForm: React.FC<CreateTeamNameFormProps> = ({ next, onCreateTeam }: CreateTeamNameFormProps) => {
   const createValidationSchema = yupResolver(
     yup.object().shape({
       name: yup.string().required('Please enter a team name.'),

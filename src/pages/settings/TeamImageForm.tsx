@@ -2,7 +2,13 @@ import { Button } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import { TeamImageFormProps } from './types';
 
-const TeamImageForm: React.FC<TeamImageFormProps> = ({ fileInput, previewImage, onChangeLogoImage, onSaveLogoImage, onCancelChangeLogoImage }: TeamImageFormProps) => {
+const TeamImageForm: React.FC<TeamImageFormProps> = ({
+  fileInput,
+  previewImage,
+  onChangeLogoImage,
+  onSaveLogoImage,
+  onCancelChangeLogoImage,
+}: TeamImageFormProps) => {
   return (
     <>
       <div style={{ height: 190, position: 'relative' }}>

@@ -9,7 +9,16 @@ import InviteMemberButton from './InviteMemberButton';
 import { useTeamSettings } from './hooks';
 
 const CreateTeam = () => {
-  const { team, fileInput, previewImage, onCreateTeam, onChangeLogoImage, onSaveLogoImage, onCancelChangeLogoImage, onInvite } = useTeamSettings();
+  const {
+    team,
+    fileInput,
+    previewImage,
+    onCreateTeam,
+    onChangeLogoImage,
+    onSaveLogoImage,
+    onCancelChangeLogoImage,
+    onInvite,
+  } = useTeamSettings();
 
   return (
     <>
@@ -40,11 +49,21 @@ const CreateTeam = () => {
                     <Steps>
                       <Step
                         id="create"
+                        render={({ next }) => <CreateTeamNameForm next={next} onCreateTeam={onCreateTeam} />}
+                      />
+                      <Step
+                        id="logo"
                         render={({ next }) => (
-                          <CreateTeamNameForm next={next} onCreateTeam={onCreateTeam} />
+                          <CreateTeamImageForm
+                            next={next}
+                            fileInput={fileInput}
+                            previewImage={previewImage}
+                            onChangeLogoImage={onChangeLogoImage}
+                            onSaveLogoImage={onSaveLogoImage}
+                            onCancelChangeLogoImage={onCancelChangeLogoImage}
+                          />
                         )}
                       />
-                      <Step id="logo" render={({ next }) => <CreateTeamImageForm next={next} fileInput={fileInput} previewImage={previewImage} onChangeLogoImage={onChangeLogoImage} onSaveLogoImage={onSaveLogoImage} onCancelChangeLogoImage={onCancelChangeLogoImage} />} />
                       <Step
                         id="finished"
                         render={() => (

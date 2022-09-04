@@ -1,11 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import { createTeam as createTeamAPI, readTeam as readTeamAPI, updateTeamInfo as updateTeamInfoAPI, createLogoImage as createLogoImageAPI, uploadLogoImage as uploadLogoImageAPI, inviteMember as inviteMemberAPI } from 'helpers';
+import {
+  createTeam as createTeamAPI,
+  readTeam as readTeamAPI,
+  updateTeamInfo as updateTeamInfoAPI,
+  createLogoImage as createLogoImageAPI,
+  uploadLogoImage as uploadLogoImageAPI,
+  inviteMember as inviteMemberAPI,
+} from 'helpers';
 import { Member, Team, Invitation } from '../types';
 import defaultImage from 'assets/images/asyncrum-logo-small.png';
 
 const useTeamSettings = () => {
-    const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [team, setTeam] = useState<Team>();
   const [teamname, setTeamname] = useState<string>();
   const [previewImage, setPreviewImage] = useState<string>();
@@ -55,7 +62,7 @@ const useTeamSettings = () => {
     setTeam(teaminfo);
     setTeamname(teaminfo.name);
     setPreviewImage(teaminfo.pictureUrl);
-    console.log(teaminfo)
+    console.log(teaminfo);
     setLoading(false);
     return teaminfo;
   };
@@ -127,22 +134,37 @@ const useTeamSettings = () => {
   };
 
   const changeImageNotify = () =>
-  toast(
-    <div>
-      Team logo saved successfully!
-      <br />
-      The change might take a few minutes to be applied.
-    </div>
-  );
+    toast(
+      <div>
+        Team logo saved successfully!
+        <br />
+        The change might take a few minutes to be applied.
+      </div>
+    );
 
   const invitationNotify = (email: string) =>
-  toast(
-    <div>
-      Invitation sent to <b>{email}</b>!
-    </div>
-  );
+    toast(
+      <div>
+        Invitation sent to <b>{email}</b>!
+      </div>
+    );
 
-  return { loading, team, teamname, previewImage, logoImageFile, fileInput,  setTeamname, setPreviewImage, onCreateTeam, onSubmitTeamInfo, onChangeLogoImage, onSaveLogoImage, onCancelChangeLogoImage, onInvite }
-}
+  return {
+    loading,
+    team,
+    teamname,
+    previewImage,
+    logoImageFile,
+    fileInput,
+    setTeamname,
+    setPreviewImage,
+    onCreateTeam,
+    onSubmitTeamInfo,
+    onChangeLogoImage,
+    onSaveLogoImage,
+    onCancelChangeLogoImage,
+    onInvite,
+  };
+};
 
 export default useTeamSettings;

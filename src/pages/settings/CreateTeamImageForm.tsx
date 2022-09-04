@@ -2,7 +2,14 @@ import { Button } from 'react-bootstrap';
 import { VerticalForm } from 'components';
 import { CreateTeamImageFormProps } from './types';
 
-const CreateTeamImageForm: React.FC<CreateTeamImageFormProps> = ({ next, fileInput, previewImage, onChangeLogoImage, onSaveLogoImage, onCancelChangeLogoImage }: CreateTeamImageFormProps) => {
+const CreateTeamImageForm: React.FC<CreateTeamImageFormProps> = ({
+  next,
+  fileInput,
+  previewImage,
+  onChangeLogoImage,
+  onSaveLogoImage,
+  onCancelChangeLogoImage,
+}: CreateTeamImageFormProps) => {
   return (
     <>
       <VerticalForm

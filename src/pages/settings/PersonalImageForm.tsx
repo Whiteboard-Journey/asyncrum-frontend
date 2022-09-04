@@ -2,7 +2,8 @@ import { Button } from 'react-bootstrap';
 import { usePersonalSettings } from './hooks';
 
 const PersonalImageForm: React.FC = () => {
-  const { previewImage, fileInput, onChangeProfileImage, onSaveProfileImage, onCancelChangeProfileImage } = usePersonalSettings();
+  const { previewImage, fileInput, onChangeProfileImage, onSaveProfileImage, onCancelChangeProfileImage } =
+    usePersonalSettings();
 
   return (
     <>

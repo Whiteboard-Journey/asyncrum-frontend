@@ -1,5 +1,9 @@
 import { toast } from 'react-toastify';
-import { updateProfileInfo as updateProfileInfoAPI, createProfileImage as createProfileImageAPI, uploadProfileImage as uploadProfileImageAPI } from 'helpers';
+import {
+  updateProfileInfo as updateProfileInfoAPI,
+  createProfileImage as createProfileImageAPI,
+  uploadProfileImage as uploadProfileImageAPI,
+} from 'helpers';
 import { APICore } from 'helpers/api/apiCore';
 import { useRef, useState } from 'react';
 
@@ -7,9 +11,9 @@ const api = new APICore();
 const user = api.getLoggedInUser();
 
 const usePersonalSettings = () => {
-    const [userFullname, setUserFullname] = useState<string>(user.fullname);
-    const [previewImage, setPreviewImage] = useState<string>(user.profileImageUrl);
-    const [profileImageFile, setProfileImageFile] = useState<null | File>();
+  const [userFullname, setUserFullname] = useState<string>(user.fullname);
+  const [previewImage, setPreviewImage] = useState<string>(user.profileImageUrl);
+  const [profileImageFile, setProfileImageFile] = useState<null | File>();
 
   const fileInput = useRef<HTMLInputElement>(null);
 
@@ -58,21 +62,29 @@ const usePersonalSettings = () => {
   const onCancelChangeProfileImage = () => {
     setPreviewImage(user.profileImageUrl);
     setProfileImageFile(null);
-  }
+  };
 
   const changeInfoNotify = () => toast(<div>Personal information changed successfully!</div>);
 
   const changeImageNotify = () =>
-  toast(
-    <div>
-      Profile image saved successfully!
-      <br />
-      The change might take a few minutes to be applied.
-    </div>
-  );
+    toast(
+      <div>
+        Profile image saved successfully!
+        <br />
+        The change might take a few minutes to be applied.
+      </div>
+    );
 
-  return { userFullname, previewImage, profileImageFile, fileInput, onSubmitProfileInfo, onChangeProfileImage, onSaveProfileImage, onCancelChangeProfileImage };
-
-}
+  return {
+    userFullname,
+    previewImage,
+    profileImageFile,
+    fileInput,
+    onSubmitProfileInfo,
+    onChangeProfileImage,
+    onSaveProfileImage,
+    onCancelChangeProfileImage,
+  };
+};
 
 export default usePersonalSettings;

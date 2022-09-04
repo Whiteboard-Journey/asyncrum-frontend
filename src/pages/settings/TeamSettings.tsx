@@ -10,7 +10,18 @@ import InviteMemberButton from './InviteMemberButton';
 import { useTeamSettings } from './hooks';
 
 const TeamSettings = () => {
-  const { loading, team, teamname, previewImage, fileInput, onSubmitTeamInfo, onChangeLogoImage, onSaveLogoImage, onCancelChangeLogoImage, onInvite } = useTeamSettings();
+  const {
+    loading,
+    team,
+    teamname,
+    previewImage,
+    fileInput,
+    onSubmitTeamInfo,
+    onChangeLogoImage,
+    onSaveLogoImage,
+    onCancelChangeLogoImage,
+    onInvite,
+  } = useTeamSettings();
 
   return (
     <>
@@ -37,7 +48,13 @@ const TeamSettings = () => {
                       <TeamInfoForm teamname={teamname} onSubmitTeamInfo={onSubmitTeamInfo} />
                     </Col>
                     <Col md={{ span: 3, offset: 2 }}>
-                      <TeamImageForm fileInput={fileInput} previewImage={previewImage} onChangeLogoImage={onChangeLogoImage} onSaveLogoImage={onSaveLogoImage} onCancelChangeLogoImage={onCancelChangeLogoImage} />
+                      <TeamImageForm
+                        fileInput={fileInput}
+                        previewImage={previewImage}
+                        onChangeLogoImage={onChangeLogoImage}
+                        onSaveLogoImage={onSaveLogoImage}
+                        onCancelChangeLogoImage={onCancelChangeLogoImage}
+                      />
                     </Col>
                   </Row>
                   <hr />
