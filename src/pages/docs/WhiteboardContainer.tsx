@@ -47,7 +47,7 @@ const WhiteboardContainer = () => {
       {!whiteboardLoading && (
         <>
           <Row>
-            {whiteboards.map((whiteboard: Whiteboard, i: number) => {
+            {whiteboards.map((whiteboard: Whiteboard) => {
               return (
                 <Col md={6} xxl={3} key={'wb-' + whiteboard.id}>
                   <WhiteboardCard

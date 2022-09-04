@@ -50,8 +50,8 @@ const useWhiteboard = () => {
   const onCreateWhiteboard = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const title = ((event.target as HTMLFormElement).elements as { [key: string]: any })['title'].value;
-    const description = ((event.target as HTMLFormElement).elements as { [key: string]: any })['description'].value;
+    const title = ((event.target as HTMLFormElement).elements.namedItem('title') as HTMLInputElement).value;
+    const description = ((event.target as HTMLFormElement).elements.namedItem('description') as HTMLInputElement).value;
 
     const createWhiteboardAPIResponse = await createWhiteboardAPI({ title, description, scope });
     const { id, preSignedURL } = createWhiteboardAPIResponse.data;
@@ -112,9 +112,9 @@ const useWhiteboard = () => {
   const onEditWhiteboard = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const id = ((event.target as HTMLFormElement).elements as { [key: string]: any })['id'].value;
-    const title = ((event.target as HTMLFormElement).elements as { [key: string]: any })['title'].value;
-    const description = ((event.target as HTMLFormElement).elements as { [key: string]: any })['description'].value;
+    const id = ((event.target as HTMLFormElement).elements.namedItem('id') as HTMLInputElement).value;
+    const title = ((event.target as HTMLFormElement).elements.namedItem('title') as HTMLInputElement).value;
+    const description = ((event.target as HTMLFormElement).elements.namedItem('description') as HTMLInputElement).value;
 
     await updateWhiteboardAPI(id, { title, description, scope });
     const pageIndex = whiteboardPageNumber - 1;
@@ -124,14 +124,14 @@ const useWhiteboard = () => {
   const onDeleteWhiteboard = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const id = ((event.target as HTMLFormElement).elements as { [key: string]: any })['id'].value;
+    const id = ((event.target as HTMLFormElement).elements.namedItem('id') as HTMLInputElement).value;
     await deleteWhiteboardAPI(id);
     const pageIndex = whiteboardPageNumber - 1;
     readAllWhiteboard(pageIndex);
   };
 
   const onPageNumberClick = (e: React.MouseEvent<HTMLElement>) => {
-    setWhiteboardPageNumber(parseInt((e.target as any).innerText));
+    setWhiteboardPageNumber(parseInt((e.target as HTMLLIElement).innerText));
   };
 
   return {
