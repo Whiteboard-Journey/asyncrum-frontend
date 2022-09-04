@@ -3,11 +3,24 @@ import { useVideoRecorder } from './hooks';
 
 const VideoRecorder: React.FC = () => {
   const videoConstraints = { facingMode: 'user' };
-const cam_w = 320,
-  cam_h = 240,
-  screen_w = 960,
-  screen_h = 540;
-  const { recordingState, webcamRef, videoRef, previewStream, camMediaBlobUrl, screenMediaBlobUrl, setRecordingState, camStartRecording, camStopRecording, screenStartRecording, screenStopRecording, uploadVideoes } = useVideoRecorder();
+  const cam_w = 320,
+    cam_h = 240,
+    screen_w = 960,
+    screen_h = 540;
+  const {
+    recordingState,
+    webcamRef,
+    videoRef,
+    previewStream,
+    camMediaBlobUrl,
+    screenMediaBlobUrl,
+    setRecordingState,
+    camStartRecording,
+    camStopRecording,
+    screenStartRecording,
+    screenStopRecording,
+    uploadVideoes,
+  } = useVideoRecorder();
 
   return (
     <div className="video-recorder">

@@ -5,13 +5,13 @@ import { createRecord as createRecordAPI, uploadRecord as uploadRecordAPI } from
 import { APICore } from 'helpers/api/apiCore';
 
 const useVideoRecorder = () => {
-    const [recordingState, setRecordingState] = useState<'idle' | 'recording' | 'recorded'>('idle');
+  const [recordingState, setRecordingState] = useState<'idle' | 'recording' | 'recorded'>('idle');
 
-    const videoRef = useRef<HTMLVideoElement>(null);
-    const webcamRef = useRef<Webcam>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const webcamRef = useRef<Webcam>(null);
 
-    const api = new APICore();
-    const user = api.getLoggedInUser();
+  const api = new APICore();
+  const user = api.getLoggedInUser();
   const title = user.fullname + ' ' + Date.now();
   const description = 'Daily standups - ' + title;
 
@@ -62,7 +62,20 @@ const useVideoRecorder = () => {
     }
   }, [previewStream]);
 
-  return { recordingState, webcamRef, videoRef, previewStream, camMediaBlobUrl, screenMediaBlobUrl, setRecordingState, camStartRecording, camStopRecording, screenStartRecording, screenStopRecording, uploadVideoes };
-}
+  return {
+    recordingState,
+    webcamRef,
+    videoRef,
+    previewStream,
+    camMediaBlobUrl,
+    screenMediaBlobUrl,
+    setRecordingState,
+    camStartRecording,
+    camStopRecording,
+    screenStartRecording,
+    screenStopRecording,
+    uploadVideoes,
+  };
+};
 
 export default useVideoRecorder;
