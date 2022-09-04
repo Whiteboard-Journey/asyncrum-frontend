@@ -1,7 +1,7 @@
 import Carousel from 'react-multi-carousel';
-import { readAllDailyStandups as readAllDailyStandupsAPI } from 'helpers';
+import { readAllDailyStandups as readAllDailyStandupsAPI, viewDailyStandup as viewDailyStandupAPI } from 'helpers';
 import { DailyStandup } from '../types';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useMoment } from './';
 import { APICore } from 'helpers/api/apiCore';
 
@@ -16,7 +16,7 @@ const useDailyStandup = () => {
   const user = api.getLoggedInUser();
   const scope = 'team';
 
-  const readAllDailyStandups = async () => {
+  const readAllDailyStandups = useCallback(async () => {
     const pageIndex = 0;
     const readAllDailyStandupsAPIResponse = await readAllDailyStandupsAPI({ scope, pageIndex });
     for (const record of readAllDailyStandupsAPIResponse.data.records) {
@@ -68,13 +68,19 @@ const useDailyStandup = () => {
     if (carouselRef && carouselRef.current) {
       carouselRef.current.goToSlide(slide);
     }
+  }, [dailyStandups, getTimeDifference, user.id]);
+
+  const onViewDailyStandups = async (dailyStandup: DailyStandup) => {
+    await viewDailyStandupAPI(dailyStandup.id[0]);
+    await viewDailyStandupAPI(dailyStandup.id[1]);
+    dailyStandup.seen = true;
   };
 
   useEffect(() => {
     readAllDailyStandups();
-  }, []);
+  }, [readAllDailyStandups]);
 
-  return { carouselRef, dailyStandups, dailyStandupLoading, setDailyStandups, setDailyStandupLoading };
+  return { carouselRef, dailyStandups, dailyStandupLoading, setDailyStandups, setDailyStandupLoading, onViewDailyStandups };
 };
 
 export default useDailyStandup;

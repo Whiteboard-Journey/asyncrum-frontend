@@ -1,6 +1,5 @@
 import { Card, Modal } from 'react-bootstrap';
-import { useDailyStandupCard, useModal, useMoment } from './hooks';
-
+import { useDailyStandup, useModal, useMoment } from './hooks';
 import { DailyStandup } from './types';
 
 const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
@@ -10,14 +9,14 @@ const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
     screen_h = 540;
   const { isOpen: isViewOpen, size, className, scroll, toggleModal: toggleView, openModalWithClass } = useModal();
   const { getTimeFromNow } = useMoment();
-  const { onViewDailyStandups } = useDailyStandupCard();
+  const { onViewDailyStandups } = useDailyStandup();
 
   return (
     <Card className="d-block me-3">
       <Card.Body
         onClick={() => {
           openModalWithClass('modal-full-width');
-          onViewDailyStandups(dailyStandup.id);
+          onViewDailyStandups(dailyStandup);
         }}
         style={{ cursor: 'pointer' }}
       >

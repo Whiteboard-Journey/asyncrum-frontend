@@ -28,7 +28,7 @@ const inviteMember = (teamId: number, params: { memberId: null; memberEmail: str
 const uploadLogoImage = (presignedURL: string, logoImageFile: File) => {
   const uploadAxios = axios.create({
     transformRequest: [
-      (data: any, headers: any) => {
+      (_, headers: any) => {
         delete headers.common.Authorization;
         headers['Content-Type'] = 'image/png';
         return logoImageFile;
