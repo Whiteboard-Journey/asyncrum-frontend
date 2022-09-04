@@ -1,46 +1,16 @@
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import LeftPanel from './LeftPanel';
-import React, { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { readTeam as readTeamAPI } from 'helpers';
-import { Member, Team } from './types';
+import { Member } from './types';
 import MemberCard from './MemberCard';
 import TeamInfoForm from './TeamInfoForm';
 import TeamImageForm from './TeamImageForm';
 import InviteMemberButton from './InviteMemberButton';
+import { useTeamSettings } from './hooks';
 
 const TeamSettings = () => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [team, setTeam] = useState<Team>();
-  const [teamname, setTeamname] = useState<string>();
-  const [previewImage, setPreviewImage] = useState<string>();
-
-  useEffect(() => {
-    getTeamData();
-  }, []);
-
-  useEffect(() => {
-    setPreviewImage(team?.pictureUrl);
-  }, [team]);
-
-  const getTeamData = async () => {
-    const readTeamAPIResponse = await readTeamAPI();
-    const teaminfo: Team = {
-      id: readTeamAPIResponse.data.id,
-      name: readTeamAPIResponse.data.name,
-      pictureUrl: readTeamAPIResponse.data.pictureUrl,
-      members: readTeamAPIResponse.data.members.map((member: Member) => ({
-        fullname: member.fullname,
-        profileImageUrl: member.profileImageUrl,
-      })),
-    };
-    setTeam(teaminfo);
-    setTeamname(teaminfo.name);
-    setPreviewImage(teaminfo.pictureUrl);
-    setLoading(false);
-    return teaminfo;
-  };
+  const { loading, team, teamname, previewImage, fileInput, onSubmitTeamInfo, onChangeLogoImage, onSaveLogoImage, onCancelChangeLogoImage, onInvite } = useTeamSettings();
 
   return (
     <>
@@ -64,17 +34,17 @@ const TeamSettings = () => {
                   <h4 className="mb-3">Change Team Information</h4>
                   <Row>
                     <Col md={7}>
-                      <TeamInfoForm team={team} teamname={teamname} setTeamname={setTeamname} />
+                      <TeamInfoForm teamname={teamname} onSubmitTeamInfo={onSubmitTeamInfo} />
                     </Col>
                     <Col md={{ span: 3, offset: 2 }}>
-                      <TeamImageForm team={team} previewImage={previewImage} setPreviewImage={setPreviewImage} />
+                      <TeamImageForm fileInput={fileInput} previewImage={previewImage} onChangeLogoImage={onChangeLogoImage} onSaveLogoImage={onSaveLogoImage} onCancelChangeLogoImage={onCancelChangeLogoImage} />
                     </Col>
                   </Row>
                   <hr />
                   <Row className="mb-3">
                     <Col>
                       <span className="h4 mb-1 me-3">Members</span>
-                      <InviteMemberButton teamId={team?.id} />
+                      <InviteMemberButton onInvite={onInvite} />
                     </Col>
                   </Row>
                   <Row>

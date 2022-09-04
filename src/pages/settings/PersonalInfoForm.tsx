@@ -1,29 +1,9 @@
 import { Button } from 'react-bootstrap';
 import { FormInput } from 'components';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { updateProfileInfo as updateProfileInfoAPI } from 'helpers';
-import { APICore } from 'helpers/api/apiCore';
-import { useState } from 'react';
+import { usePersonalSettings } from './hooks';
 
 const PersonalInfoForm: React.FC = () => {
-  const api = new APICore();
-  const user = api.getLoggedInUser();
-  const [userFullname, setUserFullname] = useState<string>(user.fullname);
-
-  const onSubmitProfileInfo = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const fullname = ((e.target as HTMLFormElement).elements as { [key: string]: any })['fullname'].value;
-    const nickname = '';
-    await updateProfileInfoAPI({ fullname, nickname });
-    setUserFullname(fullname);
-    user.fullname = fullname;
-    sessionStorage.setItem('asyncrum_user', JSON.stringify(user));
-    (e.target as HTMLFormElement).reset();
-    changeInfoNotify();
-  };
-
-  const changeInfoNotify = () => toast(<div>Personal information changed successfully!</div>);
+  const { userFullname, onSubmitProfileInfo } = usePersonalSettings();
 
   return (
     <form onSubmit={onSubmitProfileInfo}>

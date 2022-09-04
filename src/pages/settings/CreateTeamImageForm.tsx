@@ -1,60 +1,8 @@
-import React, { useRef, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { VerticalForm } from 'components';
-import { toast } from 'react-toastify';
-import { createLogoImage as createLogoImageAPI, uploadLogoImage as uploadLogoImageAPI } from 'helpers';
 import { CreateTeamImageFormProps } from './types';
-import defaultImage from 'assets/images/asyncrum-logo-small.png';
 
-const CreateTeamImageForm: React.FC<CreateTeamImageFormProps> = ({ next, teamId }: CreateTeamImageFormProps) => {
-  const [previewImage, setPreviewImage] = useState<string>(defaultImage);
-  const [logoImageFile, setLogoImageFile] = useState<null | File>();
-  const fileInput = useRef<HTMLInputElement>(null);
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    if (!e.target.files) {
-      setPreviewImage(defaultImage);
-      return;
-    } else {
-      setLogoImageFile(e.target.files[0]);
-    }
-
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setPreviewImage(reader.result as string);
-      }
-    };
-
-    reader.readAsDataURL(e.target.files[0]);
-  };
-
-  const onCancelLogoImageChange = () => {
-    setPreviewImage(defaultImage);
-    setLogoImageFile(null);
-  };
-
-  const onSaveLogoImage = async (e: React.MouseEvent<HTMLElement>) => {
-    if (!teamId || !logoImageFile) {
-      return;
-    } else {
-      const createLogoImageAPIResponse = await createLogoImageAPI(teamId);
-      const presignedURL = createLogoImageAPIResponse.data.preSignedURL;
-      await uploadLogoImageAPI(presignedURL, logoImageFile);
-      notify();
-    }
-  };
-
-  const notify = () =>
-    toast(
-      <div>
-        Team logo saved successfully!
-        <br />
-        The change might take a few minutes to be applied.
-      </div>
-    );
-
+const CreateTeamImageForm: React.FC<CreateTeamImageFormProps> = ({ next, fileInput, previewImage, onChangeLogoImage, onSaveLogoImage, onCancelChangeLogoImage }: CreateTeamImageFormProps) => {
   return (
     <>
       <VerticalForm
@@ -84,7 +32,7 @@ const CreateTeamImageForm: React.FC<CreateTeamImageFormProps> = ({ next, teamId 
                   accept="image/png"
                   style={{ display: 'none' }}
                   name="logoImage"
-                  onChange={onChange}
+                  onChange={onChangeLogoImage}
                   ref={fileInput}
                 />
                 <div
@@ -103,7 +51,7 @@ const CreateTeamImageForm: React.FC<CreateTeamImageFormProps> = ({ next, teamId 
               <Button className="me-2" onClick={onSaveLogoImage}>
                 Save
               </Button>
-              <Button className="btn btn-secondary" onClick={onCancelLogoImageChange}>
+              <Button className="btn btn-secondary" onClick={onCancelChangeLogoImage}>
                 Cancel
               </Button>
             </div>

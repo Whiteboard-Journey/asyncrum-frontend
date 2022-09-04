@@ -2,23 +2,12 @@ import { Button } from 'react-bootstrap';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { VerticalForm, FormInput } from 'components';
-
-import { createTeam as createTeamAPI } from 'helpers';
 import { CreateTeamNameFormProps } from './types';
 
 const CreateTeamNameForm: React.FC<CreateTeamNameFormProps> = ({
   next,
-  setTeamId,
-  setTeamName,
+  onCreateTeam,
 }: CreateTeamNameFormProps) => {
-  const onCreateTeam = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const name = ((e.target as HTMLFormElement).elements as { [key: string]: any })['name'].value;
-    const code = name.slice(0, 3) + Date.now();
-    const createTeamAPIResponse = await createTeamAPI({ name, code });
-    setTeamId(createTeamAPIResponse.data.id);
-    setTeamName(name);
-  };
 
   const createValidationSchema = yupResolver(
     yup.object().shape({
