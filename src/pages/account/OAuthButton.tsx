@@ -11,7 +11,7 @@ type Props = {
 const OAuthButton = ({ type, loading }: Props) => {
   return (
     <Button
-      href={`${config.API_URL}/oauth2/authorization/${type}?redirect_uri=http://localhost:3000/account/oauth`}
+      href={`${config.API_URL}/oauth2/authorization/${type}?redirect_uri=${config.WEB_URL}/account/oauth`}
       className="signin-button"
       variant="primary"
       type="submit"
