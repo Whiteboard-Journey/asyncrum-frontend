@@ -28,7 +28,7 @@ export default function useLogin() {
   }, [dispatch]);
 
   const { loading, userLoggedIn, user, error } = appSelector((state) => ({
-    loading: state.Auth.loading,
+    loading: state.Auth.loading as boolean,
     user: state.Auth.user,
     error: state.Auth.error,
     userLoggedIn: state.Auth.userLoggedIn,
