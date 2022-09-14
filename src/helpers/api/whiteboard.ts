@@ -1,10 +1,28 @@
 import { APICore } from './apiCore';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 const api = new APICore();
 const baseURL = '/api/v1/whiteboards';
 
-const readAllWhiteboard = (params: { scope: string; pageIndex: number }) => {
+interface IReadAllWhiteboardResponse {
+  whiteboards: IWhiteboard[],
+  size_ALL_PAGE: number,
+}
+export interface IWhiteboard {
+  id: number,
+  title: string,
+  description: string,
+  createdDate: string,
+  lastModifiedDate: string,
+  scope: string,
+  whiteboardFileUrl: string,
+  author: {
+    fullname: string,
+    profileImageUrl: string
+  },
+}
+
+const readAllWhiteboard = (params: { scope: string; pageIndex: number }): Promise<AxiosResponse<IReadAllWhiteboardResponse>>  => {
   return api.get(baseURL, params);
 };
 

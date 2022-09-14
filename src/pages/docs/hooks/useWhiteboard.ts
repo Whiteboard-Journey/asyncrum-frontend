@@ -27,10 +27,10 @@ const useWhiteboard = () => {
   }, [whiteboardPageNumber]);
 
   const readAllWhiteboard = async (pageIndex: number) => {
-    const whiteboards: Whiteboard[] = [];
     const readAllWhiteboardAPIResponse = await readAllWhiteboardAPI({ scope, pageIndex });
-    for (const whiteboard of readAllWhiteboardAPIResponse.data.whiteboards) {
-      whiteboards.push({
+    
+    const whiteboards = readAllWhiteboardAPIResponse.data.whiteboards.map((whiteboard): Whiteboard => {
+      return {
         id: whiteboard.id,
         title: whiteboard.title,
         description: whiteboard.description,
@@ -40,8 +40,9 @@ const useWhiteboard = () => {
         author: whiteboard.author.fullname,
         authorProfileImageUrl: whiteboard.author.profileImageUrl,
         whiteboardFileUrl: whiteboard.whiteboardFileUrl,
-      });
-    }
+      }
+    });
+
     setWhiteboards(whiteboards);
     setNumberOfWhiteboards(readAllWhiteboardAPIResponse.data.size_ALL_PAGE);
     setWhiteboardLoading(false);
