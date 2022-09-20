@@ -67,11 +67,11 @@ const profileMenus: ProfileOption[] = [
     icon: 'mdi mdi-cog',
     redirectTo: 'settings/user',
   },
-  {
-    label: 'Support',
-    icon: 'mdi mdi-lifebuoy',
-    redirectTo: '#',
-  },
+  // {
+  //   label: 'Support',
+  //   icon: 'mdi mdi-lifebuoy',
+  //   redirectTo: '#',
+  // },
   {
     label: 'Logout',
     icon: 'mdi mdi-logout',

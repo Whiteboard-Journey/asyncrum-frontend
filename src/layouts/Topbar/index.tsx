@@ -86,23 +86,22 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
         )}
 
         <ul className="list-unstyled topbar-menu float-end mb-0">
-          <li className="notification-list topbar-dropdown d-xl-none">
+          {/* <li className="notification-list topbar-dropdown d-xl-none">
             <SearchDropdown />
           </li>
           <li className="dropdown notification-list topbar-dropdown">
             <LanguageDropdown />
-          </li>
-          <li className="dropdown notification-list">
+          </li> */}
+          {/* <li className="dropdown notification-list">
             <NotificationDropdown notifications={notifications} />
-          </li>
-          <li className="dropdown notification-list d-none d-sm-inline-block">
+          </li> */}
+          {/* <li className="dropdown notification-list d-none d-sm-inline-block">
             <AppsDropdown />
-          </li>
+          </li> */}
           <li className="notification-list">
             <button
               className="nav-link dropdown-toggle end-bar-toggle arrow-none btn btn-link shadow-none"
-              onClick={handleRightSideBar}
-            >
+              onClick={handleRightSideBar}>
               <i className="dripicons-gear noti-icon"></i>
             </button>
           </li>
@@ -145,7 +144,7 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
             </div>
           </Link>
         )}
-        <TopbarSearch options={searchOptions} />
+        {/* <TopbarSearch options={searchOptions} /> */}
       </div>
     </div>
   );

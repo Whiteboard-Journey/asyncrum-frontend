@@ -15,20 +15,20 @@ export type MenuItemType = {
 
 const MENU_ITEMS: MenuItemType[] = [
   { key: 'docs', label: 'Documents', isTitle: true },
-  {
-    key: 'docs-recent',
-    label: 'Recent',
-    isTitle: false,
-    icon: 'uil-clock-three',
-    url: '/docs/recent',
-  },
-  {
-    key: 'docs-starred',
-    label: 'Starred',
-    isTitle: false,
-    icon: 'uil-star',
-    url: '/docs/starred',
-  },
+  // {
+  //   key: 'docs-recent',
+  //   label: 'Recent',
+  //   isTitle: false,
+  //   icon: 'uil-clock-three',
+  //   url: '/docs/recent',
+  // },
+  // {
+  //   key: 'docs-starred',
+  //   label: 'Starred',
+  //   isTitle: false,
+  //   icon: 'uil-star',
+  //   url: '/docs/starred',
+  // },
   {
     key: 'docs-dashboard',
     label: 'Dashboard',

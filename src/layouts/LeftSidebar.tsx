@@ -29,7 +29,7 @@ const SideBarContent = ({ hideUserProfile }: SideBarContentProps) => {
       )}
       <AppMenu menuItems={getMenuItems()} />
 
-      <div
+      {/* <div
         className={classNames('help-box', 'text-center', {
           'text-white': hideUserProfile,
         })}
@@ -44,7 +44,7 @@ const SideBarContent = ({ hideUserProfile }: SideBarContentProps) => {
         <button className={classNames('btn', 'btn-sm', hideUserProfile ? 'btn-outline-light' : 'btn-outline-primary')}>
           Upgrade
         </button>
-      </div>
+      </div> */}
       <div className="clearfix" />
     </>
   );
