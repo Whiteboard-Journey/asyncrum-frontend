@@ -4,11 +4,11 @@ import axios from 'axios';
 const api = new APICore();
 const baseURL = '/api/v1/records';
 
-const createRecord = (params: { title: string; description: string; scope: string }) => {
+const createRecord = (params: { title: string; description: string; scope: string; teamId: string; }) => {
   return api.create(baseURL, params);
 };
 
-const readAllDailyStandups = (params: { scope: string; pageIndex: number }) => {
+const readAllDailyStandups = (params: { teamId: string; scope: string; pageIndex: number }) => {
   return api.get(baseURL, params);
 };
 

@@ -7,6 +7,7 @@ import {
   readMember as readMemberApi,
   signup as signupApi,
   forgotPassword as forgotPasswordApi,
+  readAllTeam as readAllTeamApi,
 } from 'helpers';
 import { authApiResponseSuccess, authApiResponseError } from './actions';
 import { AuthActionTypes } from './constants';
@@ -20,6 +21,10 @@ type UserData = {
   };
   type: string;
 };
+
+type TeamData = {
+  id: number;
+}
 
 type TokenData = {
   payload: {
@@ -38,7 +43,6 @@ function* login({ payload: { email, password }, type }: UserData): SagaIterator 
   try {
     const response = yield call(loginApi, { email, password });
     const user = response.data;
-    // NOTE - You can change this according to response format from your api
     api.setLoggedInUser(user);
     setAuthorization(user['token']);
     yield put(authApiResponseSuccess(AuthActionTypes.LOGIN_USER, user));
@@ -56,9 +60,16 @@ function* oauthLogin({ payload: { token }, type }: TokenData): SagaIterator {
 
     const user = response.data;
     user['token'] = token;
-    // NOTE - You can change this according to response format from your api
     api.setLoggedInUser(user);
     setAuthorization(token);
+    const readAllTeamApiResponse = yield call(readAllTeamApi);
+    user['teams'] = readAllTeamApiResponse.data.teams.map((team: TeamData) => team.id);
+    if (user['teams']) {
+      user['currentTeam'] = user['teams'][0];
+    } else {
+      user['currentTeam'] = -1;
+    }
+    api.setLoggedInUser(user);
     yield put(authApiResponseSuccess(AuthActionTypes.OAUTH_LOGIN_USER, user));
   } catch (error: any) {
     yield put(authApiResponseError(AuthActionTypes.OAUTH_LOGIN_USER, error));

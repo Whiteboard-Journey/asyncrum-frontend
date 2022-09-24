@@ -15,10 +15,11 @@ const useDailyStandup = () => {
   const api = new APICore();
   const user = api.getLoggedInUser();
   const scope = 'team';
+  const teamId = user.currentTeam;
 
   const readAllDailyStandups = useCallback(async () => {
     const pageIndex = 0;
-    const readAllDailyStandupsAPIResponse = await readAllDailyStandupsAPI({ scope, pageIndex });
+    const readAllDailyStandupsAPIResponse = await readAllDailyStandupsAPI({ teamId, scope, pageIndex });
     for (const record of readAllDailyStandupsAPIResponse.data.records) {
       if (getTimeDifference(record.createdDate) > 24 && record.seenMemberIdGroup?.indexOf(user.id) > -1) {
         continue;
@@ -68,7 +69,7 @@ const useDailyStandup = () => {
     if (carouselRef && carouselRef.current) {
       carouselRef.current.goToSlide(slide);
     }
-  }, [dailyStandups, getTimeDifference, user.id]);
+  }, [dailyStandups, getTimeDifference, user.id, teamId]);
 
   const onViewDailyStandups = async (dailyStandup: DailyStandup) => {
     await viewDailyStandupAPI(dailyStandup.id[0]);

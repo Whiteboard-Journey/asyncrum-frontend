@@ -9,6 +9,7 @@ import {
   inviteMember as inviteMemberAPI,
 } from 'helpers';
 import { Member, Team, Invitation } from '../types';
+import { APICore } from 'helpers/api/apiCore';
 import defaultImage from 'assets/images/asyncrum-logo-small.png';
 
 const useTeamSettings = () => {
@@ -20,8 +21,13 @@ const useTeamSettings = () => {
 
   const fileInput = useRef<HTMLInputElement>(null);
 
+  const api = new APICore();
+  const user = api.getLoggedInUser();
+
   useEffect(() => {
-    getTeamData();
+    if (user.teams) {
+      getTeamData();
+    }
   }, []);
 
   useEffect(() => {
@@ -32,8 +38,15 @@ const useTeamSettings = () => {
     e.preventDefault();
     const name = ((e.target as HTMLFormElement).elements.namedItem('name') as HTMLInputElement).value;
     const code = name.slice(0, 3) + Date.now();
-    await createTeamAPI({ name, code });
-    const readTeamAPIResponse = await readTeamAPI();
+    const createTeamAPIResponse = await createTeamAPI({ name, code });
+    const newTeamId = createTeamAPIResponse.data.id;
+    if (user['teams']) {
+      user['teams'].push(newTeamId);
+    } else {
+      user['teams'] = [newTeamId];
+    }
+    user['currentTeam'] = newTeamId;
+    const readTeamAPIResponse = await readTeamAPI(newTeamId);
     const teaminfo: Team = {
       id: readTeamAPIResponse.data.id,
       name: readTeamAPIResponse.data.name,
@@ -49,7 +62,7 @@ const useTeamSettings = () => {
   };
 
   const getTeamData = async () => {
-    const readTeamAPIResponse = await readTeamAPI();
+    const readTeamAPIResponse = await readTeamAPI(user.currentTeam);
     const teaminfo: Team = {
       id: readTeamAPIResponse.data.id,
       name: readTeamAPIResponse.data.name,
@@ -62,7 +75,6 @@ const useTeamSettings = () => {
     setTeam(teaminfo);
     setTeamname(teaminfo.name);
     setPreviewImage(teaminfo.pictureUrl);
-    console.log(teaminfo);
     setLoading(false);
     return teaminfo;
   };
@@ -73,7 +85,7 @@ const useTeamSettings = () => {
       return;
     }
     const name = ((e.target as HTMLFormElement).elements.namedItem('name') as HTMLInputElement).value;
-    await updateTeamInfoAPI(team.id, { name });
+    await updateTeamInfoAPI(user.currentTeam, { name });
     setTeamname(name);
     (e.target as HTMLFormElement).reset();
     changeInfoNotify();
@@ -103,7 +115,7 @@ const useTeamSettings = () => {
     if (!logoImageFile || !team) {
       return;
     } else {
-      const createLogoImageAPIResponse = await createLogoImageAPI(team.id);
+      const createLogoImageAPIResponse = await createLogoImageAPI(user.currentTeam);
       const presignedURL = createLogoImageAPIResponse.data.preSignedURL;
       await uploadLogoImageAPI(presignedURL, logoImageFile);
       changeImageNotify();
@@ -117,7 +129,7 @@ const useTeamSettings = () => {
 
   const onInvite = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!team?.id) {
+    if (!user.currentTeam) {
       return;
     }
     const email = ((e.target as HTMLFormElement).elements.namedItem('email') as HTMLInputElement).value;
@@ -125,7 +137,7 @@ const useTeamSettings = () => {
       memberId: null,
       memberEmail: email,
     };
-    await inviteMemberAPI(team?.id, invitationData);
+    await inviteMemberAPI(user.currentTeam, invitationData);
     (e.target as HTMLFormElement).reset();
     invitationNotify(email);
   };
@@ -155,6 +167,7 @@ const useTeamSettings = () => {
     team,
     teamname,
     previewImage,
+    defaultImage,
     logoImageFile,
     fileInput,
     setTeamname,
