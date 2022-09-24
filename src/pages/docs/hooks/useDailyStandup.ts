@@ -26,7 +26,7 @@ const useDailyStandup = () => {
       }
       if (
         dailyStandups.at(-1) &&
-        dailyStandups.at(-1)?.author === record.author.fullname &&
+        dailyStandups.at(-1)?.author === record.member.fullname &&
         dailyStandups.at(-1)?.title.slice(0, 13) === record.title.slice(0, 13)
       ) {
         if (record.title.slice(-6) === 'screen') {
@@ -40,9 +40,9 @@ const useDailyStandup = () => {
         if (record.title.slice(-6) === 'screen') {
           dailyStandups.push({
             id: [record.id],
-            author: record.author.fullname,
+            author: record.member.fullname,
             title: record.title,
-            profileImageUrl: record.author.profileImageUrl,
+            profileImageUrl: record.member.profileImageUrl,
             createdDate: record.createdDate,
             camRecordFileUrl: '',
             screenRecordFileUrl: record.recordFileUrl,
@@ -51,9 +51,9 @@ const useDailyStandup = () => {
         } else {
           dailyStandups.push({
             id: [record.id],
-            author: record.author.fullname,
+            author: record.member.fullname,
             title: record.title,
-            profileImageUrl: record.author.profileImageUrl,
+            profileImageUrl: record.member.profileImageUrl,
             createdDate: record.createdDate,
             camRecordFileUrl: record.recordFileUrl,
             screenRecordFileUrl: '',

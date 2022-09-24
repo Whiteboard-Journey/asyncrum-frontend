@@ -41,8 +41,8 @@ const useWhiteboard = () => {
         createdDate: whiteboard.createdDate,
         lastModifiedDate: whiteboard.lastModifiedDate,
         scope: whiteboard.scope,
-        author: whiteboard.author.fullname,
-        authorProfileImageUrl: whiteboard.author.profileImageUrl,
+        author: whiteboard.member.fullname,
+        authorProfileImageUrl: whiteboard.member.profileImageUrl,
         whiteboardFileUrl: whiteboard.whiteboardFileUrl,
       }
     });

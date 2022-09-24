@@ -16,7 +16,7 @@ export interface IWhiteboard {
   lastModifiedDate: string,
   scope: string,
   whiteboardFileUrl: string,
-  author: {
+  member: {
     fullname: string,
     profileImageUrl: string
   },
