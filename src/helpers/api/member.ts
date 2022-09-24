@@ -6,7 +6,7 @@ const baseURL = '/api/v1/members';
 const user = api.getLoggedInUser();
 
 const createProfileImage = () => {
-  return api.create(baseURL + `/images/${user.id}`, null);
+  return api.create(baseURL + `/${user.id}/image`, null);
 };
 
 const updateProfileInfo = (params: { fullname: string; nickname: string }) => {
