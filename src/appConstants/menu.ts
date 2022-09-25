@@ -44,18 +44,6 @@ const MENU_ITEMS: MenuItemType[] = [
     icon: 'mdi mdi-account-group-outline',
     url: '/docs/whiteboards',
   },
-  { key: 'teams', label: 'Teams', isTitle: true },
-  {
-    key: 'teams-team1',
-    label: 'Whiteboard Journey',
-    isTitle: false,
-  },
-  {
-    key: 'teams-team2',
-    label: 'Another Team',
-    isTitle: false,
-    url: '/teams/team2',
-  },
 ];
 
 export { MENU_ITEMS };

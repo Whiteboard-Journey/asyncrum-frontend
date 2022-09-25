@@ -50,6 +50,7 @@ const useTeamSettings = () => {
     const teaminfo: Team = {
       id: readTeamAPIResponse.data.id,
       name: readTeamAPIResponse.data.name,
+      code: readTeamAPIResponse.data.code,
       pictureUrl: readTeamAPIResponse.data.pictureUrl,
       members: readTeamAPIResponse.data.members.map((member: Member) => ({
         fullname: member.fullname,
@@ -66,6 +67,7 @@ const useTeamSettings = () => {
     const teaminfo: Team = {
       id: readTeamAPIResponse.data.id,
       name: readTeamAPIResponse.data.name,
+      code: readTeamAPIResponse.data.code,
       pictureUrl: readTeamAPIResponse.data.pictureUrl,
       members: readTeamAPIResponse.data.members.map((member: Member) => ({
         fullname: member.fullname,

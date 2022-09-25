@@ -27,7 +27,7 @@ const SideBarContent = ({ hideUserProfile }: SideBarContentProps) => {
           </Link>
         </div>
       )}
-      <AppMenu menuItems={getMenuItems()} />
+      <AppMenu menuItems={getMenuItems(user.teams)} />
 
       {/* <div
         className={classNames('help-box', 'text-center', {

@@ -1,8 +1,23 @@
 import { MENU_ITEMS, MenuItemType } from 'appConstants';
-
-const getMenuItems = () => {
-  // NOTE - You can fetch from server and return here as well
-  return MENU_ITEMS;
+import { Team } from 'pages/settings/types';
+const getMenuItems = (teams: Team[]) => {
+  const menu: MenuItemType[] = [
+    ...MENU_ITEMS,
+    { 
+      key: 'teams', 
+      label: 'Teams', 
+      isTitle: false,
+      children: teams.map((team: Team) => {
+        return {
+          key: team.code,
+          label: team.name,
+          isTitle: false,
+          parentKey: 'teams'
+        }
+      })
+    },
+  ];
+  return menu;
 };
 
 const findAllParent = (menuItems: MenuItemType[], menuItem: MenuItemType): string[] => {

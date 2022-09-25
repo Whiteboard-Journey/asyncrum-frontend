@@ -8,6 +8,7 @@ type NavbarProps = {
 };
 
 const Navbar = ({ isMenuOpened }: NavbarProps) => {
+  const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
   // change the inputTheme value to light for creative theme
   const inputTheme = 'dark';
 
@@ -17,7 +18,7 @@ const Navbar = ({ isMenuOpened }: NavbarProps) => {
         <nav className={classNames('navbar', 'navbar-expand-lg', 'topnav-menu', 'navbar-' + inputTheme)}>
           <Collapse in={isMenuOpened} className="navbar-collapse">
             <div id="topnav-menu-content">
-              <AppMenu menuItems={getMenuItems()} />
+              <AppMenu menuItems={getMenuItems(user.teams)} />
             </div>
           </Collapse>
         </nav>

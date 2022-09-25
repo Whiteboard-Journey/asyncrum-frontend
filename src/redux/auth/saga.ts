@@ -63,11 +63,11 @@ function* oauthLogin({ payload: { token }, type }: TokenData): SagaIterator {
     api.setLoggedInUser(user);
     setAuthorization(token);
     const readAllTeamApiResponse = yield call(readAllTeamApi);
-    user['teams'] = readAllTeamApiResponse.data.teams.map((team: TeamData) => team.id);
+    user['teams'] = readAllTeamApiResponse.data.teams;
     if (user['teams']) {
       user['currentTeam'] = user['teams'][0];
     } else {
-      user['currentTeam'] = -1;
+      user['currentTeam'] = {};
     }
     api.setLoggedInUser(user);
     yield put(authApiResponseSuccess(AuthActionTypes.OAUTH_LOGIN_USER, user));
