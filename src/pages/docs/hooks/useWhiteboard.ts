@@ -10,6 +10,7 @@ import {
   updateWhiteboard as updateWhiteboardAPI,
 } from 'helpers';
 import { Whiteboard } from '../types';
+import { APICore } from 'helpers/api/apiCore';
 
 const useWhiteboard = () => {
   const [whiteboards, setWhiteboards] = useState<Whiteboard[]>([]);
@@ -18,8 +19,11 @@ const useWhiteboard = () => {
   const [numberOfWhiteboards, setNumberOfWhiteboards] = useState<number>(0);
   const [isCreateWhiteboardOpen, toggleCreateWhiteboard] = useToggle();
 
+  const api = new APICore();
+  const user = api.getLoggedInUser();
   const scope = 'team';
   const whiteboardPageURL = '/whiteboard?url=';
+  const teamId = user.currentTeam
 
   useEffect(() => {
     const pageIndex = whiteboardPageNumber - 1;
@@ -27,7 +31,7 @@ const useWhiteboard = () => {
   }, [whiteboardPageNumber]);
 
   const readAllWhiteboard = async (pageIndex: number) => {
-    const readAllWhiteboardAPIResponse = await readAllWhiteboardAPI({ scope, pageIndex });
+    const readAllWhiteboardAPIResponse = await readAllWhiteboardAPI({ teamId, scope, pageIndex });
     
     const whiteboards = readAllWhiteboardAPIResponse.data.whiteboards.map((whiteboard): Whiteboard => {
       return {
@@ -37,8 +41,8 @@ const useWhiteboard = () => {
         createdDate: whiteboard.createdDate,
         lastModifiedDate: whiteboard.lastModifiedDate,
         scope: whiteboard.scope,
-        author: whiteboard.author.fullname,
-        authorProfileImageUrl: whiteboard.author.profileImageUrl,
+        author: whiteboard.member.fullname,
+        authorProfileImageUrl: whiteboard.member.profileImageUrl,
         whiteboardFileUrl: whiteboard.whiteboardFileUrl,
       }
     });
@@ -54,7 +58,7 @@ const useWhiteboard = () => {
     const title = ((event.target as HTMLFormElement).elements.namedItem('title') as HTMLInputElement).value;
     const description = ((event.target as HTMLFormElement).elements.namedItem('description') as HTMLInputElement).value;
 
-    const createWhiteboardAPIResponse = await createWhiteboardAPI({ title, description, scope });
+    const createWhiteboardAPIResponse = await createWhiteboardAPI({ title, description, scope, teamId });
     const { id, preSignedURL } = createWhiteboardAPIResponse.data;
     const formData = createWhiteboardFormData(id, title);
     await uploadWhiteboardAPI(preSignedURL, formData);

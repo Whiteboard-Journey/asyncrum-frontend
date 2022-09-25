@@ -16,13 +16,13 @@ export interface IWhiteboard {
   lastModifiedDate: string,
   scope: string,
   whiteboardFileUrl: string,
-  author: {
+  member: {
     fullname: string,
     profileImageUrl: string
   },
 }
 
-const readAllWhiteboard = (params: { scope: string; pageIndex: number }): Promise<AxiosResponse<IReadAllWhiteboardResponse>>  => {
+const readAllWhiteboard = (params: { teamId: string; scope: string; pageIndex: number }): Promise<AxiosResponse<IReadAllWhiteboardResponse>>  => {
   return api.get(baseURL, params);
 };
 
@@ -30,7 +30,7 @@ const readWhiteboard = (id: string) => {
   return api.get(baseURL + '/' + id, null);
 };
 
-const createWhiteboard = (params: { title: string; description: string; scope: string }) => {
+const createWhiteboard = (params: { title: string; description: string; scope: string; teamId: string; }) => {
   return api.create(baseURL, params);
 };
 

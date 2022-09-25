@@ -10,11 +10,11 @@ import {
 } from './whiteboard';
 import { createRecord, readAllDailyStandups, uploadRecord, viewDailyStandup } from './record';
 import { createProfileImage, updateProfileInfo, uploadProfileImage } from './member';
-import { createTeam, createLogoImage, readTeam, updateTeamInfo, inviteMember, uploadLogoImage } from './team';
+import { createTeam, createLogoImage, readAllTeam, readTeam, updateTeamInfo, inviteMember, uploadLogoImage } from './team';
 
 export { login, logout, readMember, signup, forgotPassword, forgotPasswordConfirm };
 export { readAllWhiteboard, readWhiteboard, createWhiteboard, uploadWhiteboard, updateWhiteboard, deleteWhiteboard };
 export type { IWhiteboard };
 export { createRecord, readAllDailyStandups, uploadRecord, viewDailyStandup };
 export { createProfileImage, updateProfileInfo, uploadProfileImage };
-export { createTeam, createLogoImage, readTeam, updateTeamInfo, inviteMember, uploadLogoImage };
+export { createTeam, createLogoImage, readAllTeam, readTeam, updateTeamInfo, inviteMember, uploadLogoImage };
