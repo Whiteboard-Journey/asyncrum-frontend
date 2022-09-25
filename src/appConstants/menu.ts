@@ -11,6 +11,7 @@ export type MenuItemType = {
   parentKey?: string;
   target?: string;
   children?: MenuItemType[];
+  teamId?: number;
 };
 
 const MENU_ITEMS: MenuItemType[] = [
