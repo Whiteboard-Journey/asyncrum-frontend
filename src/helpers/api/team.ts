@@ -9,6 +9,7 @@ const changeTeam = async (teamId: number) => {
   const readTeamApiResponse = await readTeam(teamId);
   user.currentTeam = readTeamApiResponse.data;
   api.setLoggedInUser(user);
+  window.location.reload();
 }
 
 const createTeam = (params: { name: string; code: string }) => {
