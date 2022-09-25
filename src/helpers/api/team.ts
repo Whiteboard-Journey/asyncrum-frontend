@@ -3,6 +3,13 @@ import axios from 'axios';
 
 const api = new APICore();
 const baseURL = '/api/v1/teams';
+const user = api.getLoggedInUser();
+
+const changeTeam = async (teamId: number) => {
+  const readTeamApiResponse = await readTeam(teamId);
+  user.currentTeam = readTeamApiResponse.data;
+  api.setLoggedInUser(user);
+}
 
 const createTeam = (params: { name: string; code: string }) => {
   return api.create(baseURL, params);
@@ -41,4 +48,4 @@ const uploadLogoImage = (presignedURL: string, logoImageFile: File) => {
   return uploadAxios.put(presignedURL, logoImageFile);
 };
 
-export { createTeam, createLogoImage, readAllTeam, readTeam, updateTeamInfo, inviteMember, uploadLogoImage };
+export { changeTeam, createTeam, createLogoImage, readAllTeam, readTeam, updateTeamInfo, inviteMember, uploadLogoImage };

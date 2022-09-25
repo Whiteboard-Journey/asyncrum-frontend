@@ -8,12 +8,14 @@ const getMenuItems = (teams: Team[]) => {
       label: 'Teams', 
       isTitle: false,
       children: teams.map((team: Team) => {
-        return {
+        const teamObject = {
           key: team.code,
           label: team.name,
           isTitle: false,
-          parentKey: 'teams'
-        }
+          parentKey: 'teams',
+          teamId: team.id
+        };
+        return teamObject;
       })
     },
   ];
