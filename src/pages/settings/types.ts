@@ -5,6 +5,7 @@ export type Member = {
 
 export type Team = {
   id: number;
+  code: string;
   name: string;
   pictureUrl: string;
   members: Member[];
