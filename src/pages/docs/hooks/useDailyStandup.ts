@@ -15,7 +15,7 @@ const useDailyStandup = () => {
   const api = new APICore();
   const user = api.getLoggedInUser();
   const scope = 'team';
-  const teamId = user.currentTeam;
+  const teamId = user.currentTeam.id;
 
   const readAllDailyStandups = useCallback(async () => {
     const pageIndex = 0;

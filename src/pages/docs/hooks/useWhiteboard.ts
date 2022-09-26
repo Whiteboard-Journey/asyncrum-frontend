@@ -23,7 +23,7 @@ const useWhiteboard = () => {
   const user = api.getLoggedInUser();
   const scope = 'team';
   const whiteboardPageURL = '/whiteboard?url=';
-  const teamId = user.currentTeam
+  const teamId = user.currentTeam.id
 
   useEffect(() => {
     const pageIndex = whiteboardPageNumber - 1;

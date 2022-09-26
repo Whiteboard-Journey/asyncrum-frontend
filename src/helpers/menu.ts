@@ -13,7 +13,8 @@ const getMenuItems = (teams: Team[]) => {
           label: team.name,
           isTitle: false,
           parentKey: 'teams',
-          teamId: team.id
+          teamId: team.id,
+          url: '/'
         };
         return teamObject;
       })
