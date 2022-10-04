@@ -1,10 +1,18 @@
 import Routes from 'routes/Routes';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import 'assets/scss/Saas.scss';
 
 const App = () => {
+  const theme = extendTheme({
+    styles: {
+      global: () => ({
+        body: '',
+      }),
+    },
+  });
+
   return (
-    <ChakraProvider>
+    <ChakraProvider resetCSS={false} theme={theme}>
       <Routes />
     </ChakraProvider>
   );

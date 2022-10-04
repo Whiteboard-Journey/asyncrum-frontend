@@ -1,7 +1,6 @@
 import { useRef, useEffect, useCallback } from 'react';
 import { Tldraw, TldrawApp, ColorStyle } from '@krapi0314/tldraw';
 
-// import { Container } from 'react-bootstrap';
 import { Box } from '@chakra-ui/react';
 
 import type { Video } from './Video';
@@ -102,7 +101,6 @@ export default function Drawing({ playing, onMount, scale, video, videoBookmark 
   }, [playing, clearDrawing]);
 
   return (
-    // <Container className="position-absolute top-0 left-0 bottom-0 right-0" ref={outerRef}>
     <Box position="absolute" top="0" left="0" right="0" bottom="0" ref={outerRef}>
       <Tldraw
         // @ts-ignore
@@ -112,6 +110,5 @@ export default function Drawing({ playing, onMount, scale, video, videoBookmark 
         style="{background-color: transparent !important}"
       />
     </Box>
-    // </Container>
   );
 }

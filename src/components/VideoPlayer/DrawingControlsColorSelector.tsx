@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Flex, Box, Popover, PopoverTrigger, PopoverContent, PopoverBody, PopoverArrow } from '@chakra-ui/react';
 
 import { TldrawApp, ColorStyle } from '@krapi0314/tldraw';
-import { Container, Overlay } from 'react-bootstrap';
 
 type PropsType = {
   app: TldrawApp;
@@ -23,14 +22,6 @@ const colors = {
   [ColorStyle.Orange]: '#ff9433',
   [ColorStyle.Yellow]: '#ffc936',
 };
-
-const colorBoxStyles = {
-  container: {
-    width: '1.5rem',
-    height: '1.5rem',
-    cursor: 'pointer',
-  },
-} as const;
 
 export default function DrawingControlsColorSelector({ app }: PropsType) {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -52,33 +43,21 @@ export default function DrawingControlsColorSelector({ app }: PropsType) {
   const swatchesData = Object.entries(colors) as Array<[ColorStyle, string]>;
 
   const renderedSwatches = swatchesData.map(([key, value]) => {
-    const style = {
-      ...colorBoxStyles.container,
-      backgroundColor: value,
-    };
-    return <Container className="mx-1 my-1 " key={key} style={style} onClick={() => handleColourPick(key)} />;
+    return (
+      <Box
+        mx={1}
+        my={1}
+        key={key}
+        width="1.5rem"
+        height="1.5rem"
+        backgroundColor={value}
+        cursor="pointer"
+        onClick={() => handleColourPick(key)}
+      />
+    );
   });
 
   return (
-    // <>
-    //   <Container></Container>
-    //   <Overlay target={target.current} show={show} placement="right">
-    //     {({ placement, arrowProps, show: _show, popper, ...props }) => (
-    //       <div
-    //         {...props}
-    //         style={{
-    //           position: 'absolute',
-    //           backgroundColor: 'rgba(255, 100, 100, 0.85)',
-    //           padding: '2px 10px',
-    //           color: 'white',
-    //           borderRadius: 3,
-    //           ...props.style,
-    //         }}>
-    //         Simple tooltip
-    //       </div>
-    //     )}
-    //   </Overlay>
-    // </>
     <Popover placement="right" isOpen={isOpen} onClose={() => setIsOpen(false)}>
       <PopoverTrigger>
         <Box
