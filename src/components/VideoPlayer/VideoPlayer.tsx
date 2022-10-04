@@ -38,6 +38,7 @@ const VideoPlayer = () => {
   const [fullscreen, setFullscreen] = useState<boolean>(false);
   const [videoDimensions, setVideoDimensions] = useState<[number, number] | null>(null);
   const [currentTime, setCurrentTime] = useState<number>(0);
+  const [currentVolume, setCurrentVolume] = useState<number>(0.8);
   const [fullDuration, setfullDuration] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [playing, setPlaying] = useState<boolean>(false);
@@ -72,7 +73,10 @@ const VideoPlayer = () => {
     video.el.ontimeupdate = () => {
       setCurrentTime(video.el.currentTime);
     };
-    video.el.onloadedmetadata = () => setfullDuration(video.el.duration);
+    video.el.onloadedmetadata = () => {
+      setfullDuration(video.el.duration);
+      setCurrentVolume(video.el.volume);
+    };
     setLoading(false);
   }, []);
 
@@ -214,7 +218,7 @@ const VideoPlayer = () => {
           </Box>
 
           <Box mx="2">
-            <VideoVolume video={video} />
+            <VideoVolume video={video} setCurrentVolume={setCurrentVolume} />
           </Box>
 
           {app && (

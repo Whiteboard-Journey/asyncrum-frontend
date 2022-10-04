@@ -4,17 +4,15 @@ import { Volume as VolumeIcon } from 'tabler-icons-react';
 
 import type { Video } from './Video';
 
-type PropsType = {
+type Props = {
   video: Video;
+  setCurrentVolume: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function VideoVolume({ video }: PropsType) {
-  const setVideoVolume = (video: Video, volume: number) => {
-    video.volume = volume;
-  };
-
+export default function VideoVolume({ video, setCurrentVolume }: Props) {
   function handleSliderChange(value: number) {
-    setVideoVolume(video, value);
+    setCurrentVolume(value);
+    video.el.volume = value;
   }
 
   return (
@@ -23,7 +21,7 @@ export default function VideoVolume({ video }: PropsType) {
       <Slider
         key="playing"
         aria-label="Video volume control"
-        value={video.volume}
+        value={video.el.volume}
         min={0}
         max={1}
         onChange={(value: number) => handleSliderChange(value)}
