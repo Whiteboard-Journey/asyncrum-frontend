@@ -19,13 +19,9 @@ export default function TimeControl({ video, setPlaying, currentTime, setCurrent
   const fullDuration = video.el.duration;
 
   function handleSliderChange(time: number) {
-    setPlaying(false);
     setCurrentTime(time);
+    video.el.currentTime = time;
   }
-
-  useEffect(() => {
-    console.log(trackRef);
-  });
 
   useLayoutEffect(() => {
     function handleResize() {

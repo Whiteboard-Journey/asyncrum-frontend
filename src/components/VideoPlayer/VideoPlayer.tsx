@@ -72,6 +72,7 @@ const VideoPlayer = () => {
     video.el.ontimeupdate = () => {
       setCurrentTime(video.el.currentTime);
     };
+    video.el.onloadedmetadata = () => setfullDuration(video.el.duration);
     setLoading(false);
   }, []);
 
@@ -200,7 +201,7 @@ const VideoPlayer = () => {
           </Tooltip>
 
           <Box mx="2">
-            <TimeDisplay video={video.el} />
+            <TimeDisplay currentTime={currentTime} fullDuration={fullDuration} />
           </Box>
 
           <Box flexGrow={1} mx="2" minW="25vw">

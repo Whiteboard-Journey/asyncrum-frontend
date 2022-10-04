@@ -12,19 +12,13 @@ export function secondsToHms(input: number) {
 }
 
 type Props = {
-  video: HTMLVideoElement;
+  currentTime: number;
+  fullDuration: number;
 };
 
-export default function TimeDisplay({ video }: Props) {
-  const currentTime = video.currentTime;
-  const fullDuration = video.duration;
-
-  if (fullDuration === null) {
-    return null;
-  }
-
+export default function TimeDisplay({ currentTime, fullDuration }: Props) {
   return (
-    <Text whiteSpace="nowrap" fontSize="sm" align="center">
+    <Text whiteSpace="nowrap" fontSize="sm" align="center" my="auto" mb="1">
       {secondsToHms(Math.round(currentTime))} / {secondsToHms(Math.round(fullDuration))}
     </Text>
   );
