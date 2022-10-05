@@ -20,6 +20,7 @@ const useDailyStandup = () => {
   const readAllDailyStandups = useCallback(async () => {
     const pageIndex = 0;
     const readAllDailyStandupsAPIResponse = await readAllDailyStandupsAPI({ teamId, scope, pageIndex });
+    console.log(readAllDailyStandupsAPIResponse)
     for (const record of readAllDailyStandupsAPIResponse.data.records) {
       if (getTimeDifference(record.createdDate) > 24 && record.seenMemberIdGroup?.indexOf(user.id) > -1) {
         continue;
@@ -27,14 +28,14 @@ const useDailyStandup = () => {
       if (
         dailyStandups.at(-1) &&
         dailyStandups.at(-1)?.author === record.member.fullname &&
-        dailyStandups.at(-1)?.title.slice(0, 13) === record.title.slice(0, 13)
+        dailyStandups.at(-1)?.title.slice(0, dailyStandups.at(-1)?.title.lastIndexOf(" ")) === record.title.slice(0, dailyStandups.at(-1)?.title.lastIndexOf(" "))
       ) {
         if (record.title.slice(-6) === 'screen') {
           dailyStandups.at(-1)?.id.push(record.id);
-          (dailyStandups.at(-1) as DailyStandup).screenRecordFileUrl = record.recordFileUrl;
+          (dailyStandups.at(-1) as DailyStandup).screenRecordFileUrl = record.recordUrl;
         } else {
           dailyStandups.at(-1)?.id.push(record.id);
-          (dailyStandups.at(-1) as DailyStandup).camRecordFileUrl = record.recordFileUrl;
+          (dailyStandups.at(-1) as DailyStandup).camRecordFileUrl = record.recordUrl;
         }
       } else {
         if (record.title.slice(-6) === 'screen') {
@@ -45,7 +46,7 @@ const useDailyStandup = () => {
             profileImageUrl: record.member.profileImageUrl,
             createdDate: record.createdDate,
             camRecordFileUrl: '',
-            screenRecordFileUrl: record.recordFileUrl,
+            screenRecordFileUrl: record.recordUrl,
             seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
           });
         } else {
@@ -55,7 +56,7 @@ const useDailyStandup = () => {
             title: record.title,
             profileImageUrl: record.member.profileImageUrl,
             createdDate: record.createdDate,
-            camRecordFileUrl: record.recordFileUrl,
+            camRecordFileUrl: record.recordUrl,
             screenRecordFileUrl: '',
             seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
           });
@@ -69,6 +70,7 @@ const useDailyStandup = () => {
     if (carouselRef && carouselRef.current) {
       carouselRef.current.goToSlide(slide);
     }
+    console.log(dailyStandups)
   }, [dailyStandups, getTimeDifference, user.id, teamId]);
 
   const onViewDailyStandups = async (dailyStandup: DailyStandup) => {
