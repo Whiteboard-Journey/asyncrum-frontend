@@ -96,28 +96,11 @@ const VideoPlayer = () => {
     setPlaying(!playing);
   };
 
-  const updateCurrentTime = useCallback(() => {
-    if (!video || video.el.paused === true) {
-      return;
-    }
-
-    const firstVideoTime = Object.values(videoTimes.current)[0];
-    setCurrentTime(firstVideoTime);
-  }, [video, setCurrentTime]);
-
   const activeBookmark = !video
     ? undefined
     : video.bookmarks.find((bookmark) => {
         return bookmark.time === currentTime;
       });
-
-  const setVideoBookmarkDrawing = (video: Video, bookmark: VideoBookmark, drawing: object) => {
-    const bookmarkIndex = video.bookmarks.findIndex((innerBookmark) => {
-      return innerBookmark.id === bookmark.id;
-    });
-
-    video.bookmarks[bookmarkIndex].drawing = drawing;
-  };
 
   const overlayStyle = css`
     width: 800px;
@@ -199,7 +182,16 @@ const VideoPlayer = () => {
           pointerEvents="all">
           <Tooltip label={playing ? 'Pause' : 'Play'}>
             <Box mr="2">
-              {!playing && <IconButton onClick={() => playVideo()} icon={<PlayerPlayIcon />} aria-label="Play" />}
+              {!playing && (
+                <IconButton
+                  onClick={() => {
+                    playVideo();
+                    setEditingBookmark(false);
+                  }}
+                  icon={<PlayerPlayIcon />}
+                  aria-label="Play"
+                />
+              )}
               {playing && <IconButton onClick={() => pauseVideo()} icon={<PlayerPauseIcon />} aria-label="Pause" />}
             </Box>
           </Tooltip>
@@ -226,12 +218,13 @@ const VideoPlayer = () => {
               <VideoBookmarkAdd
                 key={video.id}
                 app={app}
-                disabled={!!activeBookmark || editingBookmark}
+                disabled={!!activeBookmark || editingBookmark || playing}
                 scale={1}
                 video={video}
                 setVideo={setVideo}
                 videoTimes={videoTimes.current}
                 setPlaying={setPlaying}
+                currentTime={currentTime}
                 setCurrentTime={setCurrentTime}
                 setEditingBookmark={setEditingBookmark}
               />

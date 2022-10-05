@@ -21,8 +21,10 @@ export default function VideoBookmarkTimeline({ video, bookmark, size = 'medium'
   }
 
   function handleGoto() {
+    video.el.pause();
     setPlaying(false);
     setCurrentTime(bookmark.time);
+    video.el.currentTime = bookmark.time;
   }
 
   const renderedIcon = (() => {
@@ -34,7 +36,7 @@ export default function VideoBookmarkTimeline({ video, bookmark, size = 'medium'
   })();
 
   return (
-    <Tooltip label={`${video.name}: ${truncateString(bookmark.content, 50)}`}>
+    <Tooltip label={`${bookmark.author}: ${truncateString(bookmark.content, 50)}`}>
       <Box onClick={() => handleGoto()} cursor="pointer">
         {renderedIcon}
       </Box>

@@ -18,6 +18,7 @@ type Props = {
   disabled: boolean;
   scale: number;
   video: Video;
+  currentTime: number;
   setVideo: React.Dispatch<React.SetStateAction<Video>>;
   videoTimes: PreciseVideoTimes;
   setPlaying: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,6 +31,7 @@ export default function VideoBookmark({
   disabled,
   scale,
   video,
+  currentTime,
   setVideo,
   videoTimes,
   setPlaying,
@@ -37,12 +39,9 @@ export default function VideoBookmark({
   setCurrentTime,
 }: Props) {
   function handleCreate() {
-    const time = Object.values(videoTimes)[0];
-    console.log('create');
+    video.el.pause();
     setPlaying(false);
-    createVideoBookmark(video, setVideo, '', time, scale, app.document);
-    console.log(video);
-    setCurrentTime(time);
+    createVideoBookmark(video, setVideo, '', currentTime, scale, app.document);
     setEditingBookmark(true);
   }
 
@@ -64,12 +63,16 @@ export default function VideoBookmark({
   /**
    * When the current time changes, stop editing any open bookmarks.
    */
+  // useEffect(() => {
+  //   setEditingBookmark(false);
+  // }, [video.el.currentTime]);
+
   useEffect(() => {
-    setEditingBookmark(false);
-  }, [video.el.currentTime]);
+    console.log(video.bookmarks);
+  }, [video.bookmarks]);
 
   return (
-    <Tooltip label="Bookmark this moment">
+    <Tooltip label="Bookmark this moment (active when paused)">
       <Box>
         <IconButton
           onClick={() => handleCreate()}

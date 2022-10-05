@@ -1,5 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Video } from './Video';
+import { APICore } from 'helpers/api/apiCore';
+
+const api = new APICore();
+const user = api.getLoggedInUser();
 
 export type VideoBookmarkIcon = {
   native: string;
@@ -13,6 +17,8 @@ export type VideoBookmarkCoordinates = {
 export type VideoBookmark = {
   /** Unique id for this bookmark */
   id: string;
+
+  author: string;
 
   /** The icon of this bookmark */
   icon: VideoBookmarkIcon;
@@ -54,5 +60,6 @@ export function create(
     scale,
     time,
     video_id: video.id,
+    author: user.fullname
   };
 }
