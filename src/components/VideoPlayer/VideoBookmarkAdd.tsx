@@ -60,17 +60,6 @@ export default function VideoBookmark({
     }));
   };
 
-  /**
-   * When the current time changes, stop editing any open bookmarks.
-   */
-  // useEffect(() => {
-  //   setEditingBookmark(false);
-  // }, [video.el.currentTime]);
-
-  useEffect(() => {
-    console.log(video.bookmarks);
-  }, [video.bookmarks]);
-
   return (
     <Tooltip label="Bookmark this moment (active when paused)">
       <Box>

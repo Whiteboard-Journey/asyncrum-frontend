@@ -66,8 +66,6 @@ const VideoPlayer = () => {
 
     videoContainerRef.current.innerHTML = '';
     videoContainerRef.current.appendChild(video.el);
-    console.log(video.el);
-    console.log(videoContainerRef);
 
     video.el.volume = video.volume;
     video.el.ontimeupdate = () => {
@@ -204,6 +202,7 @@ const VideoPlayer = () => {
             <TimeControl
               video={video}
               setPlaying={setPlaying}
+              fullDuration={fullDuration}
               currentTime={currentTime}
               setCurrentTime={setCurrentTime}
             />

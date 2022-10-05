@@ -8,16 +8,15 @@ import type { Video } from './Video';
 type Props = {
   video: Video;
   setPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+  fullDuration: number;
   currentTime: number;
   setCurrentTime: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function TimeControl({ video, setPlaying, currentTime, setCurrentTime }: Props) {
+export default function TimeControl({ video, setPlaying, fullDuration, currentTime, setCurrentTime }: Props) {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [renderedCurrentBookmarks, setRenderedCurrentBookmarks] = useState<JSX.Element[]>([]);
-
   const [trackDimensions, setTrackDimensions] = useState<DOMRect | null>(null); // tracks the dimensions of the track as it's resized
-  const fullDuration = video.el.duration;
 
   function handleSliderChange(time: number) {
     setCurrentTime(time);
@@ -26,12 +25,11 @@ export default function TimeControl({ video, setPlaying, currentTime, setCurrent
 
   const setBookmarkButtons = () => {
     setRenderedCurrentBookmarks(
-      trackDimensions === null
+      trackDimensions === null || fullDuration === 0
         ? []
         : video.bookmarks.map((bookmark) => {
             const percentage = bookmark.time / fullDuration;
             const left = trackDimensions.width * percentage;
-
             return (
               <Flex
                 key={bookmark.id}
@@ -75,16 +73,12 @@ export default function TimeControl({ video, setPlaying, currentTime, setCurrent
     };
   });
 
-  if (fullDuration === null) {
-    return null;
-  }
-
   useEffect(() => {
     if (trackDimensions === null && trackRef.current) {
       setTrackDimensions(trackRef.current.getBoundingClientRect());
     }
     setBookmarkButtons();
-  }, [video.bookmarks]);
+  }, [video.bookmarks, fullDuration]);
 
   return (
     <Box position="relative">
