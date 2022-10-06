@@ -64,7 +64,6 @@ export default function VideoBookmark({
     if (bookmark.icon.codePointAt(0) !== undefined) {
       hex = bookmark.icon.codePointAt(0)!.toString(16);
     }
-    console.log(hex);
 
     const createBookmarkAPIResponse = await createBookmarkAPI({
       recordId: id,
@@ -81,8 +80,6 @@ export default function VideoBookmark({
       ...prevState,
       bookmarks: [...prevState.bookmarks, bookmark],
     }));
-    console.log(hex);
-    console.log(String.fromCodePoint(parseInt('0x' + hex)));
   };
 
   return (

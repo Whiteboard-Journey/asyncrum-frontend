@@ -27,6 +27,9 @@ export default function Drawing({ playing, onMount, scale, video, setVideo, vide
       ...prevState,
       bookmarks: prevState.bookmarks.map((el, idx) => (idx === bookmarkIndex ? { ...el, drawing: drawing } : el)),
     }));
+    if (videoBookmark) {
+      videoBookmark.drawing = drawing;
+    }
   };
 
   function handleMount(app: TldrawApp) {
@@ -79,7 +82,6 @@ export default function Drawing({ playing, onMount, scale, video, setVideo, vide
     }
 
     if (videoBookmark?.drawing && videoBookmark.drawing) {
-      console.log(JSON.parse(JSON.stringify(videoBookmark.drawing)));
       tlDrawRef.current.loadDocument(
         JSON.parse(JSON.stringify(videoBookmark.drawing)) // we need to load a copy of the document
       );

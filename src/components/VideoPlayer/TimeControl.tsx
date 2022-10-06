@@ -39,7 +39,6 @@ export default function TimeControl({
         : video.bookmarks.map((bookmark) => {
             const percentage = bookmark.time / fullDuration;
             const left = trackDimensions.width * percentage;
-            console.log(percentage, left);
             return (
               <Flex
                 key={bookmark.id}

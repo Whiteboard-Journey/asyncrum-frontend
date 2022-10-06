@@ -54,7 +54,6 @@ const VideoPlayer = ({ currentVideo }: Props) => {
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    console.log(currentVideo);
     if (overlayRef.current) {
       const dimensions = getRatioDimensions(video.displayAspectRatio, overlayRef.current);
       setVideoDimensions(dimensions);
@@ -63,7 +62,6 @@ const VideoPlayer = ({ currentVideo }: Props) => {
 
   useEffect(() => {
     if (video === undefined || video.el === null || videoContainerRef.current === null) {
-      console.log(video, video.el, videoContainerRef.current);
       return;
     }
 
@@ -79,7 +77,6 @@ const VideoPlayer = ({ currentVideo }: Props) => {
       setfullDuration(video.el.duration);
       setCurrentVolume(video.el.volume);
     };
-    console.log(video.bookmarks);
     setLoading(false);
   }, []);
 
