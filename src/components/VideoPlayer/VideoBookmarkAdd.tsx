@@ -1,7 +1,4 @@
-import { useEffect } from 'react';
-
 import { TldrawApp } from '@krapi0314/tldraw';
-import { getEmojiDataFromNative } from 'emoji-mart';
 
 import { Box, IconButton, Tooltip } from '@chakra-ui/react';
 
@@ -25,7 +22,6 @@ type Props = {
   videoTimes: PreciseVideoTimes;
   setPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   setEditingBookmark: React.Dispatch<React.SetStateAction<boolean>>;
-  setCurrentTime: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export default function VideoBookmark({
@@ -38,7 +34,6 @@ export default function VideoBookmark({
   videoTimes,
   setPlaying,
   setEditingBookmark,
-  setCurrentTime,
 }: Props) {
   function handleCreate() {
     video.el.pause();

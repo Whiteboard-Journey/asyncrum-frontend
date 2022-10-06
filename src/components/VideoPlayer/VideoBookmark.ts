@@ -15,30 +15,14 @@ export type VideoBookmarkCoordinates = {
 };
 
 export type VideoBookmark = {
-  /** Unique id for this bookmark */
   id: string;
-
   author: string;
-
-  /** The icon of this bookmark */
   icon: string;
-
-  /** Content about what the bookmark is */
   content: string;
-
-  /** What time the bookmark is located */
   time: number;
-
-  /** Position on the screen of the bookmark */
   position: VideoBookmarkCoordinates | null;
-
-  /** Drawing associated with the bookmark */
   drawing: object | null;
-
-  /** The scale the bookmark was created at */
   scale: number;
-
-  /** What video this bookmark belongs to */
   video_id: string;
 };
 

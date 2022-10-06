@@ -42,27 +42,3 @@ type VideoAPIResponse = {
 export type VideoMetadata = {
   streams: Array<VideoStreamMetadata | AudioStreamMetadata>;
 };
-
-export async function createFromAPIResponse(response: VideoAPIResponse): Promise<Video> {
-  // video element
-
-  const { id, title, url, name, profileImageUrl, bookmarks } = response;
-
-  const el = document.createElement('video');
-  el.src = response.url;
-
-
-  return {
-    bookmarks,
-    codedHeight: 1080,
-    codedWidth: 1920,
-    displayAspectRatio: "16:9",
-    el,
-    filePath: url,
-    frameRate: 30,
-    id,
-    name: title,
-    seeking: false,
-    volume: 0.8,
-  };
-}

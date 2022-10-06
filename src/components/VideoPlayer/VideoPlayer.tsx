@@ -1,7 +1,7 @@
-import { useRef, useEffect, useState, useLayoutEffect, useCallback } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 import { css } from '@emotion/react';
-import { Box, Flex, Heading, IconButton, Text, Tooltip } from '@chakra-ui/react';
+import { Box, Flex, IconButton, Text, Tooltip } from '@chakra-ui/react';
 
 import { TldrawApp } from '@krapi0314/tldraw';
 
@@ -12,9 +12,7 @@ import VideoBookmarkShow from './VideoBookmarkShow';
 import TimeDisplay from './TimeDisplay';
 import TimeControl from './TimeControl';
 import VideoVolume from './VideoVolume';
-import PlaybackSpeed from './PlaybackSpeed';
 import VideoBookmarkAdd from './VideoBookmarkAdd';
-import { video as sampleVideo } from './testVideo';
 import type { Video } from './Video';
 import type { VideoBookmark } from './VideoBookmark';
 
@@ -224,7 +222,6 @@ const VideoPlayer = ({ currentVideo }: Props) => {
                 videoTimes={videoTimes.current}
                 setPlaying={setPlaying}
                 currentTime={currentTime}
-                setCurrentTime={setCurrentTime}
                 setEditingBookmark={setEditingBookmark}
               />
             </Box>
