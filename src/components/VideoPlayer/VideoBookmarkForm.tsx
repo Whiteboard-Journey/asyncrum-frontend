@@ -12,9 +12,10 @@ type Props = {
   bookmark: VideoBookmark;
   onChangeContent: (content: string) => void;
   onChangeIcon: (details: VideoBookmarkIcon) => void;
+  currentEmoji: string;
 };
 
-export default function VideoBookmarkEditor({ bookmark, onChangeContent, onChangeIcon }: Props) {
+export default function VideoBookmarkEditor({ bookmark, onChangeContent, onChangeIcon, currentEmoji }: Props) {
   const [showEmojiPicker, setShowEmojiPicker] = React.useState<boolean>(false);
   const [referenceElement, setReferenceElement] = React.useState<HTMLDivElement | null>(null);
   const [popperElement, setPopperElement] = React.useState<HTMLDivElement | null>(null);
@@ -74,7 +75,7 @@ export default function VideoBookmarkEditor({ bookmark, onChangeContent, onChang
           onClick={() => {
             setShowEmojiPicker(!showEmojiPicker);
           }}>
-          {bookmark.icon?.native}
+          {currentEmoji}
         </Flex>
         {showEmojiPicker && (
           <Box
@@ -91,7 +92,9 @@ export default function VideoBookmarkEditor({ bookmark, onChangeContent, onChang
         <FormLabel>Description</FormLabel>
         <Textarea
           value={bookmark.content}
-          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => onChangeContent(event.target.value)}
+          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+            onChangeContent(event.target.value);
+          }}
           autoFocus
         />
       </FormControl>

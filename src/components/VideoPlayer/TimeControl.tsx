@@ -4,6 +4,7 @@ import { Box, Flex, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '
 import VideoBookmarkTimeline from './VideoBookmarkTimeline';
 
 import type { Video } from './Video';
+import type { VideoBookmark } from './VideoBookmark';
 
 type Props = {
   video: Video;
@@ -11,9 +12,17 @@ type Props = {
   fullDuration: number;
   currentTime: number;
   setCurrentTime: React.Dispatch<React.SetStateAction<number>>;
+  setActiveBookmark: React.Dispatch<React.SetStateAction<VideoBookmark | null>>;
 };
 
-export default function TimeControl({ video, setPlaying, fullDuration, currentTime, setCurrentTime }: Props) {
+export default function TimeControl({
+  video,
+  setPlaying,
+  fullDuration,
+  currentTime,
+  setCurrentTime,
+  setActiveBookmark,
+}: Props) {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [renderedCurrentBookmarks, setRenderedCurrentBookmarks] = useState<JSX.Element[]>([]);
   const [trackDimensions, setTrackDimensions] = useState<DOMRect | null>(null); // tracks the dimensions of the track as it's resized
@@ -30,6 +39,7 @@ export default function TimeControl({ video, setPlaying, fullDuration, currentTi
         : video.bookmarks.map((bookmark) => {
             const percentage = bookmark.time / fullDuration;
             const left = trackDimensions.width * percentage;
+            console.log(percentage, left);
             return (
               <Flex
                 key={bookmark.id}
@@ -49,6 +59,7 @@ export default function TimeControl({ video, setPlaying, fullDuration, currentTi
                   size="medium"
                   setCurrentTime={setCurrentTime}
                   setPlaying={setPlaying}
+                  setActiveBookmark={setActiveBookmark}
                 />
               </Flex>
             );
@@ -78,7 +89,7 @@ export default function TimeControl({ video, setPlaying, fullDuration, currentTi
       setTrackDimensions(trackRef.current.getBoundingClientRect());
     }
     setBookmarkButtons();
-  }, [video.bookmarks, fullDuration]);
+  }, [video.bookmarks, fullDuration, trackDimensions]);
 
   return (
     <Box position="relative">

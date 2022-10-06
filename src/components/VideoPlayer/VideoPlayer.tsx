@@ -29,21 +29,23 @@ export type PreciseVideoTimes = {
 };
 
 type Props = {
-  video: Video;
+  currentVideo: Video;
 };
 
 // const VideoPlayer = ({ video: HTMLVideoElement }: Props) => {
-const VideoPlayer = () => {
+const VideoPlayer = ({ currentVideo }: Props) => {
   const [app, setApp] = useState<TldrawApp>();
   const [fullscreen, setFullscreen] = useState<boolean>(false);
   const [videoDimensions, setVideoDimensions] = useState<[number, number] | null>(null);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [currentVolume, setCurrentVolume] = useState<number>(0.8);
-  const [fullDuration, setfullDuration] = useState<number>(0);
+  const [fullDuration, setfullDuration] = useState<number>(currentVideo.el.duration);
   const [loading, setLoading] = useState<boolean>(false);
   const [playing, setPlaying] = useState<boolean>(false);
   const [editingBookmark, setEditingBookmark] = useState<boolean>(false);
-  const [video, setVideo] = useState<Video>(sampleVideo);
+  const [video, setVideo] = useState<Video>(currentVideo);
+  const [bookmarks, setBookmarks] = useState<VideoBookmark[]>(currentVideo.bookmarks);
+  const [activeBookmark, setActiveBookmark] = useState<VideoBookmark | null>(null);
 
   const videoTimes = useRef<PreciseVideoTimes>({});
   const overlayRef = useRef<HTMLDivElement | null>(null);
@@ -52,6 +54,7 @@ const VideoPlayer = () => {
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    console.log(currentVideo);
     if (overlayRef.current) {
       const dimensions = getRatioDimensions(video.displayAspectRatio, overlayRef.current);
       setVideoDimensions(dimensions);
@@ -71,10 +74,12 @@ const VideoPlayer = () => {
     video.el.ontimeupdate = () => {
       setCurrentTime(video.el.currentTime);
     };
+
     video.el.onloadedmetadata = () => {
       setfullDuration(video.el.duration);
       setCurrentVolume(video.el.volume);
     };
+    console.log(video.bookmarks);
     setLoading(false);
   }, []);
 
@@ -93,12 +98,6 @@ const VideoPlayer = () => {
     video.el.pause();
     setPlaying(!playing);
   };
-
-  const activeBookmark = !video
-    ? undefined
-    : video.bookmarks.find((bookmark) => {
-        return bookmark.time === currentTime;
-      });
 
   const overlayStyle = css`
     width: 800px;
@@ -142,7 +141,8 @@ const VideoPlayer = () => {
         scale={1}
         playing={playing}
         video={video}
-        videoBookmark={activeBookmark}
+        setVideo={setVideo}
+        videoBookmark={activeBookmark ? activeBookmark : null}
       />
     );
 
@@ -150,7 +150,8 @@ const VideoPlayer = () => {
       <VideoBookmarkShow
         video={video}
         setVideo={setVideo}
-        bookmark={activeBookmark}
+        bookmark={activeBookmark ? activeBookmark : null}
+        setActiveBookmark={setActiveBookmark}
         scale={1}
         playing={playing}
         setCurrentTime={setCurrentTime}
@@ -185,6 +186,7 @@ const VideoPlayer = () => {
                   onClick={() => {
                     playVideo();
                     setEditingBookmark(false);
+                    setActiveBookmark(null);
                   }}
                   icon={<PlayerPlayIcon />}
                   aria-label="Play"
@@ -205,6 +207,7 @@ const VideoPlayer = () => {
               fullDuration={fullDuration}
               currentTime={currentTime}
               setCurrentTime={setCurrentTime}
+              setActiveBookmark={setActiveBookmark}
             />
           </Box>
 

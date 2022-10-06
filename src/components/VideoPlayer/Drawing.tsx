@@ -11,10 +11,11 @@ type Props = {
   onMount: (app: TldrawApp) => void;
   scale: number;
   video: Video;
-  videoBookmark: VideoBookmark | undefined;
+  setVideo: React.Dispatch<React.SetStateAction<Video>>;
+  videoBookmark: VideoBookmark | null;
 };
 
-export default function Drawing({ playing, onMount, scale, video, videoBookmark }: Props) {
+export default function Drawing({ playing, onMount, scale, video, setVideo, videoBookmark }: Props) {
   const tlDrawRef = useRef<TldrawApp | null>(null);
   const outerRef = useRef(null);
 
@@ -22,8 +23,10 @@ export default function Drawing({ playing, onMount, scale, video, videoBookmark 
     const bookmarkIndex = video.bookmarks.findIndex((innerBookmark) => {
       return innerBookmark.id === bookmark.id;
     });
-
-    video.bookmarks[bookmarkIndex].drawing = drawing;
+    setVideo((prevState) => ({
+      ...prevState,
+      bookmarks: prevState.bookmarks.map((el, idx) => (idx === bookmarkIndex ? { ...el, drawing: drawing } : el)),
+    }));
   };
 
   function handleMount(app: TldrawApp) {
@@ -34,7 +37,7 @@ export default function Drawing({ playing, onMount, scale, video, videoBookmark 
   }
 
   function handlePersist(app: TldrawApp) {
-    if (videoBookmark === undefined || playing === true) {
+    if (videoBookmark === null || playing === true) {
       return;
     }
 
@@ -75,7 +78,8 @@ export default function Drawing({ playing, onMount, scale, video, videoBookmark 
       return;
     }
 
-    if (videoBookmark?.drawing) {
+    if (videoBookmark?.drawing && videoBookmark.drawing) {
+      console.log(JSON.parse(JSON.stringify(videoBookmark.drawing)));
       tlDrawRef.current.loadDocument(
         JSON.parse(JSON.stringify(videoBookmark.drawing)) // we need to load a copy of the document
       );

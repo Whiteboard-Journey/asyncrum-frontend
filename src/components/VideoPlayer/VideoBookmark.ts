@@ -21,7 +21,7 @@ export type VideoBookmark = {
   author: string;
 
   /** The icon of this bookmark */
-  icon: VideoBookmarkIcon;
+  icon: string;
 
   /** Content about what the bookmark is */
   content: string;
@@ -44,6 +44,7 @@ export type VideoBookmark = {
 
 export function create(
   video: Video,
+  icon: string,
   content: string,
   time: number,
   scale: number,
@@ -52,10 +53,8 @@ export function create(
   return {
     content,
     drawing: JSON.parse(JSON.stringify(drawing)),
-    id: uuidv4(),
-    icon: {
-      native: '🔖',
-    },
+    id: '',
+    icon: icon,
     position: null,
     scale,
     time,

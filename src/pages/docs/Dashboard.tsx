@@ -5,7 +5,7 @@ import { VideoPlayer } from 'components/VideoPlayer';
 const Dashboard = () => {
   return (
     <>
-      <VideoPlayer />
+      {/* <VideoPlayer /> */}
       <DailyStandupContainer />
       <hr />
       <WhiteboardContainer />

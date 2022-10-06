@@ -1,25 +1,35 @@
-import { Card, Modal } from 'react-bootstrap';
-import { useDailyStandup, useModal, useMoment } from './hooks';
+import { VideoPlayer } from 'components/VideoPlayer';
+import { Card } from 'react-bootstrap';
+import { useDailyStandup, useMoment } from './hooks';
 import { DailyStandup } from './types';
+import {
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react';
 
 const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
   const cam_w = 320,
     cam_h = 240,
     screen_w = 960,
     screen_h = 540;
-  const { isOpen: isViewOpen, size, className, scroll, toggleModal: toggleView, openModalWithClass } = useModal();
   const { getTimeFromNow } = useMoment();
   const { onViewDailyStandups } = useDailyStandup();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Card className="d-block me-3">
       <Card.Body
         onClick={() => {
-          openModalWithClass('modal-full-width');
+          // openModalWithClass('modal-full-width');
+          onOpen();
           onViewDailyStandups(dailyStandup);
         }}
-        style={{ cursor: 'pointer' }}
-      >
+        style={{ cursor: 'pointer' }}>
         <div className={(dailyStandup.seen ? 'opacity-25' : '') + ' text-center'}>
           <img
             src={dailyStandup.profileImageUrl}
@@ -34,11 +44,31 @@ const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
         <p className={(dailyStandup.seen ? 'text-light' : 'text-muted') + ' text-center font-12 mb-1'}>
           {getTimeFromNow(dailyStandup.createdDate)}
         </p>
-        <Modal show={isViewOpen} onHide={toggleView} dialogClassName={className} size={size} scrollable={scroll}>
+        <Modal onClose={onClose} size="full" isOpen={isOpen}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>{dailyStandup.author + ' - ' + getTimeFromNow(dailyStandup.createdDate)}</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              {dailyStandup.video.el?.readyState === 4 ? (
+                <VideoPlayer currentVideo={dailyStandup.video} />
+              ) : (
+                <p>The video is not loaded yet. Please close this modal and try again.</p>
+              )}
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+        {/* <Modal
+          backdrop="static"
+          show={isViewOpen}
+          onHide={toggleView}
+          dialogClassName={className}
+          size={size}
+          scrollable={scroll}>
+          <Modal.Header onHide={toggleView} closeButton>
+            <h4 className="modal-title">{dailyStandup.author + ' - ' + getTimeFromNow(dailyStandup.createdDate)}</h4>
+          </Modal.Header>
           <Modal.Body>
-            <Modal.Header onHide={toggleView} closeButton>
-              <h4 className="modal-title">{dailyStandup.author + ' - ' + getTimeFromNow(dailyStandup.createdDate)}</h4>
-            </Modal.Header>
             <video
               src={dailyStandup.camRecordFileUrl}
               controls
@@ -58,7 +88,7 @@ const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
               style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }}
             />
           </Modal.Body>
-        </Modal>
+        </Modal> */}
       </Card.Body>
     </Card>
   );

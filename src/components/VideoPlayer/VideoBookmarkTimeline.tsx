@@ -10,9 +10,17 @@ type Props = {
   size: 'small' | 'medium';
   setCurrentTime: React.Dispatch<React.SetStateAction<number>>;
   setPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+  setActiveBookmark: React.Dispatch<React.SetStateAction<VideoBookmark | null>>;
 };
 
-export default function VideoBookmarkTimeline({ video, bookmark, size = 'medium', setCurrentTime, setPlaying }: Props) {
+export default function VideoBookmarkTimeline({
+  video,
+  bookmark,
+  size = 'medium',
+  setCurrentTime,
+  setPlaying,
+  setActiveBookmark,
+}: Props) {
   function truncateString(str: string, n: number) {
     if (str.length > n) {
       return `${str.substring(0, n)}...`;
@@ -25,11 +33,12 @@ export default function VideoBookmarkTimeline({ video, bookmark, size = 'medium'
     setPlaying(false);
     setCurrentTime(bookmark.time);
     video.el.currentTime = bookmark.time;
+    setActiveBookmark(bookmark);
   }
 
   const renderedIcon = (() => {
     if (bookmark.icon) {
-      return bookmark.icon.native;
+      return bookmark.icon;
     }
 
     return <BookmarkIcon size={size === 'medium' ? 25 : 20} color={size === 'medium' ? '#eee' : '#999'} />;

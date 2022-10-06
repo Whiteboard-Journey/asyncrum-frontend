@@ -1,3 +1,5 @@
+import { Video } from "components/VideoPlayer/Video";
+
 export type DailyStandup = {
   id: number[];
   author: string;
@@ -7,6 +9,7 @@ export type DailyStandup = {
   camRecordFileUrl: string;
   screenRecordFileUrl: string;
   seen: boolean;
+  video: Video;
 };
 
 export type Whiteboard = {
