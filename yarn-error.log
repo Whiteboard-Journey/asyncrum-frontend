@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /opt/homebrew/bin/yarn add -D @types/emoji-mart/react
+  /usr/local/bin/node /opt/homebrew/bin/yarn add @chakra-ui@1.8.9
 
 PATH: 
   /Users/olwooz/.asdf/shims:/opt/homebrew/opt/asdf/libexec/bin:/opt/homebrew/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/opt/homebrew/sbin:/Users/olwooz/.fig/bin:/Users/olwooz/.local/bin
@@ -14,7 +14,7 @@ Platform:
   darwin arm64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2femoji-mart/react: Request "https://registry.yarnpkg.com/@types%2femoji-mart/react" returned a 405
+  Error: https://registry.yarnpkg.com/@chakra-ui: Request "https://registry.yarnpkg.com/@chakra-ui" returned a 405
       at Request.params.callback [as _callback] (/opt/homebrew/lib/node_modules/yarn/lib/cli.js:66154:18)
       at Request.self.callback (/opt/homebrew/lib/node_modules/yarn/lib/cli.js:140890:22)
       at Request.emit (node:events:390:28)
@@ -35,6 +35,7 @@ npm manifest:
       "@chakra-ui/react": "1.8.7",
       "@emoji-mart/data": "^1.0.6",
       "@emoji-mart/react": "^1.0.1",
+      "@emotion/react": "^11.10.4",
       "@emotion/styled": "^11.10.4",
       "@hookform/resolvers": "^2.8.8",
       "@krapi0314/tldraw": "1.20.3",
@@ -88,11 +89,8 @@ npm manifest:
       "redux": "^4.1.2",
       "redux-saga": "^1.1.3",
       "simplebar-react": "^2.3.6",
-      "superjson": "^1.10.0",
       "tabler-icons-react": "^1.55.0",
       "typescript": "*",
-      "use-pan-and-zoom": "^0.6.5",
-      "uuid": "^9.0.0",
       "web-vitals": "^2.1.0",
       "yorkie-js-sdk": "^0.2.16",
       "yup": "^0.32.11"
@@ -120,8 +118,8 @@ npm manifest:
     "devDependencies": {
       "@testing-library/react": "^13.3.0",
       "@testing-library/user-event": "^14.4.3",
+      "@types/emoji-mart": "^3.0.9",
       "@types/react-beautiful-dnd": "^13.1.2",
-      "@types/uuid": "^8.3.4",
       "@typescript-eslint/eslint-plugin": "^5.0.0",
       "@typescript-eslint/parser": "^5.36.1",
       "eslint": "^8.23.0",
@@ -1890,6 +1888,17 @@ Lockfile:
       source-map "^0.5.7"
       stylis "4.0.13"
   
+  "@emotion/cache@^11.10.0":
+    version "11.10.3"
+    resolved "https://registry.yarnpkg.com/@emotion/cache/-/cache-11.10.3.tgz#c4f67904fad10c945fea5165c3a5a0583c164b87"
+    integrity sha512-Psmp/7ovAa8appWh3g51goxu/z3iVms7JXOreq136D8Bbn6dYraPnmL6mdM8GThEx9vwSn92Fz+mGSjBzN8UPQ==
+    dependencies:
+      "@emotion/memoize" "^0.8.0"
+      "@emotion/sheet" "^1.2.0"
+      "@emotion/utils" "^1.2.0"
+      "@emotion/weak-memoize" "^0.3.0"
+      stylis "4.0.13"
+  
   "@emotion/cache@^11.4.0", "@emotion/cache@^11.7.1":
     version "11.7.1"
     resolved "https://registry.npmjs.org/@emotion/cache/-/cache-11.7.1.tgz"
@@ -1954,6 +1963,20 @@ Lockfile:
       "@emotion/weak-memoize" "^0.2.5"
       hoist-non-react-statics "^3.3.1"
   
+  "@emotion/react@^11.10.4":
+    version "11.10.4"
+    resolved "https://registry.yarnpkg.com/@emotion/react/-/react-11.10.4.tgz#9dc6bccbda5d70ff68fdb204746c0e8b13a79199"
+    integrity sha512-j0AkMpr6BL8gldJZ6XQsQ8DnS9TxEQu1R+OGmDZiWjBAJtCcbt0tS3I/YffoqHXxH6MjgI7KdMbYKw3MEiU9eA==
+    dependencies:
+      "@babel/runtime" "^7.18.3"
+      "@emotion/babel-plugin" "^11.10.0"
+      "@emotion/cache" "^11.10.0"
+      "@emotion/serialize" "^1.1.0"
+      "@emotion/use-insertion-effect-with-fallbacks" "^1.0.0"
+      "@emotion/utils" "^1.2.0"
+      "@emotion/weak-memoize" "^0.3.0"
+      hoist-non-react-statics "^3.3.1"
+  
   "@emotion/serialize@^1.0.2":
     version "1.0.2"
     resolved "https://registry.npmjs.org/@emotion/serialize/-/serialize-1.0.2.tgz"
@@ -1980,6 +2003,11 @@ Lockfile:
     version "1.1.0"
     resolved "https://registry.npmjs.org/@emotion/sheet/-/sheet-1.1.0.tgz"
     integrity sha512-u0AX4aSo25sMAygCuQTzS+HsImZFuS8llY8O7b9MDRzbJM0kVJlAz6KNDqcG7pOuQZJmj/8X/rAW+66kMnMW+g==
+  
+  "@emotion/sheet@^1.2.0":
+    version "1.2.0"
+    resolved "https://registry.yarnpkg.com/@emotion/sheet/-/sheet-1.2.0.tgz#771b1987855839e214fc1741bde43089397f7be5"
+    integrity sha512-OiTkRgpxescko+M51tZsMq7Puu/KP55wMT8BgpcXVG2hqXc0Vo0mfymJ/Uj24Hp0i083ji/o0aLddh08UEjq8w==
   
   "@emotion/styled@^11.10.4":
     version "11.10.4"
@@ -2022,6 +2050,11 @@ Lockfile:
     version "0.2.5"
     resolved "https://registry.npmjs.org/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz"
     integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
+  
+  "@emotion/weak-memoize@^0.3.0":
+    version "0.3.0"
+    resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.3.0.tgz#ea89004119dc42db2e1dba0f97d553f7372f6fcb"
+    integrity sha512-AHPmaAx+RYfZz0eYu6Gviiagpmiyw98ySSlQvCUhVGDRtDFe4DBS0x1bSjdF3gqUDYOczB+yYvBTtEylYSdRhg==
   
   "@eslint/eslintrc@^1.3.1":
     version "1.3.1"
@@ -3448,6 +3481,13 @@ Lockfile:
     dependencies:
       "@types/node" "*"
   
+  "@types/emoji-mart@^3.0.9":
+    version "3.0.9"
+    resolved "https://registry.yarnpkg.com/@types/emoji-mart/-/emoji-mart-3.0.9.tgz#2f7ef5d9ec194f28029c46c81a5fc1e5b0efa73c"
+    integrity sha512-qdBo/2Y8MXaJ/2spKjDZocuq79GpnOhkwMHnK2GnVFa8WYFgfA+ei6sil3aeWQPCreOKIx9ogPpR5+7MaOqYAA==
+    dependencies:
+      "@types/react" "*"
+  
   "@types/eslint-scope@^3.7.3":
     version "3.7.3"
     resolved "https://registry.npmjs.org/@types/eslint-scope/-/eslint-scope-3.7.3.tgz"
@@ -3788,11 +3828,6 @@ Lockfile:
     version "2.0.2"
     resolved "https://registry.npmjs.org/@types/trusted-types/-/trusted-types-2.0.2.tgz"
     integrity sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==
-  
-  "@types/uuid@^8.3.4":
-    version "8.3.4"
-    resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.4.tgz#bd86a43617df0594787d38b735f55c805becf1bc"
-    integrity sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==
   
   "@types/warning@^3.0.0":
     version "3.0.0"
@@ -5160,13 +5195,6 @@ Lockfile:
     version "0.4.2"
     resolved "https://registry.npmjs.org/cookie/-/cookie-0.4.2.tgz"
     integrity sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==
-  
-  copy-anything@^3.0.2:
-    version "3.0.2"
-    resolved "https://registry.yarnpkg.com/copy-anything/-/copy-anything-3.0.2.tgz#7189171ff5e1893b2287e8bf574b8cd448ed50b1"
-    integrity sha512-CzATjGXzUQ0EvuvgOCI6A4BGOo2bcVx8B+eC2nF862iv9fopnPQwlrbACakNCHRIJbCSBj+J/9JeDf60k64MkA==
-    dependencies:
-      is-what "^4.1.6"
   
   copy-to-clipboard@3.3.1:
     version "3.3.1"
@@ -7513,11 +7541,6 @@ Lockfile:
     integrity sha512-qctsuLZmIQ0+vSSMfoVvyFe2+GSEvnmZ2ezTup1SBse9+twCCeial6EEi3Nc2KFcf6+qz2FBPnjXsk8xhKSaPQ==
     dependencies:
       call-bind "^1.0.2"
-  
-  is-what@^4.1.6:
-    version "4.1.7"
-    resolved "https://registry.yarnpkg.com/is-what/-/is-what-4.1.7.tgz#c41dc1d2d2d6a9285c624c2505f61849c8b1f9cc"
-    integrity sha512-DBVOQNiPKnGMxRMLIYSwERAS5MVY1B7xYiGnpgctsOFvVDz9f9PFXXxMcTOHuoqYp4NK9qFYQaIC1NRRxLMpBQ==
   
   is-wsl@^2.2.0:
     version "2.2.0"
@@ -11364,13 +11387,6 @@ Lockfile:
       rxjs-interop "^2.0.0"
       tslib "^2.4.0"
   
-  superjson@^1.10.0:
-    version "1.10.0"
-    resolved "https://registry.yarnpkg.com/superjson/-/superjson-1.10.0.tgz#279362e6c1789b0b6bdfa280e82ee43d0e0fa514"
-    integrity sha512-ks6I5fm5KXUbDqt4Epe1VwkKDaC9+kIj5HF7yhiHjChFne0EkFqsnTv1mdHE2IT6fq2CzLC3zeA/fw0BRIoNwA==
-    dependencies:
-      copy-anything "^3.0.2"
-  
   supports-color@^5.3.0:
     version "5.5.0"
     resolved "https://registry.npmjs.org/supports-color/-/supports-color-5.5.0.tgz"
@@ -11855,11 +11871,6 @@ Lockfile:
     resolved "https://registry.npmjs.org/use-memo-one/-/use-memo-one-1.1.2.tgz"
     integrity sha512-u2qFKtxLsia/r8qG0ZKkbytbztzRb317XCkT7yP8wxL0tZ/CzK2G+WWie5vWvpyeP7+YoPIwbJoIHJ4Ba4k0oQ==
   
-  use-pan-and-zoom@^0.6.5:
-    version "0.6.5"
-    resolved "https://registry.yarnpkg.com/use-pan-and-zoom/-/use-pan-and-zoom-0.6.5.tgz#f34028ae4b420f43183e74982dbee8da0af9d4f7"
-    integrity sha512-f/w1/AjfhfUUZiQ0+kHAPqwJLDW8mEX1UMiN6aK2LDl9hIpIr4d57h8+WjXFUAtYXJ+I3+CQSoujH3/gChNP7w==
-  
   use-sidecar@^1.0.1, use-sidecar@^1.0.5, use-sidecar@^1.1.2:
     version "1.1.2"
     resolved "https://registry.npmjs.org/use-sidecar/-/use-sidecar-1.1.2.tgz"
@@ -11897,11 +11908,6 @@ Lockfile:
     version "8.3.2"
     resolved "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz"
     integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
-  
-  uuid@^9.0.0:
-    version "9.0.0"
-    resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
-    integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
   
   v8-to-istanbul@^8.1.0:
     version "8.1.1"

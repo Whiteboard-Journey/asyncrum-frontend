@@ -31,9 +31,6 @@ const ErrorPageNotFound = React.lazy(() => import('pages/error/PageNotFound'));
 const ErrorPageNotFoundAlt = React.lazy(() => import('pages/error/PageNotFoundAlt'));
 const ServerError = React.lazy(() => import('pages/error/ServerError'));
 const Landing = React.lazy(() => import('pages/landing/'));
-const ReviewVideos = React.lazy(() => import('pages/renderer/pages/ReviewVideos'));
-const SetupVideos = React.lazy(() => import('pages/renderer/pages/SetupVideos'));
-const TestVideo = React.lazy(() => import('pages/renderer/pages/Video'));
 
 const loading = () => <div className=""></div>;
 
@@ -109,18 +106,6 @@ const AllRoutes = () => {
           path: 'landing',
           element: <LoadComponent component={Landing} />,
         },
-        {
-          path: 'video-test-setup',
-          element: <LoadComponent component={SetupVideos} />,
-        },
-        {
-          path: 'video-test-review',
-          element: <LoadComponent component={ReviewVideos} />,
-        },
-        // {
-        //   path: 'video-test',
-        //   element: <LoadComponent component={TestVideo} />,
-        // },
       ],
     },
     {
