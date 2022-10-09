@@ -1,13 +1,13 @@
 import { MENU_ITEMS, MenuItemType } from 'appConstants';
 import { Team } from 'pages/settings/types';
 const getMenuItems = (teams: Team[]) => {
-  const menu: MenuItemType[] = [
+  const menu: MenuItemType[] = teams && teams.length > 0 ? [
     ...MENU_ITEMS,
     { 
       key: 'teams', 
       label: 'Teams', 
       isTitle: false,
-      children: teams.map((team: Team) => {
+      children: teams.length > 0 ? teams.map((team: Team) => {
         const teamObject = {
           key: team.code,
           label: team.name,
@@ -17,9 +17,9 @@ const getMenuItems = (teams: Team[]) => {
           url: '/'
         };
         return teamObject;
-      })
+      }) : []
     },
-  ];
+  ] : MENU_ITEMS;
   return menu;
 };
 
