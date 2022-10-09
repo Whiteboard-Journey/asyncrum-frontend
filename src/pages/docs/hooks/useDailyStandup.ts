@@ -4,6 +4,8 @@ import { DailyStandup } from '../types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useMoment } from './';
 import { APICore } from 'helpers/api/apiCore';
+import { Video } from 'components/VideoPlayer/Video';
+import { VideoBookmark } from 'components/VideoPlayer/VideoBookmark';
 
 const useDailyStandup = () => {
   const [dailyStandups, setDailyStandups] = useState<DailyStandup[]>([]);
@@ -27,17 +29,64 @@ const useDailyStandup = () => {
       if (
         dailyStandups.at(-1) &&
         dailyStandups.at(-1)?.author === record.member.fullname &&
-        dailyStandups.at(-1)?.title.slice(0, 13) === record.title.slice(0, 13)
+        dailyStandups.at(-1)?.title.slice(0, dailyStandups.at(-1)?.title.lastIndexOf(" ")) === record.title.slice(0, dailyStandups.at(-1)?.title.lastIndexOf(" "))
       ) {
         if (record.title.slice(-6) === 'screen') {
+          const el = document.createElement('video');
+          el.src = record.recordUrl;
+          el.addEventListener('loadedmetadata', function () {
+            if (el.duration == Infinity) {
+              el.currentTime = 1e101;
+              el.ontimeupdate = function () {
+                this.ontimeupdate = () => {
+                  return;
+                };
+                el.currentTime = 0;
+                return;
+              };
+            }
+          });
           dailyStandups.at(-1)?.id.push(record.id);
-          (dailyStandups.at(-1) as DailyStandup).screenRecordFileUrl = record.recordFileUrl;
+          (dailyStandups.at(-1) as DailyStandup).screenRecordFileUrl = record.recordUrl;
+          (dailyStandups.at(-1) as DailyStandup).video = {
+              bookmarks: record.bookmarks ? record.bookmarks.map((b: any) => {
+                return {
+                  ...b,
+                  drawing: JSON.parse(b.drawing),
+                  icon: b.emoji ? String.fromCodePoint(parseInt('0x' + b.emoji)) : ''
+                }
+              }) : [],
+              codedWidth: 1280,
+              codedHeight: 720,
+              displayAspectRatio: "16:9",
+              el: el,
+              filePath: record.recordUrl,
+              frameRate: 30,
+              id: record.id,
+              name: record.title,
+              seeking: false,
+              volume: 0.8
+          }
         } else {
           dailyStandups.at(-1)?.id.push(record.id);
-          (dailyStandups.at(-1) as DailyStandup).camRecordFileUrl = record.recordFileUrl;
+          (dailyStandups.at(-1) as DailyStandup).camRecordFileUrl = record.recordUrl;
         }
       } else {
         if (record.title.slice(-6) === 'screen') {
+          const el = document.createElement('video');
+          el.src = record.recordUrl;
+          el.addEventListener('loadedmetadata', function () {
+            if (el.duration == Infinity) {
+              el.currentTime = 1e101;
+              el.ontimeupdate = function () {
+                this.ontimeupdate = () => {
+                  return;
+                };
+                el.currentTime = 0;
+                return;
+              };
+            }
+          });
           dailyStandups.push({
             id: [record.id],
             author: record.member.fullname,
@@ -45,8 +94,27 @@ const useDailyStandup = () => {
             profileImageUrl: record.member.profileImageUrl,
             createdDate: record.createdDate,
             camRecordFileUrl: '',
-            screenRecordFileUrl: record.recordFileUrl,
+            screenRecordFileUrl: record.recordUrl,
             seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
+            video: {
+              bookmarks: record.bookmarks ? record.bookmarks.map((b: any) => {
+                return {
+                  ...b,
+                  drawing: JSON.parse(b.drawing),
+                  icon: b.emoji ? String.fromCodePoint(parseInt('0x' + b.emoji)) : ''
+                }
+              }) : [],
+              codedWidth: 1280,
+              codedHeight: 720,
+              displayAspectRatio: "16:9",
+              el: el,
+              filePath: record.recordUrl,
+              frameRate: 30,
+              id: record.id,
+              name: record.title,
+              seeking: false,
+              volume: 0.8
+            }
           });
         } else {
           dailyStandups.push({
@@ -55,9 +123,10 @@ const useDailyStandup = () => {
             title: record.title,
             profileImageUrl: record.member.profileImageUrl,
             createdDate: record.createdDate,
-            camRecordFileUrl: record.recordFileUrl,
+            camRecordFileUrl: record.recordUrl,
             screenRecordFileUrl: '',
             seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
+            video: {} as Video
           });
         }
       }

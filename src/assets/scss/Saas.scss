@@ -6,3 +6,7 @@
 
 // Icons
 @import './icons.scss';
+
+#overlay .tl-container {
+    background-color: transparent !important;
+}
