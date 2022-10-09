@@ -7,6 +7,13 @@ const App = () => {
     styles: {
       global: () => ({
         body: '',
+        button: {
+          bg: 'white',
+          border: 'none',
+        },
+        textarea: {
+          color: 'white',
+        },
       }),
     },
   });

@@ -1,4 +1,4 @@
-import { Flex, SliderTrack, Slider, SliderFilledTrack, SliderThumb } from '@chakra-ui/react';
+import { Box, Flex, SliderTrack, Slider, SliderFilledTrack, SliderThumb } from '@chakra-ui/react';
 
 import { Volume as VolumeIcon } from 'tabler-icons-react';
 
@@ -17,7 +17,9 @@ export default function VideoVolume({ video, setCurrentVolume }: Props) {
 
   return (
     <Flex align="center" width="7rem">
-      <VolumeIcon />
+      <Box mb={1}>
+        <VolumeIcon />
+      </Box>
       <Slider
         key="playing"
         aria-label="Video volume control"
@@ -27,7 +29,8 @@ export default function VideoVolume({ video, setCurrentVolume }: Props) {
         onChange={(value: number) => handleSliderChange(value)}
         step={0.01}
         focusThumbOnChange={false}
-        ml={2}>
+        ml={2}
+        mb={1}>
         <SliderTrack>
           <SliderFilledTrack />
         </SliderTrack>
