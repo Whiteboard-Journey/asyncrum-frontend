@@ -4,13 +4,9 @@ import { Box, IconButton, Tooltip } from '@chakra-ui/react';
 
 import { Bookmark as BookmarkIcon } from 'tabler-icons-react';
 
-import { create, VideoBookmarkIcon } from './VideoBookmark';
+import { create, VideoBookmark, VideoBookmarkIcon } from './VideoBookmark';
 import type { Video } from './Video';
 import { createBookmark as createBookmarkAPI } from 'helpers';
-
-type PreciseVideoTimes = {
-  [id: string]: number;
-};
 
 type Props = {
   app: TldrawApp;
@@ -19,21 +15,21 @@ type Props = {
   video: Video;
   currentTime: number;
   setVideo: React.Dispatch<React.SetStateAction<Video>>;
-  videoTimes: PreciseVideoTimes;
   setPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   setEditingBookmark: React.Dispatch<React.SetStateAction<boolean>>;
+  setActiveBookmark: React.Dispatch<React.SetStateAction<VideoBookmark | null>>;
 };
 
-export default function VideoBookmark({
+export default function VideoBookmarkAdd({
   app,
   disabled,
   scale,
   video,
   currentTime,
   setVideo,
-  videoTimes,
   setPlaying,
   setEditingBookmark,
+  setActiveBookmark,
 }: Props) {
   function handleCreate() {
     video.el.pause();
@@ -75,6 +71,7 @@ export default function VideoBookmark({
       ...prevState,
       bookmarks: [...prevState.bookmarks, bookmark],
     }));
+    setActiveBookmark(bookmark);
   };
 
   return (

@@ -219,10 +219,10 @@ const VideoPlayer = ({ currentVideo }: Props) => {
                 scale={1}
                 video={video}
                 setVideo={setVideo}
-                videoTimes={videoTimes.current}
                 setPlaying={setPlaying}
                 currentTime={currentTime}
                 setEditingBookmark={setEditingBookmark}
+                setActiveBookmark={setActiveBookmark}
               />
             </Box>
           )}
