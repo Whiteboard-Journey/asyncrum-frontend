@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { TDDocument, TDFile, TldrawApp } from '@krapi0314/tldraw';
-import { useToggle } from 'hooks';
+import { useToggle, useRedux } from 'hooks';
 import {
   createWhiteboard as createWhiteboardAPI,
   readWhiteboard as readWhiteboardAPI,
@@ -10,7 +10,6 @@ import {
   updateWhiteboard as updateWhiteboardAPI,
 } from 'helpers';
 import { Whiteboard } from '../types';
-import { APICore } from 'helpers/api/apiCore';
 
 const useWhiteboard = () => {
   const [whiteboards, setWhiteboards] = useState<Whiteboard[]>([]);
@@ -18,19 +17,17 @@ const useWhiteboard = () => {
   const [whiteboardPageNumber, setWhiteboardPageNumber] = useState<number>(1);
   const [numberOfWhiteboards, setNumberOfWhiteboards] = useState<number>(0);
   const [isCreateWhiteboardOpen, toggleCreateWhiteboard] = useToggle();
+  const { appSelector } = useRedux();
 
-  const api = new APICore();
-  const user = api.getLoggedInUser();
+  const { user } = appSelector((state) => ({
+    user: state.Auth.user,
+  }));
+
   const scope = 'team';
+  const teamId = user.currentTeam?.id;
   const whiteboardPageURL = '/whiteboard?url=';
-  const teamId = user.currentTeam.id
 
-  useEffect(() => {
-    const pageIndex = whiteboardPageNumber - 1;
-    readAllWhiteboard(pageIndex);
-  }, [whiteboardPageNumber]);
-
-  const readAllWhiteboard = async (pageIndex: number) => {
+  const readAllWhiteboard = useCallback(async (pageIndex: number) => {
     const readAllWhiteboardAPIResponse = await readAllWhiteboardAPI({ teamId, scope, pageIndex });
     
     const whiteboards = readAllWhiteboardAPIResponse.data.whiteboards.map((whiteboard): Whiteboard => {
@@ -43,14 +40,19 @@ const useWhiteboard = () => {
         scope: whiteboard.scope,
         author: whiteboard.member.fullname,
         authorProfileImageUrl: whiteboard.member.profileImageUrl,
-        whiteboardFileUrl: whiteboard.whiteboardFileUrl,
+        whiteboardFileUrl: whiteboard.whiteboardUrl,
       }
     });
 
     setWhiteboards(whiteboards);
     setNumberOfWhiteboards(readAllWhiteboardAPIResponse.data.size_ALL_PAGE);
     setWhiteboardLoading(false);
-  };
+  }, [teamId]);
+
+  useEffect(() => {
+    const pageIndex = whiteboardPageNumber - 1;
+    readAllWhiteboard(pageIndex);
+  }, [whiteboardPageNumber, readAllWhiteboard]);
 
   const onCreateWhiteboard = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

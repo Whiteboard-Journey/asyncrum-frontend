@@ -2,16 +2,19 @@ import { useReactMediaRecorder } from 'react-media-recorder';
 import { useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import { createRecord as createRecordAPI, uploadRecord as uploadRecordAPI } from 'helpers';
-import { APICore } from 'helpers/api/apiCore';
+import { useRedux } from 'hooks';
 
 const useVideoRecorder = () => {
+  const { appSelector } = useRedux();
+
+  const { user } = appSelector((state) => ({
+    user: state.Auth.user,
+  }));
   const [recordingState, setRecordingState] = useState<'idle' | 'recording' | 'recorded'>('idle');
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const webcamRef = useRef<Webcam>(null);
 
-  const api = new APICore();
-  const user = api.getLoggedInUser();
   const title = user.fullname + ' ' + Date.now();
   const description = 'Daily standups - ' + title;
 

@@ -28,7 +28,10 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
   const { dispatch, appSelector } = useRedux();
   const { width } = useViewport();
   const [isMenuOpened, toggleMenu] = useToggle();
-  const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
+
+  const { user } = appSelector((state) => ({
+    user: state.Auth.user,
+  }));
 
   const containerCssClasses = !hideLogo ? 'container-fluid' : '';
 

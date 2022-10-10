@@ -3,11 +3,11 @@ import { Utils } from '@krapi0314/tldraw-core';
 import { useThrottleCallback } from '@react-hook/throttle';
 import { useCallback, useEffect, useState } from 'react';
 import * as yorkie from 'yorkie-js-sdk';
+import { useRedux } from 'hooks';
 
 const params = new URLSearchParams(window.location.search);
 const id = params.get('id');
 const url = params.get('url');
-const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
 
 // 0. Yorkie Client declaration
 let client: yorkie.Client<yorkie.Indexable>;
@@ -26,6 +26,12 @@ type YorkieDocType = {
 // const doc = new yorkie.Document<YorkieType>(id ? id : 'temp');
 
 const Whiteboard = () => {
+  const { appSelector } = useRedux();
+
+  const { user } = appSelector((state) => ({
+    user: state.Auth.user,
+  }));
+
   function useMultiplayerState(roomId: string, url?: string) {
     const [app, setApp] = useState<TldrawApp>();
     const [loading, setLoading] = useState(true);
@@ -105,10 +111,14 @@ const Whiteboard = () => {
     );
 
     // UndoManager will be implemented in further demo
-    const onUndo = useCallback(() => {}, []);
+    const onUndo = useCallback(() => {
+      // To do
+    }, []);
 
     // RedoManager will be implemented in further demo
-    const onRedo = useCallback(() => {}, []);
+    const onRedo = useCallback(() => {
+      // To do
+    }, []);
 
     // Handle presence updates when the user's pointer / selection changes
     const onChangePresence = useThrottleCallback(
@@ -142,7 +152,7 @@ const Whiteboard = () => {
 
         // WARNING: hard-coded section --------
         // Parse proxy object to record
-        const shapeRecord: Record<string, TDShape> = JSON.parse(root.shapes.toJSON().replace(/\\\'/g, "'"));
+        const shapeRecord: Record<string, TDShape> = JSON.parse(root.shapes.toJSON().replace(/\\'/g, "'"));
         const bindingRecord: Record<string, TDBinding> = JSON.parse(root.bindings.toJSON());
         const assetRecord: Record<string, TDAsset> = JSON.parse(root.assets.toJSON());
 

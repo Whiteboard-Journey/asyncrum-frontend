@@ -6,11 +6,15 @@ import {
 } from 'helpers';
 import { APICore } from 'helpers/api/apiCore';
 import { useRef, useState } from 'react';
-
-const api = new APICore();
-const user = api.getLoggedInUser();
+import { useRedux } from 'hooks';
 
 const usePersonalSettings = () => {
+  const { appSelector } = useRedux();
+
+  const { user } = appSelector((state) => ({
+    user: state.Auth.user,
+  }));
+
   const [userFullname, setUserFullname] = useState<string>(user.fullname);
   const [previewImage, setPreviewImage] = useState<string>(user.profileImageUrl);
   const [profileImageFile, setProfileImageFile] = useState<null | File>();
