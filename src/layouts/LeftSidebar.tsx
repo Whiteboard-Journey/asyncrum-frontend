@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SimpleBar from 'simplebar-react';
 import classNames from 'classnames';
+import { useRedux } from 'hooks';
 import { getMenuItems } from 'helpers';
 import AppMenu from './Menu';
 import logoSm from 'assets/images/asyncrum-logo-white-small.png';
@@ -9,13 +10,27 @@ import logoDark from 'assets/images/asyncrum-logo-white.png';
 import logoDarkSm from 'assets/images/asyncrum-logo-white-small.png';
 import logo from 'assets/images/asyncrum-logo-white.png';
 import helpBoxImage from 'assets/images/help-icon.svg';
+import { MenuItemType } from 'appConstants';
 
 type SideBarContentProps = {
   hideUserProfile: boolean;
 };
 
 const SideBarContent = ({ hideUserProfile }: SideBarContentProps) => {
-  const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
+  const { appSelector } = useRedux();
+  const [menuItems, setMenuItems] = useState<MenuItemType[]>([]);
+
+  const { loading, user } = appSelector((state) => ({
+    loading: state.Auth.loading,
+    user: state.Auth.user,
+  }));
+
+  useEffect(() => {
+    if (loading) {
+      return;
+    }
+    setMenuItems(getMenuItems(user.teams));
+  }, [loading]);
 
   return (
     <>
@@ -27,7 +42,7 @@ const SideBarContent = ({ hideUserProfile }: SideBarContentProps) => {
           </Link>
         </div>
       )}
-      <AppMenu menuItems={getMenuItems(user.teams)} />
+      <AppMenu menuItems={menuItems} />
 
       {/* <div
         className={classNames('help-box', 'text-center', {

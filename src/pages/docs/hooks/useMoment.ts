@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import moment from 'moment';
 
 const useMoment = () => {
@@ -11,9 +12,9 @@ const useMoment = () => {
     return moment(convertDateTime(datetime)).fromNow();
   };
 
-  const getTimeDifference = (datetime: string) => {
+  const getTimeDifference = useCallback((datetime: string) => {
     return moment().diff(moment(convertDateTime(datetime)), 'hours');
-  };
+  }, []);
 
   return { convertDateTime, getTimeFromNow, getTimeDifference };
 };

@@ -1,11 +1,20 @@
 import WhiteboardContainer from './WhiteboardContainer';
 import DailyStandupContainer from './DailyStandupContainer';
-import { VideoPlayer } from 'components/VideoPlayer';
+import { useRedux } from 'hooks';
 
 const Dashboard = () => {
-  return (
+  const { appSelector } = useRedux();
+
+  const { loading } = appSelector((state) => ({
+    loading: state.Auth.loading,
+  }));
+
+  return loading ? (
     <>
-      {/* <VideoPlayer /> */}
+      <p>Loading</p>
+    </>
+  ) : (
+    <>
       <DailyStandupContainer />
       <hr />
       <WhiteboardContainer />

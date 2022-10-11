@@ -2,13 +2,18 @@ import AppMenu from './Menu';
 import { Collapse } from 'react-bootstrap';
 import classNames from 'classnames';
 import { getMenuItems } from 'helpers';
+import { useRedux } from 'hooks';
 
 type NavbarProps = {
   isMenuOpened?: boolean;
 };
 
 const Navbar = ({ isMenuOpened }: NavbarProps) => {
-  const user = JSON.parse(sessionStorage.getItem('asyncrum_user')!);
+  const { appSelector } = useRedux();
+
+  const { user } = appSelector((state) => ({
+    user: state.Auth.user,
+  }));
   // change the inputTheme value to light for creative theme
   const inputTheme = 'dark';
 
