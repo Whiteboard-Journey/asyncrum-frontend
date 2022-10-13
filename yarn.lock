@@ -2422,6 +2422,11 @@
     "@types/yargs" "^17.0.8"
     chalk "^4.0.0"
 
+"@jitsi/react-sdk@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@jitsi/react-sdk/-/react-sdk-1.1.0.tgz#4ff1a1d29d947542502cf01983fdc6c6c52d97b5"
+  integrity sha512-a247MxxYfUg7empOhPzksJCP03F3xfXD/hwBqtSKoR1e7/JHra5SK6rUpurEV4R5/EON88yOJ+y6esogueSi7Q==
+
 "@jridgewell/gen-mapping@^0.3.2":
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.3.2.tgz#c1aedc61e853f2bb9f5dfe6d4442d3b565b253b9"
