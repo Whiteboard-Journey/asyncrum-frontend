@@ -4,7 +4,6 @@ import { DailyStandup } from '../types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRedux } from 'hooks';
 import { useMoment } from './';
-import { Video } from 'components/VideoPlayer/Video';
 
 const useDailyStandup = () => {
   const [dailyStandups, setDailyStandups] = useState<DailyStandup[]>([]);
@@ -36,61 +35,15 @@ const useDailyStandup = () => {
         dailyStandups.at(-1)?.title.slice(0, dailyStandups.at(-1)?.title.lastIndexOf(" ")) === record.title.slice(0, dailyStandups.at(-1)?.title.lastIndexOf(" "))
       ) {
         if (record.title.slice(-6) === 'screen') {
-          const el = document.createElement('video');
-          el.src = record.recordUrl;
-          el.addEventListener('loadedmetadata', function () {
-            if (el.duration == Infinity) {
-              el.currentTime = 1e101;
-              el.ontimeupdate = function () {
-                this.ontimeupdate = () => {
-                  return;
-                };
-                el.currentTime = 0;
-                return;
-              };
-            }
-          });
           dailyStandups.at(-1)?.id.push(record.id);
+          (dailyStandups.at(-1) as DailyStandup).screenRecordId = record.id;
           (dailyStandups.at(-1) as DailyStandup).screenRecordFileUrl = record.recordUrl;
-          (dailyStandups.at(-1) as DailyStandup).video = {
-              bookmarks: record.bookmarks ? record.bookmarks.map((b: any) => {
-                return {
-                  ...b,
-                  drawing: JSON.parse(b.drawing),
-                  icon: b.emoji ? String.fromCodePoint(parseInt('0x' + b.emoji)) : ''
-                }
-              }) : [],
-              codedWidth: 1280,
-              codedHeight: 720,
-              displayAspectRatio: "16:9",
-              el: el,
-              filePath: record.recordUrl,
-              frameRate: 30,
-              id: record.id,
-              name: record.title,
-              seeking: false,
-              volume: 0.8
-          }
         } else {
           dailyStandups.at(-1)?.id.push(record.id);
           (dailyStandups.at(-1) as DailyStandup).camRecordFileUrl = record.recordUrl;
         }
       } else {
         if (record.title.slice(-6) === 'screen') {
-          const el = document.createElement('video');
-          el.src = record.recordUrl;
-          el.addEventListener('loadedmetadata', function () {
-            if (el.duration == Infinity) {
-              el.currentTime = 1e101;
-              el.ontimeupdate = function () {
-                this.ontimeupdate = () => {
-                  return;
-                };
-                el.currentTime = 0;
-                return;
-              };
-            }
-          });
           dailyStandups.push({
             id: [record.id],
             author: record.member.fullname,
@@ -99,26 +52,8 @@ const useDailyStandup = () => {
             createdDate: record.createdDate,
             camRecordFileUrl: '',
             screenRecordFileUrl: record.recordUrl,
+            screenRecordId: record.id,
             seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
-            video: {
-              bookmarks: record.bookmarks ? record.bookmarks.map((b: any) => {
-                return {
-                  ...b,
-                  drawing: JSON.parse(b.drawing),
-                  icon: b.emoji ? String.fromCodePoint(parseInt('0x' + b.emoji)) : ''
-                }
-              }) : [],
-              codedWidth: 1280,
-              codedHeight: 720,
-              displayAspectRatio: "16:9",
-              el: el,
-              filePath: record.recordUrl,
-              frameRate: 30,
-              id: record.id,
-              name: record.title,
-              seeking: false,
-              volume: 0.8
-            }
           });
         } else {
           dailyStandups.push({
@@ -129,8 +64,8 @@ const useDailyStandup = () => {
             createdDate: record.createdDate,
             camRecordFileUrl: record.recordUrl,
             screenRecordFileUrl: '',
+            screenRecordId: -1,
             seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
-            video: {} as Video
           });
         }
       }

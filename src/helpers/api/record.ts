@@ -12,6 +12,10 @@ const readAllDailyStandups = (params: { teamId: string; scope: string; pageIndex
   return api.get(baseURL, params);
 };
 
+const readRecord = (id: number) => {
+  return api.get(baseURL + `/${id}`, {});
+};
+
 const uploadRecord = (presignedURL: string, fileToUpload: File) => {
   const uploadAxios = axios.create({
     transformRequest: [
@@ -35,4 +39,4 @@ const viewDailyStandup = (id: number) => {
   api.updatePatch(baseURL + '/' + id, params);
 };
 
-export { createRecord, readAllDailyStandups, uploadRecord, viewDailyStandup };
+export { createRecord, readAllDailyStandups, readRecord, uploadRecord, viewDailyStandup };

@@ -50,11 +50,7 @@ const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
             <ModalHeader>{dailyStandup.author + ' - ' + getTimeFromNow(dailyStandup.createdDate)}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              {dailyStandup.video.el?.readyState === 4 ? (
-                <VideoPlayer currentVideo={dailyStandup.video} />
-              ) : (
-                <p>The video is not loaded yet. Please close this modal and try again.</p>
-              )}
+              <VideoPlayer id={dailyStandup.screenRecordId} />
             </ModalBody>
           </ModalContent>
         </Modal>
