@@ -1,5 +1,3 @@
-import { Video } from "components/VideoPlayer/Video";
-
 export type DailyStandup = {
   id: number[];
   author: string;
@@ -8,8 +6,8 @@ export type DailyStandup = {
   createdDate: string;
   camRecordFileUrl: string;
   screenRecordFileUrl: string;
+  screenRecordId: number;
   seen: boolean;
-  video: Video;
 };
 
 export type Whiteboard = {

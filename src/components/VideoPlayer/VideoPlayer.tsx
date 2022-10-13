@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 
 import { css } from '@emotion/react';
 import { Box, Flex, IconButton, Text, Tooltip } from '@chakra-ui/react';
@@ -13,6 +13,8 @@ import TimeDisplay from './TimeDisplay';
 import TimeControl from './TimeControl';
 import VideoVolume from './VideoVolume';
 import VideoBookmarkAdd from './VideoBookmarkAdd';
+import { readRecord as readRecordAPI } from 'helpers';
+
 import type { Video } from './Video';
 import type { VideoBookmark } from './VideoBookmark';
 
@@ -22,34 +24,124 @@ import {
   Maximize as MaximizeIcon,
 } from 'tabler-icons-react';
 
-export type PreciseVideoTimes = {
-  [id: string]: number;
-};
+const VIDEO_WIDTH = 1280;
+const VIDEO_HEIGHT = 720;
+const DISPLAY_ASPECT_RATIO = '16:9';
+const FRAME_RATE = 30;
+const DEFAULT_VOLUME = 0.8;
 
 type Props = {
-  currentVideo: Video;
+  id: number;
 };
 
 // const VideoPlayer = ({ video: HTMLVideoElement }: Props) => {
-const VideoPlayer = ({ currentVideo }: Props) => {
+const VideoPlayer = ({ id }: Props) => {
   const [app, setApp] = useState<TldrawApp>();
   const [fullscreen, setFullscreen] = useState<boolean>(false);
   const [videoDimensions, setVideoDimensions] = useState<[number, number] | null>(null);
   const [currentTime, setCurrentTime] = useState<number>(0);
-  const [currentVolume, setCurrentVolume] = useState<number>(0.8);
-  const [fullDuration, setfullDuration] = useState<number>(currentVideo.el.duration);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [currentVolume, setCurrentVolume] = useState<number>(DEFAULT_VOLUME);
+  const [fullDuration, setFullDuration] = useState<number>(0);
+  const [videoElemLoading, setVideoElemLoading] = useState<boolean>(true);
+  const [videoPlayerLoading, setVideoPlayerLoading] = useState<boolean>(true);
   const [playing, setPlaying] = useState<boolean>(false);
   const [editingBookmark, setEditingBookmark] = useState<boolean>(false);
-  const [video, setVideo] = useState<Video>(currentVideo);
-  const [bookmarks, setBookmarks] = useState<VideoBookmark[]>(currentVideo.bookmarks);
+  const [video, setVideo] = useState<Video>({} as Video);
+  const [bookmarks, setBookmarks] = useState<VideoBookmark[]>(video.bookmarks);
   const [activeBookmark, setActiveBookmark] = useState<VideoBookmark | null>(null);
 
-  const videoTimes = useRef<PreciseVideoTimes>({});
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const fullscreenTargetRef = useRef<HTMLDivElement | null>(null);
   const fullscreenTriggerRef = useRef<HTMLButtonElement | null>(null);
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
+
+  const setupVideoElement = useCallback(async () => {
+    const readRecordAPIResponse = await readRecordAPI(id);
+    const videoData = readRecordAPIResponse.data;
+
+    const el = document.createElement('video');
+    el.src = videoData.recordUrl;
+
+    setVideo({
+      bookmarks: videoData.bookmarks
+        ? videoData.bookmarks.map((b: any) => {
+            return {
+              ...b,
+              drawing: JSON.parse(b.drawing),
+              icon: b.emoji ? String.fromCodePoint(parseInt('0x' + b.emoji)) : '',
+            };
+          })
+        : [],
+      codedWidth: VIDEO_HEIGHT,
+      codedHeight: VIDEO_WIDTH,
+      displayAspectRatio: DISPLAY_ASPECT_RATIO,
+      el: el,
+      filePath: videoData.recordUrl,
+      frameRate: FRAME_RATE,
+      id: videoData.id,
+      name: videoData.title,
+      seeking: false,
+      volume: DEFAULT_VOLUME,
+    });
+    setBookmarks(videoData.bookmarks);
+    setVideoElemLoading(false);
+  }, [id]);
+
+  const getDuration = (url: string, setFullDuration: React.Dispatch<React.SetStateAction<number>>) => {
+    var _player = new Audio(url);
+    _player.addEventListener(
+      'durationchange',
+      function () {
+        if (this.duration != Infinity) {
+          var duration = this.duration;
+          _player.remove();
+          setFullDuration(duration);
+        }
+      },
+      false
+    );
+    _player.load();
+    _player.currentTime = 24 * 60 * 60;
+    _player.volume = 0;
+    _player.play();
+  };
+
+  const setupVideoPlayer = useCallback(() => {
+    if (videoContainerRef.current === null || video.el === undefined) {
+      return;
+    }
+    videoContainerRef.current.innerHTML = '';
+    videoContainerRef.current.appendChild(video.el);
+
+    video.el.volume = video.volume;
+    setCurrentVolume(video.el.volume);
+    getDuration(video.el.src, setFullDuration);
+
+    video.el.ontimeupdate = () => {
+      setCurrentTime(video.el.currentTime);
+    };
+
+    setVideoPlayerLoading(false);
+  }, [video]);
+
+  useEffect(() => {
+    if (overlayRef.current && video.displayAspectRatio) {
+      const dimensions = getRatioDimensions(video.displayAspectRatio, overlayRef.current);
+      setVideoDimensions(dimensions);
+    }
+  }, [video.displayAspectRatio]);
+
+  useEffect(() => {
+    if (videoElemLoading) {
+      setupVideoElement();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (videoPlayerLoading) {
+      setupVideoPlayer();
+    }
+  }, [videoElemLoading]);
 
   useEffect(() => {
     if (overlayRef.current) {
@@ -58,25 +150,25 @@ const VideoPlayer = ({ currentVideo }: Props) => {
     }
   }, []);
 
-  useEffect(() => {
-    if (video === undefined || video.el === null || videoContainerRef.current === null) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (video === undefined || video.el === null || videoContainerRef.current === null) {
+  //     return;
+  //   }
 
-    videoContainerRef.current.innerHTML = '';
-    videoContainerRef.current.appendChild(video.el);
+  //   videoContainerRef.current.innerHTML = '';
+  //   videoContainerRef.current.appendChild(video.el);
 
-    video.el.volume = video.volume;
-    video.el.ontimeupdate = () => {
-      setCurrentTime(video.el.currentTime);
-    };
+  //   video.el.volume = video.volume;
+  //   video.el.ontimeupdate = () => {
+  //     setCurrentTime(video.el.currentTime);
+  //   };
 
-    video.el.onloadedmetadata = () => {
-      setfullDuration(video.el.duration);
-      setCurrentVolume(video.el.volume);
-    };
-    setLoading(false);
-  }, []);
+  //   video.el.onloadedmetadata = () => {
+  //     setFullDuration(video.el.duration);
+  //     setCurrentVolume(video.el.volume);
+  //   };
+  //   setLoading(false);
+  // }, []);
 
   const playVideo = () => {
     if (videoContainerRef.current === null) {
@@ -95,14 +187,14 @@ const VideoPlayer = ({ currentVideo }: Props) => {
   };
 
   const overlayStyle = css`
-    width: 800px;
-    height: 450px;
+    width: ${VIDEO_WIDTH}px;
+    height: ${VIDEO_HEIGHT}px;
   `;
 
   const videoStyle = css`
     video {
-      width: 800px;
-      height: 450px;
+      width: ${VIDEO_WIDTH}px;
+      height: ${VIDEO_HEIGHT}px;
     }
   `;
 
@@ -258,11 +350,15 @@ const VideoPlayer = ({ currentVideo }: Props) => {
   })();
   return (
     <>
-      <Flex>
-        <Box width="100vw" bgColor="black">
-          {renderedContent}
-        </Box>
-      </Flex>
+      {videoElemLoading ? (
+        <p>loading</p>
+      ) : (
+        <Flex>
+          <Box width="100vw" bgColor="black">
+            {renderedContent}
+          </Box>
+        </Flex>
+      )}
     </>
   );
 };

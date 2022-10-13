@@ -51,26 +51,27 @@ const useDailyStandup = () => {
             }
           });
           dailyStandups.at(-1)?.id.push(record.id);
+          (dailyStandups.at(-1) as DailyStandup).screenRecordId = record.id;
           (dailyStandups.at(-1) as DailyStandup).screenRecordFileUrl = record.recordUrl;
-          (dailyStandups.at(-1) as DailyStandup).video = {
-              bookmarks: record.bookmarks ? record.bookmarks.map((b: any) => {
-                return {
-                  ...b,
-                  drawing: JSON.parse(b.drawing),
-                  icon: b.emoji ? String.fromCodePoint(parseInt('0x' + b.emoji)) : ''
-                }
-              }) : [],
-              codedWidth: 1280,
-              codedHeight: 720,
-              displayAspectRatio: "16:9",
-              el: el,
-              filePath: record.recordUrl,
-              frameRate: 30,
-              id: record.id,
-              name: record.title,
-              seeking: false,
-              volume: 0.8
-          }
+          // (dailyStandups.at(-1) as DailyStandup).video = {
+          //     bookmarks: record.bookmarks ? record.bookmarks.map((b: any) => {
+          //       return {
+          //         ...b,
+          //         drawing: JSON.parse(b.drawing),
+          //         icon: b.emoji ? String.fromCodePoint(parseInt('0x' + b.emoji)) : ''
+          //       }
+          //     }) : [],
+          //     codedWidth: 1280,
+          //     codedHeight: 720,
+          //     displayAspectRatio: "16:9",
+          //     el: el,
+          //     filePath: record.recordUrl,
+          //     frameRate: 30,
+          //     id: record.id,
+          //     name: record.title,
+          //     seeking: false,
+          //     volume: 0.8
+          // }
         } else {
           dailyStandups.at(-1)?.id.push(record.id);
           (dailyStandups.at(-1) as DailyStandup).camRecordFileUrl = record.recordUrl;
@@ -99,26 +100,27 @@ const useDailyStandup = () => {
             createdDate: record.createdDate,
             camRecordFileUrl: '',
             screenRecordFileUrl: record.recordUrl,
+            screenRecordId: record.id,
             seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
-            video: {
-              bookmarks: record.bookmarks ? record.bookmarks.map((b: any) => {
-                return {
-                  ...b,
-                  drawing: JSON.parse(b.drawing),
-                  icon: b.emoji ? String.fromCodePoint(parseInt('0x' + b.emoji)) : ''
-                }
-              }) : [],
-              codedWidth: 1280,
-              codedHeight: 720,
-              displayAspectRatio: "16:9",
-              el: el,
-              filePath: record.recordUrl,
-              frameRate: 30,
-              id: record.id,
-              name: record.title,
-              seeking: false,
-              volume: 0.8
-            }
+            // video: {
+            //   bookmarks: record.bookmarks ? record.bookmarks.map((b: any) => {
+            //     return {
+            //       ...b,
+            //       drawing: JSON.parse(b.drawing),
+            //       icon: b.emoji ? String.fromCodePoint(parseInt('0x' + b.emoji)) : ''
+            //     }
+            //   }) : [],
+            //   codedWidth: 1280,
+            //   codedHeight: 720,
+            //   displayAspectRatio: "16:9",
+            //   el: el,
+            //   filePath: record.recordUrl,
+            //   frameRate: 30,
+            //   id: record.id,
+            //   name: record.title,
+            //   seeking: false,
+            //   volume: 0.8
+            // }
           });
         } else {
           dailyStandups.push({
@@ -129,8 +131,8 @@ const useDailyStandup = () => {
             createdDate: record.createdDate,
             camRecordFileUrl: record.recordUrl,
             screenRecordFileUrl: '',
+            screenRecordId: -1,
             seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
-            video: {} as Video
           });
         }
       }
