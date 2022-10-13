@@ -150,26 +150,6 @@ const VideoPlayer = ({ id }: Props) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (video === undefined || video.el === null || videoContainerRef.current === null) {
-  //     return;
-  //   }
-
-  //   videoContainerRef.current.innerHTML = '';
-  //   videoContainerRef.current.appendChild(video.el);
-
-  //   video.el.volume = video.volume;
-  //   video.el.ontimeupdate = () => {
-  //     setCurrentTime(video.el.currentTime);
-  //   };
-
-  //   video.el.onloadedmetadata = () => {
-  //     setFullDuration(video.el.duration);
-  //     setCurrentVolume(video.el.volume);
-  //   };
-  //   setLoading(false);
-  // }, []);
-
   const playVideo = () => {
     if (videoContainerRef.current === null) {
       return;

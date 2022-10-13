@@ -51,11 +51,6 @@ const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
             <ModalCloseButton />
             <ModalBody>
               <VideoPlayer id={dailyStandup.screenRecordId} />
-              {/* {dailyStandup.video.el?.readyState === 4 ? (
-                <VideoPlayer currentVideo={dailyStandup.video} />
-              ) : (
-                <p>The video is not loaded yet. Please close this modal and try again.</p>
-              )} */}
             </ModalBody>
           </ModalContent>
         </Modal>
