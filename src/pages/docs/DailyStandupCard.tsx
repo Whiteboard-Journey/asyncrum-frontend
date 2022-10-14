@@ -29,7 +29,8 @@ const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
           onOpen();
           onViewDailyStandups(dailyStandup);
         }}
-        style={{ cursor: 'pointer' }}>
+        style={{ cursor: 'pointer' }}
+      >
         <div className={(dailyStandup.seen ? 'opacity-25' : '') + ' text-center'}>
           <img
             src={dailyStandup.profileImageUrl}

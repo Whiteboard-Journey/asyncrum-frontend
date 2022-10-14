@@ -51,7 +51,8 @@ const Login = () => {
         <VerticalForm<UserData>
           onSubmit={onSubmit}
           resolver={schemaResolver}
-          defaultValues={{ username: 'test@gmail.com', password: 'test' }}>
+          defaultValues={{ username: 'test@gmail.com', password: 'test' }}
+        >
           <FormInput
             label={t('Username')}
             type="text"
@@ -64,7 +65,8 @@ const Login = () => {
             type="password"
             name="password"
             placeholder={t('Enter your password')}
-            containerClass={'mb-3'}>
+            containerClass={'mb-3'}
+          >
             <Link to="/account/forget-password" className="text-muted float-end">
               <small>{t('Forgot your password?')}</small>
             </Link>

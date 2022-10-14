@@ -1,14 +1,15 @@
-import { css } from '@emotion/react';
+import { useState } from 'react';
 
+import { css } from '@emotion/react';
 import { Box, Flex, Button, ButtonGroup, Text, Spacer, IconButton } from '@chakra-ui/react';
 import Draggable from 'react-draggable'; // The default
+
+import { updateBookmark as updateBookmarkAPI, deleteBookmark as deleteBookmarkAPI } from 'helpers';
 
 import VideoBookmarkForm from './VideoBookmarkForm';
 
 import type { Video } from './Video';
 import type { VideoBookmark, VideoBookmarkCoordinates, VideoBookmarkIcon } from './VideoBookmark';
-import { updateBookmark as updateBookmarkAPI, deleteBookmark as deleteBookmarkAPI } from 'helpers';
-import React, { useState } from 'react';
 
 type Props = {
   bookmark: VideoBookmark | null;
@@ -40,7 +41,6 @@ export default function VideoBookmarkShow({
   setActiveBookmark,
   scale,
   playing,
-  setCurrentTime,
   editingBookmark,
   setEditingBookmark,
   setVideo,
@@ -55,15 +55,15 @@ export default function VideoBookmarkShow({
 
   const [currentEmoji, setCurrentEmoji] = useState<string>(bookmark.icon);
 
-  function handleDelete() {
+  const handleDelete = () => {
     if (bookmark) {
-      deleteVideoBookmark(setVideo, bookmark);
+      deleteVideoBookmark();
     }
     setEditingBookmark(false);
     setActiveBookmark(null);
-  }
+  };
 
-  const deleteVideoBookmark = (setVideo: React.Dispatch<React.SetStateAction<Video>>, bookmark: VideoBookmark) => {
+  const deleteVideoBookmark = () => {
     setVideo((prevState) => ({
       ...prevState,
       bookmarks: prevState.bookmarks.filter((innerBookmark) => {
@@ -73,13 +73,7 @@ export default function VideoBookmarkShow({
     deleteBookmarkAPI(parseInt(bookmark.id));
   };
 
-  const setVideoBookmarkCoords = (
-    video: Video,
-    setVideo: React.Dispatch<React.SetStateAction<Video>>,
-    bookmark: VideoBookmark,
-    coords: VideoBookmarkCoordinates,
-    scale: number
-  ) => {
+  const setVideoBookmarkCoords = (coords: VideoBookmarkCoordinates) => {
     const bookmarkIndex = video.bookmarks.findIndex((innerBookmark) => {
       return innerBookmark.id === bookmark.id;
     });
@@ -92,12 +86,7 @@ export default function VideoBookmarkShow({
     }));
   };
 
-  const setVideoBookmarkContent = (
-    video: Video,
-    setVideo: React.Dispatch<React.SetStateAction<Video>>,
-    bookmark: VideoBookmark,
-    content: string
-  ) => {
+  const setVideoBookmarkContent = (content: string) => {
     const bookmarkIndex = video.bookmarks.findIndex((innerBookmark) => {
       return innerBookmark.id === bookmark.id;
     });
@@ -111,12 +100,7 @@ export default function VideoBookmarkShow({
     bookmark.content = content;
   };
 
-  const setVideoBookmarkIcon = (
-    video: Video,
-    setVideo: React.Dispatch<React.SetStateAction<Video>>,
-    bookmark: VideoBookmark,
-    icon: VideoBookmarkIcon
-  ) => {
+  const setVideoBookmarkIcon = (icon: VideoBookmarkIcon) => {
     const bookmarkIndex = video.bookmarks.findIndex((innerBookmark) => {
       return innerBookmark.id === bookmark.id;
     });
@@ -141,8 +125,8 @@ export default function VideoBookmarkShow({
     if (editingBookmark === true) {
       return (
         <VideoBookmarkForm
-          onChangeContent={(content) => setVideoBookmarkContent(video, setVideo, bookmark, content)}
-          onChangeIcon={(details) => setVideoBookmarkIcon(video, setVideo, bookmark, details)}
+          onChangeContent={(content) => setVideoBookmarkContent(content)}
+          onChangeIcon={(details) => setVideoBookmarkIcon(details)}
           bookmark={bookmark}
           currentEmoji={currentEmoji}
         />
@@ -172,7 +156,8 @@ export default function VideoBookmarkShow({
         const scale = bookmark.scale;
         const author = bookmark.author;
         updateBookmarkAPI(parseInt(bookmark.id), { emoji, content, time, position, drawing, scale, author });
-      }}>
+      }}
+    >
       Done
     </Button>
   ) : (
@@ -190,13 +175,15 @@ export default function VideoBookmarkShow({
       justify="flex-end"
       padding="4"
       pointerEvents="none"
-      zIndex={3}>
+      zIndex={3}
+    >
       <Draggable
         key={bookmark.id}
-        onStop={(_event, data) => setVideoBookmarkCoords(video, setVideo, bookmark, { x: data.x, y: data.y }, scale)}
+        onStop={(_event, data) => setVideoBookmarkCoords({ x: data.x, y: data.y })}
         bounds="parent"
         handle="#dragHandle"
-        position={position}>
+        position={position}
+      >
         <Box pointerEvents="all" background="blackAlpha.900" width="md">
           <Box id="dragHandle" css={dragHandleStyles} />
           {renderedContent && (

@@ -12,7 +12,8 @@ const MenuItem = ({ item, className, linkClassName }: SubMenus) => {
 
   return (
     <li
-      className={classNames('side-nav-item', className, item.key === user.currentTeam?.code ? 'menuitem-active' : '')}>
+      className={classNames('side-nav-item', className, item.key === user.currentTeam?.code ? 'menuitem-active' : '')}
+    >
       <MenuItemLink item={item} className={linkClassName} />
     </li>
   );

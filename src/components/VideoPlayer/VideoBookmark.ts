@@ -42,6 +42,6 @@ export function create(
     scale,
     time,
     video_id: video.id,
-    author: user.fullname
+    author: user.fullname,
   };
 }

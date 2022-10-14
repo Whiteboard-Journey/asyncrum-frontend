@@ -1,25 +1,31 @@
 import { MENU_ITEMS, MenuItemType } from 'appConstants';
 import { Team } from 'pages/settings/types';
 const getMenuItems = (teams: Team[]) => {
-  const menu: MenuItemType[] = teams && teams.length > 0 ? [
-    ...MENU_ITEMS,
-    { 
-      key: 'teams', 
-      label: 'Teams', 
-      isTitle: false,
-      children: teams.length > 0 ? teams.map((team: Team) => {
-        const teamObject = {
-          key: team.code,
-          label: team.name,
-          isTitle: false,
-          parentKey: 'teams',
-          teamId: team.id,
-          url: '/'
-        };
-        return teamObject;
-      }) : []
-    },
-  ] : MENU_ITEMS;
+  const menu: MenuItemType[] =
+    teams && teams.length > 0
+      ? [
+          ...MENU_ITEMS,
+          {
+            key: 'teams',
+            label: 'Teams',
+            isTitle: false,
+            children:
+              teams.length > 0
+                ? teams.map((team: Team) => {
+                    const teamObject = {
+                      key: team.code,
+                      label: team.name,
+                      isTitle: false,
+                      parentKey: 'teams',
+                      teamId: team.id,
+                      url: '/',
+                    };
+                    return teamObject;
+                  })
+                : [],
+          },
+        ]
+      : MENU_ITEMS;
   return menu;
 };
 

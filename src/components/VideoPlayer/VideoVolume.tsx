@@ -30,7 +30,8 @@ export default function VideoVolume({ video, setCurrentVolume }: Props) {
         step={0.01}
         focusThumbOnChange={false}
         ml={2}
-        mb={1}>
+        mb={1}
+      >
         <SliderTrack>
           <SliderFilledTrack />
         </SliderTrack>

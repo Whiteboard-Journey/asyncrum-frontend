@@ -15,7 +15,7 @@ type Props = {
   videoBookmark: VideoBookmark | null;
 };
 
-export default function Drawing({ playing, onMount, scale, video, setVideo, videoBookmark }: Props) {
+const Drawing = ({ playing, onMount, scale, video, setVideo, videoBookmark }: Props) => {
   const tlDrawRef = useRef<TldrawApp | null>(null);
   const outerRef = useRef(null);
 
@@ -66,25 +66,17 @@ export default function Drawing({ playing, onMount, scale, video, setVideo, vide
     tlDrawRef.current.setCamera([0, 0], scale, 'layout_resized');
   }, [scale]);
 
-  /**
-   * Rescale drawing as parent scales
-   */
   useEffect(() => {
     rescaleDrawing();
   }, [scale, rescaleDrawing]);
 
-  /**
-   * Load video bookmarks
-   */
   useEffect(() => {
     if (tlDrawRef.current === null) {
       return;
     }
 
     if (videoBookmark?.drawing && videoBookmark.drawing) {
-      tlDrawRef.current.loadDocument(
-        JSON.parse(JSON.stringify(videoBookmark.drawing)) // we need to load a copy of the document
-      );
+      tlDrawRef.current.loadDocument(JSON.parse(JSON.stringify(videoBookmark.drawing)));
 
       tlDrawRef.current.selectNone();
       rescaleDrawing();
@@ -93,9 +85,6 @@ export default function Drawing({ playing, onMount, scale, video, setVideo, vide
     }
   }, [clearDrawing, rescaleDrawing, videoBookmark]);
 
-  /**
-   * Clear drawings between time changes if enabled
-   */
   useEffect(() => {
     if (tlDrawRef.current === null) {
       return;
@@ -117,4 +106,6 @@ export default function Drawing({ playing, onMount, scale, video, setVideo, vide
       />
     </Box>
   );
-}
+};
+
+export default Drawing;
