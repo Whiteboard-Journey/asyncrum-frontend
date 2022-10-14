@@ -40,10 +40,10 @@ const MENU_ITEMS: MenuItemType[] = [
   { key: 'meetings', label: 'Meetings', isTitle: true },
   {
     key: 'meetings-meeting',
-    label: 'Meeting 1',
+    label: 'Meeting',
     isTitle: false,
     icon: 'mdi mdi-account-group-outline',
-    url: '/docs/whiteboards',
+    url: '/meeting',
   },
 ];
 
