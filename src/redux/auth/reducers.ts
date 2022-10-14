@@ -30,13 +30,13 @@ type AuthActionType = {
     | AuthActionTypes.RESET;
   payload: {
     actionType?: string;
-    data?: UserData | {};
+    data?: UserData | unknown;
     error?: string;
   };
 };
 
 type State = {
-  user?: UserData | {};
+  user?: UserData | unknown;
   loading?: boolean;
   value?: boolean;
 };
