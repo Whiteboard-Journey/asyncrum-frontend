@@ -34,40 +34,38 @@ const useDailyStandup = () => {
         dailyStandups.at(-1)?.author === record.member.fullname &&
         dailyStandups.at(-1)?.title.slice(0, dailyStandups.at(-1)?.title.lastIndexOf(" ")) === record.title.slice(0, dailyStandups.at(-1)?.title.lastIndexOf(" "))
       ) {
+        dailyStandups.at(-1)?.id.push(record.id);
         if (record.title.slice(-6) === 'screen') {
-          dailyStandups.at(-1)?.id.push(record.id);
           (dailyStandups.at(-1) as DailyStandup).screenRecordId = record.id;
           (dailyStandups.at(-1) as DailyStandup).screenRecordFileUrl = record.recordUrl;
         } else {
-          dailyStandups.at(-1)?.id.push(record.id);
           (dailyStandups.at(-1) as DailyStandup).camRecordFileUrl = record.recordUrl;
         }
       } else {
-        if (record.title.slice(-6) === 'screen') {
-          dailyStandups.push({
-            id: [record.id],
+        let dailyStandup = {
+          id: [record.id],
             author: record.member.fullname,
             title: record.title,
             profileImageUrl: record.member.profileImageUrl,
             createdDate: record.createdDate,
             camRecordFileUrl: '',
-            screenRecordFileUrl: record.recordUrl,
-            screenRecordId: record.id,
-            seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
-          });
-        } else {
-          dailyStandups.push({
-            id: [record.id],
-            author: record.member.fullname,
-            title: record.title,
-            profileImageUrl: record.member.profileImageUrl,
-            createdDate: record.createdDate,
-            camRecordFileUrl: record.recordUrl,
             screenRecordFileUrl: '',
             screenRecordId: -1,
             seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
-          });
         }
+        if (record.title.slice(-6) === 'screen') {
+          dailyStandup = {
+            ...dailyStandup,
+            screenRecordFileUrl: record.recordUrl,
+            screenRecordId: record.id,
+          }
+        } else {
+          dailyStandup = {
+            ...dailyStandup,
+            camRecordFileUrl: record.recordUrl,
+          }
+        }
+        dailyStandups.push(dailyStandup);
       }
     }
     setDailyStandups(dailyStandups.reverse());
