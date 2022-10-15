@@ -34,7 +34,9 @@ function manageBodyClass(cssClass: string, action = 'toggle') {
 function* showRightSidebar() {
   try {
     yield call(manageBodyClass, 'end-bar-enabled', 'add');
-  } catch (error) {}
+  } catch (error) {
+    return;
+  }
 }
 
 /**
@@ -43,7 +45,9 @@ function* showRightSidebar() {
 function* hideRightSidebar() {
   try {
     yield call(manageBodyClass, 'end-bar-enabled', 'remove');
-  } catch (error) {}
+  } catch (error) {
+    return;
+  }
 }
 
 export function* watchShowRightSidebar() {

@@ -20,7 +20,7 @@ const Pricing = ({ plans }: PricingProps) => {
                 Choose Simple <span className="text-primary">Pricing</span>
               </h3>
               <p className="text-muted mt-2">
-                The clean and well commented code allows easy customization of the theme.It's designed for
+                The clean and well commented code allows easy customization of the theme. It&apos;s designed for
                 <br />
                 describing your app, agency or business.
               </p>

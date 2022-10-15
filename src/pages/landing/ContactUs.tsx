@@ -65,7 +65,10 @@ const ContactUs = () => {
             </p>
           </Col>
           <Col md={8}>
-            <form onSubmit={handleSubmit(() => {})}>
+            <form
+              onSubmit={handleSubmit(() => {
+                return;
+              })}>
               <Row className="mt-4">
                 <Col lg={6}>
                   <FormInput

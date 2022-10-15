@@ -5,7 +5,7 @@ import { changeBodyAttribute } from 'utils';
 
 const loading = () => <div className=""></div>;
 
-type DefaultLayoutProps = {};
+type DefaultLayoutProps = Record<string, never>;
 
 const DefaultLayout = (props: DefaultLayoutProps) => {
   const { appSelector } = useRedux();

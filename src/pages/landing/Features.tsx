@@ -17,7 +17,7 @@ const Features = ({ features }: FeaturesProps) => {
                 <i className="mdi mdi-heart-multiple-outline"></i>
               </h1>
               <h3>
-                Features you'll <span className="text-danger">love</span>
+                Features you&apos;ll <span className="text-danger">love</span>
               </h3>
               <p className="text-muted mt-2">Asyncrum description</p>
             </div>

@@ -11,7 +11,7 @@ export type AuthActionType = {
     | AuthActionTypes.LOGOUT_USER
     | AuthActionTypes.RESET
     | AuthActionTypes.SIGNUP_USER;
-  payload: {} | string;
+  payload: unknown | string;
 };
 
 type User = {
@@ -26,7 +26,7 @@ type User = {
 };
 
 // common success
-export const authApiResponseSuccess = (actionType: string, data: User | {}): AuthActionType => ({
+export const authApiResponseSuccess = (actionType: string, data: User | unknown): AuthActionType => ({
   type: AuthActionTypes.API_RESPONSE_SUCCESS,
   payload: { actionType, data },
 });
