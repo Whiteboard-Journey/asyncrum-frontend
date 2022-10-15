@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useCallback } from 'react';
 
 import { Flex, Box, Popover, PopoverTrigger, PopoverContent, PopoverBody, PopoverArrow } from '@chakra-ui/react';
 
@@ -23,12 +23,12 @@ const colors = {
   [ColorStyle.Yellow]: '#ffc936',
 };
 
-export default function DrawingControlsColorSelector({ app }: PropsType) {
-  const [isOpen, setIsOpen] = React.useState(false);
+const DrawingControlsColorSelector = ({ app }: PropsType) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   const currentStyle = app.useStore((s) => s.appState.currentStyle);
 
-  const handleColourPick = React.useCallback(
+  const handleColourPick = useCallback(
     (color: ColorStyle) => {
       app.style({ color });
       setIsOpen(false);
@@ -79,4 +79,6 @@ export default function DrawingControlsColorSelector({ app }: PropsType) {
       </PopoverContent>
     </Popover>
   );
-}
+};
+
+export default DrawingControlsColorSelector;

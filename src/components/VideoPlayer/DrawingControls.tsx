@@ -29,7 +29,7 @@ const unSelectedStyle = css`
   opacity: 0.5;
 `;
 
-export default function DrawingControls({ app }: PropsType) {
+const DrawingControls = ({ app }: PropsType) => {
   const activeTool = app.useStore((s) => s.appState.activeTool);
 
   const selectTool = React.useCallback(
@@ -106,4 +106,6 @@ export default function DrawingControls({ app }: PropsType) {
       </Flex>
     </>
   );
-}
+};
+
+export default DrawingControls;

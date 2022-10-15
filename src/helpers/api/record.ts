@@ -4,7 +4,7 @@ import axios from 'axios';
 const api = new APICore();
 const baseURL = '/api/v1/records';
 
-const createRecord = (params: { title: string; description: string; scope: string; teamId: string; }) => {
+const createRecord = (params: { title: string; description: string; scope: string; teamId: string }) => {
   return api.create(baseURL, params);
 };
 

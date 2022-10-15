@@ -27,15 +27,6 @@ type VideoStreamMetadata = {
   index: number;
 };
 
-type VideoAPIResponse = {
-  id: string;
-  title: string;
-  url: string;
-  name: string;
-  profileImageUrl: string;
-  bookmarks: VideoBookmark[];
-}
-
 export type VideoMetadata = {
   streams: Array<VideoStreamMetadata | AudioStreamMetadata>;
 };

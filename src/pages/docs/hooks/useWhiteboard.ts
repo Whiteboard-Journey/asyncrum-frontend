@@ -27,27 +27,30 @@ const useWhiteboard = () => {
   const teamId = user.currentTeam?.id;
   const whiteboardPageURL = '/whiteboard?url=';
 
-  const readAllWhiteboard = useCallback(async (pageIndex: number) => {
-    const readAllWhiteboardAPIResponse = await readAllWhiteboardAPI({ teamId, scope, pageIndex });
-    
-    const whiteboards = readAllWhiteboardAPIResponse.data.whiteboards.map((whiteboard): Whiteboard => {
-      return {
-        id: whiteboard.id,
-        title: whiteboard.title,
-        description: whiteboard.description,
-        createdDate: whiteboard.createdDate,
-        lastModifiedDate: whiteboard.lastModifiedDate,
-        scope: whiteboard.scope,
-        author: whiteboard.member.fullname,
-        authorProfileImageUrl: whiteboard.member.profileImageUrl,
-        whiteboardFileUrl: whiteboard.whiteboardUrl,
-      }
-    });
+  const readAllWhiteboard = useCallback(
+    async (pageIndex: number) => {
+      const readAllWhiteboardAPIResponse = await readAllWhiteboardAPI({ teamId, scope, pageIndex });
 
-    setWhiteboards(whiteboards);
-    setNumberOfWhiteboards(readAllWhiteboardAPIResponse.data.size_ALL_PAGE);
-    setWhiteboardLoading(false);
-  }, [teamId]);
+      const whiteboards = readAllWhiteboardAPIResponse.data.whiteboards.map((whiteboard): Whiteboard => {
+        return {
+          id: whiteboard.id,
+          title: whiteboard.title,
+          description: whiteboard.description,
+          createdDate: whiteboard.createdDate,
+          lastModifiedDate: whiteboard.lastModifiedDate,
+          scope: whiteboard.scope,
+          author: whiteboard.member.fullname,
+          authorProfileImageUrl: whiteboard.member.profileImageUrl,
+          whiteboardFileUrl: whiteboard.whiteboardUrl,
+        };
+      });
+
+      setWhiteboards(whiteboards);
+      setNumberOfWhiteboards(readAllWhiteboardAPIResponse.data.size_ALL_PAGE);
+      setWhiteboardLoading(false);
+    },
+    [teamId]
+  );
 
   useEffect(() => {
     const pageIndex = whiteboardPageNumber - 1;

@@ -24,7 +24,7 @@ type UserData = {
 
 type TeamData = {
   id: number;
-}
+};
 
 type TokenData = {
   payload: {

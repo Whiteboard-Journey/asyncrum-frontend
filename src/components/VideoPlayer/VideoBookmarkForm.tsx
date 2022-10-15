@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useCallback } from 'react';
 import { usePopper } from 'react-popper';
 import { useHotkeys } from 'react-hotkeys-hook';
 
@@ -16,9 +16,9 @@ type Props = {
 };
 
 export default function VideoBookmarkEditor({ bookmark, onChangeContent, onChangeIcon, currentEmoji }: Props) {
-  const [showEmojiPicker, setShowEmojiPicker] = React.useState<boolean>(false);
-  const [referenceElement, setReferenceElement] = React.useState<HTMLDivElement | null>(null);
-  const [popperElement, setPopperElement] = React.useState<HTMLDivElement | null>(null);
+  const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false);
+  const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
+  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement: 'left',
     modifiers: [
@@ -37,7 +37,7 @@ export default function VideoBookmarkEditor({ bookmark, onChangeContent, onChang
     ],
   });
 
-  const handleEmojiPicked = React.useCallback(
+  const handleEmojiPicked = useCallback(
     (details) => {
       setShowEmojiPicker(false);
       onChangeIcon(details);
@@ -45,9 +45,6 @@ export default function VideoBookmarkEditor({ bookmark, onChangeContent, onChang
     [onChangeIcon]
   );
 
-  /**
-   * Escape closes the emoji picker
-   */
   useHotkeys(
     'esc',
     () => {
@@ -74,7 +71,8 @@ export default function VideoBookmarkEditor({ bookmark, onChangeContent, onChang
           ref={setReferenceElement}
           onClick={() => {
             setShowEmojiPicker(!showEmojiPicker);
-          }}>
+          }}
+        >
           {currentEmoji}
         </Flex>
         {showEmojiPicker && (
@@ -83,7 +81,8 @@ export default function VideoBookmarkEditor({ bookmark, onChangeContent, onChang
             zIndex="1"
             style={styles.popper}
             // eslint-disable-next-line react/jsx-props-no-spreading
-            {...attributes.popper}>
+            {...attributes.popper}
+          >
             <Picker data={data} onEmojiSelect={(details: VideoBookmarkIcon) => handleEmojiPicked(details)} />
           </Box>
         )}

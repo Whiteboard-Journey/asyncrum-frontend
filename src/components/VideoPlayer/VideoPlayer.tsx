@@ -1,11 +1,12 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 
 import { css } from '@emotion/react';
-import { Box, Flex, IconButton, Text, Tooltip } from '@chakra-ui/react';
-
+import { Box, Flex, IconButton, Tooltip } from '@chakra-ui/react';
 import { TldrawApp } from '@krapi0314/tldraw';
 
-import { getRatioDimensions } from './layout';
+import getRatioDimensions from './layout';
+import { readRecord as readRecordAPI } from 'helpers';
+
 import Drawing from './Drawing';
 import DrawingControls from './DrawingControls';
 import VideoBookmarkShow from './VideoBookmarkShow';
@@ -13,7 +14,6 @@ import TimeDisplay from './TimeDisplay';
 import TimeControl from './TimeControl';
 import VideoVolume from './VideoVolume';
 import VideoBookmarkAdd from './VideoBookmarkAdd';
-import { readRecord as readRecordAPI } from 'helpers';
 
 import type { Video } from './Video';
 import type { VideoBookmark } from './VideoBookmark';
@@ -29,6 +29,19 @@ const VIDEO_HEIGHT = 720;
 const DISPLAY_ASPECT_RATIO = '16:9';
 const FRAME_RATE = 30;
 const DEFAULT_VOLUME = 0.8;
+const LONG_TIME = 24 * 60 * 60;
+
+const overlayStyle = css`
+  width: ${VIDEO_WIDTH}px;
+  height: ${VIDEO_HEIGHT}px;
+`;
+
+const videoStyle = css`
+  video {
+    width: ${VIDEO_WIDTH}px;
+    height: ${VIDEO_HEIGHT}px;
+  }
+`;
 
 type Props = {
   id: number;
@@ -37,17 +50,19 @@ type Props = {
 // const VideoPlayer = ({ video: HTMLVideoElement }: Props) => {
 const VideoPlayer = ({ id }: Props) => {
   const [app, setApp] = useState<TldrawApp>();
-  const [fullscreen, setFullscreen] = useState<boolean>(false);
-  const [videoDimensions, setVideoDimensions] = useState<[number, number] | null>(null);
-  const [currentTime, setCurrentTime] = useState<number>(0);
-  const [currentVolume, setCurrentVolume] = useState<number>(DEFAULT_VOLUME);
-  const [fullDuration, setFullDuration] = useState<number>(0);
+
   const [videoElemLoading, setVideoElemLoading] = useState<boolean>(true);
   const [videoPlayerLoading, setVideoPlayerLoading] = useState<boolean>(true);
-  const [playing, setPlaying] = useState<boolean>(false);
-  const [editingBookmark, setEditingBookmark] = useState<boolean>(false);
   const [video, setVideo] = useState<Video>({} as Video);
+  const [videoDimensions, setVideoDimensions] = useState<[number, number] | null>(null);
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  const [fullDuration, setFullDuration] = useState<number>(0);
+  const [currentVolume, setCurrentVolume] = useState<number>(DEFAULT_VOLUME);
+  const [fullscreen, setFullscreen] = useState<boolean>(false);
+  const [playing, setPlaying] = useState<boolean>(false);
+
   const [bookmarks, setBookmarks] = useState<VideoBookmark[]>(video.bookmarks);
+  const [editingBookmark, setEditingBookmark] = useState<boolean>(false);
   const [activeBookmark, setActiveBookmark] = useState<VideoBookmark | null>(null);
 
   const overlayRef = useRef<HTMLDivElement | null>(null);
@@ -101,7 +116,7 @@ const VideoPlayer = ({ id }: Props) => {
       false
     );
     _player.load();
-    _player.currentTime = 24 * 60 * 60;
+    _player.currentTime = LONG_TIME;
     _player.volume = 0;
     _player.play();
   };
@@ -155,7 +170,7 @@ const VideoPlayer = ({ id }: Props) => {
       return;
     }
     video.el.play();
-    setPlaying(!playing);
+    setPlaying(true);
   };
 
   const pauseVideo = () => {
@@ -163,20 +178,8 @@ const VideoPlayer = ({ id }: Props) => {
       return;
     }
     video.el.pause();
-    setPlaying(!playing);
+    setPlaying(false);
   };
-
-  const overlayStyle = css`
-    width: ${VIDEO_WIDTH}px;
-    height: ${VIDEO_HEIGHT}px;
-  `;
-
-  const videoStyle = css`
-    video {
-      width: ${VIDEO_WIDTH}px;
-      height: ${VIDEO_HEIGHT}px;
-    }
-  `;
 
   const renderedContent = (() => {
     const renderedDrawingControls = app !== undefined && (
@@ -188,7 +191,8 @@ const VideoPlayer = ({ id }: Props) => {
         pointerEvents="none"
         position="absolute"
         top={0}
-        zIndex={2}>
+        zIndex={2}
+      >
         <Box
           background="gray.900"
           borderColor="whiteAlpha.500"
@@ -196,7 +200,8 @@ const VideoPlayer = ({ id }: Props) => {
           borderWidth="1px"
           boxSizing="border-box"
           padding={4}
-          pointerEvents="all">
+          pointerEvents="all"
+        >
           <DrawingControls app={app} />
         </Box>
       </Flex>
@@ -236,7 +241,8 @@ const VideoPlayer = ({ id }: Props) => {
         left={0}
         position="absolute"
         right={0}
-        zIndex={2}>
+        zIndex={2}
+      >
         <Flex
           align="center"
           background="gray.900"
@@ -245,7 +251,8 @@ const VideoPlayer = ({ id }: Props) => {
           borderWidth="1px"
           minWidth="50vw"
           p={4}
-          pointerEvents="all">
+          pointerEvents="all"
+        >
           <Tooltip label={playing ? 'Pause' : 'Play'}>
             <Box mr="2">
               {!playing && (
@@ -270,11 +277,11 @@ const VideoPlayer = ({ id }: Props) => {
           <Box flexGrow={1} mx="2" minW="25vw">
             <TimeControl
               video={video}
-              setPlaying={setPlaying}
               fullDuration={fullDuration}
               currentTime={currentTime}
               setCurrentTime={setCurrentTime}
               setActiveBookmark={setActiveBookmark}
+              pauseVideo={pauseVideo}
             />
           </Box>
 
@@ -291,10 +298,10 @@ const VideoPlayer = ({ id }: Props) => {
                 scale={1}
                 video={video}
                 setVideo={setVideo}
-                setPlaying={setPlaying}
                 currentTime={currentTime}
                 setEditingBookmark={setEditingBookmark}
                 setActiveBookmark={setActiveBookmark}
+                pauseVideo={pauseVideo}
               />
             </Box>
           )}

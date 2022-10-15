@@ -8,29 +8,22 @@ import type { VideoBookmark } from './VideoBookmark';
 
 type Props = {
   video: Video;
-  setPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   fullDuration: number;
   currentTime: number;
   setCurrentTime: React.Dispatch<React.SetStateAction<number>>;
   setActiveBookmark: React.Dispatch<React.SetStateAction<VideoBookmark | null>>;
+  pauseVideo: () => void;
 };
 
-export default function TimeControl({
-  video,
-  setPlaying,
-  fullDuration,
-  currentTime,
-  setCurrentTime,
-  setActiveBookmark,
-}: Props) {
+const TimeControl = ({ video, fullDuration, currentTime, setCurrentTime, setActiveBookmark, pauseVideo }: Props) => {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [renderedCurrentBookmarks, setRenderedCurrentBookmarks] = useState<JSX.Element[]>([]);
   const [trackDimensions, setTrackDimensions] = useState<DOMRect | null>(null); // tracks the dimensions of the track as it's resized
 
-  function handleSliderChange(time: number) {
+  const handleSliderChange = (time: number) => {
     setCurrentTime(time);
     video.el.currentTime = time;
-  }
+  };
 
   const setBookmarkButtons = () => {
     setRenderedCurrentBookmarks(
@@ -51,14 +44,15 @@ export default function TimeControl({
                 top="-7px"
                 left={`calc(${left}px - 1rem)`}
                 rounded="full"
-                zIndex="1">
+                zIndex="1"
+              >
                 <VideoBookmarkTimeline
                   video={video}
                   bookmark={bookmark}
                   size="medium"
                   setCurrentTime={setCurrentTime}
-                  setPlaying={setPlaying}
                   setActiveBookmark={setActiveBookmark}
+                  pauseVideo={pauseVideo}
                 />
               </Flex>
             );
@@ -102,7 +96,8 @@ export default function TimeControl({
         min={0}
         onChange={(value: number) => handleSliderChange(value)}
         step={1 / video.frameRate}
-        value={currentTime}>
+        value={currentTime}
+      >
         <SliderTrack ref={trackRef}>
           <SliderFilledTrack />
         </SliderTrack>
@@ -110,4 +105,6 @@ export default function TimeControl({
       </Slider>
     </Box>
   );
-}
+};
+
+export default TimeControl;

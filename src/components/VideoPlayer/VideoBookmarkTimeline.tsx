@@ -9,8 +9,8 @@ type Props = {
   video: Video;
   size: 'small' | 'medium';
   setCurrentTime: React.Dispatch<React.SetStateAction<number>>;
-  setPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   setActiveBookmark: React.Dispatch<React.SetStateAction<VideoBookmark | null>>;
+  pauseVideo: () => void;
 };
 
 export default function VideoBookmarkTimeline({
@@ -18,8 +18,8 @@ export default function VideoBookmarkTimeline({
   bookmark,
   size = 'medium',
   setCurrentTime,
-  setPlaying,
   setActiveBookmark,
+  pauseVideo,
 }: Props) {
   function truncateString(str: string, n: number) {
     if (str.length > n) {
@@ -29,8 +29,7 @@ export default function VideoBookmarkTimeline({
   }
 
   function handleGoto() {
-    video.el.pause();
-    setPlaying(false);
+    pauseVideo();
     setCurrentTime(bookmark.time);
     video.el.currentTime = bookmark.time;
     setActiveBookmark(bookmark);

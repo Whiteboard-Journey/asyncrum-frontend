@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useCallback } from 'react';
 
 import { Flex, Popover, PopoverTrigger, PopoverContent, PopoverBody, PopoverArrow } from '@chakra-ui/react';
 import { TldrawApp, SizeStyle } from '@krapi0314/tldraw';
@@ -13,12 +13,12 @@ const sizes = {
   [SizeStyle.Large]: 'L',
 };
 
-export default function DrawingControlsSizeSelector({ app }: PropsType) {
-  const [isOpen, setIsOpen] = React.useState(false);
+const DrawingControlsSizeSelector = ({ app }: PropsType) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   const currentStyle = app.useStore((s) => s.appState.currentStyle);
 
-  const handleSizePick = React.useCallback(
+  const handleSizePick = useCallback(
     (size: SizeStyle) => {
       app.style({ size });
       setIsOpen(false);
@@ -82,4 +82,6 @@ export default function DrawingControlsSizeSelector({ app }: PropsType) {
       </PopoverContent>
     </Popover>
   );
-}
+};
+
+export default DrawingControlsSizeSelector;

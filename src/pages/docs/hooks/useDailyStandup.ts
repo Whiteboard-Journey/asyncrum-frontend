@@ -21,9 +21,9 @@ const useDailyStandup = () => {
 
   const scope = 'team';
   const teamId = user.currentTeam?.id;
+  const pageIndex = 0;
 
   const readAllDailyStandups = useCallback(async () => {
-    const pageIndex = 0;
     const readAllDailyStandupsAPIResponse = await readAllDailyStandupsAPI({ teamId, scope, pageIndex });
     for (const record of readAllDailyStandupsAPIResponse.data.records) {
       if (getTimeDifference(record.createdDate) > 24 && record.seenMemberIdGroup?.indexOf(user.id) > -1) {
@@ -32,42 +32,41 @@ const useDailyStandup = () => {
       if (
         dailyStandups.at(-1) &&
         dailyStandups.at(-1)?.author === record.member.fullname &&
-        dailyStandups.at(-1)?.title.slice(0, dailyStandups.at(-1)?.title.lastIndexOf(" ")) === record.title.slice(0, dailyStandups.at(-1)?.title.lastIndexOf(" "))
+        dailyStandups.at(-1)?.title.slice(0, dailyStandups.at(-1)?.title.lastIndexOf(' ')) ===
+          record.title.slice(0, dailyStandups.at(-1)?.title.lastIndexOf(' '))
       ) {
+        dailyStandups.at(-1)?.id.push(record.id);
         if (record.title.slice(-6) === 'screen') {
-          dailyStandups.at(-1)?.id.push(record.id);
           (dailyStandups.at(-1) as DailyStandup).screenRecordId = record.id;
           (dailyStandups.at(-1) as DailyStandup).screenRecordFileUrl = record.recordUrl;
         } else {
-          dailyStandups.at(-1)?.id.push(record.id);
           (dailyStandups.at(-1) as DailyStandup).camRecordFileUrl = record.recordUrl;
         }
       } else {
+        let dailyStandup = {
+          id: [record.id],
+          author: record.member.fullname,
+          title: record.title,
+          profileImageUrl: record.member.profileImageUrl,
+          createdDate: record.createdDate,
+          camRecordFileUrl: '',
+          screenRecordFileUrl: '',
+          screenRecordId: -1,
+          seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
+        };
         if (record.title.slice(-6) === 'screen') {
-          dailyStandups.push({
-            id: [record.id],
-            author: record.member.fullname,
-            title: record.title,
-            profileImageUrl: record.member.profileImageUrl,
-            createdDate: record.createdDate,
-            camRecordFileUrl: '',
+          dailyStandup = {
+            ...dailyStandup,
             screenRecordFileUrl: record.recordUrl,
             screenRecordId: record.id,
-            seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
-          });
+          };
         } else {
-          dailyStandups.push({
-            id: [record.id],
-            author: record.member.fullname,
-            title: record.title,
-            profileImageUrl: record.member.profileImageUrl,
-            createdDate: record.createdDate,
+          dailyStandup = {
+            ...dailyStandup,
             camRecordFileUrl: record.recordUrl,
-            screenRecordFileUrl: '',
-            screenRecordId: -1,
-            seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
-          });
+          };
         }
+        dailyStandups.push(dailyStandup);
       }
     }
     setDailyStandups(dailyStandups.reverse());
@@ -92,7 +91,14 @@ const useDailyStandup = () => {
     readAllDailyStandups();
   }, [loading, readAllDailyStandups]);
 
-  return { carouselRef, dailyStandups, dailyStandupLoading, setDailyStandups, setDailyStandupLoading, onViewDailyStandups };
+  return {
+    carouselRef,
+    dailyStandups,
+    dailyStandupLoading,
+    setDailyStandups,
+    setDailyStandupLoading,
+    onViewDailyStandups,
+  };
 };
 
 export default useDailyStandup;

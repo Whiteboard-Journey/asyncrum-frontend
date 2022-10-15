@@ -5,24 +5,28 @@ const api = new APICore();
 const baseURL = '/api/v1/whiteboards';
 
 interface IReadAllWhiteboardResponse {
-  whiteboards: IWhiteboard[],
-  size_ALL_PAGE: number,
+  whiteboards: IWhiteboard[];
+  size_ALL_PAGE: number;
 }
 export interface IWhiteboard {
-  id: number,
-  title: string,
-  description: string,
-  createdDate: string,
-  lastModifiedDate: string,
-  scope: string,
-  whiteboardUrl: string,
+  id: number;
+  title: string;
+  description: string;
+  createdDate: string;
+  lastModifiedDate: string;
+  scope: string;
+  whiteboardUrl: string;
   member: {
-    fullname: string,
-    profileImageUrl: string
-  },
+    fullname: string;
+    profileImageUrl: string;
+  };
 }
 
-const readAllWhiteboard = (params: { teamId: string; scope: string; pageIndex: number }): Promise<AxiosResponse<IReadAllWhiteboardResponse>>  => {
+const readAllWhiteboard = (params: {
+  teamId: string;
+  scope: string;
+  pageIndex: number;
+}): Promise<AxiosResponse<IReadAllWhiteboardResponse>> => {
   return api.get(baseURL, params);
 };
 
@@ -30,7 +34,7 @@ const readWhiteboard = (id: string) => {
   return api.get(baseURL + '/' + id, null);
 };
 
-const createWhiteboard = (params: { title: string; description: string; scope: string; teamId: string; }) => {
+const createWhiteboard = (params: { title: string; description: string; scope: string; teamId: string }) => {
   return api.create(baseURL, params);
 };
 

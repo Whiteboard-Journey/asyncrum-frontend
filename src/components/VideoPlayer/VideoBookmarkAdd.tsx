@@ -15,9 +15,9 @@ type Props = {
   video: Video;
   currentTime: number;
   setVideo: React.Dispatch<React.SetStateAction<Video>>;
-  setPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   setEditingBookmark: React.Dispatch<React.SetStateAction<boolean>>;
   setActiveBookmark: React.Dispatch<React.SetStateAction<VideoBookmark | null>>;
+  pauseVideo: () => void;
 };
 
 export default function VideoBookmarkAdd({
@@ -27,13 +27,12 @@ export default function VideoBookmarkAdd({
   video,
   currentTime,
   setVideo,
-  setPlaying,
   setEditingBookmark,
   setActiveBookmark,
+  pauseVideo,
 }: Props) {
   function handleCreate() {
-    video.el.pause();
-    setPlaying(false);
+    pauseVideo();
     createVideoBookmark(video, setVideo, '🔖', '', currentTime, scale, app.document);
     setEditingBookmark(true);
   }

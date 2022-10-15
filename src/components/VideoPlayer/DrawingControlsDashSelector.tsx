@@ -69,7 +69,8 @@ export default function DrawingControlsStyleSelector({ app }: PropsType) {
           border="1px"
           borderColor="whiteAlpha.400"
           background="whiteAlpha.200"
-          boxSizing="border-box">
+          boxSizing="border-box"
+        >
           <Tooltip label={label}>
             <Box>{icon}</Box>
           </Tooltip>
@@ -89,7 +90,8 @@ export default function DrawingControlsStyleSelector({ app }: PropsType) {
           justifyContent="center"
           border="1px"
           borderColor="whiteAlpha.400"
-          onClick={handleOpen}>
+          onClick={handleOpen}
+        >
           {
             // @ts-ignore
             dashes[currentStyle.dash][0]

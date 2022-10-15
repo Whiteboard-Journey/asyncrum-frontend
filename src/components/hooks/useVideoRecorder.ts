@@ -39,7 +39,7 @@ const useVideoRecorder = () => {
       title: title + ' ' + type,
       description: description + ' ' + type,
       scope: 'team',
-      teamId: user.currentTeam.id
+      teamId: user.currentTeam.id,
     };
 
     const createRecordAPIResponse = await createRecordAPI(body);

@@ -10,7 +10,7 @@ const changeTeam = async (teamId: number) => {
   user.currentTeam = readTeamApiResponse.data;
   api.setLoggedInUser(user);
   window.location.reload();
-}
+};
 
 const createTeam = (params: { name: string; code: string }) => {
   return api.create(baseURL, params);
@@ -21,7 +21,7 @@ const createLogoImage = (teamId: number) => {
 };
 
 const readAllTeam = () => {
-  return api.get(baseURL, {pageIndex: 0, topId: 0});
+  return api.get(baseURL, { pageIndex: 0, topId: 0 });
 };
 
 const readTeam = (teamId: number) => {
@@ -49,4 +49,13 @@ const uploadLogoImage = (presignedURL: string, logoImageFile: File) => {
   return uploadAxios.put(presignedURL, logoImageFile);
 };
 
-export { changeTeam, createTeam, createLogoImage, readAllTeam, readTeam, updateTeamInfo, inviteMember, uploadLogoImage };
+export {
+  changeTeam,
+  createTeam,
+  createLogoImage,
+  readAllTeam,
+  readTeam,
+  updateTeamInfo,
+  inviteMember,
+  uploadLogoImage,
+};

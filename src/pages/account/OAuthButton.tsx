@@ -15,7 +15,8 @@ const OAuthButton = ({ type, loading }: Props) => {
       className="signin-button"
       variant="primary"
       type="submit"
-      disabled={loading}>
+      disabled={loading}
+    >
       <img
         className="signin-icon"
         src={type === 'naver' ? naverIcon : googleIcon}
