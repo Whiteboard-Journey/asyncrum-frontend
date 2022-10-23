@@ -29,15 +29,9 @@ const useTeamSettings = () => {
 
   useEffect(() => {
     if (currentTeam) {
-      getTeamData();
+      setLoading(false);
     }
   }, []);
-
-  // useEffect(() => {
-  //   setTeam(currentTeam);
-  //   setPreviewImage(currentTeam?.pictureUrl);
-  //   console.log(currentTeam);
-  // }, [currentTeam]);
 
   const onCreateTeam = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -67,25 +61,6 @@ const useTeamSettings = () => {
     setPreviewImage(defaultImage);
   };
 
-  const getTeamData = async () => {
-    // const readTeamAPIResponse = await readTeamAPI(currentTeam.id);
-    // const teaminfo: Team = {
-    //   id: readTeamAPIResponse.data.id,
-    //   name: readTeamAPIResponse.data.name,
-    //   code: readTeamAPIResponse.data.code,
-    //   pictureUrl: readTeamAPIResponse.data.pictureUrl,
-    //   members: readTeamAPIResponse.data.members.map((member: Member) => ({
-    //     fullname: member.fullname,
-    //     profileImageUrl: member.profileImageUrl,
-    //   })),
-    // };
-    // // setTeam(teaminfo);
-    // setTeamname(teaminfo.name);
-    // setPreviewImage(teaminfo.pictureUrl);
-    setLoading(false);
-    // return teaminfo;
-  };
-
   const onSubmitTeamInfo = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!currentTeam) {
@@ -93,9 +68,6 @@ const useTeamSettings = () => {
     }
     const name = ((e.target as HTMLFormElement).elements.namedItem('name') as HTMLInputElement).value;
     dispatch(updateTeam(currentTeam.id, name));
-    // dispatch(readTeam(currentTeam.id));
-    // await updateTeamInfoAPI(currentTeam.id, { name });
-    // setTeamname(name);
     (e.target as HTMLFormElement).reset();
     changeInfoNotify();
   };
@@ -127,6 +99,7 @@ const useTeamSettings = () => {
       const createLogoImageAPIResponse = await createLogoImageAPI(currentTeam.id);
       const presignedURL = createLogoImageAPIResponse.data.preSignedURL;
       await uploadLogoImageAPI(presignedURL, logoImageFile);
+      dispatch(readTeam(currentTeam.id));
       changeImageNotify();
     }
   };
