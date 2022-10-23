@@ -9,7 +9,7 @@ const createProfileImage = () => {
   return api.create(baseURL + `/${user.id}/image`, null);
 };
 
-const updateProfileInfo = (params: { fullname: string; nickname: string }) => {
+const updateProfileInfo = (params: { fullname: string; timezone: string }) => {
   return api.updatePatch(baseURL + `/${user.id}`, params);
 };
 
