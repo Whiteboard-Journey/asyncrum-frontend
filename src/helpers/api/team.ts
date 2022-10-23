@@ -3,12 +3,10 @@ import axios from 'axios';
 
 const api = new APICore();
 const baseURL = '/api/v1/teams';
-const user = api.getLoggedInUser();
 
 const changeTeam = async (teamId: number) => {
   const readTeamApiResponse = await readTeam(teamId);
-  user.currentTeam = readTeamApiResponse.data;
-  api.setLoggedInUser(user);
+  api.setCurrentTeam(readTeamApiResponse.data);
   window.location.reload();
 };
 
@@ -28,7 +26,7 @@ const readTeam = (teamId: number) => {
   return api.get(baseURL + `/${teamId}`, null);
 };
 
-const updateTeamInfo = (teamId: number, params: { name: string }) => {
+const updateTeam = (teamId: number, params: { name: string }) => {
   return api.updatePatch(baseURL + `/${teamId}`, params);
 };
 
@@ -55,7 +53,7 @@ export {
   createLogoImage,
   readAllTeam,
   readTeam,
-  updateTeamInfo,
+  updateTeam,
   inviteMember,
   uploadLogoImage,
 };

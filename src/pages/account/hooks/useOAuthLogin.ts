@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Location, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { resetAuth, oauthLoginUser } from 'redux/actions';
+import { resetAuth, oauthLoginUser, readAllTeam } from 'redux/actions';
 import { useRedux } from 'hooks';
 
 type LocationState = {
@@ -36,6 +36,7 @@ export default function useOAuthLogin() {
     */
   const onSubmit = (token: string) => {
     dispatch(oauthLoginUser(token));
+    dispatch(readAllTeam());
   };
 
   return {

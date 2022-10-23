@@ -7,8 +7,9 @@ import { useRedux } from 'hooks';
 const useVideoRecorder = () => {
   const { appSelector } = useRedux();
 
-  const { user } = appSelector((state) => ({
+  const { user, currentTeam } = appSelector((state) => ({
     user: state.Auth.user,
+    currentTeam: state.Team.currentTeam,
   }));
   const [recordingState, setRecordingState] = useState<'idle' | 'recording' | 'recorded'>('idle');
 
@@ -39,7 +40,7 @@ const useVideoRecorder = () => {
       title: title + ' ' + type,
       description: description + ' ' + type,
       scope: 'team',
-      teamId: user.currentTeam.id,
+      teamId: currentTeam.id,
     };
 
     const createRecordAPIResponse = await createRecordAPI(body);

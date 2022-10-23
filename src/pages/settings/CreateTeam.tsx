@@ -7,10 +7,15 @@ import CreateTeamNameForm from './CreateTeamNameForm';
 import CreateTeamImageForm from './CreateTeamImageForm';
 import InviteMemberButton from './InviteMemberButton';
 import { useTeamSettings } from './hooks';
+import { useRedux } from 'hooks';
 
 const CreateTeam = () => {
+  const { appSelector } = useRedux();
+  const { currentTeam } = appSelector((state) => ({
+    currentTeam: state.Team.currentTeam,
+  }));
+
   const {
-    team,
     fileInput,
     defaultImage,
     onCreateTeam,
@@ -73,7 +78,7 @@ const CreateTeam = () => {
                                 <h2 className="mt-0">
                                   <i className="mdi mdi-check-all"></i>
                                 </h2>
-                                <h3 className="mt-0 mb-4">Team {team?.name} Created !</h3>
+                                <h3 className="mt-0 mb-4">Team {currentTeam?.name} Created !</h3>
                               </div>
                             </Col>
 

@@ -2,33 +2,35 @@ import { Link } from 'react-router-dom';
 import { Team } from './types';
 import { Dropdown } from 'react-bootstrap';
 import { changeTeam } from 'helpers';
-import { APICore } from 'helpers/api/apiCore';
+import { useRedux } from 'hooks';
 
 type LeftPanelProps = {
   selected: string;
 };
 
 const LeftPanel = ({ selected }: LeftPanelProps) => {
-  const api = new APICore();
-  const user = api.getLoggedInUser();
+  const { appSelector } = useRedux();
+  const { teamList, currentTeam } = appSelector((state) => ({
+    teamList: state.Team.teamList,
+    currentTeam: state.Team.currentTeam,
+  }));
 
   return (
     <>
-      {user.teams && (
+      {currentTeam && (
         <Dropdown className="mb-3">
           <Dropdown.Toggle className="w-100">
-            <i className="mdi me-1"></i> {user.currentTeam.name}
+            <i className="mdi me-1"></i> {currentTeam.name}
           </Dropdown.Toggle>
           <Dropdown.Menu className="w-100">
-            {user.teams.map((team: Team) => {
+            {teamList.map((team: Team) => {
               return (
                 <Dropdown.Item
                   key={team.id}
                   onClick={() => {
                     changeTeam(team.id);
                   }}
-                  active={team.id === user.currentTeam.id ? true : false}
-                >
+                  active={team.id === currentTeam.id ? true : false}>
                   <i className=""></i> {team.name}
                 </Dropdown.Item>
               );

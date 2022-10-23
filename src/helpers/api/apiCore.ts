@@ -54,6 +54,17 @@ const getUserFromSession = () => {
   const user = sessionStorage.getItem(AUTH_SESSION_KEY);
   return user ? (typeof user == 'string' ? JSON.parse(user) : user) : null;
 };
+
+const getTeamListFromSession = () => {
+  const teamList = sessionStorage.getItem('TEAM_LIST');
+  return teamList ? (typeof teamList == 'string' ? JSON.parse(teamList) : teamList) : null;
+}
+
+const getCurrentTeamFromSession = () => {
+  const currentTeam = sessionStorage.getItem('CURRENT_TEAM');
+  return currentTeam ? (typeof currentTeam == 'string' ? JSON.parse(currentTeam) : currentTeam) : null;
+}
+
 class APICore {
   /**
    * Fetches data from given url
@@ -216,6 +227,28 @@ class APICore {
       this.setLoggedInUser({ token, ...user, ...modifiedUser });
     }
   };
+
+  setTeamList = (teamList: any) => {
+    if (teamList) sessionStorage.setItem('TEAM_LIST', JSON.stringify(teamList));
+    else {
+      sessionStorage.removeItem('TEAM_LIST')
+    }
+  }
+
+  getTeamList = () => {
+    return getTeamListFromSession();
+  }
+
+  setCurrentTeam = (currentTeam: any) => {
+    if (currentTeam) sessionStorage.setItem('CURRENT_TEAM', JSON.stringify(currentTeam));
+    else {
+      sessionStorage.removeItem('CURRENT_TEAM')
+    }
+  }
+
+  getCurrentTeam = () => {
+    return getCurrentTeamFromSession();
+  }
 }
 
 /*

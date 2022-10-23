@@ -14,13 +14,14 @@ const useDailyStandup = () => {
 
   const { getTimeDifference } = useMoment();
 
-  const { loading, user } = appSelector((state) => ({
+  const { loading, user, currentTeam } = appSelector((state) => ({
     loading: state.Auth.loading,
     user: state.Auth.user,
+    currentTeam: state.Team.currentTeam,
   }));
 
   const scope = 'team';
-  const teamId = user.currentTeam?.id;
+  const teamId = currentTeam.id;
   const pageIndex = 0;
 
   const readAllDailyStandups = useCallback(async () => {
