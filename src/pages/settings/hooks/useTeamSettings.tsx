@@ -2,15 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useRedux } from 'hooks';
 import { toast } from 'react-toastify';
 import {
-  createTeam as createTeamAPI,
-  readAllTeam as readAllTeamApi,
+  // createTeam as createTeamAPI,
   createLogoImage as createLogoImageAPI,
   uploadLogoImage as uploadLogoImageAPI,
   inviteMember as inviteMemberAPI,
 } from 'helpers';
-import { readTeam, updateTeam } from 'redux/actions';
-import { Member, Team, Invitation } from '../types';
-import { APICore } from 'helpers/api/apiCore';
+import { createTeam, readTeam, updateTeam } from 'redux/actions';
+import { Invitation } from '../types';
 import defaultImage from 'assets/images/asyncrum-logo-small.png';
 
 const useTeamSettings = () => {
@@ -37,27 +35,7 @@ const useTeamSettings = () => {
     e.preventDefault();
     const name = ((e.target as HTMLFormElement).elements.namedItem('name') as HTMLInputElement).value;
     const code = name.slice(0, 3) + Date.now();
-    const createTeamAPIResponse = await createTeamAPI({ name, code });
-    const newTeam = createTeamAPIResponse.data;
-    // if (user['teams']) {
-    //   user['teams'].push(newTeam);
-    // } else {
-    //   user['teams'] = [newTeam];
-    // }
-    // user['currentTeam'] = newTeam;
-    // const readTeamAPIResponse = await readTeamAPI(newTeam.id);
-    // const teaminfo: Team = {
-    //   id: readTeamAPIResponse.data.id,
-    //   name: readTeamAPIResponse.data.name,
-    //   code: readTeamAPIResponse.data.code,
-    //   pictureUrl: readTeamAPIResponse.data.pictureUrl,
-    //   members: readTeamAPIResponse.data.members.map((member: Member) => ({
-    //     fullname: member.fullname,
-    //     profileImageUrl: member.profileImageUrl,
-    //   })),
-    // };
-    // setTeam(teaminfo);
-    // setTeamname(teaminfo.name);
+    dispatch(createTeam(name, code));
     setPreviewImage(defaultImage);
   };
 

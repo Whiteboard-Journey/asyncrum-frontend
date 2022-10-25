@@ -25,7 +25,7 @@ const api = new APICore();
 function* create({ payload: { name, code }, type }: TeamData): SagaIterator {
   try {
     const response = yield call(createTeamApi, { name, code });
-    const id = response.data;
+    const id = response.data.id;
     const allTeamResponse = yield call(readAllTeamApi);
     const allTeam = allTeamResponse.data.teams
     const currentTeamResponse = yield call(readTeamApi, id);

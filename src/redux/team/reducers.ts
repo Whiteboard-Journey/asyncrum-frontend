@@ -78,7 +78,6 @@ const Team = (state: State = INIT_STATE, action: TeamActionType) => {
           };
         }
         case TeamActionTypes.UPDATE_TEAM: {
-          console.log(action.payload);
           return {
             ...state,
             teamList: action.payload.teamListData,
