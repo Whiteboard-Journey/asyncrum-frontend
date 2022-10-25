@@ -9,7 +9,7 @@ export type TeamActionType = {
     | TeamActionTypes.READ_ALL_TEAM
     | TeamActionTypes.READ_TEAM
     | TeamActionTypes.UPDATE_TEAM
-    | TeamActionTypes.DELETE_TEAM
+    | TeamActionTypes.LEAVE_TEAM
     | TeamActionTypes.CHANGE_TEAM
     | TeamActionTypes.RESET
   payload: unknown | string;
@@ -61,9 +61,9 @@ export const updateTeam = (id: number, name: string): TeamActionType => ({
   payload: { id, name },
 });
 
-export const deleteTeam = (id: number): TeamActionType => ({
-  type: TeamActionTypes.DELETE_TEAM,
-  payload: { id },
+export const leaveTeam = (teamId: number, memberId: number): TeamActionType => ({
+  type: TeamActionTypes.LEAVE_TEAM,
+  payload: { teamId, memberId },
 });
 
 export const changeTeam = (id: number): TeamActionType => ({

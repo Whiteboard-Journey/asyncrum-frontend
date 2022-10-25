@@ -6,7 +6,7 @@ export enum TeamActionTypes {
   READ_ALL_TEAM = '@@team/READ_ALL_TEAM',
   READ_TEAM = '@@team/READ_TEAM',
   UPDATE_TEAM = '@@team/UPDATE_TEAM',
-  DELETE_TEAM = '@@team/DELETE_TEAM',
+  LEAVE_TEAM = '@@team/LEAVE_TEAM',
   CHANGE_TEAM = '@@team/CHANGE_TEAM',
 
   RESET = '@@team/RESET',

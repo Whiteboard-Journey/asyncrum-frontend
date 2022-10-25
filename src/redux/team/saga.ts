@@ -6,6 +6,7 @@ import {
   readTeam as readTeamApi,
   readAllTeam as readAllTeamApi,
   updateTeam as updateTeamApi,
+  removeMember as removeMemberApi
 } from 'helpers';
 import { teamApiResponseSuccess, teamApiResponseError } from './actions';
 import { TeamActionTypes } from './constants';
@@ -19,6 +20,14 @@ type TeamData = {
   };
   type: string;
 };
+
+type LeaveData = {
+  payload: {
+    teamId: number;
+    memberId: number;
+  };
+  type: string;
+}
 
 const api = new APICore();
 
@@ -76,6 +85,19 @@ function* update({ payload: { id, name }, type }: TeamData): SagaIterator {
   }
 }
 
+function* leave({ payload: { teamId, memberId }, type}: LeaveData): SagaIterator {
+  try {
+    yield call(removeMemberApi, teamId, memberId );
+    const response = yield call(readAllTeamApi);
+    const allTeam = response.data.teams;
+    api.setTeamList(allTeam);
+    api.setCurrentTeam(allTeam[0]);
+    yield put(teamApiResponseSuccess(TeamActionTypes.LEAVE_TEAM, allTeam, allTeam[0]));
+  } catch (error: any) {
+    yield put(teamApiResponseError(TeamActionTypes.LEAVE_TEAM, error));
+  }
+}
+
 export function* watchCreateTeam() {
   yield takeEvery(TeamActionTypes.CREATE_TEAM, create);
 }
@@ -92,12 +114,17 @@ export function* watchUpdateTeam() {
   yield takeEvery(TeamActionTypes.UPDATE_TEAM, update);
 }
 
+export function* watchLeaveTeam() {
+  yield takeEvery(TeamActionTypes.LEAVE_TEAM, leave);
+}
+
 function* teamSaga() {
   yield all([
     fork(watchCreateTeam),
     fork(watchReadAllTeam),
     fork(watchReadTeam),
     fork(watchUpdateTeam),
+    fork(watchLeaveTeam),
   ]);
 }
 

@@ -1,26 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useRedux } from 'hooks';
+import { useRedux, useToggle } from 'hooks';
 import { toast } from 'react-toastify';
 import {
   createLogoImage as createLogoImageAPI,
   uploadLogoImage as uploadLogoImageAPI,
   inviteMember as inviteMemberAPI,
 } from 'helpers';
-import { createTeam, readTeam, updateTeam } from 'redux/actions';
+import { createTeam, readTeam, updateTeam, leaveTeam } from 'redux/actions';
 import { Invitation } from '../types';
 import defaultImage from 'assets/images/asyncrum-logo-small.png';
 
 const useTeamSettings = () => {
   const { dispatch, appSelector } = useRedux();
 
-  const { teamList, currentTeam } = appSelector((state) => ({
-    teamList: state.Team.teamList,
+  const { user, currentTeam } = appSelector((state) => ({
+    user: state.Auth.user,
     currentTeam: state.Team.currentTeam,
   }));
 
   const [loading, setLoading] = useState<boolean>(true);
   const [previewImage, setPreviewImage] = useState<string>(currentTeam?.pictureUrl);
   const [logoImageFile, setLogoImageFile] = useState<null | File>();
+  const [isDeleteOpen, toggleDelete] = useToggle();
 
   const fileInput = useRef<HTMLInputElement>(null);
 
@@ -104,6 +105,11 @@ const useTeamSettings = () => {
     invitationNotify(email);
   };
 
+  const onLeaveTeam = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(leaveTeam(currentTeam.id, user.id));
+  };
+
   const changeInfoNotify = () => {
     toast(<div>Team Information changed successfully!</div>);
   };
@@ -124,12 +130,22 @@ const useTeamSettings = () => {
       </div>
     );
 
+  const closeModalAfterFunction = (
+    f: (e: React.FormEvent<HTMLFormElement>) => void,
+    event: React.FormEvent<HTMLFormElement>,
+    toggle: () => void
+  ) => {
+    f(event);
+    toggle();
+  };
+
   return {
     loading,
     previewImage,
     defaultImage,
     logoImageFile,
     fileInput,
+    isDeleteOpen,
     setPreviewImage,
     onCreateTeam,
     onSubmitTeamInfo,
@@ -137,6 +153,9 @@ const useTeamSettings = () => {
     onSaveLogoImage,
     onCancelChangeLogoImage,
     onInvite,
+    onLeaveTeam,
+    toggleDelete,
+    closeModalAfterFunction,
   };
 };
 
