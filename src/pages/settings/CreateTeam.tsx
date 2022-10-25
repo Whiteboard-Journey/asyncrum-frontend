@@ -17,7 +17,7 @@ const CreateTeam = () => {
 
   const {
     fileInput,
-    defaultImage,
+    previewImage,
     onCreateTeam,
     onChangeLogoImage,
     onSaveLogoImage,
@@ -62,7 +62,7 @@ const CreateTeam = () => {
                           <CreateTeamImageForm
                             next={next}
                             fileInput={fileInput}
-                            previewImage={defaultImage}
+                            previewImage={previewImage}
                             onChangeLogoImage={onChangeLogoImage}
                             onSaveLogoImage={onSaveLogoImage}
                             onCancelChangeLogoImage={onCancelChangeLogoImage}

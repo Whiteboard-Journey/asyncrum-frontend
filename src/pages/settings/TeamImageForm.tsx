@@ -1,6 +1,7 @@
 import { Button } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import { TeamImageFormProps } from './types';
+import { useRedux } from 'hooks';
 
 const TeamImageForm: React.FC<TeamImageFormProps> = ({
   fileInput,
@@ -9,6 +10,11 @@ const TeamImageForm: React.FC<TeamImageFormProps> = ({
   onSaveLogoImage,
   onCancelChangeLogoImage,
 }: TeamImageFormProps) => {
+  const { appSelector } = useRedux();
+  const { currentTeam } = appSelector((state) => ({
+    currentTeam: state.Team.currentTeam,
+  }));
+
   return (
     <>
       <div style={{ height: 190, position: 'relative' }}>
@@ -17,7 +23,7 @@ const TeamImageForm: React.FC<TeamImageFormProps> = ({
         </p>
         <div className="overlay-container">
           <img
-            src={previewImage}
+            src={previewImage === currentTeam?.pictureUrl ? currentTeam?.pictureUrl : previewImage}
             alt="profile preview"
             className="rounded ratio ratio-1x1"
             style={{ position: 'absolute', width: 150, height: 150, cursor: 'pointer' }}
@@ -38,8 +44,7 @@ const TeamImageForm: React.FC<TeamImageFormProps> = ({
               if (fileInput.current) {
                 fileInput.current.click();
               }
-            }}
-          >
+            }}>
             <div className="overlay-text">click to upload</div>
           </div>
         </div>

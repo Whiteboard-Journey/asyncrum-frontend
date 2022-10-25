@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useRedux } from 'hooks';
 import { toast } from 'react-toastify';
 import {
-  // createTeam as createTeamAPI,
   createLogoImage as createLogoImageAPI,
   uploadLogoImage as uploadLogoImageAPI,
   inviteMember as inviteMemberAPI,
@@ -31,12 +30,15 @@ const useTeamSettings = () => {
     }
   }, []);
 
+  useEffect(() => {
+    setPreviewImage(currentTeam?.pictureUrl);
+  }, [currentTeam]);
+
   const onCreateTeam = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const name = ((e.target as HTMLFormElement).elements.namedItem('name') as HTMLInputElement).value;
     const code = name.slice(0, 3) + Date.now();
     dispatch(createTeam(name, code));
-    setPreviewImage(defaultImage);
   };
 
   const onSubmitTeamInfo = async (e: React.FormEvent<HTMLFormElement>) => {
