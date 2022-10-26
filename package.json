@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@chakra-ui/react": "1.8.9",
+    "@craco/craco": "^6.4.5",
     "@emoji-mart/data": "^1.0.6",
     "@emoji-mart/react": "^1.0.1",
     "@emotion/react": "^11.10.4",
@@ -74,7 +75,7 @@
     "eject": "react-scripts eject",
     "format": "prettier --write 'src/**/*.{ts,tsx}'",
     "lint": "eslint --fix 'src/**/*.{ts,tsx}'",
-    "purge": "purgecss --css ./build/static/css/*.css --output ./build/static/css/ --content ./build/index.html ./build/static/js/*.js --config ./purgecss.config.js"
+    "purge": "purgecss --css build/static/css/*.css --output build/static/css --content build/index.html build/static/js/*.js --config purgecss.config.js"
   },
   "browserslist": {
     "production": [
