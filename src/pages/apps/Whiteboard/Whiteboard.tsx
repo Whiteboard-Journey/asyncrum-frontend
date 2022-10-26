@@ -5,10 +5,6 @@ import { useCallback, useEffect, useState } from 'react';
 import * as yorkie from 'yorkie-js-sdk';
 import { useRedux } from 'hooks';
 
-const params = new URLSearchParams(window.location.search);
-const id = params.get('id');
-const url = params.get('url');
-
 // 0. Yorkie Client declaration
 let client: yorkie.Client<yorkie.Indexable>
 
@@ -29,11 +25,22 @@ type YorkieDocType = {
 }
 
 const Whiteboard = () => {
+  const [id, setId] = useState<string>();
   const { appSelector } = useRedux();
 
   const { user } = appSelector((state) => ({
     user: state.Auth.user,
   }));
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const paramId = params.get('id');
+
+    if(typeof paramId === 'string'){
+      setId(paramId);
+    }
+  }, [])
+
 
   function useMultiplayerState(roomId: string, userName: string) {
     const [app, setApp] = useState<TldrawApp>()
@@ -43,7 +50,7 @@ const Whiteboard = () => {
   
     const onMount = useCallback(
       (app: TldrawApp) => {
-        app.loadRoom(roomId, userName)
+        app.loadRoom(roomId, user.fullname ? user.fullname : 'Anony')
         app.setIsLoading(true)
         app.pause()
         setApp(app)
@@ -96,10 +103,12 @@ const Whiteboard = () => {
   
     // UndoManager will be implemented in further demo
     const onUndo = useCallback(() => {
+      return
     }, [])
   
     // RedoManager will be implemented in further demo
     const onRedo = useCallback(() => {
+      return
     }, [])
   
     // Handle presence updates when the user's pointer / selection changes
@@ -115,15 +124,17 @@ const Whiteboard = () => {
       if (!app) return
   
       // Detach & deactive yorkie client before unload
-      function handleDisconnect() {
+      async function handleDisconnect() {
         if (client === undefined || doc === undefined) return
+
+        console.log("datach")
   
-        client.detach(doc);
-        client.deactivate();
+        await client.detach(doc);
+        await client.deactivate();
       }
   
       window.addEventListener("beforeunload", handleDisconnect);
-      // add handleDisconnect on dashboard redirection
+      //window.addEventListener("popstate", handleDisconnect);
   
       // Subscribe to changes
       function handleChanges() {
@@ -131,10 +142,11 @@ const Whiteboard = () => {
   
         // WARNING: hard-coded section --------
         // Parse proxy object to record
+        // eslint-disable-next-line
         const shapeRecord: Record<string, TDShape> = JSON.parse(root.shapes.toJSON().replace(/\\\'/g, "'"))
         const bindingRecord: Record<string, TDBinding> = JSON.parse(root.bindings.toJSON())
         const assetRecord: Record<string, TDAsset> = JSON.parse(root.assets.toJSON())
-  
+
         // Replace page content with changed(propagated) records
         app?.replacePageContent(shapeRecord, bindingRecord, assetRecord)
       }
@@ -147,7 +159,7 @@ const Whiteboard = () => {
           // 01. Active client with RPCAddr(envoy) with presence
           //     also add apiKey if provided
           const options: options = {
-            apiKey: "cdcgj34qfu9can8ujemg",
+            apiKey: "",
             presence: {
               user: app?.currentUser,
             },
@@ -160,7 +172,7 @@ const Whiteboard = () => {
           }
   
           client = new yorkie.Client(
-            `${process.env.REACT_APP_YORKIE_RPC_ADDR}`, options
+            `${process.env.REACT_APP_YORKIE_URL}`, options
           )
           await client.activate()
   
@@ -237,6 +249,7 @@ const Whiteboard = () => {
   
       return () => {
         window.removeEventListener("beforeunload", handleDisconnect);
+        //window.removeEventListener("popstate", handleDisconnect);
         stillAlive = false
       }
     }, [app])
@@ -277,7 +290,7 @@ const Whiteboard = () => {
     const onAssetDelete = useCallback(
       // 1. Call deleteS3Object aws lamdba function to delete file on s3 bucket
       async (app: TldrawApp, assetId: string): Promise<boolean> => {
-        let fileName: string = ""
+        let fileName = ""
         
         Object.entries(app.assets).forEach(([id, asset]) => {
           if (assetId === asset.id) {
@@ -321,7 +334,7 @@ const Whiteboard = () => {
   }
 
   const fileSystemEvents = useFileSystem();
-  const { ...events } = useMultiplayerState(id ? id : 'temp', url ? url : '');
+  const { ...events } = useMultiplayerState(id ? id : 'default', '');
   const { ...assetEvents } = useMultiplayerAssets();
 
   return (
