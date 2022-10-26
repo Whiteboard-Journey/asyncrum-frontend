@@ -17,7 +17,7 @@ import {
   createLogoImage,
   readAllTeam,
   readTeam,
-  updateTeamInfo,
+  updateTeam,
   inviteMember,
   uploadLogoImage,
 } from './team';
@@ -34,7 +34,7 @@ export {
   createLogoImage,
   readAllTeam,
   readTeam,
-  updateTeamInfo,
+  updateTeam,
   inviteMember,
   uploadLogoImage,
 };

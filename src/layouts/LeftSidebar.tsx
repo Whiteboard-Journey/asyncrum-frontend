@@ -20,17 +20,18 @@ const SideBarContent = ({ hideUserProfile }: SideBarContentProps) => {
   const { appSelector } = useRedux();
   const [menuItems, setMenuItems] = useState<MenuItemType[]>([]);
 
-  const { loading, user } = appSelector((state) => ({
+  const { loading, user, teamList } = appSelector((state) => ({
     loading: state.Auth.loading,
     user: state.Auth.user,
+    teamList: state.Team.teamList,
   }));
 
   useEffect(() => {
     if (loading) {
       return;
     }
-    setMenuItems(getMenuItems(user.teams));
-  }, [loading]);
+    setMenuItems(getMenuItems(teamList));
+  }, [loading, teamList]);
 
   return (
     <>

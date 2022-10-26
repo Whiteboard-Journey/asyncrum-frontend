@@ -1,6 +1,7 @@
 import { Button } from 'react-bootstrap';
 import { VerticalForm } from 'components';
 import { CreateTeamImageFormProps } from './types';
+import { useRedux } from 'hooks';
 
 const CreateTeamImageForm: React.FC<CreateTeamImageFormProps> = ({
   next,
@@ -10,6 +11,11 @@ const CreateTeamImageForm: React.FC<CreateTeamImageFormProps> = ({
   onSaveLogoImage,
   onCancelChangeLogoImage,
 }: CreateTeamImageFormProps) => {
+  const { appSelector } = useRedux();
+  const { currentTeam } = appSelector((state) => ({
+    currentTeam: state.Team.currentTeam,
+  }));
+
   return (
     <>
       <VerticalForm
@@ -17,8 +23,7 @@ const CreateTeamImageForm: React.FC<CreateTeamImageFormProps> = ({
           if (next) {
             next();
           }
-        }}
-      >
+        }}>
         <div className="d-flex align-items-center justify-content-center">
           <div>
             <div style={{ height: 190, position: 'relative' }}>
@@ -27,7 +32,7 @@ const CreateTeamImageForm: React.FC<CreateTeamImageFormProps> = ({
               </p>
               <div className="overlay-container mx-auto">
                 <img
-                  src={previewImage}
+                  src={currentTeam && previewImage === currentTeam.pictureUrl ? currentTeam?.pictureUrl : previewImage}
                   alt="logo preview"
                   className="rounded ratio ratio-1x1"
                   style={{ position: 'absolute', width: 150, height: 150, cursor: 'pointer' }}
@@ -48,8 +53,7 @@ const CreateTeamImageForm: React.FC<CreateTeamImageFormProps> = ({
                     if (fileInput.current) {
                       fileInput.current.click();
                     }
-                  }}
-                >
+                  }}>
                   <div className="overlay-text">click to upload</div>
                 </div>
               </div>

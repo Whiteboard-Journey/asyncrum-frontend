@@ -19,12 +19,12 @@ const useWhiteboard = () => {
   const [isCreateWhiteboardOpen, toggleCreateWhiteboard] = useToggle();
   const { appSelector } = useRedux();
 
-  const { user } = appSelector((state) => ({
-    user: state.Auth.user,
+  const { currentTeam } = appSelector((state) => ({
+    currentTeam: state.Team.currentTeam
   }));
 
   const scope = 'team';
-  const teamId = user.currentTeam?.id;
+  const teamId = currentTeam.id;
   const whiteboardPageURL = '/whiteboard?url=';
 
   const readAllWhiteboard = useCallback(

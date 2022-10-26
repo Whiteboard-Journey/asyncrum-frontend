@@ -24,8 +24,8 @@ const usePersonalSettings = () => {
   const onSubmitProfileInfo = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fullname = ((e.target as HTMLFormElement).elements.namedItem('fullname') as HTMLInputElement).value;
-    const nickname = '';
-    await updateProfileInfoAPI({ fullname, nickname });
+    const timezone = '';
+    await updateProfileInfoAPI({ fullname, timezone });
     setUserFullname(fullname);
     user.fullname = fullname;
     sessionStorage.setItem('asyncrum_user', JSON.stringify(user));

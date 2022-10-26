@@ -8,12 +8,16 @@ import TeamInfoForm from './TeamInfoForm';
 import TeamImageForm from './TeamImageForm';
 import InviteMemberButton from './InviteMemberButton';
 import { useTeamSettings } from './hooks';
+import { useRedux } from 'hooks';
 
 const TeamSettings = () => {
+  const { appSelector } = useRedux();
+  const { currentTeam } = appSelector((state) => ({
+    currentTeam: state.Team.currentTeam,
+  }));
+
   const {
     loading,
-    team,
-    teamname,
     previewImage,
     fileInput,
     onSubmitTeamInfo,
@@ -45,7 +49,7 @@ const TeamSettings = () => {
                   <h4 className="mb-3">Change Team Information</h4>
                   <Row>
                     <Col md={7}>
-                      <TeamInfoForm teamname={teamname} onSubmitTeamInfo={onSubmitTeamInfo} />
+                      <TeamInfoForm teamname={currentTeam.name} onSubmitTeamInfo={onSubmitTeamInfo} />
                     </Col>
                     <Col md={{ span: 3, offset: 2 }}>
                       <TeamImageForm
@@ -65,7 +69,7 @@ const TeamSettings = () => {
                     </Col>
                   </Row>
                   <Row>
-                    {team?.members.map((member: Member, i: number) => {
+                    {currentTeam?.members?.map((member: Member, i: number) => {
                       return (
                         <Col key={i} sm={6} lg={4} xl={3} className="mb-4">
                           <MemberCard member={member} />
@@ -76,7 +80,7 @@ const TeamSettings = () => {
                   <hr />
                   <Row>
                     <Col>
-                      <h4>Leave {teamname} team</h4>
+                      <h4>Leave {currentTeam.name} team</h4>
                       <p>By leaving the team, you will lose access to all its contents.</p>
                       <Button className="btn btn-danger">Leave Team</Button>
                     </Col>

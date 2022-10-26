@@ -1,6 +1,5 @@
 import { MENU_ITEMS, MenuItemType } from 'appConstants';
-import { Team } from 'pages/settings/types';
-const getMenuItems = (teams: Team[]) => {
+const getMenuItems = (teams: any) => {
   const menu: MenuItemType[] =
     teams && teams.length > 0
       ? [
@@ -11,7 +10,7 @@ const getMenuItems = (teams: Team[]) => {
             isTitle: false,
             children:
               teams.length > 0
-                ? teams.map((team: Team) => {
+                ? teams.map((team: any) => {
                     const teamObject = {
                       key: team.code,
                       label: team.name,
