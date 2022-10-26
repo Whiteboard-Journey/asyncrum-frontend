@@ -51,9 +51,11 @@ function* readAll(): SagaIterator {
   try {
     const response = yield call(readAllTeamApi);
     const allTeam = response.data.teams;
+    const currentTeamResponse = yield call(readTeamApi, allTeam[0].id);
+    const currentTeam = currentTeamResponse.data
     api.setTeamList(allTeam);
-    api.setCurrentTeam(allTeam[0]);
-    yield put(teamApiResponseSuccess(TeamActionTypes.READ_ALL_TEAM, allTeam, allTeam[0]));
+    api.setCurrentTeam(currentTeam);
+    yield put(teamApiResponseSuccess(TeamActionTypes.READ_ALL_TEAM, allTeam, currentTeam));
   } catch (error: any) {
     yield put(teamApiResponseError(TeamActionTypes.READ_ALL_TEAM, error));
   }
@@ -90,9 +92,11 @@ function* leave({ payload: { teamId, memberId }, type}: LeaveData): SagaIterator
     yield call(removeMemberApi, teamId, memberId );
     const response = yield call(readAllTeamApi);
     const allTeam = response.data.teams;
+    const currentTeamResponse = yield call(readTeamApi, allTeam[0].id);
+    const currentTeam = currentTeamResponse.data
     api.setTeamList(allTeam);
-    api.setCurrentTeam(allTeam[0]);
-    yield put(teamApiResponseSuccess(TeamActionTypes.LEAVE_TEAM, allTeam, allTeam[0]));
+    api.setCurrentTeam(currentTeam);
+    yield put(teamApiResponseSuccess(TeamActionTypes.LEAVE_TEAM, allTeam, currentTeam));
   } catch (error: any) {
     yield put(teamApiResponseError(TeamActionTypes.LEAVE_TEAM, error));
   }
