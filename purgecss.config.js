@@ -1,4 +1,6 @@
 // eslint-disable-next-line no-undef
 module.exports = {
-  defaultExtractor: (content) => content.match(/{\[\w:-]+/g) || [],
+  variables: true,
+  defaultExtractor: (content) => content.match(/[\w\-/:]+/g) || [],
+  safelist: [/^col-/],
 };
