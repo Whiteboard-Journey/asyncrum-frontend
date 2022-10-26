@@ -1,4 +1,4 @@
-import { Row, Col, Card, Button } from 'react-bootstrap';
+import { Row, Col, Card, Button, Modal } from 'react-bootstrap';
 import LeftPanel from './LeftPanel';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,13 +20,16 @@ const TeamSettings = () => {
     loading,
     previewImage,
     fileInput,
+    isDeleteOpen,
     onSubmitTeamInfo,
     onChangeLogoImage,
     onSaveLogoImage,
     onCancelChangeLogoImage,
     onInvite,
+    onLeaveTeam,
+    toggleDelete,
+    closeModalAfterFunction,
   } = useTeamSettings();
-
   return (
     <>
       <Row>
@@ -82,7 +85,28 @@ const TeamSettings = () => {
                     <Col>
                       <h4>Leave {currentTeam.name} team</h4>
                       <p>By leaving the team, you will lose access to all its contents.</p>
-                      <Button className="btn btn-danger">Leave Team</Button>
+                      <Button className="btn btn-danger" onClick={toggleDelete}>
+                        Leave Team
+                      </Button>
+                      <Modal show={isDeleteOpen} onHide={toggleDelete}>
+                        <Modal.Body>
+                          <Modal.Header onHide={toggleDelete} closeButton>
+                            <h4 className="modal-title">Leave {currentTeam.name}</h4>
+                          </Modal.Header>
+                          <p className="mt-4 mb-4 text-center font-weight-bolds">
+                            Are you sure you want to leave {currentTeam.name}?
+                          </p>
+                          <form
+                            className="ps-3 pe-3"
+                            onSubmit={(e) => closeModalAfterFunction(onLeaveTeam, e, toggleDelete)}>
+                            <div className="mb-3 text-center">
+                              <Button className="btn btn-danger" type="submit">
+                                Leave Team
+                              </Button>
+                            </div>
+                          </form>
+                        </Modal.Body>
+                      </Modal>
                     </Col>
                   </Row>
                 </div>

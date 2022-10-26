@@ -33,7 +33,7 @@ type TeamActionType = {
     | TeamActionTypes.READ_ALL_TEAM
     | TeamActionTypes.READ_TEAM
     | TeamActionTypes.UPDATE_TEAM
-    | TeamActionTypes.DELETE_TEAM
+    | TeamActionTypes.LEAVE_TEAM
     | TeamActionTypes.CHANGE_TEAM
     | TeamActionTypes.RESET;
   payload: {
@@ -85,7 +85,7 @@ const Team = (state: State = INIT_STATE, action: TeamActionType) => {
             loading: false,
           };
         }
-        case TeamActionTypes.DELETE_TEAM: {
+        case TeamActionTypes.LEAVE_TEAM: {
           return {
             ...state,
             teamList: action.payload.teamListData,
@@ -113,7 +113,7 @@ const Team = (state: State = INIT_STATE, action: TeamActionType) => {
             loading: false,
           };
         }
-        case TeamActionTypes.DELETE_TEAM: {
+        case TeamActionTypes.LEAVE_TEAM: {
           return {
             ...state,
             error: action.payload.error,
@@ -128,7 +128,7 @@ const Team = (state: State = INIT_STATE, action: TeamActionType) => {
       return { ...state, loading: true };
     case TeamActionTypes.UPDATE_TEAM:
       return { ...state, loading: true };
-    case TeamActionTypes.DELETE_TEAM:
+    case TeamActionTypes.LEAVE_TEAM:
       return { ...state, loading: true };
     case TeamActionTypes.CHANGE_TEAM:
       return { ...state, loading: true };

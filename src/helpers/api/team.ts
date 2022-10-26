@@ -47,6 +47,10 @@ const uploadLogoImage = (presignedURL: string, logoImageFile: File) => {
   return uploadAxios.put(presignedURL, logoImageFile);
 };
 
+const removeMember = (teamId: number, memberId: number) => {
+  return api.delete(baseURL + '/' + teamId + '/members/' + memberId);
+}
+
 export {
   changeTeam,
   createTeam,
@@ -56,4 +60,5 @@ export {
   updateTeam,
   inviteMember,
   uploadLogoImage,
+  removeMember
 };

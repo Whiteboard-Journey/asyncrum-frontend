@@ -20,6 +20,7 @@ import {
   updateTeam,
   inviteMember,
   uploadLogoImage,
+  removeMember
 } from './team';
 
 export { login, logout, readMember, signup, forgotPassword, forgotPasswordConfirm };
@@ -37,4 +38,5 @@ export {
   updateTeam,
   inviteMember,
   uploadLogoImage,
+  removeMember
 };
