@@ -27,7 +27,7 @@ const useDailyStandup = () => {
   const readAllDailyStandups = useCallback(async () => {
     const readAllDailyStandupsAPIResponse = await readAllDailyStandupsAPI({ teamId, scope, pageIndex });
     for (const record of readAllDailyStandupsAPIResponse.data.records) {
-      if (getTimeDifference(record.createdDate) > 24 && record.seenMemberIdGroup?.indexOf(user.id) > -1) {
+      if (getTimeDifference(record.createdDate) > 24 && record.seenMember?.indexOf(user.id) > -1) {
         continue;
       }
       if (
@@ -53,7 +53,7 @@ const useDailyStandup = () => {
           camRecordFileUrl: '',
           screenRecordFileUrl: '',
           screenRecordId: -1,
-          seen: record.seenMemberIdGroup?.indexOf(user.id) > -1 ? true : false,
+          seen: record.seenMember?.indexOf(user.id) > -1 ? true : false,
         };
         if (record.title.slice(-6) === 'screen') {
           dailyStandup = {
