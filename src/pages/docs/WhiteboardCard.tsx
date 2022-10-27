@@ -2,6 +2,7 @@ import { Card, Dropdown, OverlayTrigger, Tooltip, Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import { WhiteboardCardProps } from './types';
 import { useMoment, useWhiteboardCard } from './hooks';
+import { useRedux } from 'hooks';
 
 const whiteboardPageURL = '/whiteboard?url=';
 
@@ -9,6 +10,10 @@ const WhiteboardCard = ({ whiteboard, onEditWhiteboard, onDeleteWhiteboard }: Wh
   const { getTimeFromNow } = useMoment();
   const { isEditOpen, isDeleteOpen, isReadMore, toggleEdit, toggleDelete, toggleReadMore, closeModalAfterFunction } =
     useWhiteboardCard();
+  const { appSelector } = useRedux();
+  const { currentTeam } = appSelector((state) => ({
+    currentTeam: state.Team.currentTeam,
+  }));
 
   return (
     <Card className="d-block">
@@ -95,7 +100,7 @@ const WhiteboardCard = ({ whiteboard, onEditWhiteboard, onDeleteWhiteboard }: Wh
           </Dropdown.Menu>
         </Dropdown>
         <h4 className="mt-0">
-          <Link to={whiteboardPageURL + whiteboard.whiteboardFileUrl + '&id=' + whiteboard.id} className="text-title">
+          <Link to={whiteboardPageURL + whiteboard.whiteboardFileUrl + '&id=' + currentTeam.code + '-' + whiteboard.id} className="text-title">
             {whiteboard.title.length > 25 ? whiteboard.title.slice(0, 25) + ' ...' : whiteboard.title}
           </Link>
         </h4>
