@@ -25,7 +25,7 @@ const MeetingContainer = () => {
       <Row>
         <Col></Col>
       </Row>
-      <Row className="mb-2">
+      <Row className="mb-4">
         <Col sm={4}>
           <CreateMeetingButton />
         </Col>
