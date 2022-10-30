@@ -23,6 +23,7 @@ type CurrentTeamData = {
   code: string;
   pictureUrl: string;
   members: Member[];
+  openMeetings: string[];
 }
 
 type TeamActionType = {
@@ -35,6 +36,8 @@ type TeamActionType = {
     | TeamActionTypes.UPDATE_TEAM
     | TeamActionTypes.LEAVE_TEAM
     | TeamActionTypes.CHANGE_TEAM
+    | TeamActionTypes.CREATE_MEETING
+    | TeamActionTypes.DELETE_MEETING
     | TeamActionTypes.RESET;
   payload: {
     actionType?: string;
@@ -93,6 +96,20 @@ const Team = (state: State = INIT_STATE, action: TeamActionType) => {
             loading: false,
           };
         }
+        case TeamActionTypes.CREATE_MEETING: {
+          return {
+            ...state,
+            currentTeam: action.payload.currentTeamData,
+            loading: false,
+          };
+        }
+        case TeamActionTypes.DELETE_MEETING: {
+          return {
+            ...state,
+            currentTeam: action.payload.currentTeamData,
+            loading: false,
+          };
+        }
         default:
           return { ...state };
       }
@@ -131,6 +148,10 @@ const Team = (state: State = INIT_STATE, action: TeamActionType) => {
     case TeamActionTypes.LEAVE_TEAM:
       return { ...state, loading: true };
     case TeamActionTypes.CHANGE_TEAM:
+      return { ...state, loading: true };
+    case TeamActionTypes.CREATE_MEETING:
+      return { ...state, loading: true };
+    case TeamActionTypes.DELETE_MEETING:
       return { ...state, loading: true };
     case TeamActionTypes.RESET:
       return {

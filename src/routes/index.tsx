@@ -20,7 +20,7 @@ const Dashboard = React.lazy(() => import('pages/docs/Dashboard'));
 
 // apps
 const Whiteboard = React.lazy(() => import('pages/apps/Whiteboard'));
-const Meeting = React.lazy(() => import('pages/apps/Meeting'));
+// const Meeting = React.lazy(() => import('pages/apps/Meeting'));
 
 // settings
 const PersonalSettings = React.lazy(() => import('pages/settings/PersonalSettings'));
@@ -118,10 +118,10 @@ const AllRoutes = () => {
           path: 'whiteboard',
           element: <LoadComponent component={Whiteboard} />,
         },
-        {
-          path: 'meeting',
-          element: <LoadComponent component={Meeting} />,
-        },
+        // {
+        //   path: 'meeting',
+        //   element: <LoadComponent component={Meeting} />,
+        // },
         {
           path: 'dashboard',
           element: <LoadComponent component={Dashboard} />,

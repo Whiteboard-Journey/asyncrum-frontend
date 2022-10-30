@@ -11,6 +11,8 @@ export type TeamActionType = {
     | TeamActionTypes.UPDATE_TEAM
     | TeamActionTypes.LEAVE_TEAM
     | TeamActionTypes.CHANGE_TEAM
+    | TeamActionTypes.CREATE_MEETING
+    | TeamActionTypes.DELETE_MEETING
     | TeamActionTypes.RESET
   payload: unknown | string;
 };
@@ -28,6 +30,7 @@ type CurrentTeam = {
   code: string;
   pictureUrl: string;
   members: Member[];
+  openMeetings: string[];
 }
 
 // common success
@@ -69,6 +72,16 @@ export const leaveTeam = (teamId: number, memberId: number): TeamActionType => (
 export const changeTeam = (id: number): TeamActionType => ({
   type: TeamActionTypes.CHANGE_TEAM,
   payload: { id },
+});
+
+export const createMeeting = (teamId: number, roomName: string): TeamActionType => ({
+  type: TeamActionTypes.CREATE_MEETING,
+  payload: { teamId, roomName },
+});
+
+export const deleteMeeting = (teamId: number, roomName: string): TeamActionType => ({
+  type: TeamActionTypes.DELETE_MEETING,
+  payload: { teamId, roomName },
 });
 
 export const resetTeam = (): TeamActionType => ({

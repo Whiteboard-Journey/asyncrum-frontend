@@ -1,5 +1,6 @@
 import WhiteboardContainer from './WhiteboardContainer';
 import DailyStandupContainer from './DailyStandupContainer';
+import MeetingContainer from './MeetingContainer';
 import { useRedux } from 'hooks';
 
 const Dashboard = () => {
@@ -16,6 +17,8 @@ const Dashboard = () => {
   ) : (
     <>
       <DailyStandupContainer />
+      <hr />
+      <MeetingContainer />
       <hr />
       <WhiteboardContainer />
     </>
