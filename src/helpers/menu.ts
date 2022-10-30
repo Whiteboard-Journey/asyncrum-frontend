@@ -7,6 +7,7 @@ const getMenuItems = (teams: any) => {
           {
             key: 'teams',
             label: 'Teams',
+            icon: 'mdi mdi-account-group-outline',
             isTitle: false,
             children:
               teams.length > 0
