@@ -172,7 +172,7 @@ const Whiteboard = () => {
           }
   
           client = new yorkie.Client(
-            `${process.env.REACT_APP_YORKIE_URL}`, options
+            `${process.env.REACT_APP_API_URL}/yorkie`, options
           )
           await client.activate()
   
