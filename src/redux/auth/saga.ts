@@ -1,4 +1,4 @@
-import { all, fork, put, takeEvery, call, take } from 'redux-saga/effects';
+import { all, fork, put, takeEvery, call, take, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { APICore, setAuthorization } from 'helpers/api/apiCore';
 import {
@@ -7,10 +7,13 @@ import {
   readMember as readMemberApi,
   signup as signupApi,
   forgotPassword as forgotPasswordApi,
+  readTeam as readTeamApi,
   readAllTeam as readAllTeamApi,
 } from 'helpers';
 import { authApiResponseSuccess, authApiResponseError } from './actions';
+import { teamApiResponseSuccess, teamApiResponseError } from '../team/actions';
 import { AuthActionTypes } from './constants';
+import { TeamActionTypes } from '../team/constants';
 
 type UserData = {
   payload: {
@@ -55,22 +58,24 @@ function* login({ payload: { email, password }, type }: UserData): SagaIterator 
 
 function* oauthLogin({ payload: { token }, type }: TokenData): SagaIterator {
   try {
-    yield take(AuthActionTypes.OAUTH_LOGIN_USER);
+    // yield take(AuthActionTypes.OAUTH_LOGIN_USER);
     const response = yield call(readMemberApi, { token });
 
     const user = response.data;
     user['token'] = token;
     api.setLoggedInUser(user);
     setAuthorization(token);
-    const readAllTeamApiResponse = yield call(readAllTeamApi);
-    user['teams'] = readAllTeamApiResponse.data.teams;
-    if (user['teams'].length > 0) {
-      user['currentTeam'] = user['teams'][0];
-    } else {
-      user['currentTeam'] = {};
-    }
     api.setLoggedInUser(user);
-    yield put(authApiResponseSuccess(AuthActionTypes.OAUTH_LOGIN_USER, user));
+    const readAllTeamResponse = yield call(readAllTeamApi);
+    const allTeam = readAllTeamResponse.data.teams;
+    const currentTeamResponse = yield call(readTeamApi, allTeam[0].id);
+    const currentTeam = currentTeamResponse.data
+    api.setTeamList(allTeam);
+    api.setCurrentTeam(currentTeam);
+    yield all([
+      put(authApiResponseSuccess(AuthActionTypes.OAUTH_LOGIN_USER, user)),
+      put(teamApiResponseSuccess(TeamActionTypes.READ_ALL_TEAM, allTeam, currentTeam))
+    ]);
   } catch (error: any) {
     yield put(authApiResponseError(AuthActionTypes.OAUTH_LOGIN_USER, error));
     api.setLoggedInUser(null);
@@ -119,7 +124,7 @@ export function* watchLoginUser() {
 }
 
 export function* watchOAuthLoginUser() {
-  yield takeEvery(AuthActionTypes.OAUTH_LOGIN_USER, oauthLogin);
+  yield takeLatest(AuthActionTypes.OAUTH_LOGIN_USER, oauthLogin);
 }
 
 export function* watchLogout() {

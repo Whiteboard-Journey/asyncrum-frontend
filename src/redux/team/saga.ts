@@ -1,4 +1,4 @@
-import { all, fork, put, takeEvery, call, take } from 'redux-saga/effects';
+import { all, fork, put, takeEvery, call, take, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { APICore } from 'helpers/api/apiCore';
 import {
@@ -142,11 +142,11 @@ export function* watchCreateTeam() {
 }
 
 export function* watchReadAllTeam() {
-  yield takeEvery(TeamActionTypes.READ_ALL_TEAM, readAll);
+  yield takeLatest(TeamActionTypes.READ_ALL_TEAM, readAll);
 }
 
 export function* watchReadTeam() {
-  yield takeEvery(TeamActionTypes.READ_TEAM, read);
+  yield takeLatest(TeamActionTypes.READ_TEAM, read);
 }
 
 export function* watchUpdateTeam() {

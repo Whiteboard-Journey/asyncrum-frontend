@@ -7,11 +7,9 @@ import { useRedux } from 'hooks';
 const MeetingContainer = () => {
   const { appSelector } = useRedux();
   const { currentTeam } = appSelector((state) => ({
-    currentTeam: state.Team.currentTeam
+    currentTeam: state.Team.currentTeam,
   }));
-  const {
-    onDeleteMeeting
-  } = useMeeting();
+  const { onDeleteMeeting } = useMeeting();
 
   return (
     <>
@@ -30,20 +28,17 @@ const MeetingContainer = () => {
           <CreateMeetingButton />
         </Col>
       </Row>
-      { currentTeam.openMeetings && currentTeam.openMeetings.length > 0 &&
-      <Row>
-        {currentTeam.openMeetings.map((meeting: string) => {
-          return (
-            <Col md={4} xxl={2} key={'mt-' + meeting}>
-              <MeetingCard
-                meeting={meeting}
-                onDeleteMeeting={onDeleteMeeting}
-              />
-            </Col>
-          );
-        })}
-      </Row>
-      }
+      {currentTeam?.openMeetings && currentTeam.openMeetings.length > 0 && (
+        <Row>
+          {currentTeam.openMeetings.map((meeting: string) => {
+            return (
+              <Col md={4} xxl={2} key={'mt-' + meeting}>
+                <MeetingCard meeting={meeting} onDeleteMeeting={onDeleteMeeting} />
+              </Col>
+            );
+          })}
+        </Row>
+      )}
     </>
   );
 };

@@ -20,10 +20,6 @@ export default function useOAuthLogin() {
     redirectUrl = from ? from.pathname : '/';
   }
 
-  useEffect(() => {
-    dispatch(resetAuth());
-  }, [dispatch]);
-
   const { loading, userLoggedIn, user, error } = appSelector((state) => ({
     loading: state.Auth.loading,
     user: state.Auth.user,
@@ -36,7 +32,6 @@ export default function useOAuthLogin() {
     */
   const onSubmit = (token: string) => {
     dispatch(oauthLoginUser(token));
-    dispatch(readAllTeam());
   };
 
   return {

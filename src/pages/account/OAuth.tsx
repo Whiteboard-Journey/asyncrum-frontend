@@ -9,7 +9,7 @@ const OAuth = () => {
     const params = new URLSearchParams(document.location.search);
     const token = params.get('token');
     onSubmit(token!);
-  });
+  }, []);
 
   return <>{(userLoggedIn || user) && <Navigate to={redirectUrl} replace />}</>;
 };

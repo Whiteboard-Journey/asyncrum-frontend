@@ -24,7 +24,7 @@ const useWhiteboard = () => {
   }));
 
   const scope = 'team';
-  const teamId = currentTeam.id;
+  const teamId = currentTeam?.id;
   const whiteboardPageURL = '/whiteboard?url=';
 
   const readAllWhiteboard = useCallback(

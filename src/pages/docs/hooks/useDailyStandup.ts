@@ -21,11 +21,14 @@ const useDailyStandup = () => {
   }));
 
   const scope = 'team';
-  const teamId = currentTeam.id;
+  // const teamId = currentTeam?.id;
   const pageIndex = 0;
 
   const readAllDailyStandups = useCallback(async () => {
-    const readAllDailyStandupsAPIResponse = await readAllDailyStandupsAPI({ teamId, scope, pageIndex });
+    if (!currentTeam) {
+      return;
+    }
+    const readAllDailyStandupsAPIResponse = await readAllDailyStandupsAPI({ teamId: currentTeam.id, scope, pageIndex });
     for (const record of readAllDailyStandupsAPIResponse.data.records) {
       if (getTimeDifference(record.createdDate) > 24 && record.seenMember?.indexOf(user.id) > -1) {
         continue;
@@ -77,7 +80,7 @@ const useDailyStandup = () => {
     if (carouselRef && carouselRef.current) {
       carouselRef.current.goToSlide(slide);
     }
-  }, [dailyStandups, getTimeDifference, user.id, teamId]);
+  }, [dailyStandups, getTimeDifference, user.id, currentTeam]);
 
   const onViewDailyStandups = async (dailyStandup: DailyStandup) => {
     await viewDailyStandupAPI(dailyStandup.id[0]);
