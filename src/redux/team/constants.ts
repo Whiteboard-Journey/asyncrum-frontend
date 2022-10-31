@@ -8,6 +8,8 @@ export enum TeamActionTypes {
   UPDATE_TEAM = '@@team/UPDATE_TEAM',
   LEAVE_TEAM = '@@team/LEAVE_TEAM',
   CHANGE_TEAM = '@@team/CHANGE_TEAM',
+  CREATE_MEETING = '@@team/CREATE_MEETING',
+  DELETE_MEETING = '@@team/DELETE_MEETING',
 
   RESET = '@@team/RESET',
 }

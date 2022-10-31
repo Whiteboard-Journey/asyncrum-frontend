@@ -1,7 +1,7 @@
 import { JitsiMeeting } from '@jitsi/react-sdk';
 import { useRedux } from 'hooks';
 
-const Meeting = () => {
+const Meeting = (roomName: string) => {
   const { appSelector } = useRedux();
   const { user } = appSelector((state) => ({
     user: state.Auth.user,
@@ -9,15 +9,15 @@ const Meeting = () => {
 
   const generateRoomName = () => `${user.currentTeam.id}${Math.random() * 100}-${Date.now()}`;
 
-  const handleReadyToClose = (): any => {
-    alert('sdf');
-    //window.location.href = `/dashboard`;
-  };
+  // const handleReadyToClose = (): any => {
+  //   alert('sdf');
+  //   //window.location.href = `/dashboard`;
+  // };
 
   return (
     <JitsiMeeting
       domain={process.env.REACT_APP_JITSI_URL}
-      roomName="test"
+      roomName={roomName}
       configOverwrite={{
         startWithAudioMuted: true,
         disableModeratorIndicator: true,
@@ -38,7 +38,6 @@ const Meeting = () => {
       getIFrameRef={(iframeRef) => {
         iframeRef.style.height = '800px';
       }}
-      onReadyToClose={handleReadyToClose()}
     />
   );
 };
