@@ -10,7 +10,7 @@ const useMeeting = () => {
 
   const [isCreateMeetingOpen, toggleCreateMeeting] = useToggle();
 
-  const teamId = currentTeam.id;
+  const teamId = currentTeam?.id;
 
   const onCreateMeeting = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
