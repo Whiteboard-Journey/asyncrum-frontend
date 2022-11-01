@@ -14,8 +14,10 @@ import logoSmDark from 'assets/images/asyncrum-logo-white-small.png';
 import logoSmLight from 'assets/images/asyncrum-logo-white-small.png';
 import logo from 'assets/images/asyncrum-logo-white.png';
 import config from 'config';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { getFirebaseToken, onMessageListener } from './FirebaseConfig';
+import { NotificationItem, Message } from '../types';
 
 type TopbarProps = {
   hideLogo?: boolean;
@@ -28,10 +30,42 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
   const { dispatch, appSelector } = useRedux();
   const { width } = useViewport();
   const [isMenuOpened, toggleMenu] = useToggle();
+  const [isTokenFound, setTokenFound] = useState(false);
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
 
   const { user } = appSelector((state) => ({
     user: state.Auth.user,
   }));
+
+  useEffect(() => {
+    getFirebaseToken(setTokenFound);
+  }, []);
+
+  onMessageListener()
+    .then((payload: any) => {
+      console.log(payload);
+
+      const title: string = payload.notification.title;
+      const body: string = payload.notification.body;
+      const message: Message = {
+        id: 1,
+        title: title,
+        subText: body,
+        time: '1 min ago',
+        icon: 'mdi mdi-comment-account-outline',
+        variant: 'primary',
+        isRead: true,
+      };
+
+      const messages: Message[] = [];
+      messages.push(message);
+
+      const notification: NotificationItem = { day: 'Today', messages: messages };
+      notifications.push(notification);
+
+      setNotifications(notifications);
+    })
+    .catch((err) => console.log('failed: ', err));
 
   const containerCssClasses = !hideLogo ? 'container-fluid' : '';
 
@@ -95,17 +129,16 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
           <li className="dropdown notification-list topbar-dropdown">
             <LanguageDropdown />
           </li> */}
-          {/* <li className="dropdown notification-list">
-            <NotificationDropdown notifications={notifications} />
-          </li> */}
+          <li className="dropdown notification-list">
+            <NotificationDropdown notifications={notifications!} />
+          </li>
           {/* <li className="dropdown notification-list d-none d-sm-inline-block">
             <AppsDropdown />
           </li> */}
           <li className="notification-list">
             <button
               className="nav-link dropdown-toggle end-bar-toggle arrow-none btn btn-link shadow-none"
-              onClick={handleRightSideBar}
-            >
+              onClick={handleRightSideBar}>
               <i className="dripicons-gear noti-icon"></i>
             </button>
           </li>
