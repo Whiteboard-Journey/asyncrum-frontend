@@ -8,7 +8,7 @@ export type AppItem = {
   redirectTo: string;
 };
 
-type Message = {
+export type Message = {
   id: number;
   title: string;
   time?: string;

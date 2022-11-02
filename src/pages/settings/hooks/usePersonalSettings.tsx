@@ -25,7 +25,8 @@ const usePersonalSettings = () => {
     e.preventDefault();
     const fullname = ((e.target as HTMLFormElement).elements.namedItem('fullname') as HTMLInputElement).value;
     const timezone = '';
-    await updateProfileInfoAPI({ fullname, timezone });
+    const fcmRegistrationToken = sessionStorage.getItem('fcmRegistrationToken');
+    await updateProfileInfoAPI({ fullname, timezone, fcmRegistrationToken });
     setUserFullname(fullname);
     user.fullname = fullname;
     sessionStorage.setItem('asyncrum_user', JSON.stringify(user));

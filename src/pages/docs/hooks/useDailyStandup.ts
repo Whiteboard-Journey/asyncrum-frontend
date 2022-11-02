@@ -37,7 +37,7 @@ const useDailyStandup = () => {
         dailyStandups.at(-1) &&
         dailyStandups.at(-1)?.author === record.member.fullname &&
         dailyStandups.at(-1)?.title.slice(0, dailyStandups.at(-1)?.title.lastIndexOf(' ')) ===
-          record.title.slice(0, dailyStandups.at(-1)?.title.lastIndexOf(' '))
+        record.title.slice(0, dailyStandups.at(-1)?.title.lastIndexOf(' '))
       ) {
         dailyStandups.at(-1)?.id.push(record.id);
         if (record.title.slice(-6) === 'screen') {

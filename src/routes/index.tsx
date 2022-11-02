@@ -33,6 +33,9 @@ const ErrorPageNotFoundAlt = React.lazy(() => import('pages/error/PageNotFoundAl
 const ServerError = React.lazy(() => import('pages/error/ServerError'));
 const Landing = React.lazy(() => import('pages/landing/'));
 
+// uikit
+const Notifications = React.lazy(() => import('pages/uikit/Notifications'));
+
 const loading = () => <div className=""></div>;
 
 type LoadComponentProps = {
@@ -144,6 +147,20 @@ const AllRoutes = () => {
             {
               path: 'error-404-alt',
               element: <LoadComponent component={ErrorPageNotFoundAlt} />,
+            },
+            {
+              path: 'ui',
+              children: [
+                {
+                  path: 'base-ui',
+                  children: [
+                    {
+                      path: 'notifications',
+                      element: <LoadComponent component={Notifications} />,
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },
