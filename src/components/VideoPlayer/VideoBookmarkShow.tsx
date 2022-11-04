@@ -10,6 +10,8 @@ import VideoBookmarkForm from './VideoBookmarkForm';
 
 import type { Video } from './Video';
 import type { VideoBookmark, VideoBookmarkCoordinates, VideoBookmarkIcon } from './VideoBookmark';
+import type { Comment } from './Comment';
+import { ChatList } from 'components/ChatList';
 
 type Props = {
   bookmark: VideoBookmark | null;
@@ -21,6 +23,7 @@ type Props = {
   setCurrentTime: React.Dispatch<React.SetStateAction<number>>;
   editingBookmark: boolean;
   setEditingBookmark: React.Dispatch<React.SetStateAction<boolean>>;
+  comments: Comment[];
 };
 
 const dragHandleStyles = css`
@@ -44,6 +47,7 @@ export default function VideoBookmarkShow({
   editingBookmark,
   setEditingBookmark,
   setVideo,
+  comments,
 }: Props) {
   if (playing === true) {
     return null;
@@ -134,9 +138,12 @@ export default function VideoBookmarkShow({
     }
 
     return (
-      <Text style={{ whiteSpace: 'pre-wrap' }}>
-        {bookmark.icon} {bookmark.content}
-      </Text>
+      <div>
+        <h4>Bookmark</h4>
+        <Text style={{ whiteSpace: 'pre-wrap' }}>
+          {bookmark.icon} {bookmark.content}
+        </Text>
+      </div>
     );
   })();
 
@@ -156,8 +163,7 @@ export default function VideoBookmarkShow({
         const scale = bookmark.scale;
         const author = bookmark.author;
         updateBookmarkAPI(parseInt(bookmark.id), { emoji, content, time, position, drawing, scale, author });
-      }}
-    >
+      }}>
       Done
     </Button>
   ) : (
@@ -175,15 +181,13 @@ export default function VideoBookmarkShow({
       justify="flex-end"
       padding="4"
       pointerEvents="none"
-      zIndex={3}
-    >
+      zIndex={3}>
       <Draggable
         key={bookmark.id}
         onStop={(_event, data) => setVideoBookmarkCoords({ x: data.x, y: data.y })}
         bounds="parent"
         handle="#dragHandle"
-        position={position}
-      >
+        position={position}>
         <Box pointerEvents="all" background="blackAlpha.900" width="md">
           <Box id="dragHandle" css={dragHandleStyles} />
           {renderedContent && (
@@ -191,6 +195,7 @@ export default function VideoBookmarkShow({
               {renderedContent}
             </Box>
           )}
+          <ChatList chatMessages={comments}></ChatList>
 
           <Flex padding="4">
             <Spacer />

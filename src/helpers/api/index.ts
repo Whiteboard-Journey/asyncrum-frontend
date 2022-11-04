@@ -10,6 +10,7 @@ import {
 } from './whiteboard';
 import { createRecord, readAllDailyStandups, readRecord, uploadRecord, viewDailyStandup } from './record';
 import { createBookmark, readAllBookmarks, updateBookmark, deleteBookmark } from './bookmark';
+import { createComment, readAllComments, updateComment, deleteComment } from './comment';
 import { createProfileImage, updateProfileInfo, uploadProfileImage } from './member';
 import {
   changeTeam,
@@ -30,6 +31,7 @@ export { readAllWhiteboard, readWhiteboard, createWhiteboard, uploadWhiteboard, 
 export type { IWhiteboard };
 export { createRecord, readAllDailyStandups, readRecord, uploadRecord, viewDailyStandup };
 export { createBookmark, readAllBookmarks, updateBookmark, deleteBookmark };
+export { createComment, readAllComments, updateComment, deleteComment }
 export { createProfileImage, updateProfileInfo, uploadProfileImage };
 export {
   changeTeam,

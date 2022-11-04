@@ -33,6 +33,7 @@ export default function VideoBookmarkTimeline({
     setCurrentTime(bookmark.time);
     video.el.currentTime = bookmark.time;
     setActiveBookmark(bookmark);
+    sessionStorage.setItem('currentBookmarkId', bookmark.id);
   }
 
   const renderedIcon = (() => {

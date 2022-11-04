@@ -191,8 +191,7 @@ const VideoPlayer = ({ id }: Props) => {
         pointerEvents="none"
         position="absolute"
         top={0}
-        zIndex={2}
-      >
+        zIndex={2}>
         <Box
           background="gray.900"
           borderColor="whiteAlpha.500"
@@ -200,8 +199,7 @@ const VideoPlayer = ({ id }: Props) => {
           borderWidth="1px"
           boxSizing="border-box"
           padding={4}
-          pointerEvents="all"
-        >
+          pointerEvents="all">
           <DrawingControls app={app} />
         </Box>
       </Flex>
@@ -229,6 +227,7 @@ const VideoPlayer = ({ id }: Props) => {
         setCurrentTime={setCurrentTime}
         editingBookmark={editingBookmark}
         setEditingBookmark={setEditingBookmark}
+        comments={activeBookmark?.comments!}
       />
     );
 
@@ -241,8 +240,7 @@ const VideoPlayer = ({ id }: Props) => {
         left={0}
         position="absolute"
         right={0}
-        zIndex={2}
-      >
+        zIndex={2}>
         <Flex
           align="center"
           background="gray.900"
@@ -251,8 +249,7 @@ const VideoPlayer = ({ id }: Props) => {
           borderWidth="1px"
           minWidth="50vw"
           p={4}
-          pointerEvents="all"
-        >
+          pointerEvents="all">
           <Tooltip label={playing ? 'Pause' : 'Play'}>
             <Box mr="2">
               {!playing && (
