@@ -5,6 +5,7 @@ import config from '../../config';
 // content type
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.baseURL = config.API_URL;
+axios.defaults.withCredentials = true;
 
 // intercepting to capture errors
 axios.interceptors.response.use(
@@ -76,18 +77,20 @@ class APICore {
     if (params) {
       const queryString = params
         ? Object.keys(params)
-            .map((key) => {
-              if (!user || key != 'token') {
-                return key + '=' + params[key];
-              }
-            })
-            .join('&')
+          .map((key) => {
+            if (!user || key != 'token') {
+              return key + '=' + params[key];
+            }
+          })
+          .join('&')
         : '';
       response = axios.get(`${url}?${queryString}`, {
         headers: { Authorization: 'Bearer ' + `${params['token'] ? params['token'] : user.token}` },
       });
     } else {
-      response = axios.get(`${url}`);
+      response = axios.get(`${url}`, {
+        headers: { Authorization: 'Bearer ' + user.token },
+      });
     }
     return response;
   };
@@ -97,8 +100,8 @@ class APICore {
     if (params) {
       const queryString = params
         ? Object.keys(params)
-            .map((key) => key + '=' + params[key])
-            .join('&')
+          .map((key) => key + '=' + params[key])
+          .join('&')
         : '';
       response = axios.get(`${url}?${queryString}`, { responseType: 'blob' });
     } else {
@@ -113,8 +116,8 @@ class APICore {
     if (params) {
       queryString = params
         ? Object.keys(params)
-            .map((key) => key + '=' + params[key])
-            .join('&')
+          .map((key) => key + '=' + params[key])
+          .join('&')
         : '';
     }
 
@@ -122,6 +125,16 @@ class APICore {
       reqs.push(axios.get(`${url}?${queryString}`));
     }
     return axios.all(reqs);
+  };
+
+  /**
+   * refresh access token
+   */
+  refreshToken = (url: string) => {
+    if (user?.token) {
+      return axios.get(url, { headers: { Authorization: 'Bearer ' + user.token } });
+    }
+    return axios.get(url);
   };
 
   /**
@@ -201,7 +214,16 @@ class APICore {
     const currentTime = Date.now() / 1000;
     if (decoded.exp < currentTime) {
       console.warn('access token expired');
-      return false;
+
+      this.refreshToken('/api/v1/auth/refresh')
+        .then((res) => {
+          const accessToken = res.data['token'];
+          this.renewAccessTokenInSession(accessToken);
+          return true;
+        })
+        .catch((err) => {
+          return false;
+        });
     } else {
       return true;
     }
@@ -219,6 +241,15 @@ class APICore {
   getLoggedInUser = () => {
     return getUserFromSession();
   };
+
+  renewAccessTokenInSession = (token: string) => {
+    const userInfo = sessionStorage.getItem(AUTH_SESSION_KEY);
+    if (userInfo) {
+      const user = JSON.parse(userInfo);
+      user.token = token;
+      this.setLoggedInUser(user);
+    }
+  }
 
   setUserInSession = (modifiedUser: any) => {
     const userInfo = sessionStorage.getItem(AUTH_SESSION_KEY);
