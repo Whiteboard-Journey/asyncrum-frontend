@@ -1,5 +1,6 @@
 import { Video } from './Video';
 import { APICore } from 'helpers/api/apiCore';
+import type { Comment } from './Comment';
 
 const api = new APICore();
 const user = api.getLoggedInUser();
@@ -23,6 +24,7 @@ export type VideoBookmark = {
   drawing: object | null;
   scale: number;
   video_id: string;
+  comments: Comment[]
 };
 
 export function create(
@@ -43,5 +45,6 @@ export function create(
     time,
     video_id: video.id,
     author: user.fullname,
+    comments: []
   };
 }

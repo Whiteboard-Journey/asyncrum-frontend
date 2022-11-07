@@ -6,4 +6,7 @@ export { default as Loader } from './Loader';
 export { default as MessageItem } from './MessageItem';
 export { default as MessageList } from './MessageList';
 export { default as PageTitle } from './PageTitle';
+export { default as CardTitle } from './CardTitle';
 export { default as VideoRecorder } from './VideoRecorder';
+export { default as CommentVideoRecorder } from './CommentVideoRecorder';
+export { default as CreateCommentRecordButton } from './CreateCommentRecordButton';
