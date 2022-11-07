@@ -84,7 +84,6 @@ const ChatList = ({ chatMessages, className }: ChatListProps) => {
 
   const playNextVideo = (index: number) => {
     setPlayIndex(index);
-    console.log(index);
   };
 
   return (

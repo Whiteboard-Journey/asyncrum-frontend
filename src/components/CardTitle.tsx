@@ -21,6 +21,7 @@ const CardTitle = ({ title, containerClass, icon, menuItems }: CardTitleProps) =
     return (
         <div className={classNames(containerClass)}>
             {typeof title === 'string' ? <h4 className="header-title mb-0">{title}</h4> : title}
+        { menuItems &&             
             <Dropdown>
                 <Dropdown.Toggle as={Link} to="#" className="arrow-none card-drop">
                     <i className={classNames(icon ? icon : 'mdi mdi-dots-vertical')} />
@@ -38,7 +39,7 @@ const CardTitle = ({ title, containerClass, icon, menuItems }: CardTitleProps) =
                         );
                     })}
                 </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown>}
         </div>
     );
 };
