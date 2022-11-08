@@ -23,12 +23,15 @@ const usePersonalSettings = () => {
 
   const onSubmitProfileInfo = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const fullname = ((e.target as HTMLFormElement).elements.namedItem('fullname') as HTMLInputElement).value;
-    const timezone = '';
+    let fullname = ((e.target as HTMLFormElement).elements.namedItem('fullname') as HTMLInputElement).value;
+    fullname = fullname === '' ? user.fullname : fullname;
+    let timezone = ((e.target as HTMLFormElement).elements.namedItem('timezone') as HTMLInputElement).value;
+    timezone = timezone === '' ? user.timeZone : timezone;
     const fcmRegistrationToken = sessionStorage.getItem('fcmRegistrationToken');
     await updateProfileInfoAPI({ fullname, timezone, fcmRegistrationToken });
     setUserFullname(fullname);
     user.fullname = fullname;
+    user.timeZone = timezone;
     sessionStorage.setItem('asyncrum_user', JSON.stringify(user));
     (e.target as HTMLFormElement).reset();
     changeInfoNotify();
