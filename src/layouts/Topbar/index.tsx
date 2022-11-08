@@ -139,7 +139,7 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
             <button
               className="nav-link dropdown-toggle end-bar-toggle arrow-none btn btn-link shadow-none"
               onClick={handleRightSideBar}>
-              <i className="dripicons-gear noti-icon"></i>
+              <i className="mdi mdi-application-cog-outline noti-icon"></i>
             </button>
           </li>
           <li className="dropdown notification-list">

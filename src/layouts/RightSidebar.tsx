@@ -52,7 +52,7 @@ const RightSideBar = () => {
           <Link to="#" className="end-bar-toggle float-end" onClick={handleClose}>
             <i className="dripicons-cross noti-icon"></i>
           </Link>
-          <h5 className="m-0">Settings</h5>
+          <h5 className="m-0">Display Settings</h5>
         </div>
 
         <SimpleBar style={{ maxHeight: '100%', zIndex: 10000 }} timeout={500} scrollbarMaxSize={320}>

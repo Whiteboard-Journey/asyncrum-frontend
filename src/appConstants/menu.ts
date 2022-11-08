@@ -15,21 +15,6 @@ export type MenuItemType = {
 };
 
 const MENU_ITEMS: MenuItemType[] = [
-  // { key: 'docs', label: 'Documents', isTitle: true },
-  // {
-  //   key: 'docs-recent',
-  //   label: 'Recent',
-  //   isTitle: false,
-  //   icon: 'uil-clock-three',
-  //   url: '/docs/recent',
-  // },
-  // {
-  //   key: 'docs-starred',
-  //   label: 'Starred',
-  //   isTitle: false,
-  //   icon: 'uil-star',
-  //   url: '/docs/starred',
-  // },
   {
     key: 'docs-dashboard',
     label: 'Dashboard',
@@ -37,14 +22,6 @@ const MENU_ITEMS: MenuItemType[] = [
     icon: 'mdi mdi-bulletin-board',
     url: '/dashboard',
   },
-  // { key: 'meetings', label: 'Meetings', isTitle: true },
-  // {
-  //   key: 'meetings-meeting',
-  //   label: 'Meeting',
-  //   isTitle: false,
-  //   icon: 'mdi mdi-account-group-outline',
-  //   url: '/meeting',
-  // },
 ];
 
 export { MENU_ITEMS };

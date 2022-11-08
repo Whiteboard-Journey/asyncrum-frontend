@@ -15,15 +15,14 @@ const ProfileDropdown = ({ userTitle, username, menuItems, userImage }: ProfileD
   const [isOpen, toggleDropdown] = useToggle();
 
   return (
-    <Dropdown show={isOpen} onToggle={toggleDropdown}>
+    <Dropdown>
       <Dropdown.Toggle
         variant="link"
         id="dropdown-profile"
         as={Link}
-        to="#"
-        onClick={toggleDropdown}
-        className="nav-link dropdown-toggle nav-user arrow-none me-0"
-      >
+        to="/settings/user"
+        // onClick={toggleDropdown}
+        className="nav-link dropdown-toggle nav-user arrow-none me-0">
         <span className="account-user-avatar">
           <img src={userImage} className="rounded-circle" alt="user" referrerPolicy="no-referrer" />
         </span>
@@ -32,7 +31,7 @@ const ProfileDropdown = ({ userTitle, username, menuItems, userImage }: ProfileD
           <span className="account-position">{userTitle}</span>
         </span>
       </Dropdown.Toggle>
-      <Dropdown.Menu align={'end'} className="dropdown-menu-animated topbar-dropdown-menu profile-dropdown">
+      {/* <Dropdown.Menu align={'end'} className="dropdown-menu-animated topbar-dropdown-menu profile-dropdown">
         <div onClick={toggleDropdown}>
           <div className="dropdown-header noti-title">
             <h6 className="text-overflow m-0">Welcome !</h6>
@@ -46,7 +45,7 @@ const ProfileDropdown = ({ userTitle, username, menuItems, userImage }: ProfileD
             );
           })}
         </div>
-      </Dropdown.Menu>
+      </Dropdown.Menu> */}
     </Dropdown>
   );
 };
