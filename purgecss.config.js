@@ -2,5 +2,5 @@
 module.exports = {
   variables: true,
   defaultExtractor: (content) => content.match(/[\w\-/:]+/g) || [],
-  safelist: [/^col-/],
+  safelist: [/^col-/, /^modal/],
 };
