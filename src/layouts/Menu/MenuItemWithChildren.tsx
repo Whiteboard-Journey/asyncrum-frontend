@@ -9,7 +9,7 @@ const MenuItemWithChildren = ({ item, linkClassName, subMenuClassNames, activeMe
   const [open, setOpen] = useState<boolean>(activeMenuItems!.includes(item.key));
 
   useEffect(() => {
-    setOpen(activeMenuItems!.includes(item.key));
+    setOpen(activeMenuItems!.includes(item.key) || item.key === 'teams');
   }, [activeMenuItems, item]);
 
   const toggleMenuItem = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -29,8 +29,7 @@ const MenuItemWithChildren = ({ item, linkClassName, subMenuClassNames, activeMe
         aria-expanded={open}
         className={classNames('has-arrow', 'side-sub-nav-link', linkClassName, {
           'menuitem-active': activeMenuItems!.includes(item.key) ? 'active' : '',
-        })}
-      >
+        })}>
         {item.icon && <i className={item.icon}></i>}
         {!item.badge ? (
           <span className="menu-arrow"></span>
@@ -38,8 +37,7 @@ const MenuItemWithChildren = ({ item, linkClassName, subMenuClassNames, activeMe
           <span
             className={classNames('badge', 'bg-' + item.badge.variant, 'float-end', {
               'text-dark': item.badge.variant === 'light',
-            })}
-          >
+            })}>
             {item.badge.text}
           </span>
         )}
