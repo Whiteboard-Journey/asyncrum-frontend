@@ -21,7 +21,7 @@ const MenuItemWithChildren = ({ item, linkClassName, subMenuClassNames, activeMe
   };
 
   return (
-    <li className={classNames('side-nav-item', { 'menuitem-active': open })}>
+    <li className={classNames('side-nav-item', { 'menuitem-active': open && item.key != 'teams' })}>
       <Link
         to="#"
         onClick={toggleMenuItem}

@@ -7,9 +7,10 @@ import MenuItemWithChildren from './MenuItemWithChildren';
 
 type AppMenuProps = {
   menuItems: Array<MenuItemType>;
+  marginTop?: number;
 };
 
-const AppMenu = ({ menuItems }: AppMenuProps) => {
+const AppMenu = ({ menuItems, marginTop }: AppMenuProps) => {
   const location = useLocation();
 
   const menuRef = useRef<HTMLUListElement>(null);
@@ -56,7 +57,7 @@ const AppMenu = ({ menuItems }: AppMenuProps) => {
   }, [activeMenu]);
 
   return (
-    <ul className="side-nav" ref={menuRef} id="main-side-menu">
+    <ul style={{ marginTop: `${marginTop}rem` }} className="side-nav" ref={menuRef} id="main-side-menu">
       {(menuItems || []).map((item, index) => {
         return (
           <React.Fragment key={index.toString()}>

@@ -27,7 +27,7 @@ const NotificationDropdown = ({ notifications }: NotificationDropdownProps) => {
         to="#"
         onClick={toggleDropdown}
         className="nav-link dropdown-toggle arrow-none">
-        <i className="dripicons-bell noti-icon"></i>
+        <i className="mdi mdi-bell-outline noti-icon"></i>
         {notifications.length != 0 ? <span className="noti-icon-badge"></span> : <span></span>}
       </Dropdown.Toggle>
       <Dropdown.Menu className="dropdown-menu-animated dropdown-lg" align="end">

@@ -10,8 +10,12 @@ const MenuItem = ({ item, className, linkClassName }: SubMenus) => {
     currentTeam: state.Team.currentTeam,
   }));
 
+  const bottom = item.key === 'settings' ? 203 : 160;
+
   return (
-    <li className={classNames('side-nav-item', className, item.key === currentTeam?.code ? 'menuitem-active' : '')}>
+    <li
+      style={['settings', 'logout'].includes(item.key) ? { position: 'fixed', bottom: bottom } : {}}
+      className={classNames('side-nav-item', className, item.key === currentTeam?.code ? 'menuitem-active' : '')}>
       <MenuItemLink item={item} className={linkClassName} />
     </li>
   );

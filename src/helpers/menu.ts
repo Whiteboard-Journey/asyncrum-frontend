@@ -24,8 +24,38 @@ const getMenuItems = (teams: any) => {
                   })
                 : [],
           },
+          {
+            key: 'settings',
+            label: 'Settings',
+            isTitle: false,
+            icon: 'mdi mdi-cog-outline',
+            url: '/settings/user',
+          },
+          {
+            key: 'logout',
+            label: 'Logout',
+            isTitle: false,
+            icon: 'mdi mdi-logout',
+            url: '/account/logout',
+          },
         ]
-      : MENU_ITEMS;
+      : [
+        ...MENU_ITEMS,
+        {
+          key: 'settings',
+          label: 'Settings',
+          isTitle: false,
+          icon: 'mdi mdi-cog-outline',
+          url: '/settings/user',
+        },
+        {
+          key: 'logout',
+          label: 'Logout',
+          isTitle: false,
+          icon: 'mdi mdi-logout',
+          url: '/account/logout',
+        },
+      ];
   return menu;
 };
 
