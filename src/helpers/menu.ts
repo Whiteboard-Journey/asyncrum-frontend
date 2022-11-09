@@ -1,5 +1,12 @@
 import { MENU_ITEMS, MenuItemType } from 'appConstants';
-const getMenuItems = (teams: any) => {
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone'
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+const getMenuItems = (teams: any, currentTeam: any) => {
   const menu: MenuItemType[] =
     teams && teams.length > 0
       ? [
@@ -18,12 +25,40 @@ const getMenuItems = (teams: any) => {
                       isTitle: false,
                       parentKey: 'teams',
                       teamId: team.id,
-                      url: '/',
+                      url: '#',
                     };
                     return teamObject;
                   })
                 : [],
           },
+          {
+            key: 'members',
+            label: 'Members',
+            isTitle: false,
+            // children: currentTeam.members.map((member: any) => {
+            //   const memberObject = {
+            //     key: member.fullname,
+            //     label: moment.tz(new Date(), member.timeZone).format("hh:mm A") + " " + member.fullname,
+            //     isTitle: false,
+            //     parentKey: 'members',
+            //     url: '#',
+            //   };
+            //   return memberObject;
+            // })
+          },
+          ...currentTeam.members.map((member: any) => {
+            const memberObject = {
+              key: member.fullname,
+              get label (): string {
+                return `${this.time.format("hh:mm A")} ${this.key}`;
+              },
+              isTitle: false,
+              parentKey: 'members',
+              url: '#',
+              time: dayjs(new Date()).tz(member.timeZone),
+            };
+            return memberObject;
+          }),
           {
             key: 'settings',
             label: 'Settings',
