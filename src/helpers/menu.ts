@@ -34,17 +34,8 @@ const getMenuItems = (teams: any, currentTeam: any) => {
           {
             key: 'members',
             label: 'Members',
+            icon: 'mdi mdi-account-multiple',
             isTitle: false,
-            // children: currentTeam.members.map((member: any) => {
-            //   const memberObject = {
-            //     key: member.fullname,
-            //     label: moment.tz(new Date(), member.timeZone).format("hh:mm A") + " " + member.fullname,
-            //     isTitle: false,
-            //     parentKey: 'members',
-            //     url: '#',
-            //   };
-            //   return memberObject;
-            // })
           },
           ...currentTeam.members.map((member: any) => {
             const memberObject = {
@@ -54,7 +45,7 @@ const getMenuItems = (teams: any, currentTeam: any) => {
               },
               isTitle: false,
               parentKey: 'members',
-              url: '#',
+              url: '',
               time: dayjs(new Date()).tz(member.timeZone),
             };
             return memberObject;
