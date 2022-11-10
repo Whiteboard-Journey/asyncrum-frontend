@@ -68,8 +68,8 @@ function* oauthLogin({ payload: { token }, type }: TokenData): SagaIterator {
     api.setLoggedInUser(user);
     const readAllTeamResponse = yield call(readAllTeamApi);
     const allTeam = readAllTeamResponse.data.teams;
-    const currentTeamResponse = yield call(readTeamApi, allTeam[0].id);
-    const currentTeam = currentTeamResponse.data
+    const currentTeamResponse = allTeam.length > 0 ? yield call(readTeamApi, allTeam[0].id) : {};
+    const currentTeam = currentTeamResponse?.data
     api.setTeamList(allTeam);
     api.setCurrentTeam(currentTeam);
     yield all([
