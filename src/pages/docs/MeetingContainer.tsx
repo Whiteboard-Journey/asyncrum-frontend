@@ -2,14 +2,10 @@ import { Row, Col } from 'react-bootstrap';
 import MeetingCard from './MeetingCard';
 import CreateMeetingButton from './CreateMeetingButton';
 import { useMeeting } from './hooks';
-import { useRedux } from 'hooks';
+import { Meeting } from './types';
 
 const MeetingContainer = () => {
-  const { appSelector } = useRedux();
-  const { currentTeam } = appSelector((state) => ({
-    currentTeam: state.Team.currentTeam,
-  }));
-  const { onDeleteMeeting } = useMeeting();
+  const { meetings, meetingLoading, onDeleteMeeting, onEnterMeeting, onEndMeeting } = useMeeting();
 
   return (
     <>
@@ -28,12 +24,17 @@ const MeetingContainer = () => {
           <CreateMeetingButton />
         </Col>
       </Row>
-      {currentTeam?.openMeetings && currentTeam.openMeetings.length > 0 && (
+      {!meetingLoading && meetings.length > 0 && (
         <Row>
-          {currentTeam.openMeetings.map((meeting: string) => {
+          {meetings.map((meeting: Meeting) => {
             return (
-              <Col md={4} xxl={2} key={'mt-' + meeting}>
-                <MeetingCard meeting={meeting} onDeleteMeeting={onDeleteMeeting} />
+              <Col md={4} xxl={2} key={'mt-' + meeting.id}>
+                <MeetingCard
+                  meeting={meeting}
+                  onDeleteMeeting={onDeleteMeeting}
+                  onEnterMeeting={onEnterMeeting}
+                  onEndMeeting={onEndMeeting}
+                />
               </Col>
             );
           })}

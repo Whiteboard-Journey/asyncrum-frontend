@@ -8,7 +8,9 @@ import {
   updateTeam as updateTeamApi,
   removeMember as removeMemberApi,
   createMeeting as createMeetingApi,
+  updateMeeting as updateMeetingApi,
   deleteMeeting as deleteMeetingApi,
+  readAllMeeting as readAllMeetingApi,
 } from 'helpers';
 import { teamApiResponseSuccess, teamApiResponseError } from './actions';
 import { TeamActionTypes } from './constants';
@@ -27,14 +29,6 @@ type LeaveData = {
   payload: {
     teamId: number;
     memberId: number;
-  };
-  type: string;
-}
-
-type MeetingData = {
-  payload: {
-    teamId: number;
-    roomName: string;
   };
   type: string;
 }
@@ -63,7 +57,6 @@ function* readAll(): SagaIterator {
     const allTeam = response.data.teams;
     const currentTeamResponse = yield call(readTeamApi, allTeam[0].id);
     const currentTeam = currentTeamResponse.data
-    console.log(currentTeam);
     api.setTeamList(allTeam);
     api.setCurrentTeam(currentTeam);
     yield put(teamApiResponseSuccess(TeamActionTypes.READ_ALL_TEAM, allTeam, currentTeam));
@@ -113,30 +106,6 @@ function* leave({ payload: { teamId, memberId }, type}: LeaveData): SagaIterator
   }
 }
 
-function* createMeeting({ payload: { teamId, roomName }, type }: MeetingData): SagaIterator {
-  try {
-    yield call(createMeetingApi, teamId, { roomName });
-    const currentTeamResponse = yield call(readTeamApi, teamId);
-    const currentTeam = currentTeamResponse.data
-    api.setCurrentTeam(currentTeam);
-    yield put(teamApiResponseSuccess(TeamActionTypes.CREATE_MEETING, {}, currentTeam));
-  } catch (error: any) {
-    yield put(teamApiResponseError(TeamActionTypes.CREATE_MEETING, error));
-  }
-}
-
-function* deleteMeeting({ payload: { teamId, roomName }, type }: MeetingData): SagaIterator {
-  try {
-    yield call(deleteMeetingApi, teamId, roomName);
-    const currentTeamResponse = yield call(readTeamApi, teamId);
-    const currentTeam = currentTeamResponse.data
-    api.setCurrentTeam(currentTeam);
-    yield put(teamApiResponseSuccess(TeamActionTypes.DELETE_MEETING, {}, currentTeam));
-  } catch (error: any) {
-    yield put(teamApiResponseError(TeamActionTypes.DELETE_MEETING, error));
-  }
-}
-
 export function* watchCreateTeam() {
   yield takeEvery(TeamActionTypes.CREATE_TEAM, create);
 }
@@ -157,14 +126,6 @@ export function* watchLeaveTeam() {
   yield takeEvery(TeamActionTypes.LEAVE_TEAM, leave);
 }
 
-export function* watchCreateMeeting() {
-  yield takeEvery(TeamActionTypes.CREATE_MEETING, createMeeting);
-}
-
-export function* watchDeleteMeeting() {
-  yield takeEvery(TeamActionTypes.DELETE_MEETING, deleteMeeting);
-}
-
 function* teamSaga() {
   yield all([
     fork(watchCreateTeam),
@@ -172,8 +133,6 @@ function* teamSaga() {
     fork(watchReadTeam),
     fork(watchUpdateTeam),
     fork(watchLeaveTeam),
-    fork(watchCreateMeeting),
-    fork(watchDeleteMeeting),
   ]);
 }
 

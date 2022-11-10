@@ -3,6 +3,7 @@ import { useToggle } from 'hooks';
 
 const useMeetingCard = () => {
   const [isDeleteOpen, toggleDelete] = useToggle();
+  const [isViewOpen, toggleView] = useToggle();
 
   const closeModalAfterFunction = (
     f: (e: React.FormEvent<HTMLFormElement>) => Promise<void>,
@@ -13,7 +14,7 @@ const useMeetingCard = () => {
     toggle();
   };
 
-  return { isDeleteOpen, toggleDelete, closeModalAfterFunction };
+  return { isDeleteOpen, toggleDelete, isViewOpen, toggleView, closeModalAfterFunction };
 };
 
 export default useMeetingCard;

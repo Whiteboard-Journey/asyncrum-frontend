@@ -1,7 +1,7 @@
 import { useReactMediaRecorder } from 'react-media-recorder';
 import { useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import { createRecord as createRecordAPI, uploadRecord as uploadRecordAPI } from 'helpers';
+import { createRecord as createRecordAPI, uploadRecord as uploadRecordAPI, createMeetingRecord as createMeetingRecordAPI } from 'helpers';
 import { useRedux } from 'hooks';
 
 const useVideoRecorder = () => {
@@ -11,7 +11,7 @@ const useVideoRecorder = () => {
     user: state.Auth.user,
     currentTeam: state.Team.currentTeam,
   }));
-  const [recordingState, setRecordingState] = useState<'idle' | 'recording' | 'recorded'>('idle');
+  const [recordingState, setRecordingState] = useState<'idle' | 'recording' | 'recorded' | 'refused'>('idle');
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const webcamRef = useRef<Webcam>(null);
@@ -49,6 +49,21 @@ const useVideoRecorder = () => {
     await uploadRecordAPI(presignedURL, fileToUpload);
   };
 
+  const uploadMeetingVideo = async (url: string, meetingId: number) => {
+    if (!screenMediaBlobUrl) {
+      alert('Recordings are not ready');
+      return;
+    }
+
+    const camMedia = await fetch(url);
+    const blob = await camMedia.blob();
+
+    const createMeetingRecordAPIResponse = await createMeetingRecordAPI(meetingId);
+    const presignedURL = createMeetingRecordAPIResponse.data.preSignedURL;
+    const fileToUpload = new File([blob], meetingId.toString() + new Date() + '.mp4', { type: 'video/mp4' });
+    await uploadRecordAPI(presignedURL, fileToUpload);
+  };
+
   const uploadVideoes = async () => {
     if (!camMediaBlobUrl || !screenMediaBlobUrl) {
       alert('Recordings are not ready');
@@ -80,6 +95,7 @@ const useVideoRecorder = () => {
     screenStartRecording,
     screenStopRecording,
     uploadVideoes,
+    uploadMeetingVideo
   };
 };
 

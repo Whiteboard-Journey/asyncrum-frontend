@@ -21,10 +21,18 @@ import {
   updateTeam,
   inviteMember,
   uploadLogoImage,
-  removeMember,
-  createMeeting,
-  deleteMeeting
+  removeMember
 } from './team';
+import {
+  createMeeting,
+  updateMeeting,
+  readMeeting,
+  readAllMeeting,
+  deleteMeeting,
+  createMeetingRecord,
+  addMeetingMember,
+  removeMeetingMember
+} from './meeting';
 
 export { login, logout, readMember, signup, forgotPassword, forgotPasswordConfirm };
 export { readAllWhiteboard, readWhiteboard, createWhiteboard, uploadWhiteboard, updateWhiteboard, deleteWhiteboard };
@@ -42,7 +50,15 @@ export {
   updateTeam,
   inviteMember,
   uploadLogoImage,
-  removeMember,
+  removeMember
+};
+export {
   createMeeting,
-  deleteMeeting
+  updateMeeting,
+  readMeeting,
+  readAllMeeting,
+  deleteMeeting,
+  createMeetingRecord,
+  addMeetingMember,
+  removeMeetingMember
 };
