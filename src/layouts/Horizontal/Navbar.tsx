@@ -11,8 +11,10 @@ type NavbarProps = {
 const Navbar = ({ isMenuOpened }: NavbarProps) => {
   const { appSelector } = useRedux();
 
-  const { user } = appSelector((state) => ({
+  const { user, teamList, currentTeam } = appSelector((state) => ({
     user: state.Auth.user,
+    teamList: state.Team.teamList,
+    currentTeam: state.Team.currentTeam,
   }));
   // change the inputTheme value to light for creative theme
   const inputTheme = 'dark';
@@ -23,7 +25,7 @@ const Navbar = ({ isMenuOpened }: NavbarProps) => {
         <nav className={classNames('navbar', 'navbar-expand-lg', 'topnav-menu', 'navbar-' + inputTheme)}>
           <Collapse in={isMenuOpened} className="navbar-collapse">
             <div id="topnav-menu-content">
-              <AppMenu menuItems={getMenuItems(user.teams)} />
+              <AppMenu menuItems={getMenuItems(teamList, currentTeam)} />
             </div>
           </Collapse>
         </nav>
