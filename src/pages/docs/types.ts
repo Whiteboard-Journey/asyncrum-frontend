@@ -22,6 +22,17 @@ export type Whiteboard = {
   whiteboardFileUrl: string;
 };
 
+export type Meeting = {
+  teamId: number;
+  id: number;
+  meetingName: string;
+  createDate: string;
+  lastModifiedDate: string;
+  status: boolean;
+  meetingFileUrl: string;
+  participants: string[];
+}
+
 export type WhiteboardCardProps = {
   whiteboard: Whiteboard;
   onEditWhiteboard: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;

@@ -1,8 +1,17 @@
+import ScreenRecorder from 'components/ScreenRecorder';
 import { Button, Modal } from 'react-bootstrap';
 import { useMeeting } from './hooks';
 
 const CreateMeetingButton = () => {
-  const { isCreateMeetingOpen, toggleCreateMeeting, onCreateMeeting } = useMeeting();
+  const {
+    isCreateMeetingOpen,
+    toggleCreateMeeting,
+    isRecordOpen,
+    toggleRecord,
+    currentMeetingId,
+    currentMeetingName,
+    onCreateMeeting,
+  } = useMeeting();
 
   return (
     <>
@@ -16,10 +25,17 @@ const CreateMeetingButton = () => {
           </Modal.Header>
           <form className="ps-3 pe-3" onSubmit={onCreateMeeting}>
             <div className="mt-3 mb-3">
-              <label htmlFor="roomName" className="form-label">
-                Meeting Room Name
+              <label htmlFor="meetingName" className="form-label">
+                Meeting Name
               </label>
-              <input className="form-control" type="text" id="roomName" maxLength={255} required placeholder="Meeting Room Name" />
+              <input
+                className="form-control"
+                type="text"
+                id="meetingName"
+                maxLength={255}
+                required
+                placeholder="Meeting Name"
+              />
             </div>
 
             <div className="mb-3 text-center">
@@ -28,6 +44,14 @@ const CreateMeetingButton = () => {
               </button>
             </div>
           </form>
+        </Modal.Body>
+      </Modal>
+      <Modal show={isRecordOpen} onHide={toggleRecord} size="xl">
+        <Modal.Body>
+          <Modal.Header onHide={toggleRecord} closeButton>
+            <h4 className="modal-title">Record a meeting video</h4>
+          </Modal.Header>
+          <ScreenRecorder meetingId={currentMeetingId!} meetingName={currentMeetingName} />
         </Modal.Body>
       </Modal>
     </>

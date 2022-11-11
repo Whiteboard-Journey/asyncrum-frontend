@@ -13,10 +13,6 @@ import {
 } from '@chakra-ui/react';
 
 const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
-  const cam_w = 320,
-    cam_h = 240,
-    screen_w = 960,
-    screen_h = 540;
   const { getTimeFromNow } = useMoment();
   const { onViewDailyStandups } = useDailyStandup();
   const { isOpen, onOpen, onClose } = useDisclosure();

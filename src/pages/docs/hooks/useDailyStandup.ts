@@ -80,7 +80,7 @@ const useDailyStandup = () => {
     if (carouselRef && carouselRef.current) {
       carouselRef.current.goToSlide(slide);
     }
-  }, [dailyStandups, getTimeDifference, user.id, currentTeam]);
+  }, [dailyStandups, getTimeDifference, user.id, currentTeam.id]);
 
   const onViewDailyStandups = async (dailyStandup: DailyStandup) => {
     await viewDailyStandupAPI(dailyStandup.id[0]);

@@ -51,14 +51,6 @@ const removeMember = (teamId: number, memberId: number) => {
   return api.delete(baseURL + '/' + teamId + '/members/' + memberId);
 }
 
-const createMeeting = (teamId: number, params: { roomName: string }) => {
-  return api.create(baseURL + '/' + teamId + '/roomNames', params);
-};
-
-const deleteMeeting = (teamId: number, roomName: string) => {
-  return api.delete(baseURL + '/' + teamId + '/roomNames/' + roomName);
-};
-
 export {
   changeTeam,
   createTeam,
@@ -69,6 +61,4 @@ export {
   inviteMember,
   uploadLogoImage,
   removeMember,
-  createMeeting,
-  deleteMeeting
 };
