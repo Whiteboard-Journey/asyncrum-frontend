@@ -28,7 +28,7 @@ const MeetingContainer = () => {
         <Row>
           {meetings.map((meeting: Meeting) => {
             return (
-              <Col md={4} xxl={2} key={'mt-' + meeting.id}>
+              <Col md={6} xxl={3} key={'mt-' + meeting.id}>
                 <MeetingCard
                   meeting={meeting}
                   onDeleteMeeting={onDeleteMeeting}

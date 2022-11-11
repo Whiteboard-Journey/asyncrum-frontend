@@ -31,8 +31,16 @@ const useMeeting = () => {
   const readAllMeeting = useCallback(
     async () => {
       const readAllMeetingAPIResponse = await readAllMeetingAPI(teamId);
-
-      setMeetings(readAllMeetingAPIResponse.data.meetings);
+      let meetingsData = readAllMeetingAPIResponse.data.meetings;
+      meetingsData = meetingsData.map((meeting: Meeting) => {
+        return {
+        ...meeting,
+        participants: meeting.participants.map((participant: string) => {
+          const participantArray = participant.split(',');
+          return [participantArray[0].substring(1), participantArray[1].trim()];
+        })
+      }});
+      setMeetings(meetingsData);
       setMeetingLoading(false);
     },
     [currentTeam.id]
