@@ -13,9 +13,7 @@ type Props = {
 const MeetingCard = ({ meeting, onDeleteMeeting, onEnterMeeting, onEndMeeting }: Props) => {
   const { isDeleteOpen, toggleDelete, isViewOpen, toggleView, closeModalAfterFunction } = useMeetingCard();
   const { getTimeFromNow } = useMoment();
-  useEffect(() => {
-    console.log(meeting.participants);
-  });
+
   return (
     <Card className="d-block">
       <Card.Body>
