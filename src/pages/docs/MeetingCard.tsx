@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Card, Dropdown, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useMoment, useMeetingCard } from './hooks';
 import { Meeting } from './types';
@@ -12,6 +13,7 @@ type Props = {
 const MeetingCard = ({ meeting, onDeleteMeeting, onEnterMeeting, onEndMeeting }: Props) => {
   const { isDeleteOpen, toggleDelete, isViewOpen, toggleView, closeModalAfterFunction } = useMeetingCard();
   const { getTimeFromNow } = useMoment();
+
   return (
     <Card className="d-block">
       <Card.Body>
@@ -68,7 +70,15 @@ const MeetingCard = ({ meeting, onDeleteMeeting, onEnterMeeting, onEndMeeting }:
           {meeting.status ? <span className="badge bg-danger float-end me-3">live</span> : ''}
         </h4>
         <div className="mt-3">
-          <span className="font-13">Participants: {meeting.participants}</span>
+          <span className="font-13">Participants: </span>
+          {meeting &&
+            meeting.participants.map((participant) => {
+              return (
+                <OverlayTrigger key={participant[0]} placement={'bottom'} overlay={<Tooltip>{participant[0]}</Tooltip>}>
+                  <img src={participant[1]} className="rounded-circle avatar-xs" alt={participant[0]} />
+                </OverlayTrigger>
+              );
+            })}
         </div>
         <p className="text-muted text-end font-12 mt-3 mb-1">
           Last modified: {getTimeFromNow(meeting.lastModifiedDate)}
