@@ -7,11 +7,11 @@
 
 # Asyncrum
 
-> 시차가 존재하는 원격 팀을 위한 화이트보드 + 비디오 로그 기반 비동기 협업 소프트웨어 <br/> **개발기간: 2022.06 ~ 2022.11**
+> 시차가 존재하는 원격 팀을 위한 화이트보드 + 비디오 로그 기반 비동기 협업 소프트웨어 <br/> **개발 기간: 2022.06 ~ 2022.11**
 
 ## 배포 주소
 
-> **URL** : [https://test.asyncrum.com](https://test.asyncrum.com)
+> [https://test.asyncrum.com](https://test.asyncrum.com)
 
 ## 프로젝트 소개
 
