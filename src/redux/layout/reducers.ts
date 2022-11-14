@@ -8,7 +8,7 @@ const INIT_STATE: LayoutStateType = {
   layoutType: LayoutTypes.LAYOUT_VERTICAL,
   layoutWidth: LayoutWidth.LAYOUT_WIDTH_FLUID,
   leftSideBarTheme: SideBarTheme.LEFT_SIDEBAR_THEME_DARK,
-  leftSideBarType: SideBarWidth.LEFT_SIDEBAR_TYPE_SCROLLABLE,
+  leftSideBarType: SideBarWidth.LEFT_SIDEBAR_TYPE_FIXED,
   showRightSidebar: false,
 };
 
