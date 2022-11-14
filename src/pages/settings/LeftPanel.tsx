@@ -49,11 +49,6 @@ const LeftPanel = ({ selected }: LeftPanelProps) => {
           <i className="mdi mdi-plus font-18 align-middle me-2"></i>Create Team
         </Link>
       </div>
-      <div className="mt-4">
-        <h4>
-          <span className="badge rounded-pill p-1 px-2 badge-secondary-lighten">FREE</span>
-        </h4>
-      </div>
     </>
   );
 };

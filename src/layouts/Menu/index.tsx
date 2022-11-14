@@ -41,7 +41,7 @@ const AppMenu = ({ menuItems, marginTop }: AppMenuProps) => {
           break;
         }
       }
-
+      console.log(matchingMenuItem);
       if (matchingMenuItem) {
         const mid = matchingMenuItem.getAttribute('data-menu-key');
         const activeMt = findMenuItem(menuItems, mid!);
@@ -55,6 +55,10 @@ const AppMenu = ({ menuItems, marginTop }: AppMenuProps) => {
   useEffect(() => {
     activeMenu();
   }, [activeMenu]);
+
+  useEffect(() => {
+    console.log(activeMenuItems);
+  }, [activeMenuItems]);
 
   return (
     <ul style={{ marginTop: `${marginTop}rem` }} className="side-nav" ref={menuRef} id="main-side-menu">

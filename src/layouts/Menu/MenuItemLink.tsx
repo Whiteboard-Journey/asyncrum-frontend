@@ -10,6 +10,7 @@ const isWorking = (time: Dayjs) => {
 
 const MenuItemLink = ({ item, className }: SubMenus) => {
   const isMember = item.parentKey === 'members';
+  const isMemberTitle = item.key === 'members';
 
   return (
     <Link
@@ -20,8 +21,8 @@ const MenuItemLink = ({ item, className }: SubMenus) => {
         }
       }}
       target={item.target}
-      className={classNames('side-nav-link-ref', 'side-sub-nav-link', className)}
-      style={isMember || item.key === 'members' ? { pointerEvents: 'none' } : {}}
+      className={classNames('side-nav-link-ref', 'side-sub-nav-link', className, isMemberTitle ? 'mt-4' : '')}
+      style={isMember || isMemberTitle ? { pointerEvents: 'none' } : {}}
       data-menu-key={item.key}>
       {item.icon && <i className={item.icon}></i>}
       {isMember && (

@@ -67,7 +67,13 @@ const MeetingCard = ({ meeting, onDeleteMeeting, onEnterMeeting, onEndMeeting }:
             }
           }}>
           {meeting.meetingName}
-          {meeting.status ? <span className="badge bg-danger float-end me-3">live</span> : ''}
+          {meeting.status ? (
+            <span className="badge bg-danger float-end me-1">
+              <i className="mdi mdi-access-point"></i> live
+            </span>
+          ) : (
+            ''
+          )}
         </h4>
         <div className="mt-3">
           <span className="font-13">Participants: </span>

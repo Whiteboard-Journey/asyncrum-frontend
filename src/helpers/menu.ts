@@ -36,6 +36,7 @@ const getMenuItems = (teams: any, currentTeam: any) => {
             label: 'Members',
             icon: 'mdi mdi-account-multiple',
             isTitle: false,
+            url: ''
           },
           ...currentTeam.members.map((member: any) => {
             const memberObject = {

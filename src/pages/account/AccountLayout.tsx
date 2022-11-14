@@ -39,7 +39,9 @@ const AccountLayout = ({ bottomLinks, children }: AccountLayoutProps) => {
           </Row>
         </Container>
       </div>
-      <footer className="footer footer-alt">{t(`2022 © Asyncrum - Software Maestro 13th Team WBJ`)}</footer>
+      <footer className="footer footer-alt">
+        {t(`2022 © Asyncrum - Software Maestro 13th Team Whiteboard Journey`)}
+      </footer>
     </>
   );
 };

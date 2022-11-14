@@ -45,7 +45,7 @@ const ServerError = () => {
       </div>
 
       <footer className="footer footer-alt">
-        2022 {new Date().getFullYear()} © Asyncrum - Software Maestro 13th Team WBJ
+        2022 {new Date().getFullYear()} © Asyncrum - Software Maestro 13th Team Whiteboard Journey
       </footer>
     </>
   );
