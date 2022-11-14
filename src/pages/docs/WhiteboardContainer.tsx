@@ -28,20 +28,9 @@ const WhiteboardContainer = () => {
       <Row>
         <Col></Col>
       </Row>
-      <Row className="mb-2">
+      <Row className="mb-4">
         <Col sm={4}>
           <CreateWhiteboardButton />
-        </Col>
-        <Col sm={8}>
-          <div className="text-sm-end">
-            <div className="btn-group mb-3">
-              <Button variant="primary">All</Button>
-            </div>
-            <ButtonGroup className="mb-3 ms-1">
-              <Button variant="light">Owned by me</Button>
-              <Button variant="light">Not owned by me</Button>
-            </ButtonGroup>
-          </div>
         </Col>
       </Row>
       {!whiteboardLoading && (
@@ -59,15 +48,17 @@ const WhiteboardContainer = () => {
               );
             })}
           </Row>
-          <Row>
-            <Col className="d-flex">
-              <WhiteboardPagination
-                whiteboardPageNumber={whiteboardPageNumber}
-                numberOfWhiteboards={numberOfWhiteboards}
-                onPageNumberClick={onPageNumberClick}
-              />
-            </Col>
-          </Row>
+          {numberOfWhiteboards > 12 && (
+            <Row>
+              <Col className="d-flex">
+                <WhiteboardPagination
+                  whiteboardPageNumber={whiteboardPageNumber}
+                  numberOfWhiteboards={numberOfWhiteboards}
+                  onPageNumberClick={onPageNumberClick}
+                />
+              </Col>
+            </Row>
+          )}
         </>
       )}
     </>

@@ -18,6 +18,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getFirebaseToken, onMessageListener } from './FirebaseConfig';
 import { NotificationItem, Message } from '../types';
+import LayoutColor from 'components/ThemeCustomizer/LayoutColor';
+import useThemeCustomizer from 'components/ThemeCustomizer/useThemeCustomizer';
+import { Form } from 'react-bootstrap';
 
 type TopbarProps = {
   hideLogo?: boolean;
@@ -27,6 +30,7 @@ type TopbarProps = {
 };
 
 const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: TopbarProps) => {
+  const { layoutColor, changeLayoutColorScheme } = useThemeCustomizer();
   const { dispatch, appSelector } = useRedux();
   const { width } = useViewport();
   const [isMenuOpened, toggleMenu] = useToggle();
@@ -123,24 +127,23 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
         )}
 
         <ul className="list-unstyled topbar-menu float-end mb-0">
-          {/* <li className="notification-list topbar-dropdown d-xl-none">
-            <SearchDropdown />
+          <li className="nav-link notification-list">
+            <Form>
+              <i className={classNames('uil uil-sun noti-icon', layoutColor === 'light' ? 'text-warning' : '')}></i>
+              <Form.Check
+                className="d-inline-block"
+                type="switch"
+                id="custom-switch"
+                checked={layoutColor === 'light' ? false : true}
+                onChange={(e) => {
+                  changeLayoutColorScheme(layoutColor === 'light' ? 'dark' : 'light');
+                }}
+              />
+              <i className={classNames('uil uil-moon noti-icon', layoutColor === 'dark' ? 'text-warning' : '')}></i>
+            </Form>
           </li>
-          <li className="dropdown notification-list topbar-dropdown">
-            <LanguageDropdown />
-          </li> */}
           <li className="dropdown notification-list">
             <NotificationDropdown notifications={notifications!} />
-          </li>
-          {/* <li className="dropdown notification-list d-none d-sm-inline-block">
-            <AppsDropdown />
-          </li> */}
-          <li className="notification-list">
-            <button
-              className="nav-link dropdown-toggle end-bar-toggle arrow-none btn btn-link shadow-none"
-              onClick={handleRightSideBar}>
-              <i className="mdi mdi-application-cog-outline noti-icon"></i>
-            </button>
           </li>
           <li className="dropdown notification-list">
             <ProfileDropdown

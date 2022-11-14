@@ -10,7 +10,7 @@ const MenuItem = ({ item, className, linkClassName }: SubMenus) => {
     currentTeam: state.Team.currentTeam,
   }));
 
-  const bottom = item.key === 'settings' ? 203 : 160;
+  const bottom = item.key === 'settings' ? 63 : 20;
 
   return (
     <li

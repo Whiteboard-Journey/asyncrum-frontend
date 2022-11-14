@@ -21,7 +21,6 @@ const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
     <Card className="d-block me-3">
       <Card.Body
         onClick={() => {
-          // openModalWithClass('modal-full-width');
           onOpen();
           onViewDailyStandups(dailyStandup);
         }}

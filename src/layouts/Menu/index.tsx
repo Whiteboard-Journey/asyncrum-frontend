@@ -41,7 +41,6 @@ const AppMenu = ({ menuItems, marginTop }: AppMenuProps) => {
           break;
         }
       }
-
       if (matchingMenuItem) {
         const mid = matchingMenuItem.getAttribute('data-menu-key');
         const activeMt = findMenuItem(menuItems, mid!);

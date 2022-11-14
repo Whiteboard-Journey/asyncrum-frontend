@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="footer">
       <div className="container-fluid">
         <Row>
-          <Col md={6}>2022 © Asyncrum - Software Maestro 13th Team WBJ</Col>
+          <Col md={6}>2022 © Asyncrum - Software Maestro 13th Team Whiteboard Journey</Col>
 
           {/* <Col md={6}>
             <div className="text-md-end footer-links d-none d-md-block">
