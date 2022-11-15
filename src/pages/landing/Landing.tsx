@@ -27,7 +27,7 @@ const Landing = () => {
       <Services services={services} />
 
       {/* layouts */}
-      <Layouts layouts={layouts} />
+      {/* <Layouts layouts={layouts} /> */}
 
       {/* features */}
       <Features features={features} />
@@ -36,7 +36,7 @@ const Landing = () => {
       <Pricing plans={plans} />
 
       {/* faqs */}
-      <FAQ rawFaqs={rawFaqs} />
+      {/* <FAQ rawFaqs={rawFaqs} /> */}
 
       {/* contact */}
       <ContactUs />

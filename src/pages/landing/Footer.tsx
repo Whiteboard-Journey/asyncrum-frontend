@@ -1,6 +1,6 @@
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import logo from 'assets/images/asyncrum-logo-cool.png';
+import logo from 'assets/images/asyncrum-logo-white.png';
 
 const Footer = () => {
   return (
@@ -9,7 +9,12 @@ const Footer = () => {
         <Row>
           <Col lg={6}>
             <img src={logo} alt="" className="logo-dark" height="18" />
-            <p className="text-muted mt-4">Asyncrum description</p>
+            <p className="text-muted mt-4">
+              For those teams in multiple time zones or with flextime schedules <br />
+              that have difficulties having real-time meetings, our project aims to develop an asynchronous meeting tool
+              with a vlog-based <br />
+              collaborative whiteboard.
+            </p>
 
             <ul className="social-list list-inline mt-3">
               <li className="list-inline-item text-center">
@@ -115,7 +120,9 @@ const Footer = () => {
         <Row>
           <Col lg={12}>
             <div className="mt-5">
-              <p className="text-muted mt-4 text-center mb-0">© 2022 {new Date().getFullYear()} Asyncrum.</p>
+              <p className="text-muted mt-4 text-center mb-0">
+                © 2022 {new Date().getFullYear()} Asyncrum. by Team Whiteboard Journey in Software Maestro 13th
+              </p>
             </div>
           </Col>
         </Row>

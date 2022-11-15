@@ -13,10 +13,10 @@ const Layouts = ({ layouts }: LayoutsProps) => {
           <Col lg={12}>
             <div className="text-center">
               <h3>
-                Flexible <span className="text-primary">Layouts</span>
+                Async/Sync <span className="text-primary">Collaboration Tools</span>
               </h3>
               <p className="text-muted mt-2">
-                There are three different layout options available to cater need for any <br /> modern web application.
+                There are several tools for teams to use for different kinds of collaboration.
               </p>
             </div>
           </Col>
