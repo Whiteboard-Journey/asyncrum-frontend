@@ -45,8 +45,8 @@ SW마에스트로 13기 벤처 프로젝트로서 네이버 SmartStudio Alto 팀
 <img src="https://user-images.githubusercontent.com/24418404/201703645-c4b35d77-a144-4e43-a5b6-6b53448434f5.png" />
 
 ### 팀 워크스페이스
-<img src="https://user-images.githubusercontent.com/24418404/201704682-c094f531-6364-40c8-ab8b-4a016122f8d5.png" />
-<img src="https://user-images.githubusercontent.com/24418404/201704926-7fe6b7d8-ae75-4977-9b00-9a88221d0df8.png" />
+<img src="https://user-images.githubusercontent.com/24418404/201914578-3c919422-15c0-4800-b3c5-693f376cbf05.png" />
+<img src="https://user-images.githubusercontent.com/24418404/201914591-d66ec093-0725-4f4c-a7ee-de2173878c98.png" />
 
 ### 데일리 스크럼
 <img src="https://user-images.githubusercontent.com/24418404/201708981-393e6c2b-3928-4e15-96a4-c4a0fa2f2c2e.png" />
