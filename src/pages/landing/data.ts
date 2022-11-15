@@ -21,27 +21,27 @@ const services: Service[] = [
     description: 'Team workspace for organizing team daily standups, meetings, and whiteboards.',
   },
   {
-    icon: 'uil uil-vector-square',
+    icon: 'uil uil-sun',
     title: 'Asynchrous Daily Standups',
     description: 'V-log based recording for asynchrous daily scrum.',
   },
   {
-    icon: 'uil uil-presentation',
+    icon: 'uil uil-video',
     title: 'Review Video Player',
     description: 'Review video player for bookmarking, drawing, and starting thread in recordings.',
   },
   {
-    icon: 'uil uil-apps',
+    icon: 'uil uil-clapper-board',
     title: 'Real-time Collaboration Whiteboard',
     description: 'Real-time Collaboration whiteboard for edit various objects simultaneously with your team.',
   },
   {
-    icon: 'uil uil-shopping-cart-alt',
+    icon: 'uil uil-meeting-board',
     title: 'Real-time Meeting',
     description: 'Real-time meeting for full-scale video conference that can support up to 35 participants.',
   },
   {
-    icon: 'uil uil-grids',
+    icon: 'uil uil-building',
     title: 'Team Management',
     description: 'Team management for managing team.',
   },
@@ -130,7 +130,7 @@ const plans: PricingPlan[] = [
     icon: 'dripicons-user',
     price: '$0',
     duration: 'Per User',
-    features: ['Up to 5 Users', 'Up to 10 Whiteboards', 'Recording up to 2 Mins', 'Up to 10 Thread Recordings', 'Up to 10 Participants in Meeting', 'Email Support'],
+    features: ['Up to 5 Users', 'Up to 10 Whiteboards', 'Recording up to 2 Mins', 'Up to 10 Thread Recordings', 'Up to 10 Participants in Meeting', 'Email Support', '24x7 Support'],
     isRecommended: false,
   },
   {
@@ -148,7 +148,7 @@ const plans: PricingPlan[] = [
     icon: 'dripicons-store',
     price: 'On-Demand',
     duration: '',
-    features: ['Unlimited Users', 'Unlimited Whiteboards', 'Recording up to 10 Mins', 'Unlimited Thread Recordings', 'On-Premise Support', 'Customizable Whiteboard/Recording/Meeting Settings', 'Email Support', '24x7 Support'],
+    features: ['Unlimited Users', 'Unlimited Whiteboards', 'Recording up to 10 Mins', 'Unlimited Thread Recordings', 'On-Premise Support', 'Email Support', '24x7 Support'],
     isRecommended: false,
   },
 ];

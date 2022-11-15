@@ -61,7 +61,7 @@ const ContactUs = () => {
             </p>
             <p className="text-muted mt-4">
               <span className="fw-bold">Office Time:</span>
-              <br /> <span className="d-block mt-1">9:00AM To 6:00PM</span>
+              <br /> <span className="d-block mt-1">9:00 AM To 6:00 PM</span>
             </p>
           </Col>
           <Col md={8}>
@@ -134,9 +134,7 @@ const ContactUs = () => {
               </Row>
               <Row className="mt-2">
                 <Col className="col-12 text-end">
-                  <button className="btn btn-primary">
-                    Send a Message <i className="mdi mdi-telegram ms-1"></i>
-                  </button>
+                  <button className="btn btn-primary">Send a Message</button>
                 </Col>
               </Row>
             </form>
