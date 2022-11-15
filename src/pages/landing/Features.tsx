@@ -8,7 +8,7 @@ type FeaturesProps = {
 
 const Features = ({ features }: FeaturesProps) => {
   return (
-    <section className="py-5">
+    <section id="features" className="py-5 bg-light-lighten border-top border-bottom border-light">
       <Container>
         <Row>
           <Col lg={12}>
@@ -17,9 +17,11 @@ const Features = ({ features }: FeaturesProps) => {
                 <i className="mdi mdi-heart-multiple-outline"></i>
               </h1>
               <h3>
-                Features you&apos;ll <span className="text-danger">love</span>
+                Async/Sync <span className="text-primary">Collaboration Tools</span>
               </h3>
-              <p className="text-muted mt-2">Asyncrum description</p>
+              <p className="text-muted mt-2">
+                There are several tools for teams to use for different kinds of collaboration.
+              </p>
             </div>
           </Col>
         </Row>
@@ -28,7 +30,7 @@ const Features = ({ features }: FeaturesProps) => {
           return item.id % 2 !== 0 ? (
             <Row key={index.toString()} className="mt-2 py-5 align-items-center">
               <Col lg={5} md={6}>
-                <img src={item.image} className="img-fluid" alt="" />
+                <img src={item.image} className="img-fluid rounded" alt="" />
               </Col>
               <Col md={{ span: 5, offset: 1 }} lg={6}>
                 <h3 className="fw-normal">{item.title}</h3>
@@ -43,9 +45,6 @@ const Features = ({ features }: FeaturesProps) => {
                     );
                   })}
                 </div>
-                <Link to="#" className="btn btn-primary btn-rounded mt-3">
-                  Read More <i className="mdi mdi-arrow-right ms-1"></i>
-                </Link>
               </Col>
             </Row>
           ) : (
@@ -63,12 +62,9 @@ const Features = ({ features }: FeaturesProps) => {
                     );
                   })}
                 </div>
-                <Link to="#" className="btn btn-success btn-rounded mt-3">
-                  Read More <i className="mdi mdi-arrow-right ms-1"></i>
-                </Link>
               </Col>
               <Col md={{ span: 6, offset: 1 }} lg={5}>
-                <img src={item.image} className="img-fluid" alt="" />
+                <img src={item.image} className="img-fluid rounded" alt="" />
               </Col>
             </Row>
           );

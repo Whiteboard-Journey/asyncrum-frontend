@@ -6,39 +6,44 @@ import layout3 from 'assets/images/layouts/layout-3.png';
 import layout4 from 'assets/images/layouts/layout-4.png';
 import layout5 from 'assets/images/layouts/layout-5.png';
 import layout6 from 'assets/images/layouts/layout-6.png';
-import image1 from 'assets/images/features-1.svg';
-import image2 from 'assets/images/features-2.svg';
+import dashboard_image from 'assets/images/dashboard.png';
+import daily_scrum from 'assets/images/daily_scrum.png';
+import review_video from 'assets/images/review_video.png';
+import whiteboard from 'assets/images/whiteboard.png';
+import meeting from 'assets/images/meeting.png';
+import team_setting from 'assets/images/team_setting.png';
+
 
 const services: Service[] = [
   {
     icon: 'uil uil-desktop',
-    title: 'Responsive Layouts',
-    description: 'Et harum quidem rerum as expedita distinctio nam libero tempore cum soluta nobis est cumque quo.',
+    title: 'Team Dashboard',
+    description: 'Team workspace for organizing team daily standups, meetings, and whiteboards.',
   },
   {
     icon: 'uil uil-vector-square',
-    title: 'Based on Bootstrap UI',
-    description: 'Temporibus autem quibusdam et aut officiis necessitatibus saepe eveniet ut sit et recusandae.',
+    title: 'Asynchrous Daily Standups',
+    description: 'V-log based recording for asynchrous daily scrum.',
   },
   {
     icon: 'uil uil-presentation',
-    title: 'Creative Design',
-    description: 'Nam libero tempore, cum soluta a est eligendi minus id quod maxime placeate facere assumenda est.',
+    title: 'Review Video Player',
+    description: 'Review video player for bookmarking, drawing, and starting thread in recordings.',
   },
   {
     icon: 'uil uil-apps',
-    title: 'Multiple Applications',
-    description: 'Et harum quidem rerum as expedita distinctio nam libero tempore cum soluta nobis est cumque quo.',
+    title: 'Real-time Collaboration Whiteboard',
+    description: 'Real-time Collaboration whiteboard for edit various objects simultaneously with your team.',
   },
   {
     icon: 'uil uil-shopping-cart-alt',
-    title: 'Ecommerce Pages',
-    description: 'Temporibus autem quibusdam et aut officiis necessitatibus saepe eveniet ut sit et recusandae.',
+    title: 'Real-time Meeting',
+    description: 'Real-time meeting for full-scale video conference that can support up to 35 participants.',
   },
   {
     icon: 'uil uil-grids',
-    title: 'Multiple Layouts',
-    description: 'Nam libero tempore, cum soluta a est eligendi minus id quod maxime placeate facere assumenda est.',
+    title: 'Team Management',
+    description: 'Team management for managing team.',
   },
 ];
 
@@ -72,58 +77,78 @@ const layouts: LayoutDemo[] = [
 const features: Feature[] = [
   {
     id: 1,
-    title: 'Asyncrum 1',
-    desc: 'Asyncrum description 1',
-    image: image1,
-    features: ['Feature 1', 'Feature 2', 'Feature 3', 'Feature 4'],
+    title: 'Team Dashboard',
+    desc: 'Team workspace for organizing team daily standups, meetings, and whiteboards',
+    image: dashboard_image,
+    features: ['Daily Scrum List', 'Meeting List', 'Whiteboard List', 'Mention Notification', 'Member Timezone Indicator'],
   },
   {
     id: 2,
-    title: 'Asyncrum 2',
-    desc: 'Asyncrum description 2',
-    image: image2,
+    title: 'Asynchrous Daily Standups',
+    desc: 'V-log based recording for asynchrous daily scrum.',
+    image: daily_scrum,
     features: [
-      'Built with latest Bootstrap',
-      'Extensive use of SCSS variables',
-      ' Well documented and structured code',
-      'Detailed Documentation',
+      'Record Daily',
+      'Record both Screen and Face',
+      'Check team member\'s daily standups daily',
     ],
+  },
+  {
+    id: 3,
+    title: 'Review Video Player',
+    desc: 'Review video player for bookmarking, drawing, and starting thread in recordings',
+    image: review_video,
+    features: ['Video Bookmark', 'Emoji reaction on bookmark', 'Draw on bookmarked video', 'Video-based thread on bookmark'],
+  },
+  {
+    id: 4,
+    title: 'Real-time Collaboration Whiteboard',
+    desc: 'Real-time Collaboration whiteboard for edit various objects simultaneously with your team',
+    image: whiteboard,
+    features: ['Draw various objects', 'Edit objects in real-time with others', 'Video/Image upload', 'Export/Import'],
+  },
+  {
+    id: 5,
+    title: 'Real-time Meeting',
+    desc: 'Real-time meeting for full-scale video conference that can support up to 35 participants',
+    image: meeting,
+    features: ['Video Conference', 'Screen Sharing', 'Reaction', 'Chat'],
+  },
+  {
+    id: 6,
+    title: 'Team Management',
+    desc: 'Team management for managing team',
+    image: team_setting,
+    features: ['Team Inivte', 'Team profile update', 'Personal profile update'],
   },
 ];
 
 const plans: PricingPlan[] = [
   {
     id: 1,
-    name: 'Standard License',
+    name: 'Free',
     icon: 'dripicons-user',
-    price: '$49',
-    duration: 'License',
-    features: ['10 GB Storage', '500 GB Bandwidth', 'No Domain', '1 User', 'Email Support', '24x7 Support'],
+    price: '$0',
+    duration: 'Per User',
+    features: ['Up to 5 Users', 'Up to 10 Whiteboards', 'Recording up to 2 Mins', 'Up to 10 Thread Recordings', 'Up to 10 Participants in Meeting', 'Email Support'],
     isRecommended: false,
   },
   {
     id: 2,
-    name: 'Multiple License',
+    name: 'Standard',
     icon: 'dripicons-briefcase',
-    price: '$99',
-    duration: 'License',
-    features: ['50 GB Storage', '900 GB Bandwidth', '2 Domain', '10 User', 'Email Support', '24x7 Support'],
+    price: '$2.5~3.5',
+    duration: 'Per User',
+    features: ['Up to 50 Users', 'Unlimited Whiteboards', 'Recording up to 5 Mins', 'Unlimited Thread Recordings', 'Up to 35 Participants in Meeting', 'Email Support', '24x7 Support'],
     isRecommended: true,
   },
   {
     id: 3,
-    name: 'Extended License',
+    name: 'Enterprise',
     icon: 'dripicons-store',
-    price: '$599',
-    duration: 'License',
-    features: [
-      '100 GB Storage',
-      'Unlimited Bandwidth',
-      '10 Domain',
-      'Unlimited Users',
-      'Email Support',
-      '24x7 Support',
-    ],
+    price: 'On-Demand',
+    duration: '',
+    features: ['Unlimited Users', 'Unlimited Whiteboards', 'Recording up to 10 Mins', 'Unlimited Thread Recordings', 'On-Premise Support', 'Customizable Whiteboard/Recording/Meeting Settings', 'Email Support', '24x7 Support'],
     isRecommended: false,
   },
 ];

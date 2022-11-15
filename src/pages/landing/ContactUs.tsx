@@ -28,7 +28,7 @@ const ContactUs = () => {
   } = methods;
 
   return (
-    <section className="py-5 bg-light-lighten border-top border-bottom border-light">
+    <section id="contact" className="py-5">
       <Container>
         <Row>
           <Col lg={12}>
@@ -49,15 +49,15 @@ const ContactUs = () => {
           <Col md={4}>
             <p className="text-muted">
               <span className="fw-bold">Customer Support:</span>
-              <br /> <span className="d-block mt-1">+1 234 56 7894</span>
+              <br /> <span className="d-block mt-1">+82 02-6933-0702 ~ 5</span>
             </p>
             <p className="text-muted mt-4">
               <span className="fw-bold">Email Address:</span>
-              <br /> <span className="d-block mt-1">info@gmail.com</span>
+              <br /> <span className="d-block mt-1">asyncrum@gmail.com</span>
             </p>
             <p className="text-muted mt-4">
               <span className="fw-bold">Office Address:</span>
-              <br /> <span className="d-block mt-1">4461 Cedar Street Moro, AR 72368</span>
+              <br /> <span className="d-block mt-1">311, Teheran-ro, Gangnam-gu, Seoul, Republic of Korea</span>
             </p>
             <p className="text-muted mt-4">
               <span className="fw-bold">Office Time:</span>

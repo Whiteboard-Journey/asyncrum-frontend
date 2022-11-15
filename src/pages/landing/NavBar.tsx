@@ -1,7 +1,7 @@
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useRedux } from 'hooks';
-import logo from 'assets/images/asyncrum-logo-cool.png';
+import logo from 'assets/images/asyncrum-logo-white.png';
 
 const NavBar = () => {
   const { appSelector } = useRedux();
@@ -12,7 +12,7 @@ const NavBar = () => {
   }));
 
   return (
-    <Navbar collapseOnSelect expand="lg" variant="dark" className="py-lg-3">
+    <Navbar collapseOnSelect expand="lg" variant="dark" className="py-lg-3 bg-dark">
       <Container>
         <Navbar.Brand href="/" className="me-lg-5">
           <img src={logo} alt="" className="logo-dark" height="18" />
@@ -24,24 +24,21 @@ const NavBar = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav as="ul" className="me-auto align-items-center">
             <Nav.Item as="li" className="mx-lg-1">
-              <Nav.Link href="" className="active">
+              <Nav.Link href="#home" className="active">
                 Home
               </Nav.Link>
             </Nav.Item>
             <Nav.Item className="mx-lg-1">
-              <Nav.Link href="">Features</Nav.Link>
+              <Nav.Link href="#services">Services</Nav.Link>
             </Nav.Item>
             <Nav.Item className="mx-lg-1">
-              <Nav.Link href="">Pricing</Nav.Link>
+              <Nav.Link href="#features">Features</Nav.Link>
             </Nav.Item>
             <Nav.Item className="mx-lg-1">
-              <Nav.Link href="">FAQs</Nav.Link>
+              <Nav.Link href="#pricing">Pricing</Nav.Link>
             </Nav.Item>
             <Nav.Item className="mx-lg-1">
-              <Nav.Link href="">Clients</Nav.Link>
-            </Nav.Item>
-            <Nav.Item className="mx-lg-1">
-              <Nav.Link href="">Contact</Nav.Link>
+              <Nav.Link href="#contact">Contact</Nav.Link>
             </Nav.Item>
           </Nav>
 

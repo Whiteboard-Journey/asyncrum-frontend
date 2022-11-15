@@ -8,7 +8,7 @@ type ServicesProps = {
 
 const Services = ({ services }: ServicesProps) => {
   return (
-    <section className="py-5">
+    <section id="services" className="py-5">
       <Container>
         <Row className="py-4">
           <Col lg={12}>
@@ -17,13 +17,13 @@ const Services = ({ services }: ServicesProps) => {
                 <i className="mdi mdi-infinity"></i>
               </h1>
               <h3>
-                The admin is fully <span className="text-primary">responsive</span> and easy to{' '}
-                <span className="text-primary">customize</span>
+                Asyncrum provides both <span className="text-primary">Asynchronous</span> and{' '}
+                <span className="text-primary">Synchronous</span> collaboration tools
               </h3>
               <p className="text-muted mt-2">
-                The clean and well commented code allows easy customization of the theme. It&apos;s designed for
+                The clean and well designed async/synchronous collaboration tools &apos;s designed for
                 <br />
-                describing your app, agency or business.
+                teams in multiple time zones or with flextime schedules that have difficulties having real-time meetings
               </p>
             </div>
           </Col>
