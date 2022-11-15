@@ -30,7 +30,7 @@ const uploadRecord = (presignedURL: string, fileToUpload: File) => {
 };
 
 const viewDailyStandup = (id: number) => {
-  api.updatePatch(baseURL + '/' + id, {});
+  api.updatePatch(baseURL + '/' + id, { scope: 'team' });
 };
 
 export { createRecord, readAllDailyStandups, readRecord, uploadRecord, viewDailyStandup };
