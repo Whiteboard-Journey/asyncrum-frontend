@@ -11,7 +11,7 @@
 
 ## 배포 주소
 
-> [https://test.asyncrum.com](https://test.asyncrum.com)
+> [https://www.asyncrum.com](https://www.asyncrum.com)
 
 ## 프로젝트 소개
 
