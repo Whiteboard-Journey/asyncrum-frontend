@@ -44,8 +44,7 @@ const TimeControl = ({ video, fullDuration, currentTime, setCurrentTime, setActi
                 top="-7px"
                 left={`calc(${left}px - 1rem)`}
                 rounded="full"
-                zIndex="1"
-              >
+                zIndex="1">
                 <VideoBookmarkTimeline
                   video={video}
                   bookmark={bookmark}
@@ -65,7 +64,6 @@ const TimeControl = ({ video, fullDuration, currentTime, setCurrentTime, setActi
       if (trackRef.current === null) {
         return;
       }
-
       setTrackDimensions(trackRef.current.getBoundingClientRect());
       setBookmarkButtons();
     }
@@ -78,8 +76,12 @@ const TimeControl = ({ video, fullDuration, currentTime, setCurrentTime, setActi
   });
 
   useEffect(() => {
-    if (trackDimensions === null && trackRef.current) {
-      setTrackDimensions(trackRef.current.getBoundingClientRect());
+    if (trackRef.current) {
+      if (
+        trackDimensions === null ||
+        trackRef.current.getBoundingClientRect().width < (trackDimensions as DOMRect).width
+      )
+        setTrackDimensions(trackRef.current.getBoundingClientRect());
     }
     setBookmarkButtons();
   }, [video.bookmarks, fullDuration, trackDimensions]);
@@ -94,11 +96,11 @@ const TimeControl = ({ video, fullDuration, currentTime, setCurrentTime, setActi
         key="playing"
         max={fullDuration}
         min={0}
+        top="1px"
         onChange={(value: number) => handleSliderChange(value)}
         step={1 / video.frameRate}
-        value={currentTime}
-      >
-        <SliderTrack ref={trackRef}>
+        value={currentTime}>
+        <SliderTrack className="track" ref={trackRef}>
           <SliderFilledTrack />
         </SliderTrack>
         <SliderThumb />
