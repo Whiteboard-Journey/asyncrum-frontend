@@ -15,7 +15,8 @@ const ProfileDropdown = ({ userTitle, username, userImage }: ProfileDropdownProp
         id="dropdown-profile"
         as={Link}
         to="/settings/user"
-        className="nav-link dropdown-toggle nav-user arrow-none me-0">
+        className="nav-link dropdown-toggle nav-user arrow-none me-0"
+      >
         <span className="account-user-avatar">
           <img src={userImage} className="rounded-circle" alt="user" referrerPolicy="no-referrer" />
         </span>

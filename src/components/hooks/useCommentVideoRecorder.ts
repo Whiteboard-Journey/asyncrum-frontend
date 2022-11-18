@@ -51,7 +51,6 @@ const useCommentVideoRecorder = () => {
 
     await uploadVideo(camMediaBlobUrl);
 
-    // TODO: close only modal
     window.location.reload();
   };
 

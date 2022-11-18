@@ -30,7 +30,8 @@ const LeftPanel = ({ selected }: LeftPanelProps) => {
                   onClick={() => {
                     dispatch(readTeam(team.id));
                   }}
-                  active={team.id === currentTeam.id ? true : false}>
+                  active={team.id === currentTeam.id ? true : false}
+                >
                   <i className=""></i> {team.name}
                 </Dropdown.Item>
               );

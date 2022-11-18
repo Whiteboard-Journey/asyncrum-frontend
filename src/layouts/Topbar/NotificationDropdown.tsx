@@ -26,7 +26,8 @@ const NotificationDropdown = ({ notifications }: NotificationDropdownProps) => {
         as={Link}
         to="#"
         onClick={toggleDropdown}
-        className="nav-link dropdown-toggle arrow-none">
+        className="nav-link dropdown-toggle arrow-none"
+      >
         <i className="mdi mdi-bell-outline noti-icon"></i>
         {notifications.length != 0 ? <span className="noti-icon-badge"></span> : <span></span>}
       </Dropdown.Toggle>
@@ -54,7 +55,8 @@ const NotificationDropdown = ({ notifications }: NotificationDropdownProps) => {
                         className={classNames(
                           'p-0 notify-item card shadow-none mb-2',
                           message.isRead ? 'read-noti' : 'unread-noti'
-                        )}>
+                        )}
+                      >
                         <Card.Body>
                           <span className="float-end noti-close-btn text-muted">
                             <i className="mdi mdi-close"></i>

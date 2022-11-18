@@ -98,7 +98,8 @@ const TeamSettings = () => {
                           </p>
                           <form
                             className="ps-3 pe-3"
-                            onSubmit={(e) => closeModalAfterFunction(onLeaveTeam, e, toggleDelete)}>
+                            onSubmit={(e) => closeModalAfterFunction(onLeaveTeam, e, toggleDelete)}
+                          >
                             <div className="mb-3 text-center">
                               <Button className="btn btn-danger" type="submit">
                                 Leave Team

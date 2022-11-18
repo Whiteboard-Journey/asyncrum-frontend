@@ -58,7 +58,6 @@ function* login({ payload: { email, password }, type }: UserData): SagaIterator 
 
 function* oauthLogin({ payload: { token }, type }: TokenData): SagaIterator {
   try {
-    // yield take(AuthActionTypes.OAUTH_LOGIN_USER);
     const response = yield call(readMemberApi, { token });
 
     const user = response.data;
@@ -69,12 +68,12 @@ function* oauthLogin({ payload: { token }, type }: TokenData): SagaIterator {
     const readAllTeamResponse = yield call(readAllTeamApi);
     const allTeam = readAllTeamResponse.data.teams;
     const currentTeamResponse = allTeam.length > 0 ? yield call(readTeamApi, allTeam[0].id) : {};
-    const currentTeam = currentTeamResponse?.data
+    const currentTeam = currentTeamResponse?.data;
     api.setTeamList(allTeam);
     api.setCurrentTeam(currentTeam);
     yield all([
       put(authApiResponseSuccess(AuthActionTypes.OAUTH_LOGIN_USER, user)),
-      put(teamApiResponseSuccess(TeamActionTypes.READ_ALL_TEAM, allTeam, currentTeam))
+      put(teamApiResponseSuccess(TeamActionTypes.READ_ALL_TEAM, allTeam, currentTeam)),
     ]);
   } catch (error: any) {
     yield put(authApiResponseError(AuthActionTypes.OAUTH_LOGIN_USER, error));
@@ -101,8 +100,6 @@ function* signup({ payload: { fullname, email, password } }: UserData): SagaIter
   try {
     const response = yield call(signupApi, { fullname, email, password });
     const user = response.data;
-    // api.setLoggedInUser(user);
-    // setAuthorization(user['token']);
     yield put(authApiResponseSuccess(AuthActionTypes.SIGNUP_USER, user));
   } catch (error: any) {
     yield put(authApiResponseError(AuthActionTypes.SIGNUP_USER, error));

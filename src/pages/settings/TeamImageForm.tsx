@@ -43,7 +43,8 @@ const TeamImageForm: React.FC<TeamImageFormProps> = ({
               if (fileInput.current) {
                 fileInput.current.click();
               }
-            }}>
+            }}
+          >
             <div className="overlay-text">click to upload</div>
           </div>
         </div>

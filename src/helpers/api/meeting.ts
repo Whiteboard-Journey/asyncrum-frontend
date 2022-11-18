@@ -21,19 +21,19 @@ const readAllMeeting = (teamId: number) => {
 
 const deleteMeeting = (id: number) => {
   return api.delete(baseURL + `/${id}`);
-}
+};
 
 const createMeetingRecord = (meetingId: number) => {
   return api.create(baseURL + `/${meetingId}`, {});
 };
 
 const addMeetingMember = (meetingId: number, params: { memberId: number }) => {
-  return api.create(baseURL + `/${meetingId}/members`, params)
-}
+  return api.create(baseURL + `/${meetingId}/members`, params);
+};
 
-const removeMeetingMember = (meetingId: number, memberId: number ) => {
-  return api.delete(baseURL + `/${meetingId}/members/${memberId}`)
-}
+const removeMeetingMember = (meetingId: number, memberId: number) => {
+  return api.delete(baseURL + `/${meetingId}/members/${memberId}`);
+};
 
 export {
   createMeeting,

@@ -10,7 +10,8 @@ const CreateCommentRecordButton = () => {
       <Button
         onClick={() => {
           openModalWithSize('lg');
-        }}>
+        }}
+      >
         <i className="mdi mdi-plus"></i> Record
       </Button>
       <Modal show={isRecordOpen} onHide={toggleRecord} dialogClassName={className} size={size} scrollable={scroll}>

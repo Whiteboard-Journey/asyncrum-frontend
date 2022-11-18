@@ -47,7 +47,8 @@ const DrawingControlsSizeSelector = ({ app }: PropsType) => {
         border="1px"
         borderColor="whiteAlpha.400"
         background="whiteAlpha.200"
-        padding="1rem">
+        padding="1rem"
+      >
         {value}
       </Flex>
     );
@@ -65,7 +66,8 @@ const DrawingControlsSizeSelector = ({ app }: PropsType) => {
           justifyContent="center"
           border="1px"
           borderColor="whiteAlpha.400"
-          onClick={handleOpen}>
+          onClick={handleOpen}
+        >
           {
             // @ts-ignore
             sizes[currentStyle.size].slice(0, 1).toUpperCase()

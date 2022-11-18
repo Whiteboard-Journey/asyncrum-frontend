@@ -11,7 +11,7 @@ export type TeamActionType = {
     | TeamActionTypes.UPDATE_TEAM
     | TeamActionTypes.LEAVE_TEAM
     | TeamActionTypes.CHANGE_TEAM
-    | TeamActionTypes.RESET
+    | TeamActionTypes.RESET;
   payload: unknown | string;
 };
 
@@ -29,10 +29,14 @@ type CurrentTeam = {
   pictureUrl: string;
   members: Member[];
   openMeetings: string[];
-}
+};
 
 // common success
-export const teamApiResponseSuccess = (actionType: string, teamListData: Team[] | unknown, currentTeamData: CurrentTeam | unknown): TeamActionType => ({
+export const teamApiResponseSuccess = (
+  actionType: string,
+  teamListData: Team[] | unknown,
+  currentTeamData: CurrentTeam | unknown
+): TeamActionType => ({
   type: TeamActionTypes.API_RESPONSE_SUCCESS,
   payload: { actionType, teamListData, currentTeamData },
 });

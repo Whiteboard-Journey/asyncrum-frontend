@@ -31,7 +31,7 @@ export type Meeting = {
   status: boolean;
   meetingFileUrl: string;
   participants: string[];
-}
+};
 
 export type WhiteboardCardProps = {
   whiteboard: Whiteboard;

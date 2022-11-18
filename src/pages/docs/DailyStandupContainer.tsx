@@ -75,7 +75,8 @@ const DailyStandupContainer = () => {
             shouldResetAutoplay
             showDots={false}
             sliderClass=""
-            slidesToSlide={1}>
+            slidesToSlide={1}
+          >
             {dailyStandups.map((dailyStandup: DailyStandup, i: number) => {
               return (
                 <div key={i}>

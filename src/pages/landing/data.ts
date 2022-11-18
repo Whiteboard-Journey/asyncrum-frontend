@@ -7,7 +7,6 @@ import whiteboard from 'assets/images/whiteboard.png';
 import meeting from 'assets/images/meeting.png';
 import team_setting from 'assets/images/team_setting.png';
 
-
 const services: Service[] = [
   {
     icon: 'uil uil-desktop',
@@ -47,25 +46,32 @@ const features: Feature[] = [
     title: 'Team Dashboard',
     desc: 'Team workspace for organizing team daily standups, meetings, and whiteboards',
     image: dashboard_image,
-    features: ['Daily Scrum List', 'Meeting List', 'Whiteboard List', 'Mention Notification', 'Member Timezone Indicator'],
+    features: [
+      'Daily Scrum List',
+      'Meeting List',
+      'Whiteboard List',
+      'Mention Notification',
+      'Member Timezone Indicator',
+    ],
   },
   {
     id: 2,
     title: 'Asynchrous Daily Standups',
     desc: 'V-log based recording for asynchrous daily scrum.',
     image: daily_scrum,
-    features: [
-      'Record Daily',
-      'Record both Screen and Face',
-      'Check team member\'s daily standups daily',
-    ],
+    features: ['Record Daily', 'Record both Screen and Face', "Check team member's daily standups daily"],
   },
   {
     id: 3,
     title: 'Review Video Player',
     desc: 'Review video player for bookmarking, drawing, and starting thread in recordings',
     image: review_video,
-    features: ['Video Bookmark', 'Emoji reaction on bookmark', 'Draw on bookmarked video', 'Video-based thread on bookmark'],
+    features: [
+      'Video Bookmark',
+      'Emoji reaction on bookmark',
+      'Draw on bookmarked video',
+      'Video-based thread on bookmark',
+    ],
   },
   {
     id: 4,
@@ -97,7 +103,15 @@ const plans: PricingPlan[] = [
     icon: 'dripicons-user',
     price: '$0',
     duration: 'Per User',
-    features: ['Up to 5 Users', 'Up to 10 Whiteboards', 'Recording up to 2 Mins', 'Up to 10 Thread Recordings', 'Up to 10 Participants in Meeting', 'Email Support', '24x7 Support'],
+    features: [
+      'Up to 5 Users',
+      'Up to 10 Whiteboards',
+      'Recording up to 2 Mins',
+      'Up to 10 Thread Recordings',
+      'Up to 10 Participants in Meeting',
+      'Email Support',
+      '24x7 Support',
+    ],
     isRecommended: false,
   },
   {
@@ -106,7 +120,15 @@ const plans: PricingPlan[] = [
     icon: 'dripicons-briefcase',
     price: '$2.5~3.5',
     duration: 'Per User',
-    features: ['Up to 50 Users', 'Unlimited Whiteboards', 'Recording up to 5 Mins', 'Unlimited Thread Recordings', 'Up to 35 Participants in Meeting', 'Email Support', '24x7 Support'],
+    features: [
+      'Up to 50 Users',
+      'Unlimited Whiteboards',
+      'Recording up to 5 Mins',
+      'Unlimited Thread Recordings',
+      'Up to 35 Participants in Meeting',
+      'Email Support',
+      '24x7 Support',
+    ],
     isRecommended: true,
   },
   {
@@ -115,7 +137,15 @@ const plans: PricingPlan[] = [
     icon: 'dripicons-store',
     price: 'On-Demand',
     duration: '',
-    features: ['Unlimited Users', 'Unlimited Whiteboards', 'Recording up to 10 Mins', 'Unlimited Thread Recordings', 'On-Premise Support', 'Email Support', '24x7 Support'],
+    features: [
+      'Unlimited Users',
+      'Unlimited Whiteboards',
+      'Recording up to 10 Mins',
+      'Unlimited Thread Recordings',
+      'On-Premise Support',
+      'Email Support',
+      '24x7 Support',
+    ],
     isRecommended: false,
   },
 ];

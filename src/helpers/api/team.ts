@@ -49,7 +49,7 @@ const uploadLogoImage = (presignedURL: string, logoImageFile: File) => {
 
 const removeMember = (teamId: number, memberId: number) => {
   return api.delete(baseURL + '/' + teamId + '/members/' + memberId);
-}
+};
 
 export {
   changeTeam,

@@ -163,7 +163,8 @@ export default function VideoBookmarkShow({
         const scale = bookmark.scale;
         const author = bookmark.author;
         updateBookmarkAPI(parseInt(bookmark.id), { emoji, content, time, position, drawing, scale, author });
-      }}>
+      }}
+    >
       Done
     </Button>
   ) : (
@@ -181,13 +182,15 @@ export default function VideoBookmarkShow({
       justify="flex-end"
       padding="4"
       pointerEvents="none"
-      zIndex={3}>
+      zIndex={3}
+    >
       <Draggable
         key={bookmark.id}
         onStop={(_event, data) => setVideoBookmarkCoords({ x: data.x, y: data.y })}
         bounds="parent"
         handle="#dragHandle"
-        position={position}>
+        position={position}
+      >
         <Box pointerEvents="all" background="blackAlpha.900" width="md">
           <Box id="dragHandle" css={dragHandleStyles} />
           {renderedContent && (
