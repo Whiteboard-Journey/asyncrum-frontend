@@ -1,4 +1,4 @@
-import { all, fork, put, takeEvery, call, take, takeLatest } from 'redux-saga/effects';
+import { all, fork, put, takeEvery, call, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { APICore } from 'helpers/api/apiCore';
 import {
@@ -7,10 +7,6 @@ import {
   readAllTeam as readAllTeamApi,
   updateTeam as updateTeamApi,
   removeMember as removeMemberApi,
-  createMeeting as createMeetingApi,
-  updateMeeting as updateMeetingApi,
-  deleteMeeting as deleteMeetingApi,
-  readAllMeeting as readAllMeetingApi,
 } from 'helpers';
 import { teamApiResponseSuccess, teamApiResponseError } from './actions';
 import { TeamActionTypes } from './constants';

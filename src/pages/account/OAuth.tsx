@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useOAuthLogin } from './hooks';
 
 const OAuth = () => {
-  const { loading, userLoggedIn, user, error, onSubmit, redirectUrl } = useOAuthLogin();
+  const { userLoggedIn, user, onSubmit, redirectUrl } = useOAuthLogin();
 
   useEffect(() => {
     const params = new URLSearchParams(document.location.search);

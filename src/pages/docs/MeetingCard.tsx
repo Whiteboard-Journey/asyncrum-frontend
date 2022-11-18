@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Card, Dropdown, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useMoment, useMeetingCard } from './hooks';
 import { Meeting } from './types';

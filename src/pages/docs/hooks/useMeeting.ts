@@ -2,7 +2,6 @@ import { useToggle, useRedux } from 'hooks';
 import { useCallback, useEffect, useState } from 'react';
 import {
   createMeeting as createMeetingAPI,
-  readMeeting as readMeetingAPI,
   readAllMeeting as readAllMeetingAPI,
   deleteMeeting as deleteMeetingAPI,
   updateMeeting as updateMeetingAPI,
@@ -56,7 +55,6 @@ const useMeeting = () => {
     toggleCreateMeeting();
     toggleRecord();
     readAllMeeting();
-    // window.location.href = `https://${process.env.REACT_APP_JITSI_URL}/${roomName}`;
   };
 
   const onDeleteMeeting = async (event: React.FormEvent<HTMLFormElement>) => {

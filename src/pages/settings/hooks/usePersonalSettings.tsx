@@ -4,7 +4,6 @@ import {
   createProfileImage as createProfileImageAPI,
   uploadProfileImage as uploadProfileImageAPI,
 } from 'helpers';
-import { APICore } from 'helpers/api/apiCore';
 import { useRef, useState } from 'react';
 import { useRedux } from 'hooks';
 

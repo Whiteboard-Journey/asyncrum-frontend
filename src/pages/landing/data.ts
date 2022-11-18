@@ -1,11 +1,5 @@
 import { FAQItem, PricingPlan } from 'components';
 import { Feature, LayoutDemo, Service } from './types';
-import layout1 from 'assets/images/layouts/layout-1.png';
-import layout2 from 'assets/images/layouts/layout-2.png';
-import layout3 from 'assets/images/layouts/layout-3.png';
-import layout4 from 'assets/images/layouts/layout-4.png';
-import layout5 from 'assets/images/layouts/layout-5.png';
-import layout6 from 'assets/images/layouts/layout-6.png';
 import dashboard_image from 'assets/images/dashboard.png';
 import daily_scrum from 'assets/images/daily_scrum.png';
 import review_video from 'assets/images/review_video.png';
@@ -44,33 +38,6 @@ const services: Service[] = [
     icon: 'uil uil-building',
     title: 'Team Management',
     description: 'Team management for managing team.',
-  },
-];
-
-const layouts: LayoutDemo[] = [
-  {
-    image: layout1,
-    layout: 'Vertical Layout',
-  },
-  {
-    image: layout2,
-    layout: 'Horizontal Layout',
-  },
-  {
-    image: layout3,
-    layout: 'Detached Layout',
-  },
-  {
-    image: layout5,
-    layout: 'Light Sidenav Layout',
-  },
-  {
-    image: layout6,
-    layout: 'Boxed Layout',
-  },
-  {
-    image: layout4,
-    layout: 'Semi Dark Layout',
   },
 ];
 
@@ -187,4 +154,4 @@ const rawFaqs: FAQItem[] = [
   },
 ];
 
-export { services, layouts, features, plans, rawFaqs };
+export { services, features, plans, rawFaqs };

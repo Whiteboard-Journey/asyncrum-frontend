@@ -1,5 +1,4 @@
 import { APICore } from './apiCore';
-import axios from 'axios';
 
 const api = new APICore();
 const baseURL = '/api/v1/meetings';

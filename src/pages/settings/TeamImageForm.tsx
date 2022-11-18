@@ -31,7 +31,6 @@ const TeamImageForm: React.FC<TeamImageFormProps> = ({
           />
           <input
             type="file"
-            // accept='image/jpg, image/png, image/jpeg'
             accept="image/png"
             style={{ display: 'none' }}
             name="logoImage"

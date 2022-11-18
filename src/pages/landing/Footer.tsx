@@ -10,7 +10,7 @@ const Footer = () => {
           <Col lg={12}>
             <div>
               <p className="text-muted text-center mb-0">
-                © 2022 {new Date().getFullYear()} Asyncrum. by Team Whiteboard Journey in Software Maestro 13th
+                2022 © Asyncrum. by Team Whiteboard Journey in Software Maestro 13th
               </p>
             </div>
           </Col>

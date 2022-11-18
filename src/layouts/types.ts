@@ -24,12 +24,6 @@ export type NotificationItem = {
   messages: Message[];
 };
 
-export type ProfileOption = {
-  label: string;
-  icon: string;
-  redirectTo: string;
-};
-
 export type SearchOption = {
   label: string;
   icon?: string;
