@@ -346,7 +346,7 @@ const VideoPlayer = ({ id, cam }: Props) => {
             {renderedContent}
           </Box>
           <div id="cam-wrapper">
-            <video id="cam" width="320px" height="240px" src={cam} ref={camVideoRef} />
+            <video id="cam" width="320px" height="240px" src={cam} ref={camVideoRef} muted />
           </div>
         </Flex>
       )}
