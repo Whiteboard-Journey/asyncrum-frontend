@@ -24,8 +24,7 @@ const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
           onOpen();
           onViewDailyStandups(dailyStandup);
         }}
-        style={{ cursor: 'pointer' }}
-      >
+        style={{ cursor: 'pointer' }}>
         <div className={(dailyStandup.seen ? 'opacity-25' : '') + ' text-center'}>
           <img
             src={dailyStandup.profileImageUrl}
@@ -46,7 +45,7 @@ const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
             <ModalHeader>{dailyStandup.author + ' - ' + getTimeFromNow(dailyStandup.createdDate)}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <VideoPlayer id={dailyStandup.screenRecordId} />
+              <VideoPlayer id={dailyStandup.screenRecordId} cam={dailyStandup.camRecordFileUrl} />
             </ModalBody>
           </ModalContent>
         </Modal>

@@ -10,3 +10,20 @@
 #overlay .tl-container {
     background-color: transparent !important;
 }
+
+#cam-wrapper {
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
+    width: 240px;
+    height: 240px;
+    display: block;
+    overflow: hidden;
+    border-radius: 120px;
+}
+
+#cam {
+    margin-left: -40px;
+    border-radius: 1px;
+    object-fit: cover;
+}
