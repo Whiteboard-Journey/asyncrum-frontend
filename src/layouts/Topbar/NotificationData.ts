@@ -7,7 +7,7 @@ const data = {
     "messageId": "22705b39-2d85-4112-9608-ebbed3fe141b",
     "notification": {
         "title": "Daily Scrum Mention",
-        "body": "You have been mentioned by [Kevin Park] in [Test team] team! Please check your team's daily scrum for more information!",
+        "body": "[Kevin Park] has mentioned you in [Whiteboard Journey] team! Please check your team's daily scrum for more information!",
         "image": "https://wbj-media.s3.ap-northeast-2.amazonaws.com/assets/asyncrum-logo-small.png"
     }
 }
