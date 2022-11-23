@@ -5,6 +5,7 @@ import PrivateRoute from './PrivateRoute';
 import Root from './Root';
 import { LayoutTypes } from 'appConstants';
 import { useRedux } from 'hooks';
+import { Default } from 'react-toastify/dist/utils';
 
 // auth
 const Login = React.lazy(() => import('pages/account/Login'));
@@ -109,10 +110,6 @@ const AllRoutes = () => {
       element: <PrivateRoute roles={'Admin'} component={Layout} />,
       children: [
         {
-          path: 'whiteboard',
-          element: <LoadComponent component={Whiteboard} />,
-        },
-        {
           path: 'dashboard',
           element: <LoadComponent component={Dashboard} />,
         },
@@ -136,6 +133,17 @@ const AllRoutes = () => {
               element: <LoadComponent component={ErrorPageNotFoundAlt} />,
             },
           ],
+        },
+      ],
+    },
+    {
+      // auth protected routes
+      path: '/',
+      element: <DefaultLayout />,
+      children: [
+        {
+          path: 'whiteboard',
+          element: <PrivateRoute roles={'Admin'} component={Whiteboard} />,
         },
       ],
     },

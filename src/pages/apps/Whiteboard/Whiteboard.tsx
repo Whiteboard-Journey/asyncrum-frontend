@@ -172,7 +172,7 @@ const Whiteboard = () => {
             options.apiKey = `${process.env.REACT_APP_YORKIE_API_KEY}`;
           }
 
-          client = new yorkie.Client(`${process.env.REACT_APP_API_URL}/yorkie`, options);
+          client = new yorkie.Client(`${process.env.REACT_APP_YORKIE_URL}`, options);
           await client.activate();
 
           // 01-1. Subscribe peers-changed event and update tldraw users state
