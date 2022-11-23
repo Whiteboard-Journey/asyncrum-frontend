@@ -33,7 +33,8 @@ const WhiteboardCard = ({ whiteboard, onEditWhiteboard, onDeleteWhiteboard }: Wh
                 </Modal.Header>
                 <form
                   className="ps-3 pe-3"
-                  onSubmit={(event) => closeModalAfterFunction(onEditWhiteboard, event, toggleEdit)}>
+                  onSubmit={(event) => closeModalAfterFunction(onEditWhiteboard, event, toggleEdit)}
+                >
                   <input type="hidden" id="id" value={whiteboard.id} />
                   <div className="mt-3 mb-3">
                     <label htmlFor="title" className="form-label">
@@ -85,7 +86,8 @@ const WhiteboardCard = ({ whiteboard, onEditWhiteboard, onDeleteWhiteboard }: Wh
                 </p>
                 <form
                   className="ps-3 pe-3"
-                  onSubmit={(event) => closeModalAfterFunction(onDeleteWhiteboard, event, toggleDelete)}>
+                  onSubmit={(event) => closeModalAfterFunction(onDeleteWhiteboard, event, toggleDelete)}
+                >
                   <input type="hidden" id="id" value={whiteboard.id} />
                   <div className="mb-3 text-center">
                     <button className="btn btn-danger" type="submit">
@@ -100,7 +102,8 @@ const WhiteboardCard = ({ whiteboard, onEditWhiteboard, onDeleteWhiteboard }: Wh
         <h4 className="mt-0">
           <Link
             to={whiteboardPageURL + whiteboard.whiteboardFileUrl + '&id=' + currentTeam.code + '-' + whiteboard.id}
-            className="text-title">
+            className="text-title"
+          >
             {whiteboard.title.length > 25 ? whiteboard.title.slice(0, 25) + ' ...' : whiteboard.title}
           </Link>
         </h4>

@@ -1,24 +1,15 @@
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import { showRightSidebar, changeSidebarType } from 'redux/actions';
+import { changeSidebarType } from 'redux/actions';
 import * as layoutConstants from 'appConstants';
 import { useRedux, useToggle, useViewport } from 'hooks';
-import { notifications, profileMenus, searchOptions } from './data';
-import LanguageDropdown from './LanguageDropdown';
 import NotificationDropdown from './NotificationDropdown';
 import ProfileDropdown from './ProfileDropdown';
-import SearchDropdown from './SearchDropdown';
-import TopbarSearch from './TopbarSearch';
-import AppsDropdown from './AppsDropdown';
-import logoSmDark from 'assets/images/asyncrum-logo-white-small.png';
-import logoSmLight from 'assets/images/asyncrum-logo-white-small.png';
+import logoSm from 'assets/images/asyncrum-logo-white-small.png';
 import logo from 'assets/images/asyncrum-logo-white.png';
-import config from 'config';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { getFirebaseToken, onMessageListener } from './FirebaseConfig';
 import { NotificationItem, Message } from '../types';
-import LayoutColor from 'components/ThemeCustomizer/LayoutColor';
 import useThemeCustomizer from 'components/ThemeCustomizer/useThemeCustomizer';
 import { Form } from 'react-bootstrap';
 
@@ -105,13 +96,6 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
     }
   };
 
-  /**
-   * Toggles the right sidebar
-   */
-  const handleRightSideBar = () => {
-    dispatch(showRightSidebar());
-  };
-
   return (
     <div className={classNames('navbar-custom', navCssClasses)}>
       <div className={containerCssClasses}>
@@ -121,7 +105,7 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
               <img src={logo} alt="logo" height="16" />
             </span>
             <span className="topnav-logo-sm">
-              <img src={topbarDark ? logoSmLight : logoSmDark} alt="logo" height="16" />
+              <img src={logoSm} alt="logo" height="16" />
             </span>
           </Link>
         )}
@@ -146,12 +130,7 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
             <NotificationDropdown notifications={notifications!} />
           </li>
           <li className="dropdown notification-list">
-            <ProfileDropdown
-              userImage={user.profileImageUrl}
-              menuItems={profileMenus}
-              username={user.fullname}
-              userTitle={'Developer'}
-            />
+            <ProfileDropdown userImage={user.profileImageUrl} username={user.fullname} userTitle={'Developer'} />
           </li>
         </ul>
 

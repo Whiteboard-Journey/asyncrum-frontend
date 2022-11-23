@@ -64,7 +64,8 @@ const CommentVideoRecorder: React.FC = () => {
                 onClick={() => {
                   camStartRecording();
                   setRecordingState('recording');
-                }}>
+                }}
+              >
                 Start Recording
               </button>
             </div>
@@ -74,7 +75,8 @@ const CommentVideoRecorder: React.FC = () => {
                 className="btn btn-primary me-3"
                 onClick={() => {
                   setRecordingState('idle');
-                }}>
+                }}
+              >
                 Reshoot
               </button>
               <button className="btn btn-primary" onClick={uploadVideoes}>
@@ -89,7 +91,8 @@ const CommentVideoRecorder: React.FC = () => {
               onClick={() => {
                 camStopRecording();
                 setRecordingState('recorded');
-              }}>
+              }}
+            >
               Stop Recording
             </button>
           </div>

@@ -24,7 +24,7 @@ export type VideoBookmark = {
   drawing: object | null;
   scale: number;
   video_id: string;
-  comments: Comment[]
+  comments: Comment[];
 };
 
 export function create(
@@ -45,6 +45,6 @@ export function create(
     time,
     video_id: video.id,
     author: user.fullname,
-    comments: []
+    comments: [],
   };
 }

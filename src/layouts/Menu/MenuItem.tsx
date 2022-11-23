@@ -15,7 +15,8 @@ const MenuItem = ({ item, className, linkClassName }: SubMenus) => {
   return (
     <li
       style={['settings', 'logout'].includes(item.key) ? { position: 'fixed', bottom: bottom } : {}}
-      className={classNames('side-nav-item', className, item.key === currentTeam?.code ? 'menuitem-active' : '')}>
+      className={classNames('side-nav-item', className, item.key === currentTeam?.code ? 'menuitem-active' : '')}
+    >
       <MenuItemLink item={item} className={linkClassName} />
     </li>
   );

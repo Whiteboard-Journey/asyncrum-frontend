@@ -5,8 +5,6 @@ import { useRedux, useToggle } from 'hooks';
 import * as layoutConstants from 'appConstants';
 import { changeBodyAttribute } from 'utils';
 
-// code splitting and lazy loading
-// https://blog.logrocket.com/lazy-loading-components-in-react-16-6-6cea535c0b52
 const Topbar = React.lazy(() => import('../Topbar'));
 const Navbar = React.lazy(() => import('./Navbar'));
 const Footer = React.lazy(() => import('../Footer'));

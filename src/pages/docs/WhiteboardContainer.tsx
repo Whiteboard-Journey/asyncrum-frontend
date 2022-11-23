@@ -1,4 +1,4 @@
-import { Row, Col, Button, ButtonGroup } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { Whiteboard } from './types';
 import WhiteboardCard from './WhiteboardCard';
 import CreateWhiteboardButton from './CreateWhiteboardButton';

@@ -58,12 +58,12 @@ const getUserFromSession = () => {
 const getTeamListFromSession = () => {
   const teamList = sessionStorage.getItem('TEAM_LIST');
   return teamList ? (typeof teamList == 'string' ? JSON.parse(teamList) : teamList) : null;
-}
+};
 
 const getCurrentTeamFromSession = () => {
   const currentTeam = sessionStorage.getItem('CURRENT_TEAM');
   return currentTeam ? (typeof currentTeam == 'string' ? JSON.parse(currentTeam) : currentTeam) : null;
-}
+};
 
 class APICore {
   /**
@@ -76,12 +76,12 @@ class APICore {
     if (params) {
       const queryString = params
         ? Object.keys(params)
-          .map((key) => {
-            if (!user || key != 'token') {
-              return key + '=' + params[key];
-            }
-          })
-          .join('&')
+            .map((key) => {
+              if (!user || key != 'token') {
+                return key + '=' + params[key];
+              }
+            })
+            .join('&')
         : '';
       response = axios.get(`${url}?${queryString}`, {
         headers: { Authorization: 'Bearer ' + `${params['token'] ? params['token'] : user.token}` },
@@ -99,8 +99,8 @@ class APICore {
     if (params) {
       const queryString = params
         ? Object.keys(params)
-          .map((key) => key + '=' + params[key])
-          .join('&')
+            .map((key) => key + '=' + params[key])
+            .join('&')
         : '';
       response = axios.get(`${url}?${queryString}`, { responseType: 'blob' });
     } else {
@@ -115,8 +115,8 @@ class APICore {
     if (params) {
       queryString = params
         ? Object.keys(params)
-          .map((key) => key + '=' + params[key])
-          .join('&')
+            .map((key) => key + '=' + params[key])
+            .join('&')
         : '';
     }
 
@@ -248,7 +248,7 @@ class APICore {
       user.token = token;
       this.setLoggedInUser(user);
     }
-  }
+  };
 
   setUserInSession = (modifiedUser: any) => {
     const userInfo = sessionStorage.getItem(AUTH_SESSION_KEY);
@@ -261,24 +261,24 @@ class APICore {
   setTeamList = (teamList: any) => {
     if (teamList) sessionStorage.setItem('TEAM_LIST', JSON.stringify(teamList));
     else {
-      sessionStorage.removeItem('TEAM_LIST')
+      sessionStorage.removeItem('TEAM_LIST');
     }
-  }
+  };
 
   getTeamList = () => {
     return getTeamListFromSession();
-  }
+  };
 
   setCurrentTeam = (currentTeam: any) => {
     if (currentTeam) sessionStorage.setItem('CURRENT_TEAM', JSON.stringify(currentTeam));
     else {
-      sessionStorage.removeItem('CURRENT_TEAM')
+      sessionStorage.removeItem('CURRENT_TEAM');
     }
-  }
+  };
 
   getCurrentTeam = () => {
     return getCurrentTeamFromSession();
-  }
+  };
 }
 
 /*

@@ -6,8 +6,6 @@ import Root from './Root';
 import { LayoutTypes } from 'appConstants';
 import { useRedux } from 'hooks';
 
-// lazy load all the views
-
 // auth
 const Login = React.lazy(() => import('pages/account/Login'));
 const OAuth = React.lazy(() => import('pages/account/OAuth'));
@@ -15,12 +13,12 @@ const Logout = React.lazy(() => import('pages/account/Logout'));
 const Register = React.lazy(() => import('pages/account/Register'));
 const Confirm = React.lazy(() => import('pages/account/Confirm'));
 const ForgetPassword = React.lazy(() => import('pages/account/ForgetPassword'));
+
 // dashboard
 const Dashboard = React.lazy(() => import('pages/docs/Dashboard'));
 
 // apps
 const Whiteboard = React.lazy(() => import('pages/apps/Whiteboard'));
-// const Meeting = React.lazy(() => import('pages/apps/Meeting'));
 
 // settings
 const PersonalSettings = React.lazy(() => import('pages/settings/PersonalSettings'));
@@ -32,9 +30,6 @@ const ErrorPageNotFound = React.lazy(() => import('pages/error/PageNotFound'));
 const ErrorPageNotFoundAlt = React.lazy(() => import('pages/error/PageNotFoundAlt'));
 const ServerError = React.lazy(() => import('pages/error/ServerError'));
 const Landing = React.lazy(() => import('pages/landing/'));
-
-// uikit
-const Notifications = React.lazy(() => import('pages/uikit/Notifications'));
 
 const loading = () => <div className=""></div>;
 
@@ -95,10 +90,6 @@ const AllRoutes = () => {
           ],
         },
         {
-          path: 'whiteboard',
-          element: <LoadComponent component={Whiteboard} />,
-        },
-        {
           path: 'error-404',
           element: <LoadComponent component={ErrorPageNotFound} />,
         },
@@ -121,10 +112,6 @@ const AllRoutes = () => {
           path: 'whiteboard',
           element: <LoadComponent component={Whiteboard} />,
         },
-        // {
-        //   path: 'meeting',
-        //   element: <LoadComponent component={Meeting} />,
-        // },
         {
           path: 'dashboard',
           element: <LoadComponent component={Dashboard} />,
@@ -147,20 +134,6 @@ const AllRoutes = () => {
             {
               path: 'error-404-alt',
               element: <LoadComponent component={ErrorPageNotFoundAlt} />,
-            },
-            {
-              path: 'ui',
-              children: [
-                {
-                  path: 'base-ui',
-                  children: [
-                    {
-                      path: 'notifications',
-                      element: <LoadComponent component={Notifications} />,
-                    },
-                  ],
-                },
-              ],
             },
           ],
         },

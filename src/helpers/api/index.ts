@@ -21,7 +21,7 @@ import {
   updateTeam,
   inviteMember,
   uploadLogoImage,
-  removeMember
+  removeMember,
 } from './team';
 import {
   createMeeting,
@@ -31,7 +31,7 @@ import {
   deleteMeeting,
   createMeetingRecord,
   addMeetingMember,
-  removeMeetingMember
+  removeMeetingMember,
 } from './meeting';
 
 export { login, logout, readMember, signup, forgotPassword, forgotPasswordConfirm };
@@ -39,7 +39,7 @@ export { readAllWhiteboard, readWhiteboard, createWhiteboard, uploadWhiteboard, 
 export type { IWhiteboard };
 export { createRecord, readAllDailyStandups, readRecord, uploadRecord, viewDailyStandup };
 export { createBookmark, readAllBookmarks, updateBookmark, deleteBookmark };
-export { createComment, readAllComments, updateComment, deleteComment }
+export { createComment, readAllComments, updateComment, deleteComment };
 export { createProfileImage, updateProfileInfo, uploadProfileImage };
 export {
   changeTeam,
@@ -50,7 +50,7 @@ export {
   updateTeam,
   inviteMember,
   uploadLogoImage,
-  removeMember
+  removeMember,
 };
 export {
   createMeeting,
@@ -60,5 +60,5 @@ export {
   deleteMeeting,
   createMeetingRecord,
   addMeetingMember,
-  removeMeetingMember
+  removeMeetingMember,
 };

@@ -61,7 +61,8 @@ const ScreenRecorder = ({ meetingId, meetingName }: Props) => {
                   onClick={() => {
                     setRecordingState('refused');
                     onEnterMeeting(meetingId, meetingName);
-                  }}>
+                  }}
+                >
                   Start Meeting without Recording
                 </button>
               </div>
@@ -70,7 +71,8 @@ const ScreenRecorder = ({ meetingId, meetingName }: Props) => {
                 onClick={() => {
                   screenStartRecording();
                   setRecordingState('recording');
-                }}>
+                }}
+              >
                 Start Meeting with Recording
               </button>
             </div>
@@ -82,7 +84,8 @@ const ScreenRecorder = ({ meetingId, meetingName }: Props) => {
                   onClick={() => {
                     uploadMeetingVideo(screenMediaBlobUrl!, meetingId);
                     onEndMeeting(meetingId);
-                  }}>
+                  }}
+                >
                   Save Recording & End Meeting
                 </button>
               ) : (
@@ -90,7 +93,8 @@ const ScreenRecorder = ({ meetingId, meetingName }: Props) => {
                   className="btn btn-primary"
                   onClick={() => {
                     onEndMeeting(meetingId);
-                  }}>
+                  }}
+                >
                   End Meeting
                 </button>
               )}
@@ -104,7 +108,8 @@ const ScreenRecorder = ({ meetingId, meetingName }: Props) => {
               onClick={() => {
                 setMeetingInProgress(true);
                 onEnterMeeting(meetingId, meetingName);
-              }}>
+              }}
+            >
               Start Meeting
             </button>
             <button
@@ -112,7 +117,8 @@ const ScreenRecorder = ({ meetingId, meetingName }: Props) => {
               onClick={() => {
                 screenStopRecording();
                 setRecordingState('recorded');
-              }}>
+              }}
+            >
               Stop Recording
             </button>
           </div>

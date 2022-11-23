@@ -21,7 +21,6 @@ const PersonalImageForm: React.FC = () => {
           />
           <input
             type="file"
-            // accept='image/jpg, image/png, image/jpeg'
             accept="image/png"
             style={{ display: 'none' }}
             name="profileImage"
@@ -34,8 +33,7 @@ const PersonalImageForm: React.FC = () => {
               if (fileInput.current) {
                 fileInput.current.click();
               }
-            }}
-          >
+            }}>
             <div className="overlay-text">click to upload</div>
           </div>
         </div>

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Card, Dropdown, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useMoment, useMeetingCard } from './hooks';
 import { Meeting } from './types';
@@ -27,7 +26,8 @@ const MeetingCard = ({ meeting, onDeleteMeeting, onEnterMeeting, onEndMeeting }:
             <Dropdown.Item
               onClick={() => {
                 onEndMeeting(meeting.id);
-              }}>
+              }}
+            >
               End Meeting
             </Dropdown.Item>
             <Dropdown.Item className="text-danger" onClick={toggleDelete}>
@@ -44,7 +44,8 @@ const MeetingCard = ({ meeting, onDeleteMeeting, onEnterMeeting, onEndMeeting }:
                 </p>
                 <form
                   className="ps-3 pe-3"
-                  onSubmit={(event) => closeModalAfterFunction(onDeleteMeeting, event, toggleDelete)}>
+                  onSubmit={(event) => closeModalAfterFunction(onDeleteMeeting, event, toggleDelete)}
+                >
                   <input type="hidden" id="id" value={meeting.id} />
                   <div className="mb-3 text-center">
                     <button className="btn btn-danger" type="submit">
@@ -65,7 +66,8 @@ const MeetingCard = ({ meeting, onDeleteMeeting, onEnterMeeting, onEndMeeting }:
             } else if (meeting.meetingFileUrl) {
               toggleView();
             }
-          }}>
+          }}
+        >
           {meeting.meetingName}
           {meeting.status ? (
             <span className="badge bg-danger float-end me-1">

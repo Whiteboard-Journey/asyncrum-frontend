@@ -1,7 +1,7 @@
 import { MENU_ITEMS, MenuItemType } from 'appConstants';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone'
+import timezone from 'dayjs/plugin/timezone';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -36,13 +36,13 @@ const getMenuItems = (teams: any, currentTeam: any) => {
             label: 'Members',
             icon: 'mdi mdi-account-multiple',
             isTitle: false,
-            url: ''
+            url: '',
           },
           ...currentTeam.members.map((member: any) => {
             const memberObject = {
               key: member.fullname,
-              get label (): string {
-                return `${this.time.format("hh:mm A")} ${this.key}`;
+              get label(): string {
+                return `${this.time.format('hh:mm A')} ${this.key}`;
               },
               isTitle: false,
               parentKey: 'members',
@@ -67,22 +67,22 @@ const getMenuItems = (teams: any, currentTeam: any) => {
           },
         ]
       : [
-        ...MENU_ITEMS,
-        {
-          key: 'settings',
-          label: 'Settings',
-          isTitle: false,
-          icon: 'mdi mdi-cog-outline',
-          url: '/settings/user',
-        },
-        {
-          key: 'logout',
-          label: 'Logout',
-          isTitle: false,
-          icon: 'mdi mdi-logout',
-          url: '/account/logout',
-        },
-      ];
+          ...MENU_ITEMS,
+          {
+            key: 'settings',
+            label: 'Settings',
+            isTitle: false,
+            icon: 'mdi mdi-cog-outline',
+            url: '/settings/user',
+          },
+          {
+            key: 'logout',
+            label: 'Logout',
+            isTitle: false,
+            icon: 'mdi mdi-logout',
+            url: '/account/logout',
+          },
+        ];
   return menu;
 };
 

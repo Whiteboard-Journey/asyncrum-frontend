@@ -1,15 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SimpleBar from 'simplebar-react';
-import classNames from 'classnames';
 import { useRedux } from 'hooks';
 import { getMenuItems } from 'helpers';
 import AppMenu from './Menu';
-import logoSm from 'assets/images/asyncrum-logo-white-small.png';
-import logoDark from 'assets/images/asyncrum-logo-white.png';
-import logoDarkSm from 'assets/images/asyncrum-logo-white-small.png';
 import logo from 'assets/images/asyncrum-logo-white.png';
-import helpBoxImage from 'assets/images/help-icon.svg';
+import logoSm from 'assets/images/asyncrum-logo-white-small.png';
 import { MenuItemType } from 'appConstants';
 
 type SideBarContentProps = {
@@ -85,19 +81,19 @@ const LeftSidebar = ({ isCondensed, isLight, hideLogo, hideUserProfile }: LeftSi
         <>
           <Link to="/" className="logo text-center logo-light">
             <span className="logo-lg">
-              <img src={isLight ? logoDark : logo} alt="logo" height="24" />
+              <img src={logo} alt="logo" height="24" />
             </span>
             <span className="logo-sm">
-              <img src={isLight ? logoSm : logoDarkSm} alt="logo" height="16" />
+              <img src={logoSm} alt="logo" height="16" />
             </span>
           </Link>
 
           <Link to="/" className="logo text-center logo-dark">
             <span className="logo-lg">
-              <img src={isLight ? logoDark : logo} alt="logo" height="24" />
+              <img src={logo} alt="logo" height="24" />
             </span>
             <span className="logo-sm">
-              <img src={isLight ? logoSm : logoDarkSm} alt="logo" height="16" />
+              <img src={logoSm} alt="logo" height="16" />
             </span>
           </Link>
         </>

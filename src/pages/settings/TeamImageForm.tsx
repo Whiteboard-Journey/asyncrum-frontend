@@ -31,7 +31,6 @@ const TeamImageForm: React.FC<TeamImageFormProps> = ({
           />
           <input
             type="file"
-            // accept='image/jpg, image/png, image/jpeg'
             accept="image/png"
             style={{ display: 'none' }}
             name="logoImage"
@@ -44,7 +43,8 @@ const TeamImageForm: React.FC<TeamImageFormProps> = ({
               if (fileInput.current) {
                 fileInput.current.click();
               }
-            }}>
+            }}
+          >
             <div className="overlay-text">click to upload</div>
           </div>
         </div>

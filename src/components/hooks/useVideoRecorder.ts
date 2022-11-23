@@ -1,7 +1,11 @@
 import { useReactMediaRecorder } from 'react-media-recorder';
 import { useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import { createRecord as createRecordAPI, uploadRecord as uploadRecordAPI, createMeetingRecord as createMeetingRecordAPI } from 'helpers';
+import {
+  createRecord as createRecordAPI,
+  uploadRecord as uploadRecordAPI,
+  createMeetingRecord as createMeetingRecordAPI,
+} from 'helpers';
 import { useRedux } from 'hooks';
 
 const useVideoRecorder = () => {
@@ -95,7 +99,7 @@ const useVideoRecorder = () => {
     screenStartRecording,
     screenStopRecording,
     uploadVideoes,
-    uploadMeetingVideo
+    uploadMeetingVideo,
   };
 };
 

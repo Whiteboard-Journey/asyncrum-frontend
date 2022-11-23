@@ -7,13 +7,6 @@ const Meeting = (roomName: string) => {
     user: state.Auth.user,
   }));
 
-  const generateRoomName = () => `${user.currentTeam.id}${Math.random() * 100}-${Date.now()}`;
-
-  // const handleReadyToClose = (): any => {
-  //   alert('sdf');
-  //   //window.location.href = `/dashboard`;
-  // };
-
   return (
     <JitsiMeeting
       domain={process.env.REACT_APP_JITSI_URL}
@@ -30,10 +23,6 @@ const Meeting = (roomName: string) => {
       userInfo={{
         displayName: user.fullname,
         email: user.email,
-      }}
-      onApiReady={(externalApi) => {
-        // here you can attach custom event listeners to the Jitsi Meet External API
-        // you can also store it locally to execute commands
       }}
       getIFrameRef={(iframeRef) => {
         iframeRef.style.height = '800px';

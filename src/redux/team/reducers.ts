@@ -7,7 +7,7 @@ const api = new APICore();
 const INIT_STATE = {
   teamList: api.getTeamList(),
   currentTeam: api.getCurrentTeam(),
-  loading: true
+  loading: true,
 };
 
 type TeamData = {
@@ -24,7 +24,7 @@ type CurrentTeamData = {
   pictureUrl: string;
   members: Member[];
   openMeetings: string[];
-}
+};
 
 type TeamActionType = {
   type:

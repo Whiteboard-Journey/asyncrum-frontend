@@ -6,5 +6,5 @@ import Team from './team/reducers';
 export default combineReducers({
   Auth,
   Layout,
-  Team
+  Team,
 });

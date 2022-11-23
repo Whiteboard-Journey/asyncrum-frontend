@@ -47,7 +47,6 @@ type Props = {
   id: number;
 };
 
-// const VideoPlayer = ({ video: HTMLVideoElement }: Props) => {
 const VideoPlayer = ({ id }: Props) => {
   const [app, setApp] = useState<TldrawApp>();
 

@@ -41,9 +41,7 @@ const ErrorPageNotFound = () => {
         </div>
       </div>
 
-      <footer className="footer footer-alt">
-        2022{new Date().getFullYear()} © Asyncrum - Software Maestro 13th Team Whiteboard Journey
-      </footer>
+      <footer className="footer footer-alt">2022 © Asyncrum - Software Maestro 13th Team Whiteboard Journey</footer>
     </>
   );
 };

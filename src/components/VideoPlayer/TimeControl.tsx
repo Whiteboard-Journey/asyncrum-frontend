@@ -44,7 +44,8 @@ const TimeControl = ({ video, fullDuration, currentTime, setCurrentTime, setActi
                 top="-7px"
                 left={`calc(${left}px - 1rem)`}
                 rounded="full"
-                zIndex="1">
+                zIndex="1"
+              >
                 <VideoBookmarkTimeline
                   video={video}
                   bookmark={bookmark}
@@ -99,7 +100,8 @@ const TimeControl = ({ video, fullDuration, currentTime, setCurrentTime, setActi
         top="1px"
         onChange={(value: number) => handleSliderChange(value)}
         step={1 / video.frameRate}
-        value={currentTime}>
+        value={currentTime}
+      >
         <SliderTrack className="track" ref={trackRef}>
           <SliderFilledTrack />
         </SliderTrack>

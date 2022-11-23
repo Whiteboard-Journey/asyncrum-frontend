@@ -20,7 +20,7 @@ const useWhiteboard = () => {
   const { appSelector } = useRedux();
 
   const { currentTeam } = appSelector((state) => ({
-    currentTeam: state.Team.currentTeam
+    currentTeam: state.Team.currentTeam,
   }));
 
   const scope = 'team';

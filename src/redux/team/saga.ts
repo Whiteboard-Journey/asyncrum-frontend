@@ -1,4 +1,4 @@
-import { all, fork, put, takeEvery, call, take, takeLatest } from 'redux-saga/effects';
+import { all, fork, put, takeEvery, call, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { APICore } from 'helpers/api/apiCore';
 import {
@@ -7,10 +7,6 @@ import {
   readAllTeam as readAllTeamApi,
   updateTeam as updateTeamApi,
   removeMember as removeMemberApi,
-  createMeeting as createMeetingApi,
-  updateMeeting as updateMeetingApi,
-  deleteMeeting as deleteMeetingApi,
-  readAllMeeting as readAllMeetingApi,
 } from 'helpers';
 import { teamApiResponseSuccess, teamApiResponseError } from './actions';
 import { TeamActionTypes } from './constants';
@@ -31,7 +27,7 @@ type LeaveData = {
     memberId: number;
   };
   type: string;
-}
+};
 
 const api = new APICore();
 
@@ -40,9 +36,9 @@ function* create({ payload: { name, code }, type }: TeamData): SagaIterator {
     const response = yield call(createTeamApi, { name, code });
     const id = response.data.id;
     const allTeamResponse = yield call(readAllTeamApi);
-    const allTeam = allTeamResponse.data.teams
+    const allTeam = allTeamResponse.data.teams;
     const currentTeamResponse = yield call(readTeamApi, id);
-    const currentTeam = currentTeamResponse.data
+    const currentTeam = currentTeamResponse.data;
     api.setTeamList(allTeam);
     api.setCurrentTeam(currentTeam);
     yield put(teamApiResponseSuccess(TeamActionTypes.CREATE_TEAM, allTeam, currentTeam));
@@ -56,7 +52,7 @@ function* readAll(): SagaIterator {
     const response = yield call(readAllTeamApi);
     const allTeam = response.data.teams;
     const currentTeamResponse = yield call(readTeamApi, allTeam[0].id);
-    const currentTeam = currentTeamResponse.data
+    const currentTeam = currentTeamResponse.data;
     api.setTeamList(allTeam);
     api.setCurrentTeam(currentTeam);
     yield put(teamApiResponseSuccess(TeamActionTypes.READ_ALL_TEAM, allTeam, currentTeam));
@@ -65,7 +61,7 @@ function* readAll(): SagaIterator {
   }
 }
 
-function* read({ payload: { id }, type}: TeamData): SagaIterator {
+function* read({ payload: { id }, type }: TeamData): SagaIterator {
   try {
     const response = yield call(readTeamApi, id);
     const currentTeam = response.data;
@@ -80,7 +76,7 @@ function* update({ payload: { id, name }, type }: TeamData): SagaIterator {
   try {
     yield call(updateTeamApi, id, { name });
     const allTeamResponse = yield call(readAllTeamApi);
-    const allTeam = allTeamResponse.data.teams
+    const allTeam = allTeamResponse.data.teams;
     const response = yield call(readTeamApi, id);
     const currentTeam = response.data;
     api.setTeamList(allTeam);
@@ -91,13 +87,13 @@ function* update({ payload: { id, name }, type }: TeamData): SagaIterator {
   }
 }
 
-function* leave({ payload: { teamId, memberId }, type}: LeaveData): SagaIterator {
+function* leave({ payload: { teamId, memberId }, type }: LeaveData): SagaIterator {
   try {
-    yield call(removeMemberApi, teamId, memberId );
+    yield call(removeMemberApi, teamId, memberId);
     const response = yield call(readAllTeamApi);
     const allTeam = response.data.teams;
     const currentTeamResponse = yield call(readTeamApi, allTeam[0].id);
-    const currentTeam = currentTeamResponse.data
+    const currentTeam = currentTeamResponse.data;
     api.setTeamList(allTeam);
     api.setCurrentTeam(currentTeam);
     yield put(teamApiResponseSuccess(TeamActionTypes.LEAVE_TEAM, allTeam, currentTeam));

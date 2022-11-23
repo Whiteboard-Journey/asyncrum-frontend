@@ -23,12 +23,14 @@ const MenuItemLink = ({ item, className }: SubMenus) => {
       target={item.target}
       className={classNames('side-nav-link-ref', 'side-sub-nav-link', className, isMemberTitle ? 'mt-4' : '')}
       style={isMember || isMemberTitle ? { pointerEvents: 'none' } : {}}
-      data-menu-key={item.key}>
+      data-menu-key={item.key}
+    >
       {item.icon && <i className={item.icon}></i>}
       {isMember && (
         <span
           style={{ height: '0.5rem', borderRadius: '10', fontSize: '0.5rem', marginTop: '0.5rem' }}
-          className={classNames('badge', isWorking(item.time!) ? 'bg-success' : 'bg-secondary', 'float-end')}>
+          className={classNames('badge', isWorking(item.time!) ? 'bg-success' : 'bg-secondary', 'float-end')}
+        >
           &nbsp;
         </span>
       )}

@@ -9,7 +9,11 @@ const createProfileImage = () => {
   return api.create(baseURL + `/${user.id}/image`, null);
 };
 
-const updateProfileInfo = (params: { fullname: string | null; timezone: string | null, fcmRegistrationToken: string | null }) => {
+const updateProfileInfo = (params: {
+  fullname: string | null;
+  timezone: string | null;
+  fcmRegistrationToken: string | null;
+}) => {
   return api.updatePatch(baseURL + `/${user.id}`, params);
 };
 
