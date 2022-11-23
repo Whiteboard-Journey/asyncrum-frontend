@@ -45,9 +45,10 @@ const videoStyle = css`
 
 type Props = {
   id: number;
+  cam: string;
 };
 
-const VideoPlayer = ({ id }: Props) => {
+const VideoPlayer = ({ id, cam }: Props) => {
   const [app, setApp] = useState<TldrawApp>();
 
   const [videoElemLoading, setVideoElemLoading] = useState<boolean>(true);
@@ -68,6 +69,7 @@ const VideoPlayer = ({ id }: Props) => {
   const fullscreenTargetRef = useRef<HTMLDivElement | null>(null);
   const fullscreenTriggerRef = useRef<HTMLButtonElement | null>(null);
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
+  const camVideoRef = useRef<HTMLVideoElement | null>(null);
 
   const setupVideoElement = useCallback(async () => {
     const readRecordAPIResponse = await readRecordAPI(id);
@@ -165,18 +167,20 @@ const VideoPlayer = ({ id }: Props) => {
   }, []);
 
   const playVideo = () => {
-    if (videoContainerRef.current === null) {
+    if (videoContainerRef.current === null || camVideoRef.current === null) {
       return;
     }
     video.el.play();
+    camVideoRef.current.play();
     setPlaying(true);
   };
 
   const pauseVideo = () => {
-    if (videoContainerRef.current === null) {
+    if (videoContainerRef.current === null || camVideoRef.current === null) {
       return;
     }
     video.el.pause();
+    camVideoRef.current.pause();
     setPlaying(false);
   };
 
@@ -278,6 +282,7 @@ const VideoPlayer = ({ id }: Props) => {
               setCurrentTime={setCurrentTime}
               setActiveBookmark={setActiveBookmark}
               pauseVideo={pauseVideo}
+              camVideoRef={camVideoRef}
             />
           </Box>
 
@@ -340,6 +345,9 @@ const VideoPlayer = ({ id }: Props) => {
           <Box width="100vw" bgColor="black">
             {renderedContent}
           </Box>
+          <div id="cam-wrapper">
+            <video id="cam" width="320px" height="240px" src={cam} ref={camVideoRef} />
+          </div>
         </Flex>
       )}
     </>

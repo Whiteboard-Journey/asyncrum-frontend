@@ -13,9 +13,18 @@ type Props = {
   setCurrentTime: React.Dispatch<React.SetStateAction<number>>;
   setActiveBookmark: React.Dispatch<React.SetStateAction<VideoBookmark | null>>;
   pauseVideo: () => void;
+  camVideoRef: React.MutableRefObject<HTMLVideoElement | null>;
 };
 
-const TimeControl = ({ video, fullDuration, currentTime, setCurrentTime, setActiveBookmark, pauseVideo }: Props) => {
+const TimeControl = ({
+  video,
+  fullDuration,
+  currentTime,
+  setCurrentTime,
+  setActiveBookmark,
+  pauseVideo,
+  camVideoRef,
+}: Props) => {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [renderedCurrentBookmarks, setRenderedCurrentBookmarks] = useState<JSX.Element[]>([]);
   const [trackDimensions, setTrackDimensions] = useState<DOMRect | null>(null); // tracks the dimensions of the track as it's resized
@@ -23,6 +32,7 @@ const TimeControl = ({ video, fullDuration, currentTime, setCurrentTime, setActi
   const handleSliderChange = (time: number) => {
     setCurrentTime(time);
     video.el.currentTime = time;
+    camVideoRef.current!.currentTime = time;
   };
 
   const setBookmarkButtons = () => {
@@ -44,8 +54,7 @@ const TimeControl = ({ video, fullDuration, currentTime, setCurrentTime, setActi
                 top="-7px"
                 left={`calc(${left}px - 1rem)`}
                 rounded="full"
-                zIndex="1"
-              >
+                zIndex="1">
                 <VideoBookmarkTimeline
                   video={video}
                   bookmark={bookmark}
@@ -100,8 +109,7 @@ const TimeControl = ({ video, fullDuration, currentTime, setCurrentTime, setActi
         top="1px"
         onChange={(value: number) => handleSliderChange(value)}
         step={1 / video.frameRate}
-        value={currentTime}
-      >
+        value={currentTime}>
         <SliderTrack className="track" ref={trackRef}>
           <SliderFilledTrack />
         </SliderTrack>

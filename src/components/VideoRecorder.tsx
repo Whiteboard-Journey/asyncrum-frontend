@@ -79,8 +79,7 @@ const VideoRecorder: React.FC = () => {
                   screenStartRecording();
                   camStartRecording();
                   setRecordingState('recording');
-                }}
-              >
+                }}>
                 Start Recording
               </button>
             </div>
@@ -90,8 +89,7 @@ const VideoRecorder: React.FC = () => {
                 className="btn btn-primary me-3"
                 onClick={() => {
                   setRecordingState('idle');
-                }}
-              >
+                }}>
                 Reshoot
               </button>
               <button className="btn btn-primary" onClick={uploadVideoes}>
@@ -107,8 +105,7 @@ const VideoRecorder: React.FC = () => {
                 camStopRecording();
                 screenStopRecording();
                 setRecordingState('recorded');
-              }}
-            >
+              }}>
               Stop Recording
             </button>
           </div>
