@@ -12,6 +12,7 @@ import { getFirebaseToken, onMessageListener } from './FirebaseConfig';
 import { NotificationItem, Message } from '../types';
 import useThemeCustomizer from 'components/ThemeCustomizer/useThemeCustomizer';
 import { Form } from 'react-bootstrap';
+import notifications from './NotificationData';
 
 type TopbarProps = {
   hideLogo?: boolean;
@@ -26,41 +27,41 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
   const { width } = useViewport();
   const [isMenuOpened, toggleMenu] = useToggle();
   const [isTokenFound, setTokenFound] = useState(false);
-  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+  // const [notifications, setNotifications] = useState<NotificationItem[]>([]);
 
   const { user } = appSelector((state) => ({
     user: state.Auth.user,
   }));
 
-  useEffect(() => {
-    getFirebaseToken(setTokenFound);
-  }, []);
+  // useEffect(() => {
+  //   getFirebaseToken(setTokenFound);
+  // }, []);
 
-  onMessageListener()
-    .then((payload: any) => {
-      console.log(payload);
+  // onMessageListener()
+  //   .then((payload: any) => {
+  //     console.log(payload);
 
-      const title: string = payload.notification.title;
-      const body: string = payload.notification.body;
-      const message: Message = {
-        id: 1,
-        title: title,
-        subText: body,
-        time: '1 min ago',
-        icon: 'mdi mdi-comment-account-outline',
-        variant: 'primary',
-        isRead: true,
-      };
+  //     const title: string = payload.notification.title;
+  //     const body: string = payload.notification.body;
+  //     const message: Message = {
+  //       id: 1,
+  //       title: title,
+  //       subText: body,
+  //       time: '1 min ago',
+  //       icon: 'mdi mdi-comment-account-outline',
+  //       variant: 'primary',
+  //       isRead: true,
+  //     };
 
-      const messages: Message[] = [];
-      messages.push(message);
+  //     const messages: Message[] = [];
+  //     messages.push(message);
 
-      const notification: NotificationItem = { day: 'Today', messages: messages };
-      notifications.push(notification);
+  //     const notification: NotificationItem = { day: 'Today', messages: messages };
+  //     notifications.push(notification);
 
-      setNotifications(notifications);
-    })
-    .catch((err) => console.log('failed: ', err));
+  //     setNotifications(notifications);
+  //   })
+  //   .catch((err) => console.log('failed: ', err));
 
   const containerCssClasses = !hideLogo ? 'container-fluid' : '';
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Dropdown } from 'react-bootstrap';
 import SimpleBar from 'simplebar-react';
@@ -17,6 +17,7 @@ type NotificationDropdownProps = {
 
 const NotificationDropdown = ({ notifications }: NotificationDropdownProps) => {
   const [isOpen, toggleDropdown] = useToggle();
+  const [clicked, setClicked] = useState<boolean>(false);
 
   return (
     <Dropdown show={isOpen} onToggle={toggleDropdown}>
@@ -25,11 +26,15 @@ const NotificationDropdown = ({ notifications }: NotificationDropdownProps) => {
         id="dropdown-notification"
         as={Link}
         to="#"
-        onClick={toggleDropdown}
+        onClick={() => {
+          toggleDropdown();
+          setClicked(true);
+        }}
         className="nav-link dropdown-toggle arrow-none"
       >
         <i className="mdi mdi-bell-outline noti-icon"></i>
-        {notifications.length != 0 ? <span className="noti-icon-badge"></span> : <span></span>}
+        {!clicked ? <span className="noti-icon-badge"></span> : <span></span>}
+        {/* {notifications.length != 0 ? <span className="noti-icon-badge"></span> : <span></span>} */}
       </Dropdown.Toggle>
       <Dropdown.Menu className="dropdown-menu-animated dropdown-lg" align="end">
         <div onClick={toggleDropdown}>
@@ -87,9 +92,9 @@ const NotificationDropdown = ({ notifications }: NotificationDropdownProps) => {
               );
             })}
 
-            <div className="text-center">
+            {/* <div className="text-center">
               <i className="mdi mdi-dots-circle mdi-spin text-muted h3 mt-0"></i>
-            </div>
+            </div> */}
           </SimpleBar>
 
           <Dropdown.Item className="text-center text-primary notify-item border-top border-light py-2">
