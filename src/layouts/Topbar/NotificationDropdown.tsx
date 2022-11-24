@@ -4,7 +4,7 @@ import { Card, Dropdown } from 'react-bootstrap';
 import SimpleBar from 'simplebar-react';
 import classNames from 'classnames';
 import { NotificationItem } from '../types';
-import { useToggle } from 'hooks';
+import { useToggle, useRedux } from 'hooks';
 
 // notifiaction continer styles
 const notificationShowContainerStyle = {
@@ -16,6 +16,11 @@ type NotificationDropdownProps = {
 };
 
 const NotificationDropdown = ({ notifications }: NotificationDropdownProps) => {
+  const { appSelector } = useRedux();
+
+  const { user } = appSelector((state) => ({
+    user: state.Auth.user,
+  }));
   const [isOpen, toggleDropdown] = useToggle();
   const [clicked, setClicked] = useState<boolean>(false);
 
@@ -30,10 +35,9 @@ const NotificationDropdown = ({ notifications }: NotificationDropdownProps) => {
           toggleDropdown();
           setClicked(true);
         }}
-        className="nav-link dropdown-toggle arrow-none"
-      >
+        className="nav-link dropdown-toggle arrow-none">
         <i className="mdi mdi-bell-outline noti-icon"></i>
-        {!clicked ? <span className="noti-icon-badge"></span> : <span></span>}
+        {!clicked && user.fullname === 'Ned' ? <span className="noti-icon-badge"></span> : <span></span>}
         {/* {notifications.length != 0 ? <span className="noti-icon-badge"></span> : <span></span>} */}
       </Dropdown.Toggle>
       <Dropdown.Menu className="dropdown-menu-animated dropdown-lg" align="end">
@@ -60,8 +64,7 @@ const NotificationDropdown = ({ notifications }: NotificationDropdownProps) => {
                         className={classNames(
                           'p-0 notify-item card shadow-none mb-2',
                           message.isRead ? 'read-noti' : 'unread-noti'
-                        )}
-                      >
+                        )}>
                         <Card.Body>
                           <span className="float-end noti-close-btn text-muted">
                             <i className="mdi mdi-close"></i>

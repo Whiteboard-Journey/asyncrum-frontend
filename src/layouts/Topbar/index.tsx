@@ -128,7 +128,7 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
             </Form>
           </li>
           <li className="dropdown notification-list">
-            <NotificationDropdown notifications={notifications!} />
+            <NotificationDropdown notifications={user.fullname === 'Ned' ? notifications! : []} />
           </li>
           <li className="dropdown notification-list">
             <ProfileDropdown userImage={user.profileImageUrl} username={user.fullname} userTitle={'Developer'} />
