@@ -50,7 +50,6 @@ type Props = {
 
 const VideoPlayer = ({ id, cam }: Props) => {
   const [app, setApp] = useState<TldrawApp>();
-
   const [videoElemLoading, setVideoElemLoading] = useState<boolean>(true);
   const [videoPlayerLoading, setVideoPlayerLoading] = useState<boolean>(true);
   const [video, setVideo] = useState<Video>({} as Video);
@@ -210,7 +209,8 @@ const VideoPlayer = ({ id, cam }: Props) => {
 
     const renderedDrawing = (
       <Drawing
-        onMount={(innerApp) => setApp(innerApp)}
+        app={app}
+        setApp={setApp}
         scale={1}
         playing={playing}
         video={video}
