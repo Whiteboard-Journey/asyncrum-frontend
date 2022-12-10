@@ -1,23 +1,30 @@
-import { useRef, useEffect, useCallback } from 'react';
-import { Tldraw, TldrawApp, ColorStyle } from '@krapi0314/tldraw';
+import { useRef, useEffect, useCallback, ReactText, useState } from 'react';
+import { Tldraw, TldrawApp, ColorStyle, useFileSystem } from '@krapi0314/tldraw';
 
 import { Box } from '@chakra-ui/react';
 
 import type { Video } from './Video';
 import type { VideoBookmark } from './VideoBookmark';
+import useMultiplayerState from 'pages/apps/Whiteboard/useMultiplayerState';
+import useMultiplayerAssets from 'pages/apps/Whiteboard/useMultiplayerAssets';
 
 type Props = {
+  app: TldrawApp | undefined;
   playing: boolean;
-  onMount: (app: TldrawApp) => void;
+  setApp: React.Dispatch<React.SetStateAction<TldrawApp | undefined>>;
   scale: number;
   video: Video;
   setVideo: React.Dispatch<React.SetStateAction<Video>>;
   videoBookmark: VideoBookmark | null;
 };
 
-const Drawing = ({ playing, onMount, scale, video, setVideo, videoBookmark }: Props) => {
+const Drawing = ({ playing, setApp, scale, video, setVideo, videoBookmark }: Props) => {
   const tlDrawRef = useRef<TldrawApp | null>(null);
   const outerRef = useRef(null);
+  const fileSystemEvents = useFileSystem();
+  const { ...events } = useMultiplayerState(video.id + 'b' + videoBookmark?.id, '', tlDrawRef.current, handleMount);
+  const { ...assetEvents } = useMultiplayerAssets();
+  const [reset, isReset] = useState(0);
 
   const setVideoBookmarkDrawing = (video: Video, bookmark: VideoBookmark, drawing: object) => {
     const bookmarkIndex = video.bookmarks.findIndex((innerBookmark) => {
@@ -36,7 +43,7 @@ const Drawing = ({ playing, onMount, scale, video, setVideo, videoBookmark }: Pr
     tlDrawRef.current = app;
     tlDrawRef.current.setCamera([0, 0], scale, 'layout_mounted');
     tlDrawRef.current.style({ color: ColorStyle.Red });
-    onMount(app);
+    setApp(app);
   }
 
   function handlePersist(app: TldrawApp) {
@@ -75,9 +82,10 @@ const Drawing = ({ playing, onMount, scale, video, setVideo, videoBookmark }: Pr
       return;
     }
 
+    isReset((reset) => reset + 1);
+
     if (videoBookmark?.drawing && videoBookmark.drawing) {
       tlDrawRef.current.loadDocument(JSON.parse(JSON.stringify(videoBookmark.drawing)));
-
       tlDrawRef.current.selectNone();
       rescaleDrawing();
     } else {
@@ -99,10 +107,17 @@ const Drawing = ({ playing, onMount, scale, video, setVideo, videoBookmark }: Pr
     <Box position="absolute" top="0" left="0" right="0" bottom="0" ref={outerRef}>
       <Tldraw
         // @ts-ignore
-        onMount={(app: TldrawApp) => handleMount(app)}
+        // onMount={(app: TldrawApp) => handleMount(app)}
+        // @ts-ignore
         onPersist={(app: TldrawApp) => handlePersist(app)}
         showUI={false}
         style="{background-color: transparent !important}"
+        disableAssets={false}
+        showPages={false}
+        {...assetEvents}
+        {...fileSystemEvents}
+        {...events}
+        key={reset}
       />
     </Box>
   );

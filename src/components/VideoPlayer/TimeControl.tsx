@@ -33,6 +33,7 @@ const TimeControl = ({
     setCurrentTime(time);
     video.el.currentTime = time;
     camVideoRef.current!.currentTime = time;
+    setActiveBookmark(null);
   };
 
   const setBookmarkButtons = () => {
