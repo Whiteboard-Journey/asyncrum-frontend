@@ -14,6 +14,10 @@ const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
 
   useEffect(() => {
     preload();
+    if (!dailyStandup.seen) {
+      fetch(dailyStandup.camRecordFileUrl);
+      fetch(dailyStandup.screenRecordFileUrl);
+    }
   }, []);
 
   return (
@@ -38,6 +42,7 @@ const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
         <p className={(dailyStandup.seen ? 'text-light' : 'text-muted') + ' text-center font-12 mb-1'}>
           {getTimeFromNow(dailyStandup.createdDate)}
         </p>
+
         <Suspense fallback={null}>
           <LazyDailyStandupModal dailyStandup={dailyStandup} onClose={onClose} isOpen={isOpen} />
         </Suspense>
