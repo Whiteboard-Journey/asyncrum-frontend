@@ -1,21 +1,20 @@
-import { VideoPlayer } from 'components/VideoPlayer';
+import { Suspense, useEffect } from 'react';
 import { Card } from 'react-bootstrap';
 import { useDailyStandup, useMoment } from './hooks';
 import { DailyStandup } from './types';
-import {
-  useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-} from '@chakra-ui/react';
+import { useDisclosure } from '@chakra-ui/react';
+import { getLazyComponentWithPreload } from 'hooks/useLazyComponent';
+
+const [LazyDailyStandupModal, preload] = getLazyComponentWithPreload(() => import('./DailyStandupModal'));
 
 const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
   const { getTimeFromNow } = useMoment();
   const { onViewDailyStandups } = useDailyStandup();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  useEffect(() => {
+    preload();
+  }, []);
 
   return (
     <Card className="d-block me-3">
@@ -39,47 +38,9 @@ const DailyStandupCard = ({ dailyStandup }: { dailyStandup: DailyStandup }) => {
         <p className={(dailyStandup.seen ? 'text-light' : 'text-muted') + ' text-center font-12 mb-1'}>
           {getTimeFromNow(dailyStandup.createdDate)}
         </p>
-        <Modal onClose={onClose} size="full" isOpen={isOpen}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>{dailyStandup.author + ' - ' + getTimeFromNow(dailyStandup.createdDate)}</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <VideoPlayer id={dailyStandup.screenRecordId} cam={dailyStandup.camRecordFileUrl} />
-            </ModalBody>
-          </ModalContent>
-        </Modal>
-        {/* <Modal
-          backdrop="static"
-          show={isViewOpen}
-          onHide={toggleView}
-          dialogClassName={className}
-          size={size}
-          scrollable={scroll}>
-          <Modal.Header onHide={toggleView} closeButton>
-            <h4 className="modal-title">{dailyStandup.author + ' - ' + getTimeFromNow(dailyStandup.createdDate)}</h4>
-          </Modal.Header>
-          <Modal.Body>
-            <video
-              src={dailyStandup.camRecordFileUrl}
-              controls
-              autoPlay
-              playsInline
-              width={cam_w}
-              height={cam_h}
-              style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }}
-            />
-            <video
-              src={dailyStandup.screenRecordFileUrl}
-              controls
-              autoPlay
-              playsInline
-              width={screen_w}
-              height={screen_h}
-              style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }}
-            />
-          </Modal.Body>
-        </Modal> */}
+        <Suspense fallback={null}>
+          <LazyDailyStandupModal dailyStandup={dailyStandup} onClose={onClose} isOpen={isOpen} />
+        </Suspense>
       </Card.Body>
     </Card>
   );
