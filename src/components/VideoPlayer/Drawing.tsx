@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback, ReactText, useState } from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 import { Tldraw, TldrawApp, ColorStyle, useFileSystem } from '@krapi0314/tldraw';
 
 import { Box } from '@chakra-ui/react';
@@ -106,8 +106,6 @@ const Drawing = ({ playing, setApp, scale, video, setVideo, videoBookmark }: Pro
   return (
     <Box position="absolute" top="0" left="0" right="0" bottom="0" ref={outerRef}>
       <Tldraw
-        // @ts-ignore
-        // onMount={(app: TldrawApp) => handleMount(app)}
         // @ts-ignore
         onPersist={(app: TldrawApp) => handlePersist(app)}
         showUI={false}

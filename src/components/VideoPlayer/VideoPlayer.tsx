@@ -50,7 +50,6 @@ type Props = {
 
 const VideoPlayer = ({ id, cam }: Props) => {
   const [app, setApp] = useState<TldrawApp>();
-  const [roomId, setRoomId] = useState<string>('');
   const [videoElemLoading, setVideoElemLoading] = useState<boolean>(true);
   const [videoPlayerLoading, setVideoPlayerLoading] = useState<boolean>(true);
   const [video, setVideo] = useState<Video>({} as Video);
@@ -77,8 +76,6 @@ const VideoPlayer = ({ id, cam }: Props) => {
 
     const el = document.createElement('video');
     el.src = videoData.recordUrl;
-
-    setRoomId(id + 'default');
 
     setVideo({
       bookmarks: videoData.bookmarks
