@@ -9,6 +9,8 @@
 
 > 시차가 존재하는 원격 팀을 위한 화이트보드 + 비디오 로그 기반 비동기 협업 소프트웨어 <br /><br /> **개발 기간: 2022. 06 ~ 2022. 11**
 
+> 이 성과는 2022년도 과학기술정보통신부의 재원으로 정보통신기획평가원의 지원을 받아 수행된 연구임. (IITP-2022-SW마에스트로과정) <br><br> This work was supported by the Institute of Information & Communications Technology Planning & Evaluation(IITP) grant funded by the Ministry of Science and ICT(MSIT) (IITP-2022-SW Maestro training course).
+
 ## 배포 주소
 
 > [https://www.asyncrum.com](https://www.asyncrum.com)
