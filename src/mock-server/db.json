@@ -53,12 +53,60 @@
       {
         "id": 2,
         "meetingName": "Meeting 2",
-        "status": "",
+        "status": "True",
         "participants": [
           " Demo User, /images/asyncrum-logo-small.png",
           " Demo User 2, /images/asyncrum-logo-small.png"
         ],
         "lastModifiedDate": "2023-01-23T18:25:33"
+      }
+    ]
+  },
+
+  "records": {
+    "records": [
+      {
+        "id": 2,
+        "title": "test record",
+        "description": "test description",
+        "recordUrl": "https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_1_1_2.mp4",
+        "bookmarks": [
+          {
+            "id": 4,
+            "recordId": 2,
+            "content": "test bookmark",
+            "time": 5.6,
+            "position": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "drawing": "{\"id\":\"doc\",\"name\":\"New Document\",\"version\":15.5,\"pages\":{\"page\":{\"id\":\"page\",\"name\":\"Page 1\",\"childIndex\":1,\"shapes\":{},\"bindings\":{}}},\"pageStates\":{\"page\":{\"id\":\"page\",\"selectedIds\":[],\"camera\":{\"point\":[0,0],\"zoom\":0.8342592592592591}}},\"assets\":{}}",
+            "scale": 0.8342592592592591
+          },
+          {
+            "id": 5,
+            "recordId": 2,
+            "content": "test bookmark 2",
+            "time": 5.6,
+            "position": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "drawing": "{\"id\":\"doc\",\"name\":\"New Document\",\"version\":15.5,\"pages\":{\"page\":{\"id\":\"page\",\"name\":\"Page 1\",\"childIndex\":1,\"shapes\":{},\"bindings\":{}}},\"pageStates\":{\"page\":{\"id\":\"page\",\"selectedIds\":[],\"camera\":{\"point\":[0,0],\"zoom\":0.8342592592592591}}},\"assets\":{}}",
+            "scale": 0.8342592592592591
+          }
+        ],
+        "scope": "TEAM",
+        "member": {
+          "id": 1,
+          "fullname": "Demo User",
+          "profileImageUrl": "/images/asyncrum-logo-small.png",
+          "email": "test@gmail.com",
+          "roleType": "USER",
+          "timeZone": "Asia/Seoul"
+        },
+        "createdDate": "2022-09-23T18:25:33",
+        "lastModifiedDate": "2022-09-23T18:25:33"
       }
     ]
   }

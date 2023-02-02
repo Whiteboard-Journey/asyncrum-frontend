@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   return (
     <>
-      {/* <DailyStandupContainer /> */}
+      <DailyStandupContainer />
       <hr />
       <MeetingContainer />
       <hr />

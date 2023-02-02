@@ -4,6 +4,7 @@ import { DailyStandup } from '../types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRedux } from 'hooks';
 import { useMoment } from './';
+import { currentTeam, user } from 'mock-server/demoData';
 
 const useDailyStandup = () => {
   const [dailyStandups, setDailyStandups] = useState<DailyStandup[]>([]);
@@ -13,12 +14,6 @@ const useDailyStandup = () => {
   const carouselRef = useRef<Carousel>(null);
 
   const { getTimeDifference } = useMoment();
-
-  const { loading, user, currentTeam } = appSelector((state) => ({
-    loading: state.Auth.loading,
-    user: state.Auth.user,
-    currentTeam: state.Team.currentTeam,
-  }));
 
   const scope = 'team';
   const pageIndex = 0;
@@ -88,11 +83,8 @@ const useDailyStandup = () => {
   };
 
   useEffect(() => {
-    if (loading) {
-      return;
-    }
     readAllDailyStandups();
-  }, [loading, readAllDailyStandups]);
+  }, [readAllDailyStandups]);
 
   return {
     carouselRef,
