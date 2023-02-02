@@ -31,7 +31,7 @@ const readWhiteboard = (id: string) => {
 };
 
 const createWhiteboard = (params: { title: string; description: string; scope: string; teamId: string }) => {
-  return api.create(baseURL, params);
+  return;
 };
 
 const uploadWhiteboard = (presignedURL: string, formData: FormData) => {

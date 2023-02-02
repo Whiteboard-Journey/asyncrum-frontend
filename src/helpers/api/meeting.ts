@@ -1,10 +1,10 @@
 import { APICore } from './apiCore';
 
 const api = new APICore();
-const baseURL = '/api/v1/meetings';
+const baseURL = '/meetings';
 
 const createMeeting = (params: { teamId: number; meetingName: string }) => {
-  return api.create(baseURL, params);
+  return;
 };
 
 const updateMeeting = (id: number, params: { status: boolean }) => {

@@ -58,17 +58,7 @@ const useWhiteboard = () => {
   }, [whiteboardPageNumber, readAllWhiteboard]);
 
   const onCreateWhiteboard = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const title = ((event.target as HTMLFormElement).elements.namedItem('title') as HTMLInputElement).value;
-    const description = ((event.target as HTMLFormElement).elements.namedItem('description') as HTMLInputElement).value;
-
-    const createWhiteboardAPIResponse = await createWhiteboardAPI({ title, description, scope, teamId });
-    const { id, preSignedURL } = createWhiteboardAPIResponse.data;
-    const formData = createWhiteboardFormData(id, title);
-    await uploadWhiteboardAPI(preSignedURL, formData);
-    const readWhiteboardAPIResponse = await readWhiteboardAPI(id);
-    window.location.href = whiteboardPageURL + readWhiteboardAPIResponse.data.whiteboardUrl + '&id=' + id;
+    return;
   };
 
   const createWhiteboardFormData = (whiteboardID: string, title: string) => {

@@ -37,5 +37,29 @@
         "lastModifiedDate": "2022-09-23T18:25:33"
       }
     ]
+  },
+  "meetings": {
+    "meetings": [
+      {
+        "id": 1,
+        "meetingName": "Meeting 1",
+        "status": "",
+        "participants": [
+          " Demo User, /images/asyncrum-logo-small.png",
+          " Demo User 2, /images/asyncrum-logo-small.png"
+        ],
+        "lastModifiedDate": "2022-09-23T18:25:33"
+      },
+      {
+        "id": 2,
+        "meetingName": "Meeting 2",
+        "status": "",
+        "participants": [
+          " Demo User, /images/asyncrum-logo-small.png",
+          " Demo User 2, /images/asyncrum-logo-small.png"
+        ],
+        "lastModifiedDate": "2023-01-23T18:25:33"
+      }
+    ]
   }
 }

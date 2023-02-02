@@ -9,13 +9,10 @@ import {
 } from 'helpers';
 import { Meeting } from '../types';
 
+import { currentTeam, user } from 'mock-server/demoData';
+
 const useMeeting = () => {
   const { appSelector } = useRedux();
-  const { loading, user, currentTeam } = appSelector((state) => ({
-    loading: state.Auth.loading,
-    user: state.Auth.user,
-    currentTeam: state.Team.currentTeam,
-  }));
 
   const [isCreateMeetingOpen, toggleCreateMeeting] = useToggle();
   const [isRecordOpen, toggleRecord] = useToggle();
@@ -44,15 +41,7 @@ const useMeeting = () => {
   }, [currentTeam.id]);
 
   const onCreateMeeting = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const meetingName = ((event.target as HTMLFormElement).elements.namedItem('meetingName') as HTMLInputElement).value;
-    const createMeetingAPIResponse = await createMeetingAPI({ teamId, meetingName });
-    setCurrentMeetingName(meetingName);
-    setCurrentMeetingId(createMeetingAPIResponse.data.id);
-    toggleCreateMeeting();
-    toggleRecord();
-    readAllMeeting();
+    return;
   };
 
   const onDeleteMeeting = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -73,11 +62,8 @@ const useMeeting = () => {
   };
 
   useEffect(() => {
-    if (loading) {
-      return;
-    }
     readAllMeeting();
-  }, [loading, readAllMeeting]);
+  }, [readAllMeeting]);
 
   return {
     meetings,

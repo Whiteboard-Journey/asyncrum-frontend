@@ -16,7 +16,7 @@ const Dashboard = () => {
     <>
       {/* <DailyStandupContainer /> */}
       <hr />
-      {/* <MeetingContainer /> */}
+      <MeetingContainer />
       <hr />
       <WhiteboardContainer />
     </>
