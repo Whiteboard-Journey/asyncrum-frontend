@@ -70,28 +70,7 @@ class APICore {
    * Fetches data from given url
    */
   get = (url: string, params: any) => {
-    let response;
-    const user = getUserFromSession();
-
-    if (params) {
-      const queryString = params
-        ? Object.keys(params)
-            .map((key) => {
-              if (!user || key != 'token') {
-                return key + '=' + params[key];
-              }
-            })
-            .join('&')
-        : '';
-      response = axios.get(`${url}?${queryString}`, {
-        headers: { Authorization: 'Bearer ' + `${params['token'] ? params['token'] : user.token}` },
-      });
-    } else {
-      response = axios.get(`${url}`, {
-        headers: { Authorization: 'Bearer ' + user.token },
-      });
-    }
-    return response;
+    return axios.get(`${url}`);
   };
 
   getFile = (url: string, params: any) => {
@@ -140,9 +119,6 @@ class APICore {
    * post given data to url
    */
   create = (url: string, data: any) => {
-    if (user?.token) {
-      return axios.post(url, data, { headers: { Authorization: 'Bearer ' + user.token } });
-    }
     return axios.post(url, data);
   };
 

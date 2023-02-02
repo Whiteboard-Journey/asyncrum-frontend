@@ -2,7 +2,7 @@ import { APICore } from './apiCore';
 import axios, { AxiosResponse } from 'axios';
 
 const api = new APICore();
-const baseURL = '/api/v1/whiteboards';
+const baseURL = '/whiteboards';
 
 interface IReadAllWhiteboardResponse {
   whiteboards: IWhiteboard[];
@@ -22,12 +22,8 @@ export interface IWhiteboard {
   };
 }
 
-const readAllWhiteboard = (params: {
-  teamId: string;
-  scope: string;
-  pageIndex: number;
-}): Promise<AxiosResponse<IReadAllWhiteboardResponse>> => {
-  return api.get(baseURL, params);
+const readAllWhiteboard = (): Promise<AxiosResponse<IReadAllWhiteboardResponse>> => {
+  return api.get(baseURL, {});
 };
 
 const readWhiteboard = (id: string) => {

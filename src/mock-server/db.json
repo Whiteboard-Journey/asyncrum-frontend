@@ -1,3 +1,41 @@
 {
-  "users": [{ "id": 1, "username": "demo", "password": "1234" }]
+  "users": [{ "id": 1, "username": "demo", "password": "1234" }],
+  "whiteboards": {
+    "whiteboards": [
+      {
+        "id": 2,
+        "title": "Whiteboard 2",
+        "description": "test description",
+        "whiteboardUrl": "https://wbj-media.s3.ap-northeast-2.amazonaws.com/whiteboards/whiteboard_1_4.tldr",
+        "scope": "TEAM",
+        "member": {
+          "id": 1,
+          "fullname": "Demo User",
+          "profileImageUrl": "/images/asyncrum-logo-small.png",
+          "email": "test@gmail.com",
+          "roleType": "USER",
+          "timeZone": "Asia/Seoul"
+        },
+        "createdDate": "2022-09-23T18:25:33",
+        "lastModifiedDate": "2023-01-23T18:25:33"
+      },
+      {
+        "id": 1,
+        "title": "Whiteboard 1",
+        "description": "updated test description",
+        "whiteboardUrl": "https://wbj-media.s3.ap-northeast-2.amazonaws.com/whiteboards/whiteboard_1_3.tldr",
+        "scope": "TEAM",
+        "member": {
+          "id": 1,
+          "fullname": "Demo User",
+          "profileImageUrl": "/images/asyncrum-logo-small.png",
+          "email": "test@gmail.com",
+          "roleType": "USER",
+          "timeZone": "Asia/Seoul"
+        },
+        "createdDate": "2022-09-23T18:25:33",
+        "lastModifiedDate": "2022-09-23T18:25:33"
+      }
+    ]
+  }
 }

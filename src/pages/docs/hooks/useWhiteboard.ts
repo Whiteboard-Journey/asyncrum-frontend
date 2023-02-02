@@ -24,12 +24,12 @@ const useWhiteboard = () => {
   }));
 
   const scope = 'team';
-  const teamId = currentTeam?.id;
+  const teamId = '1';
   const whiteboardPageURL = '/whiteboard?url=';
 
   const readAllWhiteboard = useCallback(
     async (pageIndex: number) => {
-      const readAllWhiteboardAPIResponse = await readAllWhiteboardAPI({ teamId, scope, pageIndex });
+      const readAllWhiteboardAPIResponse = await readAllWhiteboardAPI();
 
       const whiteboards = readAllWhiteboardAPIResponse.data.whiteboards.map((whiteboard): Whiteboard => {
         return {
