@@ -2,13 +2,14 @@ import { MENU_ITEMS, MenuItemType } from 'appConstants';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import { allTeam, currentTeam } from 'mock-server/demoData';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-const getMenuItems = (teams: any, currentTeam: any) => {
+const getMenuItems = () => {
   const menu: MenuItemType[] =
-    teams && teams.length > 0
+    allTeam && allTeam.length > 0
       ? [
           ...MENU_ITEMS,
           {
@@ -17,8 +18,8 @@ const getMenuItems = (teams: any, currentTeam: any) => {
             icon: 'mdi mdi-account-group-outline',
             isTitle: false,
             children:
-              teams.length > 0
-                ? teams.map((team: any) => {
+              allTeam.length > 0
+                ? allTeam.map((team: any) => {
                     const teamObject = {
                       key: team.code,
                       label: team.name,

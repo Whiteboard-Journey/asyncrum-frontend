@@ -5,8 +5,6 @@ const api = new APICore();
 const baseURL = '/api/v1/teams';
 
 const changeTeam = async (teamId: number) => {
-  const readTeamApiResponse = await readTeam(teamId);
-  api.setCurrentTeam(readTeamApiResponse.data);
   window.location.reload();
 };
 

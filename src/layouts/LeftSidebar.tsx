@@ -27,7 +27,7 @@ const SideBarContent = ({ hideUserProfile }: SideBarContentProps) => {
     if (loading) {
       return;
     }
-    setMenuItems(getMenuItems(teamList, currentTeam));
+    setMenuItems(getMenuItems());
   }, [loading, teamList, currentTeam]);
 
   return (
