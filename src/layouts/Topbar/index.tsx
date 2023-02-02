@@ -12,6 +12,7 @@ import { getFirebaseToken, onMessageListener } from './FirebaseConfig';
 import { NotificationItem, Message } from '../types';
 import useThemeCustomizer from 'components/ThemeCustomizer/useThemeCustomizer';
 import { Form } from 'react-bootstrap';
+import { user } from 'mock-server/demoData';
 
 type TopbarProps = {
   hideLogo?: boolean;
@@ -27,10 +28,6 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
   const [isMenuOpened, toggleMenu] = useToggle();
   const [isTokenFound, setTokenFound] = useState(false);
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
-
-  const { user } = appSelector((state) => ({
-    user: state.Auth.user,
-  }));
 
   useEffect(() => {
     getFirebaseToken(setTokenFound);

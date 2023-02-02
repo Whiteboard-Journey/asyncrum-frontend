@@ -12,21 +12,13 @@ const Dashboard = () => {
     teamList: state.Team.teamList,
   }));
 
-  return loading ? (
+  return (
     <>
-      <p>Loading</p>
-    </>
-  ) : teamList.length > 0 ? (
-    <>
-      <DailyStandupContainer />
+      {/* <DailyStandupContainer /> */}
       <hr />
-      <MeetingContainer />
+      {/* <MeetingContainer /> */}
       <hr />
       <WhiteboardContainer />
-    </>
-  ) : (
-    <>
-      <NewTeamContainer />
     </>
   );
 };

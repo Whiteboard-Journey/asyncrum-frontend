@@ -12,13 +12,6 @@ type PrivateRouteProps = {
  * @returns
  */
 const PrivateRoute = ({ component: RouteComponent, roles, ...rest }: PrivateRouteProps) => {
-  const location = useLocation();
-  const api = new APICore();
-
-  if (api.isUserAuthenticated() === false) {
-    return <Navigate to={'/account/login'} state={{ from: location }} replace />;
-  }
-
   return <RouteComponent />;
 };
 
