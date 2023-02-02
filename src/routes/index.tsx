@@ -107,7 +107,7 @@ const AllRoutes = () => {
     {
       // auth protected routes
       path: '/',
-      element: <PrivateRoute roles={'Admin'} component={Layout} />,
+      element: <DefaultLayout />,
       children: [
         {
           path: 'dashboard',
@@ -133,17 +133,6 @@ const AllRoutes = () => {
               element: <LoadComponent component={ErrorPageNotFoundAlt} />,
             },
           ],
-        },
-      ],
-    },
-    {
-      // auth protected routes
-      path: '/',
-      element: <DefaultLayout />,
-      children: [
-        {
-          path: 'whiteboard',
-          element: <PrivateRoute roles={'Admin'} component={Whiteboard} />,
         },
       ],
     },
