@@ -26,8 +26,9 @@ git clone -b demo --single-branch https://github.com/Whiteboard-Journey/asyncrum
 ```
 yarn
 ```
-3. json-server 구동
+3. json-server 설치 및 구동
 ```
+npm install -g json-server
 json-server --watch src/mock-server/db.json --port 3001
 ```
 4. 코드 실행
