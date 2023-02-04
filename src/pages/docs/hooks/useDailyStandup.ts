@@ -23,7 +23,7 @@ const useDailyStandup = () => {
       return;
     }
     const readAllDailyStandupsAPIResponse = await readAllDailyStandupsAPI({ teamId: currentTeam.id, scope, pageIndex });
-    for (const record of readAllDailyStandupsAPIResponse.data.records) {
+    for (const record of readAllDailyStandupsAPIResponse.data) {
       if (getTimeDifference(record.createdDate) > 24 && record.seenMember?.indexOf(user.id) > -1) {
         continue;
       }

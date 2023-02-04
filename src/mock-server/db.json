@@ -1,5 +1,11 @@
 {
-  "users": [{ "id": 1, "username": "demo", "password": "1234" }],
+  "users": [
+    {
+      "id": 1,
+      "username": "demo",
+      "password": "1234"
+    }
+  ],
   "whiteboards": {
     "whiteboards": [
       {
@@ -62,52 +68,101 @@
       }
     ]
   },
-
-  "records": {
-    "records": [
-      {
-        "id": 2,
-        "title": "test record",
-        "description": "test description",
-        "recordUrl": "https://wbj-media.s3.ap-northeast-2.amazonaws.com/records/record_1_1_2.mp4",
-        "bookmarks": [
-          {
-            "id": 4,
-            "recordId": 2,
-            "content": "test bookmark",
-            "time": 5.6,
-            "position": {
-              "x": 0.5,
-              "y": 0.5
-            },
-            "drawing": "{\"id\":\"doc\",\"name\":\"New Document\",\"version\":15.5,\"pages\":{\"page\":{\"id\":\"page\",\"name\":\"Page 1\",\"childIndex\":1,\"shapes\":{},\"bindings\":{}}},\"pageStates\":{\"page\":{\"id\":\"page\",\"selectedIds\":[],\"camera\":{\"point\":[0,0],\"zoom\":0.8342592592592591}}},\"assets\":{}}",
-            "scale": 0.8342592592592591
+  "records": [
+    {
+      "id": 0,
+      "title": "test record screen",
+      "description": "test description",
+      "recordUrl": "/videos/demo_video.mp4",
+      "bookmarks": [
+        {
+          "id": 4,
+          "recordId": 0,
+          "author": "Demo User",
+          "content": "test bookmark",
+          "time": 5,
+          "position": {
+            "x": 0.5,
+            "y": 0.5
           },
-          {
-            "id": 5,
-            "recordId": 2,
-            "content": "test bookmark 2",
-            "time": 5.6,
-            "position": {
-              "x": 0.5,
-              "y": 0.5
-            },
-            "drawing": "{\"id\":\"doc\",\"name\":\"New Document\",\"version\":15.5,\"pages\":{\"page\":{\"id\":\"page\",\"name\":\"Page 1\",\"childIndex\":1,\"shapes\":{},\"bindings\":{}}},\"pageStates\":{\"page\":{\"id\":\"page\",\"selectedIds\":[],\"camera\":{\"point\":[0,0],\"zoom\":0.8342592592592591}}},\"assets\":{}}",
-            "scale": 0.8342592592592591
-          }
-        ],
-        "scope": "TEAM",
-        "member": {
-          "id": 1,
-          "fullname": "Demo User",
-          "profileImageUrl": "/images/asyncrum-logo-small.png",
-          "email": "test@gmail.com",
-          "roleType": "USER",
-          "timeZone": "Asia/Seoul"
+          "drawing": "{\"id\":\"doc\",\"name\":\"New Document\",\"version\":15.5,\"pages\":{\"page\":{\"id\":\"page\",\"name\":\"Page 1\",\"childIndex\":1,\"shapes\":{},\"bindings\":{}}},\"pageStates\":{\"page\":{\"id\":\"page\",\"selectedIds\":[],\"camera\":{\"point\":[0,0],\"zoom\":0.8342592592592591}}},\"assets\":{}}",
+          "scale": 0.8342592592592591
         },
-        "createdDate": "2022-09-23T18:25:33",
-        "lastModifiedDate": "2022-09-23T18:25:33"
-      }
-    ]
-  }
+        {
+          "id": 5,
+          "recordId": 0,
+          "author": "Demo User",
+          "content": "test bookmark 2",
+          "time": 10,
+          "position": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "drawing": "{\"id\":\"doc\",\"name\":\"New Document\",\"version\":15.5,\"pages\":{\"page\":{\"id\":\"page\",\"name\":\"Page 1\",\"childIndex\":1,\"shapes\":{},\"bindings\":{}}},\"pageStates\":{\"page\":{\"id\":\"page\",\"selectedIds\":[],\"camera\":{\"point\":[0,0],\"zoom\":0.8342592592592591}}},\"assets\":{}}",
+          "scale": 0.8342592592592591
+        }
+      ],
+      "scope": "team",
+      "member": {
+        "id": 1,
+        "fullname": "Demo User",
+        "profileImageUrl": "/images/asyncrum-logo-small.png",
+        "email": "test@gmail.com",
+        "roleType": "USER",
+        "timeZone": "Asia/Seoul"
+      },
+      "createdDate": "2022-09-23T18:25:33",
+      "lastModifiedDate": "2022-09-23T18:25:33"
+    },
+    {
+      "id": 1,
+      "title": "test record",
+      "description": "test description",
+      "recordUrl": "/videos/demo_video.mp4",
+      "bookmarks": [],
+      "scope": "team",
+      "member": {
+        "id": 1,
+        "fullname": "Demo User",
+        "profileImageUrl": "/images/asyncrum-logo-small.png",
+        "email": "test@gmail.com",
+        "roleType": "USER",
+        "timeZone": "Asia/Seoul"
+      },
+      "createdDate": "2022-09-23T18:25:33",
+      "lastModifiedDate": "2022-09-23T18:25:33"
+    }
+  ],
+  "bookmarks": [
+    {
+      "recordId": 0,
+      "emoji": "1f516",
+      "content": "",
+      "time": 0,
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "drawing": "{\"id\":\"doc\",\"name\":\"New Document\",\"version\":15.5,\"pages\":{\"page\":{\"id\":\"page\",\"name\":\"Page 1\",\"childIndex\":1,\"shapes\":{\"14e06408-d915-4774-1e29-00aed7778bbc\":{\"id\":\"14e06408-d915-4774-1e29-00aed7778bbc\",\"type\":\"draw\",\"name\":\"Draw\",\"parentId\":\"page\",\"childIndex\":1,\"point\":[305.8,187.47],\"rotation\":0,\"style\":{\"color\":\"red\",\"size\":\"small\",\"isFilled\":false,\"dash\":\"draw\",\"scale\":1},\"points\":[[62,0,0.5],[62,0,0.5],[64,1,0.5],[64,2,0.5],[63,4,0.5],[61,8,0.5],[57,15,0.5],[51,26,0.5],[47,31,0.5],[40,43,0.5],[36,49,0.5],[32,55,0.5],[23,69,0.5],[15,82,0.5],[10,90,0.5],[3,105,0.5],[0,112,0.5],[0,117,0.5],[0,120,0.5],[1,123,0.5],[4,126,0.5],[15,131,0.5],[23,134,0.5],[38,137,0.5],[56,141,0.5],[71,144,0.5],[86,147,0.5],[102,149,0.5],[130,151,0.5],[147,152,0.5],[163,153,0.5],[179,154,0.5],[205,157,0.5],[218,158,0.5],[231,160,0.5],[241,161,0.5],[258,166,0.5],[266,170,0.5],[268,173,0.5],[270,176,0.5],[270,178,0.5],[269,182,0.5],[266,188,0.5],[262,196,0.5],[257,202,0.5],[250,210,0.5],[244,217,0.5],[232,232,0.5],[224,241,0.5],[217,249,0.5],[207,263,0.5],[205,267,0.5],[204,270,0.5],[204,273,0.5],[208,275,0.5],[216,279,0.5],[228,283,0.5],[235,285,0.5],[246,287,0.5],[259,290,0.5],[282,293,0.5],[293,293,0.5],[301,293,0.5],[318,293,0.5],[324,293,0.5],[329,292,0.5],[336,292,0.5],[340,291,0.5],[342,291,0.5]],\"isComplete\":true}},\"bindings\":{}}},\"pageStates\":{\"page\":{\"id\":\"page\",\"selectedIds\":[],\"camera\":{\"point\":[153.82,20.76],\"zoom\":1}}},\"assets\":{}}",
+      "scale": 1,
+      "author": "Demo User",
+      "apiId": "v1",
+      "id": 1
+    },
+    {
+      "recordId": 0,
+      "emoji": "1f516",
+      "content": "",
+      "time": 19.5,
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "drawing": "{\"id\":\"doc\",\"name\":\"New Document\",\"version\":15.5,\"pages\":{\"page\":{\"id\":\"page\",\"name\":\"Page 1\",\"childIndex\":1,\"shapes\":{\"14e06408-d915-4774-1e29-00aed7778bbc\":{\"id\":\"14e06408-d915-4774-1e29-00aed7778bbc\",\"type\":\"draw\",\"name\":\"Draw\",\"parentId\":\"page\",\"childIndex\":1,\"point\":[305.8,187.47],\"rotation\":0,\"style\":{\"color\":\"red\",\"size\":\"small\",\"isFilled\":false,\"dash\":\"draw\",\"scale\":1},\"points\":[[62,0,0.5],[62,0,0.5],[64,1,0.5],[64,2,0.5],[63,4,0.5],[61,8,0.5],[57,15,0.5],[51,26,0.5],[47,31,0.5],[40,43,0.5],[36,49,0.5],[32,55,0.5],[23,69,0.5],[15,82,0.5],[10,90,0.5],[3,105,0.5],[0,112,0.5],[0,117,0.5],[0,120,0.5],[1,123,0.5],[4,126,0.5],[15,131,0.5],[23,134,0.5],[38,137,0.5],[56,141,0.5],[71,144,0.5],[86,147,0.5],[102,149,0.5],[130,151,0.5],[147,152,0.5],[163,153,0.5],[179,154,0.5],[205,157,0.5],[218,158,0.5],[231,160,0.5],[241,161,0.5],[258,166,0.5],[266,170,0.5],[268,173,0.5],[270,176,0.5],[270,178,0.5],[269,182,0.5],[266,188,0.5],[262,196,0.5],[257,202,0.5],[250,210,0.5],[244,217,0.5],[232,232,0.5],[224,241,0.5],[217,249,0.5],[207,263,0.5],[205,267,0.5],[204,270,0.5],[204,273,0.5],[208,275,0.5],[216,279,0.5],[228,283,0.5],[235,285,0.5],[246,287,0.5],[259,290,0.5],[282,293,0.5],[293,293,0.5],[301,293,0.5],[318,293,0.5],[324,293,0.5],[329,292,0.5],[336,292,0.5],[340,291,0.5],[342,291,0.5]],\"isComplete\":true}},\"bindings\":{}}},\"pageStates\":{\"page\":{\"id\":\"page\",\"selectedIds\":[],\"camera\":{\"point\":[153.82,20.75],\"zoom\":1}}},\"assets\":{}}",
+      "scale": 1,
+      "author": "Demo User",
+      "apiId": "v1",
+      "id": 2
+    }
+  ]
 }

@@ -1,9 +1,9 @@
 import { Video } from './Video';
 import { APICore } from 'helpers/api/apiCore';
 import type { Comment } from './Comment';
+import { user } from 'mock-server/demoData';
 
 const api = new APICore();
-const user = api.getLoggedInUser();
 
 export type VideoBookmarkIcon = {
   native: string;
