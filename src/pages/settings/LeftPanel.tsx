@@ -1,20 +1,14 @@
 import { Link } from 'react-router-dom';
 import { Team } from './types';
 import { Dropdown } from 'react-bootstrap';
-import { useRedux } from 'hooks';
 import { readTeam } from 'redux/actions';
+import { allTeam as teamList, currentTeam } from 'mock-server/demoData';
 
 type LeftPanelProps = {
   selected: string;
 };
 
 const LeftPanel = ({ selected }: LeftPanelProps) => {
-  const { dispatch, appSelector } = useRedux();
-  const { teamList, currentTeam } = appSelector((state) => ({
-    teamList: state.Team.teamList,
-    currentTeam: state.Team.currentTeam,
-  }));
-
   return (
     <>
       {currentTeam && (
@@ -28,10 +22,9 @@ const LeftPanel = ({ selected }: LeftPanelProps) => {
                 <Dropdown.Item
                   key={team.id}
                   onClick={() => {
-                    dispatch(readTeam(team.id));
+                    // dispatch(readTeam(team.id));
                   }}
-                  active={team.id === currentTeam.id ? true : false}
-                >
+                  active={team.id === currentTeam.id ? true : false}>
                   <i className=""></i> {team.name}
                 </Dropdown.Item>
               );
