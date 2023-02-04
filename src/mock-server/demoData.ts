@@ -26,7 +26,7 @@ export const currentTeam = {
   id: 1,
   name: 'Demo Team',
   code: 'dt1',
-  pictureUrl: null,
+  pictureUrl: '/images/asyncrum-logo-small.png',
   members: [
     {
       id: 1,

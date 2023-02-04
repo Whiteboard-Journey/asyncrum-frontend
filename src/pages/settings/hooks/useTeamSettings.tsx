@@ -9,14 +9,10 @@ import {
 import { createTeam, readTeam, updateTeam, leaveTeam } from 'redux/actions';
 import { Invitation } from '../types';
 import defaultImage from 'assets/images/asyncrum-logo-small.png';
+import { user, currentTeam } from 'mock-server/demoData';
 
 const useTeamSettings = () => {
   const { dispatch, appSelector } = useRedux();
-
-  const { user, currentTeam } = appSelector((state) => ({
-    user: state.Auth.user,
-    currentTeam: state.Team.currentTeam,
-  }));
 
   const [loading, setLoading] = useState<boolean>(true);
   const [previewImage, setPreviewImage] = useState<string>(currentTeam?.pictureUrl);
