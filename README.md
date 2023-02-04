@@ -11,9 +11,9 @@
 
 > 이 성과는 2022년도 과학기술정보통신부의 재원으로 정보통신기획평가원의 지원을 받아 수행된 연구임. (IITP-2022-SW마에스트로과정) <br><br> This work was supported by the Institute of Information & Communications Technology Planning & Evaluation(IITP) grant funded by the Ministry of Science and ICT(MSIT) (IITP-2022-SW Maestro training course).
 
-## 배포 주소
+## ~~배포 주소~~ (서버 중단 상태)
 
-> [https://www.asyncrum.com](https://www.asyncrum.com)
+> ~~[https://www.asyncrum.com](https://www.asyncrum.com)~~
 
 ## 프로젝트 소개
 
@@ -71,3 +71,25 @@ SW마에스트로 13기 벤처 프로젝트로서 네이버 SmartStudio Alto 팀
 
 <img src="https://user-images.githubusercontent.com/24418404/201711539-bd0ea156-bc5d-438c-8101-053f3643c385.png" />
 <img src="https://user-images.githubusercontent.com/24418404/201711622-47a6b110-f86f-4cf1-834d-cf9928a5c55e.png" />
+
+## 데모
+※ 서버가 가동되고 있지 않은 상태입니다. 일부 기능이 작동하지 않을 수 있습니다.
+
+1. `demo` 브랜치에서 코드 복사
+```
+git clone -b demo --single-branch https://github.com/Whiteboard-Journey/asyncrum-frontend.git
+```
+2. dependency 설치
+```
+yarn
+```
+3. json-server 구동
+```
+json-server --watch src/mock-server/db.json --port 3001
+```
+4. 코드 실행
+```
+yarn start
+```
+
+
