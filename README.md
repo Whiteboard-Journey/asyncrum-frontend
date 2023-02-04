@@ -15,6 +15,26 @@
 
 > ~~[https://www.asyncrum.com](https://www.asyncrum.com)~~
 
+## 데모
+※ 서버가 가동되고 있지 않은 상태입니다. 일부 기능이 작동하지 않을 수 있습니다.
+
+1. `demo` 브랜치에서 코드 복사
+```
+git clone -b demo --single-branch https://github.com/Whiteboard-Journey/asyncrum-frontend.git
+```
+2. dependency 설치
+```
+yarn
+```
+3. json-server 구동
+```
+json-server --watch src/mock-server/db.json --port 3001
+```
+4. 코드 실행
+```
+yarn start
+```
+
 ## 프로젝트 소개
 
 동시 편집 화이트보드와 동영상을 결합한 협업 소프트웨어로서 원격으로 근무하는 팀을 돕습니다. 비디오 로그 기능을 통해 시차가 존재하는 팀원간의 커뮤니케이션을 원활하게 합니다.
@@ -71,25 +91,3 @@ SW마에스트로 13기 벤처 프로젝트로서 네이버 SmartStudio Alto 팀
 
 <img src="https://user-images.githubusercontent.com/24418404/201711539-bd0ea156-bc5d-438c-8101-053f3643c385.png" />
 <img src="https://user-images.githubusercontent.com/24418404/201711622-47a6b110-f86f-4cf1-834d-cf9928a5c55e.png" />
-
-## 데모
-※ 서버가 가동되고 있지 않은 상태입니다. 일부 기능이 작동하지 않을 수 있습니다.
-
-1. `demo` 브랜치에서 코드 복사
-```
-git clone -b demo --single-branch https://github.com/Whiteboard-Journey/asyncrum-frontend.git
-```
-2. dependency 설치
-```
-yarn
-```
-3. json-server 구동
-```
-json-server --watch src/mock-server/db.json --port 3001
-```
-4. 코드 실행
-```
-yarn start
-```
-
-
