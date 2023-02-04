@@ -2,14 +2,9 @@ import { useReactMediaRecorder } from 'react-media-recorder';
 import { useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import { createComment as createCommentAPI, uploadRecord as uploadRecordAPI } from 'helpers';
-import { useRedux } from 'hooks';
+import { user } from 'mock-server/demoData';
 
 const useCommentVideoRecorder = () => {
-  const { appSelector } = useRedux();
-
-  const { user } = appSelector((state) => ({
-    user: state.Auth.user,
-  }));
   const [recordingState, setRecordingState] = useState<'idle' | 'recording' | 'recorded'>('idle');
 
   const videoRef = useRef<HTMLVideoElement>(null);

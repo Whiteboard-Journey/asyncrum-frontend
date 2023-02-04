@@ -6,15 +6,9 @@ import {
   uploadRecord as uploadRecordAPI,
   createMeetingRecord as createMeetingRecordAPI,
 } from 'helpers';
-import { useRedux } from 'hooks';
+import { user, currentTeam } from 'mock-server/demoData';
 
 const useVideoRecorder = () => {
-  const { appSelector } = useRedux();
-
-  const { user, currentTeam } = appSelector((state) => ({
-    user: state.Auth.user,
-    currentTeam: state.Team.currentTeam,
-  }));
   const [recordingState, setRecordingState] = useState<'idle' | 'recording' | 'recorded' | 'refused'>('idle');
 
   const videoRef = useRef<HTMLVideoElement>(null);
