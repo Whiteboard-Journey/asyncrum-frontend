@@ -61,14 +61,13 @@ const Login = () => {
             type="password"
             name="password"
             placeholder={t('Enter your password')}
-            containerClass={'mb-3'}
-          >
+            containerClass={'mb-3'}>
             <Link to="/account/forget-password" className="text-muted float-end">
               <small>{t('Forgot your password?')}</small>
             </Link>
           </FormInput>
           <div className="mb-3 mb-0 text-center">
-            <Button variant="primary" type="submit" disabled={loading}>
+            <Button variant="primary" href="/dashboard" disabled={loading}>
               {t('Log In')}
             </Button>
           </div>
