@@ -5,15 +5,9 @@ import {
   uploadProfileImage as uploadProfileImageAPI,
 } from 'helpers';
 import { useRef, useState } from 'react';
-import { useRedux } from 'hooks';
+import { user } from 'mock-server/demoData';
 
 const usePersonalSettings = () => {
-  const { appSelector } = useRedux();
-
-  const { user } = appSelector((state) => ({
-    user: state.Auth.user,
-  }));
-
   const [userFullname, setUserFullname] = useState<string>(user.fullname);
   const [previewImage, setPreviewImage] = useState<string>(user.profileImageUrl);
   const [profileImageFile, setProfileImageFile] = useState<null | File>();

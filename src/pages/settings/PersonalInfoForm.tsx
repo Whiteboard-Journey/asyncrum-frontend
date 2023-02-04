@@ -3,15 +3,9 @@ import TimezoneSelect from 'react-timezone-select';
 import { FormInput } from 'components';
 import { usePersonalSettings } from './hooks';
 import { useState } from 'react';
-import { useRedux } from 'hooks';
+import { user } from 'mock-server/demoData';
 
 const PersonalInfoForm: React.FC = () => {
-  const { appSelector } = useRedux();
-
-  const { user } = appSelector((state) => ({
-    user: state.Auth.user,
-  }));
-
   const { userFullname, onSubmitProfileInfo } = usePersonalSettings();
   const [selectedTimezone, setSelectedTimezone] = useState(
     user.timeZone
