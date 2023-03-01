@@ -59,7 +59,7 @@ SW마에스트로 13기 벤처 프로젝트로서 네이버 SmartStudio Alto 팀
 
 ## 개발 환경
 
-- Front-end: React.js, TypeScript, Redux-saga, react-bootstrap, SCSS
+- Front-end: React, TypeScript, Redux-saga, react-bootstrap, SCSS
 - Back-end: Java, Spring Boot, JPA, Mysql, MongoDB, AWS, K8S, Docker, WebRTC, Jitsi, gRPC
 
 ## 동작 화면
